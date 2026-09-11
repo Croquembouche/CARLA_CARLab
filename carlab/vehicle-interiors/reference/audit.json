@@ -1,0 +1,753 @@
+{
+  "assets": [
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/AnimBP_LincolnMKZ.AnimBP_LincolnMKZ",
+      "class": "AnimBlueprint"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/M_Glass.M_Glass",
+      "class": "Material"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
+      "class": "MaterialInstanceConstant"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Emissive.MI_LincolnMKZ_Emissive",
+      "class": "MaterialInstanceConstant"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Emissive_Glass_Ext.MI_LincolnMKZ_Emissive_Glass_Ext",
+      "class": "MaterialInstanceConstant"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Emissive_Glass_Int.MI_LincolnMKZ_Emissive_Glass_Int",
+      "class": "MaterialInstanceConstant"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext",
+      "class": "MaterialInstanceConstant"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Int.MI_LincolnMKZ_Glass_Int",
+      "class": "MaterialInstanceConstant"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior01.MI_LincolnMKZ_Interior01",
+      "class": "MaterialInstanceConstant"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior2.MI_LincolnMKZ_Interior2",
+      "class": "MaterialInstanceConstant"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/T_LincolnMKZ_Interior01_d.T_LincolnMKZ_Interior01_d",
+      "class": "Texture2D"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/T_LincolnMKZ_Interior01_n.T_LincolnMKZ_Interior01_n",
+      "class": "Texture2D"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/T_LincolnMKZ_Interior01_ormh.T_LincolnMKZ_Interior01_ormh",
+      "class": "Texture2D"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/T_LincolnMKZ_Interior02_d.T_LincolnMKZ_Interior02_d",
+      "class": "Texture2D"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/T_LincolnMKZ_Interior02_n.T_LincolnMKZ_Interior02_n",
+      "class": "Texture2D"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/T_LincolnMKZ_Interior02_orm.T_LincolnMKZ_Interior02_orm",
+      "class": "Texture2D"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Doors/SM_LincolnMKZ_Door_FL.SM_LincolnMKZ_Door_FL",
+      "class": "StaticMesh"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Doors/SM_LincolnMKZ_Door_FR.SM_LincolnMKZ_Door_FR",
+      "class": "StaticMesh"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Doors/SM_LincolnMKZ_Door_RL.SM_LincolnMKZ_Door_RL",
+      "class": "StaticMesh"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Doors/SM_LincolnMKZ_Door_RR.SM_LincolnMKZ_Door_RR",
+      "class": "StaticMesh"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Emissive/SM_LincolnMKZ_Emissive.SM_LincolnMKZ_Emissive",
+      "class": "StaticMesh"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_FL_Glass_Ext1.SM_LincolnMKZ_Door_FL_Glass_Ext1",
+      "class": "StaticMesh"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_FL_Glass_Ext2.SM_LincolnMKZ_Door_FL_Glass_Ext2",
+      "class": "StaticMesh"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_FR_Glass_Ext1.SM_LincolnMKZ_Door_FR_Glass_Ext1",
+      "class": "StaticMesh"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_RL_Glass_Ext1.SM_LincolnMKZ_Door_RL_Glass_Ext1",
+      "class": "StaticMesh"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_RL_Glass_Ext2.SM_LincolnMKZ_Door_RL_Glass_Ext2",
+      "class": "StaticMesh"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_RR_Glass_Ext1.SM_LincolnMKZ_Door_RR_Glass_Ext1",
+      "class": "StaticMesh"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_RR_Glass_Ext2.SM_LincolnMKZ_Door_RR_Glass_Ext2",
+      "class": "StaticMesh"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Glass_Ext1.SM_LincolnMKZ_Glass_Ext1",
+      "class": "StaticMesh"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Glass_Ext2.SM_LincolnMKZ_Glass_Ext2",
+      "class": "StaticMesh"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Parked/BP_LincolnMKZ_Parked.BP_LincolnMKZ_Parked",
+      "class": "Blueprint"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Parked/MI_LincolnMKZ_Emissive_Parked.MI_LincolnMKZ_Emissive_Parked",
+      "class": "MaterialInstanceConstant"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Parked/MI_LincolnMKZ_Glass_Parked.MI_LincolnMKZ_Glass_Parked",
+      "class": "MaterialInstanceConstant"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Parked/SM_LincolnMKZ_Glass_Parked.SM_LincolnMKZ_Glass_Parked",
+      "class": "StaticMesh"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Parked/SM_LincolnMKZ_Parked.SM_LincolnMKZ_Parked",
+      "class": "StaticMesh"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Phys_LincolnMKZ.Phys_LincolnMKZ",
+      "class": "PhysicsAsset"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/SK_LincolnMKZ.SK_LincolnMKZ",
+      "class": "SkeletalMesh",
+      "materials": [
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior2.MI_LincolnMKZ_Interior2",
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior01.MI_LincolnMKZ_Interior01"
+      ]
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Skel_LincolnMKZ.Skel_LincolnMKZ",
+      "class": "Skeleton"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/SM_sc_LincolnMKZ.SM_sc_LincolnMKZ",
+      "class": "StaticMesh"
+    },
+    {
+      "path": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/SMC_LincolnMKZ.SMC_LincolnMKZ",
+      "class": "StaticMesh"
+    }
+  ],
+  "components": [
+    {
+      "name": "Default__BP_LincolnMKZ_C",
+      "class": "BP_LincolnMKZ_C"
+    },
+    {
+      "name": "back-blinker-r-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477840b68) {x: -453.514811, y: 52.003264, z: 7.080412}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477840b80) {pitch: -41.983093, yaw: 129.836487, roll: 31.970857}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477840b98) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "back-blinker-r-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477840b68) {x: -453.514811, y: 52.003264, z: 7.080412}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477840b80) {pitch: -41.983093, yaw: 129.836487, roll: 31.970857}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477840b98) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "back-fog-l-2_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477def168) {x: -482.550771, y: -56.495664, z: -40.327562}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477def180) {pitch: -43.695370, yaw: -172.761794, roll: 174.140764}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477def198) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "back-fog-r-2_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477dece68) {x: -472.680231, y: 24.510533, z: -39.827558}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477dece80) {pitch: -43.519464, yaw: 158.219938, roll: 176.044545}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477dece98) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "back-fog-l-2_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477def168) {x: -482.550771, y: -56.495664, z: -40.327562}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477def180) {pitch: -43.695370, yaw: -172.761794, roll: 174.140764}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477def198) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "back-fog-r-2_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477dece68) {x: -472.680231, y: 24.510533, z: -39.827558}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477dece80) {pitch: -43.519464, yaw: 158.219938, roll: 176.044545}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477dece98) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "back-reverse-1_GEN_VARIABLE",
+      "class": "RectLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477deba68) {x: -492.823504, y: -14.361833, z: -4.064885}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477deba80) {pitch: -44.519511, yaw: 172.707583, roll: 0.492401}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477deba98) {x: 1.000000, y: -0.788858, z: 3.235957}>"
+    },
+    {
+      "name": "back-reverse-1_GEN_VARIABLE",
+      "class": "RectLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477deba68) {x: -492.823504, y: -14.361833, z: -4.064885}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477deba80) {pitch: -44.519511, yaw: 172.707583, roll: 0.492401}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477deba98) {x: 1.000000, y: -0.788858, z: 3.235957}>"
+    },
+    {
+      "name": "back-blinker-l-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477defb68) {x: -470.617302, y: -88.354579, z: 6.214066}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477defb80) {pitch: -42.461785, yaw: -144.196984, roll: 26.843575}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477defb98) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "back-blinker-l-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477defb68) {x: -470.617302, y: -88.354579, z: 6.214066}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477defb80) {pitch: -42.461785, yaw: -144.196984, roll: 26.843575}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477defb98) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "front-high_beam-r-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477dee268) {x: -5.784316, y: 2.259604, z: 3.446107}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477dee280) {pitch: 0.489490, yaw: 0.107983, roll: 2.593733}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477dee298) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "front-high_beam-r-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477dee268) {x: -5.784316, y: 2.259604, z: 3.446107}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477dee280) {pitch: 0.489490, yaw: 0.107983, roll: 2.593733}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477dee298) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "front-high_beam-l-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477dedd68) {x: -23.658389, y: -144.430511, z: 2.540675}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477dedd80) {pitch: 1.013278, yaw: -13.779933, roll: 1.703249}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477dedd98) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "front-high_beam-l-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477dedd68) {x: -23.658389, y: -144.430511, z: 2.540675}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477dedd80) {pitch: 1.013278, yaw: -13.779933, roll: 1.703249}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477dedd98) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "front-position-r-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x9055840b068) {x: 0.000000, y: 0.000000, z: 0.000000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x9055840b080) {pitch: 0.000000, yaw: -0.000000, roll: -0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x9055840b098) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "front-position-r-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x9055840b068) {x: 0.000000, y: 0.000000, z: 0.000000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x9055840b080) {pitch: 0.000000, yaw: -0.000000, roll: -0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x9055840b098) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "front-position-l-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477def668) {x: -17.874075, y: -146.690007, z: -0.905432}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477def680) {pitch: -0.084934, yaw: -13.893857, roll: -0.696861}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477def698) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "front-position-l-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477def668) {x: -17.874075, y: -146.690007, z: -0.905432}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477def680) {pitch: -0.084934, yaw: -13.893857, roll: -0.696861}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477def698) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "back-position-l_GEN_VARIABLE",
+      "class": "RectLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477deb068) {x: -493.903758, y: -14.229859, z: -4.119618}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477deb080) {pitch: -44.519511, yaw: 172.707583, roll: 0.492401}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477deb098) {x: 1.000000, y: -0.788858, z: 3.235957}>"
+    },
+    {
+      "name": "PhysConst_FL_GEN_VARIABLE",
+      "class": "PhysicsConstraintComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f04068) {x: 95.953064, y: -87.410208, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f04080) {pitch: 0.000000, yaw: 180.000000, roll: -0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f04098) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "PhysCons_DoorsL_GEN_VARIABLE",
+      "class": "PhysicsConstraintComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f03268) {x: 95.953064, y: -87.410208, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f03280) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f03298) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "PhysCons_DoorsL_GEN_VARIABLE",
+      "class": "PhysicsConstraintComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f03268) {x: 95.953064, y: -87.410208, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f03280) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f03298) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "PhysConst_RL_GEN_VARIABLE",
+      "class": "PhysicsConstraintComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f04e68) {x: -15.953773, y: -89.694784, z: 90.428513}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f04e80) {pitch: 0.000000, yaw: 180.000000, roll: -0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f04e98) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "PhysConst_RL_GEN_VARIABLE",
+      "class": "PhysicsConstraintComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f04e68) {x: -15.953773, y: -89.694784, z: 90.428513}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f04e80) {pitch: 0.000000, yaw: 180.000000, roll: -0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f04e98) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "PhysConst_RR_GEN_VARIABLE",
+      "class": "PhysicsConstraintComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f05568) {x: -15.953276, y: 89.504412, z: 88.142204}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f05580) {pitch: 0.000000, yaw: 180.000000, roll: -0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f05598) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "PhysConst_RR_GEN_VARIABLE",
+      "class": "PhysicsConstraintComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f05568) {x: -15.953276, y: 89.504412, z: 88.142204}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f05580) {pitch: 0.000000, yaw: 180.000000, roll: -0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f05598) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "PhysConst_FL_GEN_VARIABLE",
+      "class": "PhysicsConstraintComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f04068) {x: 95.953064, y: -87.410208, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f04080) {pitch: 0.000000, yaw: 180.000000, roll: -0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f04098) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "PhysConst_FR_GEN_VARIABLE",
+      "class": "PhysicsConstraintComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f04768) {x: 95.953064, y: 88.020967, z: 87.398903}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f04780) {pitch: 0.000000, yaw: 180.000000, roll: -0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f04798) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "back-position-l_GEN_VARIABLE",
+      "class": "RectLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477deb068) {x: -493.903758, y: -14.229859, z: -4.119618}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477deb080) {pitch: -44.519511, yaw: 172.707583, roll: 0.492401}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477deb098) {x: 1.000000, y: -0.788858, z: 3.235957}>"
+    },
+    {
+      "name": "PhysConst_FR_GEN_VARIABLE",
+      "class": "PhysicsConstraintComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f04768) {x: 95.953064, y: 88.020967, z: 87.398903}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f04780) {pitch: 0.000000, yaw: 180.000000, roll: -0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f04798) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "PhysCons_DoorsR_GEN_VARIABLE",
+      "class": "PhysicsConstraintComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f03968) {x: 95.953064, y: 88.020967, z: 87.398903}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f03980) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f03998) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "PhysCons_DoorsR_GEN_VARIABLE",
+      "class": "PhysicsConstraintComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f03968) {x: 95.953064, y: 88.020967, z: 87.398903}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f03980) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f03998) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "PhysConstr_GEN_VARIABLE",
+      "class": "BillboardComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f02468) {x: 0.000000, y: 0.000000, z: 0.000000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f02480) {pitch: -0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f02498) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "back-brake-l-1_GEN_VARIABLE",
+      "class": "RectLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477deab68) {x: -492.879484, y: -14.355071, z: -4.067720}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477deab80) {pitch: -44.519511, yaw: 172.707583, roll: 0.492401}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477deab98) {x: 1.000000, y: -0.788858, z: 3.235957}>"
+    },
+    {
+      "name": "back-brake-l-1_GEN_VARIABLE",
+      "class": "RectLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477deab68) {x: -492.879484, y: -14.355071, z: -4.067720}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477deab80) {pitch: -44.519511, yaw: 172.707583, roll: 0.492401}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477deab98) {x: 1.000000, y: -0.788858, z: 3.235957}>"
+    },
+    {
+      "name": "interior-1_GEN_VARIABLE",
+      "class": "PointLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477dea668) {x: -225.146883, y: -47.282514, z: 45.381222}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477dea680) {pitch: 2.878338, yaw: -6.964823, roll: -0.351207}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477dea698) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "interior-1_GEN_VARIABLE",
+      "class": "PointLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477dea668) {x: -225.146883, y: -47.282514, z: 45.381222}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477dea680) {pitch: 2.878338, yaw: -6.964823, roll: -0.351207}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477dea698) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "front-low_beam-r-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477ded868) {x: 1.927819, y: 0.000354, z: -1.760359}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477ded880) {pitch: -0.000016, yaw: -0.000055, roll: 0.000025}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477ded898) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "SM_Lincolnv1_lights_GEN_VARIABLE",
+      "class": "StaticMeshComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f06368) {x: 0.000031, y: 0.000000, z: 0.000000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f06380) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f06398) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "static_mesh": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Emissive/SM_LincolnMKZ_Emissive.SM_LincolnMKZ_Emissive' (0x9057c0f0000) Class 'StaticMesh'>"
+    },
+    {
+      "name": "SM_Glass_DoorR_Lincoln_Rear_Ext1_GEN_VARIABLE",
+      "class": "StaticMeshComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f09b68) {x: 15.953276, y: -89.504412, z: -88.142204}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f09b80) {pitch: 0.000000, yaw: -0.000000, roll: -0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f09b98) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "static_mesh": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_RR_Glass_Ext1.SM_LincolnMKZ_Door_RR_Glass_Ext1' (0x9057c0f3800) Class 'StaticMesh'>"
+    },
+    {
+      "name": "SM_Glass_DoorR_Lincoln_Rear_Ext1_GEN_VARIABLE",
+      "class": "StaticMeshComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f09b68) {x: 15.953276, y: -89.504412, z: -88.142204}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f09b80) {pitch: 0.000000, yaw: -0.000000, roll: -0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f09b98) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "static_mesh": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_RR_Glass_Ext1.SM_LincolnMKZ_Door_RR_Glass_Ext1' (0x9057c0f3800) Class 'StaticMesh'>"
+    },
+    {
+      "name": "SM_LincolnDoor_Back_R_GEN_VARIABLE",
+      "class": "StaticMeshComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f07868) {x: 0.000000, y: 0.000000, z: 0.000000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f07880) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f07898) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "static_mesh": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Doors/SM_LincolnMKZ_Door_RR.SM_LincolnMKZ_Door_RR' (0x9057c0f1800) Class 'StaticMesh'>"
+    },
+    {
+      "name": "SM_Glass_DoorL_Lincoln_Rear_Ext1_GEN_VARIABLE",
+      "class": "StaticMeshComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f08d68) {x: 15.953773, y: 89.694784, z: -90.428513}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f08d80) {pitch: 0.000000, yaw: -0.000000, roll: -0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f08d98) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "static_mesh": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_RL_Glass_Ext1.SM_LincolnMKZ_Door_RL_Glass_Ext1' (0x9057c0f2800) Class 'StaticMesh'>"
+    },
+    {
+      "name": "SM_Glass_DoorL_Lincoln_Rear_Ext1_GEN_VARIABLE",
+      "class": "StaticMeshComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f08d68) {x: 15.953773, y: 89.694784, z: -90.428513}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f08d80) {pitch: 0.000000, yaw: -0.000000, roll: -0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f08d98) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "static_mesh": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_RL_Glass_Ext1.SM_LincolnMKZ_Door_RL_Glass_Ext1' (0x9057c0f2800) Class 'StaticMesh'>"
+    },
+    {
+      "name": "SM_LincolnDoor_Back_L_GEN_VARIABLE",
+      "class": "StaticMeshComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f07168) {x: 0.000000, y: 0.000000, z: 0.000000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f07180) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f07198) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "static_mesh": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Doors/SM_LincolnMKZ_Door_RL.SM_LincolnMKZ_Door_RL' (0x9055354f800) Class 'StaticMesh'>"
+    },
+    {
+      "name": "CustomCollision_GEN_VARIABLE",
+      "class": "StaticMeshComponent",
+      "relative_location": "<Struct 'Vector' (0x904a4fe2b68) {x: 0.000000, y: 0.000000, z: 0.000000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x904a4fe2b80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x904a4fe2b98) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "static_mesh": "None"
+    },
+    {
+      "name": "front-low_beam-r-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477ded868) {x: 1.927819, y: 0.000354, z: -1.760359}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477ded880) {pitch: -0.000016, yaw: -0.000055, roll: 0.000025}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477ded898) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "ArrowOffset_GEN_VARIABLE",
+      "class": "SceneComponent",
+      "relative_location": "<Struct 'Vector' (0x904a4f59268) {x: 0.000000, y: 0.000000, z: 250.000000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x904a4f59280) {pitch: -90.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x904a4f59298) {x: 10.000000, y: 10.000000, z: 10.000000}>"
+    },
+    {
+      "name": "Arrow_GEN_VARIABLE",
+      "class": "ArrowComponent",
+      "relative_location": "<Struct 'Vector' (0x904c3d1e568) {x: -86.700027, y: 0.000000, z: 0.000001}>",
+      "relative_rotation": "<Struct 'Rotator' (0x904c3d1e580) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x904c3d1e598) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "Arrow_GEN_VARIABLE",
+      "class": "ArrowComponent",
+      "relative_location": "<Struct 'Vector' (0x904c3d1e568) {x: -86.700027, y: 0.000000, z: 0.000001}>",
+      "relative_rotation": "<Struct 'Rotator' (0x904c3d1e580) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x904c3d1e598) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "ArrowOffset_GEN_VARIABLE",
+      "class": "SceneComponent",
+      "relative_location": "<Struct 'Vector' (0x904a4f59268) {x: 0.000000, y: 0.000000, z: 250.000000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x904a4f59280) {pitch: -90.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x904a4f59298) {x: 10.000000, y: 10.000000, z: 10.000000}>"
+    },
+    {
+      "name": "ArrowHolder_GEN_VARIABLE",
+      "class": "SceneComponent",
+      "relative_location": "<Struct 'Vector' (0x904a4f58fe8) {x: 0.000000, y: 0.000000, z: 0.000000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x904a4f59000) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x904a4f59018) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "VehicleBounds",
+      "class": "BoxComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f0cc68) {x: 0.000000, y: 2520.000000, z: -1890.000000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f0cc80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f0cc98) {x: 0.833731, y: 8.541034, z: 0.833731}>"
+    },
+    {
+      "name": "VehicleMesh",
+      "class": "SkeletalMeshComponent",
+      "relative_location": "<Struct 'Vector' (0x90477e7a168) {x: 0.000000, y: 0.000000, z: 0.000000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477e7a180) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477e7a198) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "skeletal_mesh": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/SK_LincolnMKZ.SK_LincolnMKZ' (0x90477e0be00) Class 'SkeletalMesh'>"
+    },
+    {
+      "name": "SM_LincolnDoor_Front_L_GEN_VARIABLE",
+      "class": "StaticMeshComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f07f68) {x: 0.000000, y: 0.000000, z: 0.000000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f07f80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f07f98) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "static_mesh": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Doors/SM_LincolnMKZ_Door_FL.SM_LincolnMKZ_Door_FL' (0x90558d7f000) Class 'StaticMesh'>"
+    },
+    {
+      "name": "SM_Glass_DoorL_Lincoln_Ext1_GEN_VARIABLE",
+      "class": "StaticMeshComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f05c68) {x: -95.953064, y: 87.410208, z: -87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f05c80) {pitch: 0.000000, yaw: -0.000000, roll: -0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f05c98) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "static_mesh": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_FL_Glass_Ext1.SM_LincolnMKZ_Door_FL_Glass_Ext1' (0x9057c0f1000) Class 'StaticMesh'>"
+    },
+    {
+      "name": "SM_Glass_DoorL_Lincoln_Ext1_GEN_VARIABLE",
+      "class": "StaticMeshComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f05c68) {x: -95.953064, y: 87.410208, z: -87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f05c80) {pitch: 0.000000, yaw: -0.000000, roll: -0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f05c98) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "static_mesh": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_FL_Glass_Ext1.SM_LincolnMKZ_Door_FL_Glass_Ext1' (0x9057c0f1000) Class 'StaticMesh'>"
+    },
+    {
+      "name": "front-low_beam-l-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477ded368) {x: -15.946254, y: -146.689761, z: -2.665791}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477ded380) {pitch: -0.084936, yaw: -13.893824, roll: -0.696872}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477ded398) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "front-low_beam-l-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477ded368) {x: -15.946254, y: -146.689761, z: -2.665791}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477ded380) {pitch: -0.084936, yaw: -13.893824, roll: -0.696872}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477ded398) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "front-fog-r-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477deec68) {x: 6.857431, y: -0.686966, z: -24.065877}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477deec80) {pitch: -38.344724, yaw: 30.847079, roll: 176.587488}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477deec98) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "front-fog-r-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477deec68) {x: 6.857431, y: -0.686966, z: -24.065877}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477deec80) {pitch: -38.344724, yaw: 30.847079, roll: 176.587488}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477deec98) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "front-fog-l-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477dee768) {x: -11.016625, y: -147.377068, z: -24.971315}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477dee780) {pitch: -38.772974, yaw: -44.297861, roll: 171.947487}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477dee798) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "front-fog-l-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477dee768) {x: -11.016625, y: -147.377068, z: -24.971315}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477dee780) {pitch: -38.772974, yaw: -44.297861, roll: 171.947487}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477dee798) {x: 1.000000, y: 1.000000, z: 3.235957}>"
+    },
+    {
+      "name": "front-blinker-l-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477c77468) {x: -1.024828, y: -140.587043, z: -2.031998}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477c77480) {pitch: -52.508469, yaw: -55.446800, roll: -3.067226}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477c77498) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "front-blinker-l-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x90477c77468) {x: -1.024828, y: -140.587043, z: -2.031998}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477c77480) {pitch: -52.508469, yaw: -55.446800, roll: -3.067226}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477c77498) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "SM_LincolnDoor_Front_R_GEN_VARIABLE",
+      "class": "StaticMeshComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f06a68) {x: 0.000000, y: 0.000000, z: 0.000000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f06a80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f06a98) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "static_mesh": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Doors/SM_LincolnMKZ_Door_FR.SM_LincolnMKZ_Door_FR' (0x90558d7f800) Class 'StaticMesh'>"
+    },
+    {
+      "name": "SM_Glass_DoorR_Lincoln_Ext1_GEN_VARIABLE",
+      "class": "StaticMeshComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f09468) {x: -95.953064, y: -88.020967, z: -87.398903}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f09480) {pitch: 0.000000, yaw: -0.000000, roll: -0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f09498) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "static_mesh": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_FR_Glass_Ext1.SM_LincolnMKZ_Door_FR_Glass_Ext1' (0x9057c0f2000) Class 'StaticMesh'>"
+    },
+    {
+      "name": "front-blinker-r-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x9046af70668) {x: 14.893125, y: -9.956707, z: -1.225327}>",
+      "relative_rotation": "<Struct 'Rotator' (0x9046af70680) {pitch: -51.980199, yaw: 42.149601, roll: 4.323650}>",
+      "relative_scale3d": "<Struct 'Vector' (0x9046af70698) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "SM_Glass_DoorR_Lincoln_Ext1_GEN_VARIABLE",
+      "class": "StaticMeshComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f09468) {x: -95.953064, y: -88.020967, z: -87.398903}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f09480) {pitch: 0.000000, yaw: -0.000000, roll: -0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f09498) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "static_mesh": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_FR_Glass_Ext1.SM_LincolnMKZ_Door_FR_Glass_Ext1' (0x9057c0f2000) Class 'StaticMesh'>"
+    },
+    {
+      "name": "SM_Glass_Lincoln_Ext1_GEN_VARIABLE",
+      "class": "StaticMeshComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f08668) {x: 0.000000, y: 0.000000, z: 0.000000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f08680) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f08698) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "static_mesh": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Glass_Ext1.SM_LincolnMKZ_Glass_Ext1' (0x9057c0f4800) Class 'StaticMesh'>"
+    },
+    {
+      "name": "Lights_GEN_VARIABLE",
+      "class": "BillboardComponent",
+      "relative_location": "<Struct 'Vector' (0x90477f01d68) {x: 224.492172, y: 73.889107, z: 70.538589}>",
+      "relative_rotation": "<Struct 'Rotator' (0x90477f01d80) {pitch: -2.899709, yaw: 6.956017, roll: 0.000024}>",
+      "relative_scale3d": "<Struct 'Vector' (0x90477f01d98) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "front-blinker-r-1_GEN_VARIABLE",
+      "class": "SpotLightComponent",
+      "relative_location": "<Struct 'Vector' (0x9046af70668) {x: 14.893125, y: -9.956707, z: -1.225327}>",
+      "relative_rotation": "<Struct 'Rotator' (0x9046af70680) {pitch: -51.980199, yaw: 42.149601, roll: 4.323650}>",
+      "relative_scale3d": "<Struct 'Vector' (0x9046af70698) {x: 1.000000, y: 1.000000, z: 1.000000}>"
+    },
+    {
+      "name": "VehicleMovementComp",
+      "class": "ChaosWheeledVehicleMovementComponent"
+    },
+    {
+      "name": "VelocityControl",
+      "class": "VehicleVelocityControl"
+    },
+    {
+      "name": "BaseMovementComponent",
+      "class": "BaseCarlaMovementComponent"
+    }
+  ],
+  "exports": [
+    {
+      "file": "/mnt/simulations/vehicle-interiors/reference/T_LincolnMKZ_Interior01_d.tga",
+      "ok": true
+    },
+    {
+      "file": "/mnt/simulations/vehicle-interiors/reference/T_LincolnMKZ_Interior01_n.tga",
+      "ok": true
+    },
+    {
+      "file": "/mnt/simulations/vehicle-interiors/reference/T_LincolnMKZ_Interior01_ormh.tga",
+      "ok": true
+    },
+    {
+      "file": "/mnt/simulations/vehicle-interiors/reference/T_LincolnMKZ_Interior02_d.tga",
+      "ok": true
+    },
+    {
+      "file": "/mnt/simulations/vehicle-interiors/reference/T_LincolnMKZ_Interior02_n.tga",
+      "ok": true
+    },
+    {
+      "file": "/mnt/simulations/vehicle-interiors/reference/T_LincolnMKZ_Interior02_orm.tga",
+      "ok": true
+    },
+    {
+      "file": "/mnt/simulations/vehicle-interiors/reference/SM_LincolnMKZ_Door_FL.fbx",
+      "ok": true
+    },
+    {
+      "file": "/mnt/simulations/vehicle-interiors/reference/SM_LincolnMKZ_Door_FR.fbx",
+      "ok": true
+    },
+    {
+      "file": "/mnt/simulations/vehicle-interiors/reference/SM_LincolnMKZ_Door_RL.fbx",
+      "ok": true
+    },
+    {
+      "file": "/mnt/simulations/vehicle-interiors/reference/SM_LincolnMKZ_Door_RR.fbx",
+      "ok": true
+    },
+    {
+      "file": "/mnt/simulations/vehicle-interiors/reference/SK_LincolnMKZ.fbx",
+      "ok": true
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "installed_on": "2026-09-07",
+  "blender": "5.2.1 LTS",
+  "blender_sha256_verified": true,
+  "old_copies_removed": [
+    "CarlaUE5",
+    "blender-4.1.1-linux-x64"
+  ],
+  "repos": {
+    "carla": {
+      "path": "/media/william/mist1/Simulations/linux/carla",
+      "commit": "1360bb9aff0f1aaa6216876ceee777528128306f"
+    },
+    "unreal": {
+      "path": "/media/william/mist1/Simulations/linux/UnrealEngine5_carla",
+      "commit": "2ac0528831e08e80784df2759db9a2c592d3bd4d"
+    },
+    "blender_tools": {
+      "path": "/media/william/mist1/Simulations/linux/BlenderTools",
+      "commit": "04cae45d71874a37d75522f4a694a5d4aae32147"
+    },
+    "carla_assets": {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/Carla",
+      "commit": "639d6eff5aae672da4219e9ace4a2ee891367548"
+    }
+  },
+  "gpu_sensor_work": {
+    "status": "runtime_validated_experimental_opt_in",
+    "default_enabled": false,
+    "documentation": "GPU-SENSORS.md",
+    "performance_measured": true,
+    "hardware_inline_ray_query_supported_on_gpus": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "cpp_syntax_checks": "passed_all_14_changed_translation_units",
+    "unreal_header_validation": "passed",
+    "header_generation": "passed",
+    "cpp_application_build": "passed",
+    "shader_runtime_validation": "controlled_geometry_test_passed",
+    "global_sensor_shader_compilation": "passed",
+    "controlled_geometry_report": "/mnt/simulations/verification/gpu-ray-preflight.json",
+    "single_worker_report": "/mnt/simulations/verification/sensors-single-gpu.json",
+    "camera_streams_report": "/mnt/simulations/verification/camera-streams.json",
+    "worker_timestamp_synchronization": "passed_four_worker_cpu_sensor_test",
+    "replica_backpressure_and_viewport": "passed_four_gpu_runtime_with_minimal_unlit_query_view",
+    "camera_streams": "passed_all_six_types_after_lazy_capture_change",
+    "single_worker_cpu_reduction_fraction": 0.7191139529572962,
+    "report": "/mnt/simulations/verification/gpu-stack-verification.json",
+    "four_worker_cpu_reduction_fraction": 0.8868215211240817,
+    "geometry_equivalence_certified": false,
+    "validation_scope": "Town10HD stationary vehicle; 100 measured synchronized frames after 30 warmup; four RGB, four lidar, four radar; separate semantic lidar and six camera type checks",
+    "patches": [
+      "scripts/carla-local-changes.patch",
+      "scripts/unreal-gpu-sensor-support.patch"
+    ],
+    "latest_application_build_log": "logs/replica-minimal-ray-view-build-final.log"
+  },
+  "carla_native_library_build": "passed_including_tests_and_examples_compilation",
+  "carla_python_api_import": "passed",
+  "ue_zen_cache": "/mnt/simulations/cache/zen",
+  "asset_transfer_note": "Detailed Git LFS progress file disabled after measuring per-chunk fsync stalls; partial files retained and resumed.",
+  "incremental_build_verification": "passed_target_up_to_date",
+  "carla_assets": "download_and_checkout_complete",
+  "qt_example_startup": "passed_offscreen",
+  "runtime_verification": {
+    "result": "PASS",
+    "gpu": 2,
+    "client": "0.10.0",
+    "server": "0.10.0",
+    "map": "Carla/Maps/Town10HD_Opt",
+    "blueprints": 165,
+    "ticks": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "camera": [
+      320,
+      180
+    ]
+  },
+  "build_status": "complete",
+  "control_center": {
+    "path": "/mnt/simulations/control-center",
+    "url": "http://128.175.213.232:8095",
+    "alternate_url": "http://10.100.100.7:8095",
+    "service": "carla-control-center.service",
+    "status": "runtime_validated",
+    "ros_domain_id": 42,
+    "instance_camera_nullrhi_build": "passed",
+    "build_log": "logs/control-center-instance-camera-build.log",
+    "acceptance_report": "/mnt/simulations/control-center/data/acceptance-report.json",
+    "verification_session": "20260907-221557-607589",
+    "validated_sensor_formats": 11,
+    "current_scene": "Town10HD_Opt",
+    "simulation_paused": true
+  }
+}

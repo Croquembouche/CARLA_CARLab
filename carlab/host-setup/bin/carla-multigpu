@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -e
+source /mnt/simulations/carla/carlab/host-setup/env.sh
+exec "$CARLA_VENV/bin/python" "$SIMULATIONS_ROOT/scripts/carla-multigpu.py" "$@"

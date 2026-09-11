@@ -40,6 +40,15 @@ namespace nav {
             }
             // check if we need to wait for a trafficlight
             if (event.actor) {
+                const auto movements = event.actor->GetMovementStates();
+                if (movements & 0x8000) {
+                    // The native circular fallback is red during movement control.
+                    // Wait while this crossing's approach has an active movement.
+                    for (int i=0;i<3;++i) {
+                        const auto indication=(movements>>(3*i))&7;
+                        if (indication==1 || indication==2 || indication==3) return EventResult::Continue;
+                    }
+                }
                 auto state = event.actor->GetState();
                 if (state == carla::rpc::TrafficLightState::Green || 
                     state == carla::rpc::TrafficLightState::Yellow) {

@@ -1,0 +1,209 @@
+[
+  {
+    "name": "Vehicle_Base",
+    "type": "ARMATURE",
+    "parent": "SK_LincolnMKZ",
+    "location": [
+      0.0,
+      5.746589977206895e-06,
+      0.0
+    ],
+    "dimensions": [
+      2.867274045944214,
+      1.8019918203353882,
+      0.5331327319145203
+    ],
+    "modifiers": [],
+    "bones": [
+      "Wheel_Front_Left",
+      "Wheel_Front_Right",
+      "Wheel_Rear_Right",
+      "Wheel_Rear_Left",
+      "Door_Front_Right",
+      "Door_Front_Left",
+      "Door_Rear_Right",
+      "Door_Rear_Left"
+    ]
+  },
+  {
+    "name": "SK_LincolnMKZ.001",
+    "type": "MESH",
+    "parent": null,
+    "location": [
+      0.0,
+      3.552713678800501e-15,
+      -1.4210854397564648e-16
+    ],
+    "dimensions": [
+      4.891970157623291,
+      1.8356460332870483,
+      1.5241189002990723
+    ],
+    "modifiers": [],
+    "materials": [
+      "MI_LincolnMKZ_Bodywork",
+      "MI_LincolnMKZ_Interior2",
+      "MI_LincolnMKZ_Interior01"
+    ],
+    "groups": [
+      "Wheel_Front_Left",
+      "Wheel_Front_Right",
+      "Wheel_Rear_Right",
+      "Wheel_Rear_Left"
+    ]
+  },
+  {
+    "name": "Armature",
+    "type": "ARMATURE",
+    "parent": null,
+    "location": [
+      0.18000000715255737,
+      0.4000000059604645,
+      0.6899999976158142
+    ],
+    "dimensions": [
+      0.6046500205993652,
+      0.44370001554489136,
+      1.0440000295639038
+    ],
+    "modifiers": [],
+    "bones": [
+      "root",
+      "pelvis",
+      "spine",
+      "head",
+      "eye_l",
+      "lid_l",
+      "eye_r",
+      "lid_r",
+      "upperarm_l",
+      "forearm_l",
+      "hand_l",
+      "thigh_l",
+      "shin_l",
+      "foot_l",
+      "upperarm_r",
+      "forearm_r",
+      "hand_r",
+      "thigh_r",
+      "shin_r",
+      "foot_r"
+    ]
+  },
+  {
+    "name": "Front_Right_Seatbelt_Buckle",
+    "type": "MESH",
+    "parent": null,
+    "location": [
+      0.09000000357627869,
+      -0.1080000028014183,
+      0.6050000190734863
+    ],
+    "dimensions": [
+      0.06499999761581421,
+      0.03200000151991844,
+      0.07500000298023224
+    ],
+    "modifiers": [
+      [
+        "Rounded upholstery",
+        "BEVEL"
+      ],
+      [
+        "Weighted corner normals",
+        "WEIGHTED_NORMAL"
+      ]
+    ],
+    "materials": [
+      "MKZ_Seat_Base_Plastic"
+    ],
+    "groups": []
+  },
+  {
+    "name": "Front_Left_Seatbelt_Buckle",
+    "type": "MESH",
+    "parent": null,
+    "location": [
+      0.09000000357627869,
+      0.1080000028014183,
+      0.6050000190734863
+    ],
+    "dimensions": [
+      0.06499999761581421,
+      0.03200000151991844,
+      0.07500000298023224
+    ],
+    "modifiers": [
+      [
+        "Rounded upholstery",
+        "BEVEL"
+      ],
+      [
+        "Weighted corner normals",
+        "WEIGHTED_NORMAL"
+      ]
+    ],
+    "materials": [
+      "MKZ_Seat_Base_Plastic"
+    ],
+    "groups": []
+  },
+  {
+    "name": "Rear_Right_Seatbelt_Buckle",
+    "type": "MESH",
+    "parent": null,
+    "location": [
+      -0.9449999928474426,
+      -0.1080000028014183,
+      0.6050000190734863
+    ],
+    "dimensions": [
+      0.06499999761581421,
+      0.03200000151991844,
+      0.07500000298023224
+    ],
+    "modifiers": [
+      [
+        "Rounded upholstery",
+        "BEVEL"
+      ],
+      [
+        "Weighted corner normals",
+        "WEIGHTED_NORMAL"
+      ]
+    ],
+    "materials": [
+      "MKZ_Seat_Base_Plastic"
+    ],
+    "groups": []
+  },
+  {
+    "name": "Rear_Left_Seatbelt_Buckle",
+    "type": "MESH",
+    "parent": null,
+    "location": [
+      -0.9449999928474426,
+      0.1080000028014183,
+      0.6050000190734863
+    ],
+    "dimensions": [
+      0.06499999761581421,
+      0.03200000151991844,
+      0.07500000298023224
+    ],
+    "modifiers": [
+      [
+        "Rounded upholstery",
+        "BEVEL"
+      ],
+      [
+        "Weighted corner normals",
+        "WEIGHTED_NORMAL"
+      ]
+    ],
+    "materials": [
+      "MKZ_Seat_Base_Plastic"
+    ],
+    "groups": []
+  }
+]

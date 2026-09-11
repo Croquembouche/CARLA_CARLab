@@ -69,6 +69,10 @@ namespace detail {
         return {};
     }
 
+    std::vector<geom::Location> GetCompletePath(ActorId id, geom::Location from, geom::Location to) {
+      return _nav.GetCompletePath(id, from, to);
+    }
+
     // set a new target point to go
     bool SetWalkerTarget(ActorId id, const carla::geom::Location to) {
       return _nav.SetWalkerTarget(id, to);

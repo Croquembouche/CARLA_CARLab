@@ -47,6 +47,8 @@ protected:
   /// Updates LidarMeasurement with the points read in DeltaTime.
   void SimulateLidar(const float DeltaTime);
 
+  void SimulateLidarGpu(float DeltaTime, TUniqueFunction<void()>&& Complete);
+
   /// Shoot a laser ray-trace, return whether the laser hit something.
   bool ShootLaser(const float VerticalAngle, float HorizontalAngle, FHitResult &HitResult, FCollisionQueryParams& TraceParams) const;
 

@@ -1,0 +1,22 @@
+{
+  "result": "PASS",
+  "gpu": 2,
+  "client": "0.10.0",
+  "server": "0.10.0",
+  "map": "Carla/Maps/Town10HD_Opt",
+  "blueprints": 165,
+  "ticks": [
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "camera": [
+    320,
+    180
+  ]
+}

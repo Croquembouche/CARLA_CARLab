@@ -18,7 +18,8 @@ enum MultiGPUCommand : uint32_t {
   ENABLE_ROS,
   DISABLE_ROS,
   IS_ENABLED_ROS,
-  YOU_ALIVE
+  YOU_ALIVE,
+  GET_TOKEN_BY_ACTOR
 };
 
 struct CommandHeader {

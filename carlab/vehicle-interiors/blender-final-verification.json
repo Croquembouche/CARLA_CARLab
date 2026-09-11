@@ -1,0 +1,17 @@
+{
+  "seatbelt_webbing": 5,
+  "new_detail_objects": 19,
+  "cameras": [
+    "Camera_Cabin",
+    "Camera_Passenger",
+    "Camera_Driver",
+    "MKZ_Dashboard",
+    "MKZ_Driver_View",
+    "MKZ_Rear_Seats",
+    "MKZ_Front_Seats",
+    "MKZ_Passenger_Seat"
+  ],
+  "unpacked_images": [],
+  "result": "PASS",
+  "file": "/mnt/simulations/vehicle-interiors/Lincoln_MKZ_Interior_Final.blend"
+}

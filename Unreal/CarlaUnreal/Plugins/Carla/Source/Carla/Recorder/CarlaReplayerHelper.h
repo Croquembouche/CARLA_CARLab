@@ -84,6 +84,7 @@ public:
 
   // set weather
   void ProcessReplayerWeather(const CarlaRecorderWeather &Weather);
+  void ProcessMovementSignal(uint32_t Id, uint16_t States);
   
   // replay finish
   bool ProcessReplayerFinish(bool bApplyAutopilot, bool bIgnoreHero, std::unordered_map<uint32_t, bool> &IsHero);

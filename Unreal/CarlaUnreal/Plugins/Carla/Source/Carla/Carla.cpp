@@ -1,6 +1,7 @@
 // Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
 #include "Carla.h"
+#include "Carla/Sensor/GpuSensorDispatcher.h"
 #include "Settings/CarlaSettings.h"
 
 #include <util/ue-header-guard-begin.h>
@@ -19,6 +20,7 @@ DEFINE_LOG_CATEGORY(LogCarlaServer);
 void FCarlaModule::StartupModule()
 {
 	AddShaderSearchPaths();
+	CarlaGpuSensors::Startup();
 	RegisterSettings();
 	LoadChronoDll();
 }
@@ -88,6 +90,7 @@ void FCarlaModule::LoadChronoDll()
 
 void FCarlaModule::ShutdownModule()
 {
+	CarlaGpuSensors::Shutdown();
 	if (UObjectInitialized())
 	{
 		UnregisterSettings();

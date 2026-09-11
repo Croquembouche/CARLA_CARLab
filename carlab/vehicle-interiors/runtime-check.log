@@ -1,0 +1,4 @@
+CARLA world ready
+Lincoln variant spawned
+Physics wheels: 4 Vehicle extent: Vector3D(x=2.445985, y=0.917823, z=0.762059)
+{"result": "PASS_CAPTURE_CHECK", "visual_review": "PENDING", "vehicle": "vehicle.lincoln.mkz_interior", "map": "Carla/Maps/Town10HD_Opt", "cameras": ["carla_dashboard", "carla_passenger", "carla_rear_seats"], "server": "0.10.0", "texture_pool_mb": 2048, "asynchronous_shader_compilation": false, "simultaneous_cameras": 1, "wheels": 4, "extent_m": [2.4459850788116455, 0.9178230166435242, 0.7620594501495361], "note": "RGB cabin visibility. Epic scalability with bounded texture and virtual-shadow pools; no VR test."}

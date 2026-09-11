@@ -69,6 +69,8 @@ private:
 
   void SendLineTraces(float DeltaTime);
 
+  void SendGpuTraces(float DeltaTime, TUniqueFunction<void()>&& Complete);
+
   float CalculateRelativeVelocity(const FHitResult& OutHit, const FVector& RadarLocation);
 
   FRadarData RadarData;

@@ -552,7 +552,7 @@ void LocalizationStage::ImportPath(Path &imported_path, Buffer &waypoint_buffer,
     // Remove the waypoints already added to the path, except for the first.
     if (parameters.GetUploadPath(actor_id)) {
       auto number_of_pops = waypoint_buffer.size();
-      for (uint64_t j = 0u; j < number_of_pops - 1; ++j) {
+      for (uint64_t j = 0u; j + 1 < number_of_pops; ++j) {
         PopWaypoint(actor_id, track_traffic, waypoint_buffer, false);
       }
       // We have successfully imported the path. Remove it from the list of paths to be imported.
@@ -616,8 +616,12 @@ void LocalizationStage::ImportPath(Path &imported_path, Buffer &waypoint_buffer,
           PushWaypoint(actor_id, track_traffic, waypoint_buffer, next_wp_selection);
         }
         PushWaypoint(actor_id, track_traffic, waypoint_buffer, imported);
-        latest_imported = imported_path.front();
-        imported = local_map->GetWaypoint(latest_imported);
+        // The final destination may consume the last point. Never dereference
+        // an empty path while finishing or replacing a user route.
+        if (!imported_path.empty()) {
+          latest_imported = imported_path.front();
+          imported = local_map->GetWaypoint(latest_imported);
+        }
       } else {
         PushWaypoint(actor_id, track_traffic, waypoint_buffer, next_wp_selection);
       }
@@ -635,7 +639,7 @@ void LocalizationStage::ImportRoute(Route &imported_actions, Buffer &waypoint_bu
 
     if (parameters.GetUploadRoute(actor_id)) {
       auto number_of_pops = waypoint_buffer.size();
-      for (uint64_t j = 0u; j < number_of_pops - 1; ++j) {
+      for (uint64_t j = 0u; j + 1 < number_of_pops; ++j) {
         PopWaypoint(actor_id, track_traffic, waypoint_buffer, false);
       }
       // We have successfully imported the route. Remove it from the list of routes to be imported.

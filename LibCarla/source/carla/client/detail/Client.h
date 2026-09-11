@@ -370,6 +370,8 @@ namespace detail {
         rpc::ActorId traffic_light,
         const rpc::TrafficLightState trafficLightState);
 
+    void SetTrafficLightMovementStates(rpc::ActorId traffic_light, uint16_t states);
+
     void SetTrafficLightGreenTime(
         rpc::ActorId traffic_light,
         float green_time);

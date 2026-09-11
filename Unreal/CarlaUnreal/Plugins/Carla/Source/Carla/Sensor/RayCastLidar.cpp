@@ -5,6 +5,7 @@
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
 #include "Carla/Sensor/RayCastLidar.h"
+#include "Carla/Sensor/GpuSensorDispatcher.h"
 #include "Carla.h"
 #include "Carla/Actor/ActorBlueprintFunctionLibrary.h"
 
@@ -59,9 +60,18 @@ void ARayCastLidar::Set(const FLidarDescription &LidarDescription)
 void ARayCastLidar::PostPhysTick(UWorld *World, ELevelTick TickType, float DeltaTime)
 {
   TRACE_CPUPROFILER_EVENT_SCOPE(ARayCastLidar::PostPhysTick);
-  SimulateLidar(DeltaTime);
-
+  // Multi-GPU worlds replicate sensors, but only the assigned stream worker
+  // should spend time tracing. Retain recording and ROS consumers.
+  // AreClientsListening also includes enabled ROS streams and forced activity.
+  const bool Needed = AreClientsListening() || bSavingDataToDisk;
+  if (!Needed) return;
+  CarlaGpuSensors::BeginSensorTick(*this);
+  const AActor* ParentAtCapture = GetAttachParentActor();
+  const FTransform RelativeAtCapture = ParentAtCapture
+      ? GetActorTransform().GetRelativeTransform(ParentAtCapture->GetActorTransform()) : GetActorTransform();
   auto DataStream = GetDataStream(*this);
+  auto Send = [this, RelativeAtCapture, DataStream = MoveTemp(DataStream)]() mutable
+  {
   auto SensorTransform = DataStream.GetSensorTransform();
 
   {
@@ -78,7 +88,7 @@ void ARayCastLidar::PostPhysTick(UWorld *World, ELevelTick TickType, float Delta
     AActor* ParentActor = GetAttachParentActor();
     if (ParentActor)
     {
-      FTransform LocalTransformRelativeToParent = GetActorTransform().GetRelativeTransform(ParentActor->GetActorTransform());
+      FTransform LocalTransformRelativeToParent = RelativeAtCapture;
       ROS2->ProcessDataFromLidar(DataStream.GetSensorType(), StreamId, LocalTransformRelativeToParent, LidarData, this);
     }
     else
@@ -88,6 +98,15 @@ void ARayCastLidar::PostPhysTick(UWorld *World, ELevelTick TickType, float Delta
   }
   #endif
 
+
+  };
+  if (CarlaGpuSensors::IsEnabled())
+    SimulateLidarGpu(DeltaTime, MoveTemp(Send));
+  else
+  {
+    SimulateLidar(DeltaTime);
+    Send();
+  }
 
 }
 

@@ -1,0 +1,82 @@
+{
+  "SK_SeatedMannequin": [
+    {
+      "slot": "M_Mannequin_Shell",
+      "material": "/Game/VehicleInteriors/Lincoln/M_Mannequin_Shell.M_Mannequin_Shell"
+    },
+    {
+      "slot": "M_Mannequin_Joints",
+      "material": "/Game/VehicleInteriors/Lincoln/M_Mannequin_Joints.M_Mannequin_Joints"
+    },
+    {
+      "slot": "M_Mannequin_Eye",
+      "material": "/Game/VehicleInteriors/Lincoln/M_Mannequin_Eye.M_Mannequin_Eye"
+    },
+    {
+      "slot": "M_Mannequin_Iris",
+      "material": "/Game/VehicleInteriors/Lincoln/M_Mannequin_Iris.M_Mannequin_Iris"
+    }
+  ],
+  "SM_MKZ_Cabin_v2": [
+    {
+      "slot": "MI_LincolnMKZ_Interior01",
+      "material": "/Game/VehicleInteriors/Lincoln/MI_MKZ_Ebony_Interior.MI_MKZ_Ebony_Interior"
+    },
+    {
+      "slot": "M_Interior_Mat",
+      "material": "/Game/VehicleInteriors/Lincoln/M_Interior_Mat.M_Interior_Mat"
+    },
+    {
+      "slot": "M_Interior_Edge",
+      "material": "/Game/VehicleInteriors/Lincoln/M_Interior_Edge.M_Interior_Edge"
+    },
+    {
+      "slot": "MKZ_Ebony_Leather",
+      "material": "/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather"
+    },
+    {
+      "slot": "MKZ_Perforated_Leather",
+      "material": "/Game/VehicleInteriors/Lincoln/MKZ_Perforated_Leather.MKZ_Perforated_Leather"
+    },
+    {
+      "slot": "MKZ_Stitch_Charcoal",
+      "material": "/Game/VehicleInteriors/Lincoln/MKZ_Stitch_Charcoal.MKZ_Stitch_Charcoal"
+    },
+    {
+      "slot": "MKZ_Seat_Base_Plastic",
+      "material": "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.MKZ_Seat_Base_Plastic"
+    },
+    {
+      "slot": "MKZ_Seat_Hardware",
+      "material": "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Hardware.MKZ_Seat_Hardware"
+    },
+    {
+      "slot": "MKZ_Belt_Release",
+      "material": "/Game/VehicleInteriors/Lincoln/MKZ_Belt_Release.MKZ_Belt_Release"
+    }
+  ],
+  "M_Hidden_StockCabin": {
+    "skeletal_usage": true,
+    "blend_mode": "<BlendMode.BLEND_MASKED: 1>",
+    "input_node": "<Object '/Game/VehicleInteriors/Lincoln/M_Hidden_StockCabin.M_Hidden_StockCabin:MaterialExpressionConstant_0' (0xb51c0d00b60) Class 'MaterialExpressionConstant'>",
+    "input_value": "0.0"
+  },
+  "M_Mannequin_Joints": {
+    "skeletal_usage": true,
+    "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+    "input_node": "<Object '/Game/VehicleInteriors/Lincoln/M_Mannequin_Joints.M_Mannequin_Joints:MaterialExpressionConstant3Vector_0' (0xb51c0abb0c0) Class 'MaterialExpressionConstant3Vector'>",
+    "input_value": "<Struct 'LinearColor' (0xb51c0abb180) {r: 0.045000, g: 0.055000, b: 0.065000, a: 1.000000}>"
+  },
+  "CabinReplacement_GEN_VARIABLE": [
+    "<Object '/Game/VehicleInteriors/Lincoln/MI_MKZ_Ebony_Interior.MI_MKZ_Ebony_Interior' (0xb51c0a29000) Class 'MaterialInstanceConstant'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/M_Interior_Mat.M_Interior_Mat' (0xb51c0918c00) Class 'Material'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/M_Interior_Edge.M_Interior_Edge' (0xb51c0917e00) Class 'Material'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather' (0xb51c091a800) Class 'Material'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Perforated_Leather.MKZ_Perforated_Leather' (0xb51c091b600) Class 'Material'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Stitch_Charcoal.MKZ_Stitch_Charcoal' (0xb51c091e000) Class 'Material'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.MKZ_Seat_Base_Plastic' (0xb51c091c400) Class 'Material'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Seat_Hardware.MKZ_Seat_Hardware' (0xb51c091d200) Class 'Material'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Belt_Release.MKZ_Belt_Release' (0xb51c0919a00) Class 'Material'>"
+  ],
+  "VehicleMesh": []
+}

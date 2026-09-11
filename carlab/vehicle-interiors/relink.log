@@ -1,0 +1,23 @@
+Relink-libUnrealEditor-CinematicCamera.so.sh 0
+Relink-libUnrealEditor-AITestSuite.so.sh 0
+Relink-libUnrealEditor-AudioMixer.so.sh 0
+Relink-libUnrealEditor-CollisionAnalyzer.so.sh 0
+Relink-libUnrealEditor-EditorInteractiveToolsFramework.so.sh 0
+Relink-libUnrealEditor-BlueprintGraph.so.sh 0
+Relink-libUnrealEditor-GameplayTags.so.sh 0
+Relink-libUnrealEditor-KismetCompiler.so.sh 0
+Relink-libUnrealEditor-LogVisualizer.so.sh 0
+Relink-libUnrealEditor-GraphEditor.so.sh 0
+Relink-libUnrealEditor-Landscape.so.sh 0
+Relink-libUnrealEditor-Kismet.so.sh 0
+Relink-libUnrealEditor-MaterialShaderQualitySettings.so.sh 0
+Relink-libUnrealEditor-MaterialUtilities.so.sh 0
+Relink-libUnrealEditor-MainFrame.so.sh 0
+Relink-libUnrealEditor-ReliabilityHandlerComponent.so.sh 0
+Relink-libUnrealEditor-SourceControl.so.sh 0
+Relink-libUnrealEditor-TranslationEditor.so.sh 0
+Relink-libUnrealEditor-PropertyEditor.so.sh 0
+Relink-libUnrealEditor-VREditor.so.sh 0
+Relink-libUnrealEditor-UMG.so.sh 0
+Relink-libUnrealEditor-UnrealEd.so.sh 0
+RELINK_COMPLETE

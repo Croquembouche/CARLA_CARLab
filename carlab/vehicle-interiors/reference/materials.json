@@ -1,0 +1,110 @@
+{
+  "MI_LincolnMKZ_Interior01": {
+    "parent": "/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster",
+    "scalar_parameter_values": [
+      "<Struct 'ScalarParameterValue' (0x5f1e8fc1ae0) {parameter_info: {name: \"RefractionDepthBias\", association: GlobalParameter, index: -1}, parameter_value: 0.000000}>"
+    ],
+    "vector_parameter_values": [],
+    "texture_parameter_values": [
+      "<Struct 'TextureParameterValue' (0x5f1e8f83480) {parameter_info: {name: \"Diffuse\", association: GlobalParameter, index: -1}, parameter_value: \"/Script/Engine.Texture2D'/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/T_LincolnMKZ_Interior01_d.T_LincolnMKZ_Interior01_d'\"}>",
+      "<Struct 'TextureParameterValue' (0x5f1e8f83440) {parameter_info: {name: \"ORME\", association: GlobalParameter, index: -1}, parameter_value: \"/Script/Engine.Texture2D'/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/T_LincolnMKZ_Interior01_ormh.T_LincolnMKZ_Interior01_ormh'\"}>",
+      "<Struct 'TextureParameterValue' (0x5f1e8f83340) {parameter_info: {name: \"Normal\", association: GlobalParameter, index: -1}, parameter_value: \"/Script/Engine.Texture2D'/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/T_LincolnMKZ_Interior01_n.T_LincolnMKZ_Interior01_n'\"}>"
+    ],
+    "inherited_vectors": {
+      "Dirt Color 1": "<Struct 'LinearColor' (0x7ff4befbada0) {r: 0.090277, g: 0.019315, b: 0.005956, a: 1.000000}>",
+      "Dirt Color 2": "<Struct 'LinearColor' (0x7ff4befbae60) {r: 0.041667, g: 0.010660, b: 0.000000, a: 1.000000}>",
+      "Dirt Color 3": "<Struct 'LinearColor' (0x7ff4befbae20) {r: 0.041667, g: 0.010660, b: 0.000000, a: 1.000000}>",
+      "Rim Color 1": "<Struct 'LinearColor' (0x7ff4befe0de0) {r: 0.000000, g: 0.000000, b: 0.000000, a: 1.000000}>",
+      "Rim Color 2": "<Struct 'LinearColor' (0x7ff4befe0da0) {r: 0.000000, g: 0.000000, b: 0.000000, a: 1.000000}>",
+      "Rim Color 3": "<Struct 'LinearColor' (0x7ff4befe0d60) {r: 0.000000, g: 0.000000, b: 0.000000, a: 1.000000}>",
+      "Base Color Value": "<Struct 'LinearColor' (0x7ff4befe0d60) {r: 0.000000, g: 0.000000, b: 0.000000, a: 1.000000}>",
+      "Tint Color": "<Struct 'LinearColor' (0x7ff4befe0e60) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>"
+    },
+    "inherited_scalars": {
+      "Scale X": "1.0",
+      "Scale Y": "1.0",
+      "Offset X": "0.0",
+      "Offset Y": "0.0",
+      "Rotation": "0.0",
+      "AxisSelection": "0.0",
+      "Dirt Opacity 1": "100.0",
+      "Dirt Opacity 2": "100.0",
+      "Dirt Opacity 3": "100.0",
+      "Dirt Roughness 1": "1.0",
+      "Dirt Roughness 2": "1.0",
+      "Dirt Roughness 3": "1.0",
+      "Metallic Value": "0.0",
+      "Roughness Value": "1.0",
+      "Tiling": "1.0",
+      "Saturation": "1.0",
+      "Brightness": "1.0",
+      "Contrast": "1.0",
+      "Roughness Contrast": "0.0",
+      "Roughness Correction": "0.0",
+      "AO Intensity": "0.0",
+      "MetalCorrection": "1.0",
+      "SpecularCorrection": "1.0",
+      "Normal Intensity": "1.0",
+      "Tint Intensity": "0.0",
+      "Hue": "0.0",
+      "Displacement Intensity": "1.0",
+      "Displacement MidValue": "0.5",
+      "OpacityIntensity": "0.0",
+      "Specular Value": "0.5"
+    }
+  },
+  "MI_LincolnMKZ_Interior2": {
+    "parent": "/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster",
+    "scalar_parameter_values": [
+      "<Struct 'ScalarParameterValue' (0x5f1e8fc1ae0) {parameter_info: {name: \"RefractionDepthBias\", association: GlobalParameter, index: -1}, parameter_value: 0.000000}>"
+    ],
+    "vector_parameter_values": [],
+    "texture_parameter_values": [
+      "<Struct 'TextureParameterValue' (0x5f1e8f83640) {parameter_info: {name: \"Diffuse\", association: GlobalParameter, index: -1}, parameter_value: \"/Script/Engine.Texture2D'/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/T_LincolnMKZ_Interior02_d.T_LincolnMKZ_Interior02_d'\"}>",
+      "<Struct 'TextureParameterValue' (0x5f1e8f83500) {parameter_info: {name: \"ORME\", association: GlobalParameter, index: -1}, parameter_value: \"/Script/Engine.Texture2D'/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/T_LincolnMKZ_Interior02_orm.T_LincolnMKZ_Interior02_orm'\"}>",
+      "<Struct 'TextureParameterValue' (0x5f1e8f834c0) {parameter_info: {name: \"Normal\", association: GlobalParameter, index: -1}, parameter_value: \"/Script/Engine.Texture2D'/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/T_LincolnMKZ_Interior02_n.T_LincolnMKZ_Interior02_n'\"}>"
+    ],
+    "inherited_vectors": {
+      "Dirt Color 1": "<Struct 'LinearColor' (0x7ff4bf041ee0) {r: 0.090277, g: 0.019315, b: 0.005956, a: 1.000000}>",
+      "Dirt Color 2": "<Struct 'LinearColor' (0x7ff4bf041f20) {r: 0.041667, g: 0.010660, b: 0.000000, a: 1.000000}>",
+      "Dirt Color 3": "<Struct 'LinearColor' (0x7ff4bf041f60) {r: 0.041667, g: 0.010660, b: 0.000000, a: 1.000000}>",
+      "Rim Color 1": "<Struct 'LinearColor' (0x7ff4bf041fa0) {r: 0.000000, g: 0.000000, b: 0.000000, a: 1.000000}>",
+      "Rim Color 2": "<Struct 'LinearColor' (0x7ff4bf041fe0) {r: 0.000000, g: 0.000000, b: 0.000000, a: 1.000000}>",
+      "Rim Color 3": "<Struct 'LinearColor' (0x7ff4bf042020) {r: 0.000000, g: 0.000000, b: 0.000000, a: 1.000000}>",
+      "Base Color Value": "<Struct 'LinearColor' (0x7ff4bf042020) {r: 0.000000, g: 0.000000, b: 0.000000, a: 1.000000}>",
+      "Tint Color": "<Struct 'LinearColor' (0x7ff4bf042060) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>"
+    },
+    "inherited_scalars": {
+      "Scale X": "1.0",
+      "Scale Y": "1.0",
+      "Offset X": "0.0",
+      "Offset Y": "0.0",
+      "Rotation": "0.0",
+      "AxisSelection": "0.0",
+      "Dirt Opacity 1": "100.0",
+      "Dirt Opacity 2": "100.0",
+      "Dirt Opacity 3": "100.0",
+      "Dirt Roughness 1": "1.0",
+      "Dirt Roughness 2": "1.0",
+      "Dirt Roughness 3": "1.0",
+      "Metallic Value": "0.0",
+      "Roughness Value": "1.0",
+      "Tiling": "1.0",
+      "Saturation": "1.0",
+      "Brightness": "1.0",
+      "Contrast": "1.0",
+      "Roughness Contrast": "0.0",
+      "Roughness Correction": "0.0",
+      "AO Intensity": "0.0",
+      "MetalCorrection": "1.0",
+      "SpecularCorrection": "1.0",
+      "Normal Intensity": "1.0",
+      "Tint Intensity": "0.0",
+      "Hue": "0.0",
+      "Displacement Intensity": "1.0",
+      "Displacement MidValue": "0.5",
+      "OpacityIntensity": "0.0",
+      "Specular Value": "0.5"
+    }
+  }
+}

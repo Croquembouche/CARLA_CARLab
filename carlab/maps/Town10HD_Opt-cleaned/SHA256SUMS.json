@@ -1,0 +1,12 @@
+{
+  "Content/Carla/Maps/Town10HD_Opt.umap": "501fe36a03725a0a9d084b4bd4b67e3f5f7437863f00e864e0c497ea51e79b42",
+  "README.md": "78afb017969c71d25a898fa8b5e9650a3fc46258411c352fb7cd04d452ac42d0",
+  "apply-report.json": "a095da9a92eda2d7fedb74a098ccebeb66a82999e7f15067048aa2c70aad0989",
+  "apply_cleanup.py": "975f2f1328e98a91e72cdf70aa34327dfd5e1fa1d11cf152bbce72fd7d1cdc2f",
+  "cleanup-manifest.json": "6e83bb2cd9a265ba50e4f4d922226496674426b9b8b239ebe5206b62a4e1fa16",
+  "compatibility.json": "2c666c0cd66f3b79fdef7579a888b1f23919efbd01fc839d8845d63fbc2455ed",
+  "control-center/map-revisions/Town10HD_Opt.json": "6e83bb2cd9a265ba50e4f4d922226496674426b9b8b239ebe5206b62a4e1fa16",
+  "live-verification.json": "e778819c40dccfadfb772cb1b71a8b6f47dd966595b4686974947415bae087dd",
+  "native-runtime-verification.json": "e778819c40dccfadfb772cb1b71a8b6f47dd966595b4686974947415bae087dd",
+  "scenario.json": "4e25b1bfb3304dbe3785212a337b94bdda44d2f562d35bff26d4016420aa5df8"
+}

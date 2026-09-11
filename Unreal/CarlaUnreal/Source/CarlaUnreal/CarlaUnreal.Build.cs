@@ -29,7 +29,9 @@ public class CarlaUnreal : ModuleRules
 			"Core",
 			"CoreUObject",
 			"Engine",
-			"InputCore"
+			"InputCore",
+            "HeadMountedDisplay",
+            "XRBase"
 		});
 
 		if (Target.Type == TargetType.Editor)

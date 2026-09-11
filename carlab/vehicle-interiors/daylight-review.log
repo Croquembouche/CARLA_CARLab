@@ -1,0 +1,112 @@
+00:01.253  blend            | Read blend: "/mnt/simulations/vehicle-interiors/Lincoln_MKZ_Interior_v2.blend"
+00:03.037  cycles           | WARNING HIPEW initialization failed: Error opening HIP dynamic library
+Blender 5.2.1 LTS (hash 9e2066aef7ef built 2026-08-25 02:12:34)
+00:24.843  render           | Saved: '/mnt/simulations/vehicle-interiors/renders/MKZ_Dashboard_Daylight.png'
+00:44.214  render           | Saved: '/mnt/simulations/vehicle-interiors/renders/MKZ_Front_Seats_Daylight.png'
+00:55.023  cycles           | ERROR System is out of GPU memory
+00:55.023  cycles           | ERROR Refer to the Cycles GPU rendering documentation for possible solutions:
+                            | https://docs.blender.org/manual/en/latest/render/cycles/gpu_rendering.html
+                            | 
+00:55.046  cycles           | ERROR System is out of GPU memory
+00:55.046  cycles           | ERROR System is out of GPU memory
+00:55.046  cycles           | ERROR System is out of GPU memory
+00:55.046  cycles           | ERROR System is out of GPU memory
+00:55.046  cycles           | ERROR System is out of GPU memory
+00:55.046  cycles           | ERROR System is out of GPU memory
+00:55.046  cycles           | ERROR System is out of GPU memory
+00:55.046  cycles           | ERROR System is out of GPU memory
+00:55.047  cycles           | ERROR System is out of GPU memory
+00:55.047  cycles           | ERROR System is out of GPU memory
+00:55.047  cycles           | ERROR System is out of GPU memory
+00:55.047  cycles           | ERROR System is out of GPU memory
+00:55.047  cycles           | ERROR System is out of GPU memory
+00:55.047  cycles           | ERROR System is out of GPU memory
+00:55.047  cycles           | ERROR System is out of GPU memory
+00:55.048  cycles           | ERROR System is out of GPU memory
+00:55.048  cycles           | ERROR System is out of GPU memory
+00:55.048  cycles           | ERROR System is out of GPU memory
+00:55.048  cycles           | ERROR System is out of GPU memory
+00:55.048  cycles           | ERROR System is out of GPU memory
+00:55.048  cycles           | ERROR System is out of GPU memory
+00:55.048  cycles           | ERROR System is out of GPU memory
+00:55.048  cycles           | ERROR System is out of GPU memory
+00:55.049  cycles           | ERROR System is out of GPU memory
+00:55.049  cycles           | ERROR System is out of GPU memory
+00:55.049  cycles           | ERROR System is out of GPU memory
+00:55.049  cycles           | ERROR System is out of GPU memory
+00:55.049  cycles           | ERROR System is out of GPU memory
+00:55.049  cycles           | ERROR System is out of GPU memory
+00:55.049  cycles           | ERROR System is out of GPU memory
+00:55.050  cycles           | ERROR System is out of GPU memory
+00:55.050  cycles           | ERROR System is out of GPU memory
+00:55.050  cycles           | ERROR System is out of GPU memory
+00:55.050  cycles           | ERROR System is out of GPU memory
+00:55.050  cycles           | ERROR System is out of GPU memory
+00:55.050  cycles           | ERROR System is out of GPU memory
+00:55.050  cycles           | ERROR System is out of GPU memory
+00:55.050  cycles           | ERROR System is out of GPU memory
+00:55.051  cycles           | ERROR System is out of GPU memory
+00:55.051  cycles           | ERROR System is out of GPU memory
+00:55.051  cycles           | ERROR System is out of GPU memory
+00:55.051  cycles           | ERROR System is out of GPU memory
+00:55.051  cycles           | ERROR System is out of GPU memory
+00:55.051  cycles           | ERROR System is out of GPU memory
+00:55.051  cycles           | ERROR System is out of GPU memory
+00:55.051  cycles           | ERROR System is out of GPU memory
+00:55.052  cycles           | ERROR System is out of GPU memory
+00:55.052  cycles           | ERROR System is out of GPU memory
+00:55.052  cycles           | ERROR System is out of GPU memory
+00:55.052  cycles           | ERROR System is out of GPU memory
+00:55.052  cycles           | ERROR System is out of GPU memory
+00:55.052  cycles           | ERROR System is out of GPU memory
+00:55.052  cycles           | ERROR System is out of GPU memory
+00:55.052  cycles           | ERROR System is out of GPU memory
+00:55.053  cycles           | ERROR System is out of GPU memory
+00:55.053  cycles           | ERROR System is out of GPU memory
+00:55.053  cycles           | ERROR System is out of GPU memory
+00:55.053  cycles           | ERROR System is out of GPU memory
+00:55.053  cycles           | ERROR System is out of GPU memory
+00:55.053  cycles           | ERROR System is out of GPU memory
+00:55.053  cycles           | ERROR System is out of GPU memory
+00:55.053  cycles           | ERROR System is out of GPU memory
+00:55.054  cycles           | ERROR System is out of GPU memory
+00:55.054  cycles           | ERROR System is out of GPU memory
+00:55.054  cycles           | ERROR System is out of GPU memory
+00:55.054  cycles           | ERROR System is out of GPU memory
+00:55.054  cycles           | ERROR System is out of GPU memory
+00:55.054  cycles           | ERROR System is out of GPU memory
+00:55.054  cycles           | ERROR System is out of GPU memory
+00:55.055  cycles           | ERROR System is out of GPU memory
+00:55.055  cycles           | ERROR System is out of GPU memory
+00:55.055  cycles           | ERROR System is out of GPU memory
+00:55.055  cycles           | ERROR System is out of GPU memory
+00:55.055  cycles           | ERROR System is out of GPU memory
+00:55.055  cycles           | ERROR System is out of GPU memory
+00:55.055  cycles           | ERROR System is out of GPU memory
+00:55.055  cycles           | ERROR System is out of GPU memory
+00:55.056  cycles           | ERROR System is out of GPU memory
+00:55.056  cycles           | ERROR System is out of GPU memory
+00:55.056  cycles           | ERROR System is out of GPU memory
+00:55.056  cycles           | ERROR System is out of GPU memory
+00:55.056  cycles           | ERROR System is out of GPU memory
+00:55.056  cycles           | ERROR System is out of GPU memory
+00:55.056  cycles           | ERROR System is out of GPU memory
+00:55.056  cycles           | ERROR System is out of GPU memory
+00:55.057  cycles           | ERROR System is out of GPU memory
+Traceback (most recent call last):
+  File "/mnt/simulations/vehicle-interiors/scripts/daylight_review.py", line 12, in <module>
+    s.camera=bpy.data.objects[name];s.render.filepath=str(R/'renders'/(name+'_Daylight.png'));bpy.ops.render.render(write_still=True)
+                                                                                              ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+RuntimeError: Error: Failed to build OptiX acceleration structure
+Error: System is out of GPU memory
+Error: System is out of GPU memory
+
+Reloading external rigs...
+Reloading external metarigs...
+Info: Packed 1 file(s)
+Info: Saved as "Lincoln_MKZ_Interior_v2.blend"
+Error: Failed to build OptiX acceleration structure
+Error: System is out of GPU memory
+Error: System is out of GPU memory
+unregister_class(...):, missing bl_rna attribute from '_RNAMeta' instance (may not be registered)
+Blender quit

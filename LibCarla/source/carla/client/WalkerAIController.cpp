@@ -52,6 +52,11 @@ namespace client {
     return {};
   }
 
+  std::vector<geom::Location> WalkerAIController::GetNavigationPath(const geom::Location &destination) {
+    auto walker=GetParent(); auto nav=GetEpisode().Lock()->GetNavigation();
+    return walker && nav ? nav->GetCompletePath(walker->GetId(),walker->GetLocation(),destination) : std::vector<geom::Location>{};
+  }
+
   void WalkerAIController::GoToLocation(const carla::geom::Location &destination) {
     auto nav = GetEpisode().Lock()->GetNavigation();
     if (nav != nullptr) {

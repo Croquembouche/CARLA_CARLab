@@ -10,6 +10,7 @@
 #include "carla/geom/Vector3D.h"
 
 #include <optional>
+#include <vector>
 
 namespace carla {
 namespace client {
@@ -24,6 +25,8 @@ namespace client {
     void Stop();
 
     std::optional<geom::Location> GetRandomLocation();
+
+    std::vector<geom::Location> GetNavigationPath(const geom::Location &destination);
 
     void GoToLocation(const carla::geom::Location &destination);
 

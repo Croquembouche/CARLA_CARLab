@@ -1,0 +1,130 @@
+00:00.832  blend            | Read blend: "/mnt/simulations/vehicle-interiors/Lincoln_Interior_Mannequin.blend"
+/mnt/simulations/vehicle-interiors/scripts/inspect_finish.py:11: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  print(m.name,list(m.diffuse_color),[(n.type, getattr(n,'image',None).name if getattr(n,'image',None) else '') for n in m.node_tree.nodes] if m.use_nodes else '')
+Reloading external rigs...
+Reloading external metarigs...
+[
+  {
+    "name": "SK_LincolnMKZ.001",
+    "materials": [
+      [
+        0,
+        "MI_LincolnMKZ_Bodywork",
+        77370
+      ],
+      [
+        1,
+        "MI_LincolnMKZ_Interior2",
+        491305
+      ],
+      [
+        2,
+        "MI_LincolnMKZ_Interior01",
+        18367
+      ]
+    ]
+  },
+  {
+    "name": "SM_LincolnMKZ_Door_FL",
+    "materials": [
+      [
+        0,
+        "MI_LincolnMKZ_Bodywork",
+        9134
+      ],
+      [
+        1,
+        "MI_LincolnMKZ_Interior2",
+        3394
+      ],
+      [
+        2,
+        "MI_LincolnMKZ_Interior01",
+        265
+      ]
+    ]
+  },
+  {
+    "name": "SM_LincolnMKZ_Door_FR",
+    "materials": [
+      [
+        0,
+        "MI_LincolnMKZ_Bodywork",
+        9134
+      ],
+      [
+        1,
+        "MI_LincolnMKZ_Interior2",
+        3394
+      ],
+      [
+        2,
+        "MI_LincolnMKZ_Interior01",
+        265
+      ]
+    ]
+  },
+  {
+    "name": "SM_LincolnMKZ_Door_RL",
+    "materials": [
+      [
+        0,
+        "MI_LincolnMKZ_Bodywork",
+        8116
+      ],
+      [
+        1,
+        "MI_LincolnMKZ_Interior2",
+        2112
+      ],
+      [
+        2,
+        "MI_LincolnMKZ_Interior01",
+        284
+      ]
+    ]
+  },
+  {
+    "name": "SM_LincolnMKZ_Door_RR",
+    "materials": [
+      [
+        0,
+        "MI_LincolnMKZ_Bodywork",
+        8116
+      ],
+      [
+        1,
+        "MI_LincolnMKZ_Interior2",
+        2500
+      ],
+      [
+        2,
+        "MI_LincolnMKZ_Interior01",
+        284
+      ]
+    ]
+  },
+  {
+    "name": "SM_LincolnCabinDetails",
+    "materials": [
+      [
+        0,
+        "M_Interior_Mat",
+        392
+      ],
+      [
+        1,
+        "M_Interior_Edge",
+        1568
+      ]
+    ]
+  }
+]
+M_Interior_Edge [0.08500000089406967, 0.09000000357627869, 0.0949999988079071, 1.0] [('BSDF_PRINCIPLED', ''), ('OUTPUT_MATERIAL', '')]
+M_Interior_Mat [0.017999999225139618, 0.02199999988079071, 0.026000000536441803, 1.0] [('BSDF_PRINCIPLED', ''), ('OUTPUT_MATERIAL', '')]
+MI_LincolnMKZ_Bodywork [1.0, 1.0, 1.0, 1.0] [('BSDF_PRINCIPLED', ''), ('OUTPUT_MATERIAL', ''), ('NORMAL_MAP', '')]
+MI_LincolnMKZ_Interior01 [1.0, 1.0, 1.0, 1.0] [('OUTPUT_MATERIAL', ''), ('BSDF_PRINCIPLED', ''), ('TEX_IMAGE', 'T_LincolnMKZ_Interior01_d.tga'), ('TEX_IMAGE', 'T_LincolnMKZ_Interior01_n.tga'), ('NORMAL_MAP', ''), ('TEX_IMAGE', 'T_LincolnMKZ_Interior01_ormh.tga'), ('SEPARATE_COLOR', '')]
+MI_LincolnMKZ_Interior2 [1.0, 1.0, 1.0, 1.0] [('OUTPUT_MATERIAL', ''), ('BSDF_PRINCIPLED', ''), ('TEX_IMAGE', 'T_LincolnMKZ_Interior02_d.tga'), ('TEX_IMAGE', 'T_LincolnMKZ_Interior02_n.tga'), ('NORMAL_MAP', ''), ('TEX_IMAGE', 'T_LincolnMKZ_Interior02_orm.tga'), ('SEPARATE_COLOR', '')]
+unregister_class(...):, missing bl_rna attribute from '_RNAMeta' instance (may not be registered)Blender 5.2.1 LTS (hash 9e2066aef7ef built 2026-08-25 02:12:34)
+
+Blender quit

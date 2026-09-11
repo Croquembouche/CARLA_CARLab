@@ -1,0 +1,21 @@
+00:00.813  blend            | Read blend: "/mnt/simulations/vehicle-interiors/Lincoln_Interior_Mannequin.blend"
+/mnt/simulations/vehicle-interiors/scripts/refine_lincoln.py:10: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m=bpy.data.materials.new(name);m.diffuse_color=(*color,1);m.use_nodes=True
+/mnt/simulations/vehicle-interiors/scripts/refine_lincoln.py:26: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if not m.use_nodes or not m.name.startswith('MI_LincolnMKZ_Interior'):continue
+00:15.690  cycles           | WARNING HIPEW initialization failed: Error opening HIP dynamic library
+Blender 5.2.1 LTS (hash 9e2066aef7ef built 2026-08-25 02:12:34)
+00:30.513  render           | Saved: '/mnt/simulations/vehicle-interiors/renders/MKZ_Dashboard.png'
+00:44.114  render           | Saved: '/mnt/simulations/vehicle-interiors/renders/MKZ_Driver_View.png'
+00:57.732  render           | Saved: '/mnt/simulations/vehicle-interiors/renders/MKZ_Rear_Seats.png'
+01:12.520  render           | Saved: '/mnt/simulations/vehicle-interiors/renders/MKZ_Front_Seats.png'
+Reloading external rigs...
+Reloading external metarigs...
+
+FBX export starting... '/mnt/simulations/vehicle-interiors/exports/SM_MKZ_Seating_v2.fbx'
+export finished in 4.5848 sec.
+Info: No new files have been packed
+Info: Saved as "Lincoln_MKZ_Interior_v2.blend"
+MKZ_REFINEMENT_COMPLETE
+unregister_class(...):, missing bl_rna attribute from '_RNAMeta' instance (may not be registered)
+Blender quit

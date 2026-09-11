@@ -1,0 +1,21 @@
+00:00.717  blend            | Read blend: "/mnt/simulations/vehicle-interiors/Lincoln_Interior_Mannequin.blend"
+Reloading external rigs...
+Reloading external metarigs...
+seat 583426 2 (-4.093899250030518, 45.0129280090332, 95.6777114868164)
+DiffuseUV (0.27701011300086975, 0.8489871025085449)
+LightMapUV (0.0, 0.0)
+DiffuseUV.001 (0.0, 0.0)
+DiffuseUV.002 (0.0, 0.0)
+dash 581743 2 (85.5098648071289, -38.68985366821289, 91.4013900756836)
+DiffuseUV (0.7202246785163879, 0.8391193151473999)
+LightMapUV (0.0, 0.0)
+DiffuseUV.001 (0.0, 0.0)
+DiffuseUV.002 (0.0, 0.0)
+roof 571965 2 (17.23672866821289, -2.543482780456543, 147.9363555908203)
+DiffuseUV (0.8596382141113281, 0.2939416170120239)
+LightMapUV (0.0, 0.0)
+DiffuseUV.001 (0.0, 0.0)
+DiffuseUV.002 (0.0, 0.0)
+unregister_class(...):, missing bl_rna attribute from '_RNAMeta' instance (may not be registered)Blender 5.2.1 LTS (hash 9e2066aef7ef built 2026-08-25 02:12:34)
+
+Blender quit

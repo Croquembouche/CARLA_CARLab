@@ -39,6 +39,7 @@ namespace nav {
         carla::geom::Location to;
         unsigned int currentIndex { 0 };
         WalkerState state;
+        bool explicit_target { false };
         std::vector<WalkerRoutePoint> route;
     };
 
@@ -70,6 +71,7 @@ namespace nav {
 
     /// set the next point in the route
     bool SetWalkerNextPoint(ActorId id);
+    bool HasExplicitTarget(ActorId id) const { auto it=_walkers.find(id);return it!=_walkers.end() && it->second.explicit_target; }
   
     /// get the next point in the route
     bool GetWalkerNextPoint(ActorId id, carla::geom::Location &location);

@@ -452,3 +452,14 @@ TPair<EActorSpawnResultStatus, FCarlaActor*> UCarlaEpisode::SpawnActorWithInfo(
 
   return result;
 }
+
+void UCarlaEpisode::SetReplicatedElapsedGameTime(double Time)
+{
+  check(!bIsPrimaryServer);
+  check(FMath::IsFinite(Time) && Time >= 0);
+  ElapsedGameTime = Time;
+#if defined(WITH_ROS2)
+  auto ROS2 = carla::ros2::ROS2::GetInstance();
+  if (ROS2->IsEnabled()) ROS2->SetTimestamp(Time);
+#endif
+}

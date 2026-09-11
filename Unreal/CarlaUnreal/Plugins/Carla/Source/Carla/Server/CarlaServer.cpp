@@ -868,6 +868,11 @@ void FCarlaServer::FPimpl::BindActions()
       RESPOND_ERROR("unable to destroy actor: not found");
     }
     UE_LOG(LogCarla, Log, TEXT("CarlaServer destroy_actor %d"), ActorId);
+    if (auto *Sensor = Cast<ASensor>(CarlaActor->GetActor()))
+    {
+      const carla::streaming::detail::token_type Token(Sensor->GetToken());
+      SecondaryServer->GetCommander().ReleaseSensor(Token.get_stream_id());
+    }
     // We need to force the actor state change, since dormant actors
     //  will ignore the FCarlaActor destruction
     CarlaActor->SetActorState(cr::ActorState::PendingKill);
@@ -911,7 +916,7 @@ void FCarlaServer::FPimpl::BindActions()
 
     // collision sensor always in primary server in multi-gpu
     FString Desc = Episode->GetActorDescriptionFromStream(sensor_id);
-    if (Desc == "" || Desc == "sensor.other.collision")
+    if (Desc == "" || Desc == "sensor.other.collision" || Desc == "sensor.other.imu" || Desc == "sensor.other.gnss")
     {
       ForceInPrimary = true;
     }
@@ -920,7 +925,35 @@ void FCarlaServer::FPimpl::BindActions()
     {
       // multi-gpu
       UE_LOG(LogCarla, Log, TEXT("Sensor %d '%s' created in secondary server"), sensor_id, *Desc);
-      return SecondaryServer->GetCommander().GetToken(sensor_id);
+      // Relative scheduling estimates; actual frame latency is measured by the client.
+      double Cost = 1.;
+      uint32_t ActorId = 0;
+      for (const auto &Item : Episode->GetActorRegistry())
+      {
+        auto *Sensor = Cast<ASensor>(Item.Value->GetActor());
+        if (!Sensor || carla::streaming::detail::token_type(Sensor->GetToken()).get_stream_id() != sensor_id) continue;
+        ActorId = Item.Key;
+        auto Attribute = [Sensor](const char *Name, double Default) {
+          auto Value = Sensor->GetAttribute(UTF8_TO_TCHAR(Name));
+          return Value.has_value() ? FCString::Atod(*Value->Value) : Default;
+        };
+        if (Desc.StartsWith(TEXT("sensor.camera.")))
+          Cost = 4. * Attribute("image_size_x", 800.) * Attribute("image_size_y", 600.) / (640. * 360.);
+        else if (Desc.StartsWith(TEXT("sensor.lidar.")))
+          Cost = 2. * Attribute("points_per_second", 56000.) / 200000.;
+        else if (Desc == TEXT("sensor.other.radar"))
+          Cost = .5 * Attribute("points_per_second", 1500.) / 10000.;
+        // Each capture/query carries a scene-view and residency overhead even
+        // at low pixel/ray counts. Include it so several low-rate ray sensors
+        // cannot all collect on the worker beside three large camera views.
+        Cost = 8. + FMath::Clamp(Cost, .05, 1000.);
+        break;
+      }
+      auto Token = SecondaryServer->GetCommander().GetToken(sensor_id, Cost, ActorId);
+      const carla::streaming::detail::token_type RoutedToken(Token);
+      UE_LOG(LogCarla, Log, TEXT("GPU_SENSOR_ROUTE actor=%u stream=%u worker_port=%u local_stream=%u cost=%.3f"),
+        ActorId, sensor_id, RoutedToken.get_port(), RoutedToken.get_stream_id(), Cost);
+      return Token;
     }
     else
     {
@@ -944,7 +977,7 @@ void FCarlaServer::FPimpl::BindActions()
 
     // collision sensor always in primary server in multi-gpu
     FString Desc = Episode->GetActorDescriptionFromStream(sensor_id);
-    if (Desc == "" || Desc == "sensor.other.collision")
+    if (Desc == "" || Desc == "sensor.other.collision" || Desc == "sensor.other.imu" || Desc == "sensor.other.gnss")
     {
       ForceInPrimary = true;
     }
@@ -976,7 +1009,7 @@ void FCarlaServer::FPimpl::BindActions()
 
     // collision sensor always in primary server in multi-gpu
     FString Desc = Episode->GetActorDescriptionFromStream(sensor_id);
-    if (Desc == "" || Desc == "sensor.other.collision")
+    if (Desc == "" || Desc == "sensor.other.collision" || Desc == "sensor.other.imu" || Desc == "sensor.other.gnss")
     {
       ForceInPrimary = true;
     }
@@ -1008,7 +1041,7 @@ BIND_SYNC(is_sensor_enabled_for_ros) << [this](carla::streaming::detail::stream_
 
     // collision sensor always in primary server in multi-gpu
     FString Desc = Episode->GetActorDescriptionFromStream(sensor_id);
-    if (Desc == "" || Desc == "sensor.other.collision")
+    if (Desc == "" || Desc == "sensor.other.collision" || Desc == "sensor.other.imu" || Desc == "sensor.other.gnss")
     {
       ForceInPrimary = true;
     }
@@ -2440,6 +2473,20 @@ BIND_SYNC(is_sensor_enabled_for_ros) << [this](carla::streaming::detail::stream_
           Response,
           " Actor Id: " + FString::FromInt(ActorId));
     }
+    return R<void>::Success();
+  };
+
+  BIND_SYNC(set_traffic_light_movement_states) << [this](cr::ActorId ActorId, uint16_t States) -> R<void>
+  {
+    REQUIRE_CARLA_EPISODE();
+    const bool Valid = States == 0 || ((States & 0x8000) && !(States & 0x3e00) &&
+        (States & 7) <= 4 && ((States >> 3) & 7) <= 4 && ((States >> 6) & 7) <= 4);
+    if (!Valid) return RespondError("set_traffic_light_movement_states", ECarlaServerResponse::FunctionNotSupported, TEXT("Invalid movement indications"));
+    FCarlaActor* Actor = Episode->FindCarlaActor(ActorId);
+    ATrafficLightBase* Light = Actor ? Cast<ATrafficLightBase>(Actor->GetActor()) : nullptr;
+    if (!Light || !Light->GetTrafficLightComponent())
+      return RespondError("set_traffic_light_movement_states", ECarlaServerResponse::NotATrafficLight, FString::FromInt(ActorId));
+    Light->GetTrafficLightComponent()->SetMovementStates(States);
     return R<void>::Success();
   };
 

@@ -739,6 +739,10 @@ namespace detail {
     // =========================================================================
     /// @{
 
+    void SetTrafficLightMovementStates(TrafficLight &light, uint16_t states) {
+      _client.SetTrafficLightMovementStates(light.GetId(), states);
+    }
+
     void SetTrafficLightState(TrafficLight &trafficLight, const rpc::TrafficLightState trafficLightState) {
       _client.SetTrafficLightState(trafficLight.GetId(), trafficLightState);
     }

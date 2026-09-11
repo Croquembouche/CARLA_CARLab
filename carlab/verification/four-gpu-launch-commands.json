@@ -1,0 +1,85 @@
+[
+  {
+    "role": "primary",
+    "command": [
+      "/mnt/simulations/bin/carla-sim",
+      "-unattended",
+      "-nosound",
+      "-log",
+      "-carla-rpc-port=2000",
+      "-nullrhi"
+    ]
+  },
+  {
+    "role": "gpu-0",
+    "command": [
+      "/mnt/simulations/bin/carla-sim",
+      "-unattended",
+      "-nosound",
+      "-log",
+      "-carla-rpc-port=2010",
+      "-carla-primary-host=127.0.0.1",
+      "-carla-primary-port=2002",
+      "-graphicsadapter=0",
+      "-RenderOffScreen",
+      "-ResX=640",
+      "-ResY=360",
+      "-quality-level=High",
+      "-ExecCmds=r.Streaming.PoolSize 2000,r.RayTracing.UseReferenceBasedResidency 1,r.RayTracing.NumAlwaysResidentLODs 0,r.RayTracing.ResidentGeometryMemoryPoolSizeInMB 2048,carla.Sensors.GpuRayTracing 1,r.RayTracing.ExternalQueries 1,r.RayTracing.ExternalQueryBounds 1,r.RayTracing.ForceAllRayTracingEffects 0,r.RayTracing.Culling 0,r.RayTracing.Geometry.InstancedStaticMeshes.Culling 0"
+    ]
+  },
+  {
+    "role": "gpu-1",
+    "command": [
+      "/mnt/simulations/bin/carla-sim",
+      "-unattended",
+      "-nosound",
+      "-log",
+      "-carla-rpc-port=2020",
+      "-carla-primary-host=127.0.0.1",
+      "-carla-primary-port=2002",
+      "-graphicsadapter=1",
+      "-RenderOffScreen",
+      "-ResX=640",
+      "-ResY=360",
+      "-quality-level=High",
+      "-ExecCmds=r.Streaming.PoolSize 2000,r.RayTracing.UseReferenceBasedResidency 1,r.RayTracing.NumAlwaysResidentLODs 0,r.RayTracing.ResidentGeometryMemoryPoolSizeInMB 2048,carla.Sensors.GpuRayTracing 1,r.RayTracing.ExternalQueries 1,r.RayTracing.ExternalQueryBounds 1,r.RayTracing.ForceAllRayTracingEffects 0,r.RayTracing.Culling 0,r.RayTracing.Geometry.InstancedStaticMeshes.Culling 0"
+    ]
+  },
+  {
+    "role": "gpu-2",
+    "command": [
+      "/mnt/simulations/bin/carla-sim",
+      "-unattended",
+      "-nosound",
+      "-log",
+      "-carla-rpc-port=2030",
+      "-carla-primary-host=127.0.0.1",
+      "-carla-primary-port=2002",
+      "-graphicsadapter=2",
+      "-RenderOffScreen",
+      "-ResX=640",
+      "-ResY=360",
+      "-quality-level=High",
+      "-ExecCmds=r.Streaming.PoolSize 2000,r.RayTracing.UseReferenceBasedResidency 1,r.RayTracing.NumAlwaysResidentLODs 0,r.RayTracing.ResidentGeometryMemoryPoolSizeInMB 2048,carla.Sensors.GpuRayTracing 1,r.RayTracing.ExternalQueries 1,r.RayTracing.ExternalQueryBounds 1,r.RayTracing.ForceAllRayTracingEffects 0,r.RayTracing.Culling 0,r.RayTracing.Geometry.InstancedStaticMeshes.Culling 0"
+    ]
+  },
+  {
+    "role": "gpu-3",
+    "command": [
+      "/mnt/simulations/bin/carla-sim",
+      "-unattended",
+      "-nosound",
+      "-log",
+      "-carla-rpc-port=2040",
+      "-carla-primary-host=127.0.0.1",
+      "-carla-primary-port=2002",
+      "-graphicsadapter=3",
+      "-RenderOffScreen",
+      "-ResX=640",
+      "-ResY=360",
+      "-quality-level=High",
+      "-ExecCmds=r.Streaming.PoolSize 2000,r.RayTracing.UseReferenceBasedResidency 1,r.RayTracing.NumAlwaysResidentLODs 0,r.RayTracing.ResidentGeometryMemoryPoolSizeInMB 2048,carla.Sensors.GpuRayTracing 1,r.RayTracing.ExternalQueries 1,r.RayTracing.ExternalQueryBounds 1,r.RayTracing.ForceAllRayTracingEffects 0,r.RayTracing.Culling 0,r.RayTracing.Geometry.InstancedStaticMeshes.Culling 0"
+    ]
+  }
+]

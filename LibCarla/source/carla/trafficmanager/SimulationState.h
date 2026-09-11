@@ -26,8 +26,9 @@ struct KinematicState {
 using KinematicStateMap = std::unordered_map<ActorId, KinematicState>;
 
 struct TrafficLightState {
-  TLS tl_state;
-  bool at_traffic_light;
+  TLS tl_state = TLS::Green;
+  bool at_traffic_light = false;
+  uint16_t movement_states = 0;
 };
 using TrafficLightStateMap = std::unordered_map<ActorId, TrafficLightState>;
 
@@ -63,6 +64,7 @@ public :
 
   // Method to verify if an actor is present currently present in the simulation state.
   bool ContainsActor(ActorId actor_id) const;
+  const std::unordered_set<ActorId>& GetActorIds() const { return actor_set; }
 
   // Method to remove an actor from simulation state.
   void RemoveActor(ActorId actor_id);

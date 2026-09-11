@@ -1,0 +1,12 @@
+00:00.830  blend            | Read blend: "/mnt/simulations/vehicle-interiors/Lincoln_MKZ_Interior_v2.blend"
+00:26.276  render           | Saved: '/mnt/simulations/vehicle-interiors/exports/T_MKZ_Ebony_BaseColor.png'
+00:42.495  render           | Saved: '/mnt/simulations/vehicle-interiors/exports/T_MKZ_Ebony_ORM.png'
+Reloading external rigs...
+Reloading external metarigs...
+
+FBX export starting... '/mnt/simulations/vehicle-interiors/exports/SM_MKZ_Cabin_v2.fbx'
+export finished in 0.4667 sec.
+MKZ_FINISH_EXPORT_COMPLETE
+unregister_class(...):, missing bl_rna attribute from '_RNAMeta' instance (may not be registered)Blender 5.2.1 LTS (hash 9e2066aef7ef built 2026-08-25 02:12:34)
+
+Blender quit

@@ -1,0 +1,12 @@
+[
+  {
+    "camera": "MKZ_Passenger_Seat",
+    "file": "/mnt/simulations/vehicle-interiors/renders/Lincoln_Passenger_Seat.png",
+    "seconds": 16.5
+  },
+  {
+    "camera": "MKZ_Rear_Seats",
+    "file": "/mnt/simulations/vehicle-interiors/renders/Lincoln_Back_Seat.png",
+    "seconds": 15.6
+  }
+]

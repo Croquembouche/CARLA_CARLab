@@ -94,6 +94,8 @@ namespace detail {
     rpc::Client rpc_client;
 
     streaming::Client streaming_client;
+    std::mutex sensor_tokens_mutex;
+    std::unordered_map<uint32_t, streaming::Token> subscribed_sensor_tokens;
   };
 
   // ===========================================================================
@@ -584,6 +586,10 @@ namespace detail {
     _pimpl->AsyncCall("set_traffic_light_state", traffic_light, traffic_light_state);
   }
 
+  void Client::SetTrafficLightMovementStates(rpc::ActorId traffic_light, uint16_t states) {
+    _pimpl->CallAndWait<void>("set_traffic_light_movement_states", traffic_light, states);
+  }
+
   void Client::SetTrafficLightGreenTime(rpc::ActorId traffic_light, float green_time) {
     _pimpl->AsyncCall("set_traffic_light_green_time", traffic_light, green_time);
   }
@@ -679,12 +685,20 @@ namespace detail {
       const streaming::Token &token,
       std::function<void(Buffer)> callback) {
     carla::streaming::detail::token_type thisToken(token);
+    std::scoped_lock<std::mutex> lock(_pimpl->sensor_tokens_mutex);
     streaming::Token receivedToken = _pimpl->CallAndWait<streaming::Token>("get_sensor_token", thisToken.get_stream_id());
     _pimpl->streaming_client.Subscribe(receivedToken, std::move(callback));
+    _pimpl->subscribed_sensor_tokens[thisToken.get_stream_id()] = receivedToken;
   }
 
   void Client::UnSubscribeFromStream(const streaming::Token &token) {
-    _pimpl->streaming_client.UnSubscribe(token);
+    const carla::streaming::detail::token_type original(token);
+    std::scoped_lock<std::mutex> lock(_pimpl->sensor_tokens_mutex);
+    auto found = _pimpl->subscribed_sensor_tokens.find(original.get_stream_id());
+    if (found != _pimpl->subscribed_sensor_tokens.end()) {
+      _pimpl->streaming_client.UnSubscribe(found->second);
+      _pimpl->subscribed_sensor_tokens.erase(found);
+    } else _pimpl->streaming_client.UnSubscribe(token);
   }
 
   void Client::EnableForROS(const streaming::Token &token) {

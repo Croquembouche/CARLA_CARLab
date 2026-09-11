@@ -1,0 +1,32 @@
+{
+  "result": "PASS",
+  "visual_review": "PASS: dashboard controls, screen, wood trim, door panels, front and rear seating, belts and mannequin visible; previous pale fallback appearance resolved",
+  "vehicle": "vehicle.lincoln.mkz_interior",
+  "map": "Carla/Maps/Town10HD_Opt",
+  "cameras": [
+    "carla_dashboard",
+    "carla_passenger",
+    "carla_rear_seats"
+  ],
+  "server": "0.10.0",
+  "texture_pool_mb": 2048,
+  "asynchronous_shader_compilation": false,
+  "simultaneous_cameras": 1,
+  "wheels": 4,
+  "extent_m": [
+    2.4459850788116455,
+    0.9178230166435242,
+    0.7620594501495361
+  ],
+  "note": "RGB cabin visibility. Epic scalability with bounded texture and virtual-shadow pools; no VR test.",
+  "engine_process_returncode": 0,
+  "shutdown_verified_clean": true,
+  "material": "MI_MKZ_Final_Interior using stock Lincoln master",
+  "verified_at_utc": "2026-09-09T19:25:42.906647+00:00",
+  "blender_source": "Lincoln_MKZ_Interior_Final.blend",
+  "limitations": [
+    "Close-up controls retain source texture resolution limits.",
+    "Lighting and procedural leather detail differ between Blender and Unreal.",
+    "Quest and VR interaction were deferred and were not tested."
+  ]
+}

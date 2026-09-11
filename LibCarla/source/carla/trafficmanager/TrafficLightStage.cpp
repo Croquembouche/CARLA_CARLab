@@ -46,6 +46,25 @@ void TrafficLightStage::Update(const unsigned long index) {
     const TLS traffic_light_state = tl_state.tl_state;
     const bool is_at_traffic_light = tl_state.at_traffic_light;
 
+    // Movement indications override the native shared circular colour. Once a
+    // vehicle has entered the junction it clears it under normal collision logic.
+    if (is_at_traffic_light && (tl_state.movement_states & 0x8000)) {
+      const auto& route=buffer_map.at(ego_actor_id);
+      const int movement=GetMovement(ego_actor_id);
+      bool hazard=route.empty();
+      if (!route.empty() && !route.front()->CheckJunction()) {
+        if (movement<0) hazard=true;
+        else {
+          const int indication=(tl_state.movement_states >> (movement*3)) & 7;
+          hazard=indication==0 || indication==1 || indication==4;
+          if (indication==3) hazard=MovementYieldHazard(ego_actor_id);
+        }
+      }
+      RemoveActor(ego_actor_id);
+      output_array.at(index)=hazard;
+      return;
+    }
+
     // We determine to stop if the vehicle found a traffic light in yellow / red.
     if (is_at_traffic_light &&
         traffic_light_state != TLS::Green &&
@@ -192,3 +211,84 @@ void TrafficLightStage::Reset() {
 
 } // namespace traffic_manager
 } // namespace carla
+
+namespace carla { namespace traffic_manager {
+int TrafficLightStage::GetMovement(const ActorId id) const {
+  const auto it=buffer_map.find(id); if(it==buffer_map.end()) return -1;
+  for(const auto& w:it->second) {
+    if(w->GetRoadOption()==RoadOption::Left) return 0;
+    if(w->GetRoadOption()==RoadOption::Straight) return 1;
+    if(w->GetRoadOption()==RoadOption::Right) return 2;
+  }
+  return -1;
+}
+
+bool TrafficLightStage::MovementYieldHazard(const ActorId id) const {
+  const auto ego=simulation_state.GetLocation(id);
+  const auto heading=simulation_state.GetHeading(id);
+  const auto& route=buffer_map.at(id);
+  if(route.empty()) return true;
+  std::vector<cg::Location> path;
+  auto junction=[](const auto& buffer) -> int {
+    for (const auto& w:buffer) if (w->CheckJunction()) return int(w->GetJunctionId());
+    return -1;
+  };
+  const int ego_junction=junction(route);
+  const int ego_movement=GetMovement(id);
+  bool entered=false;
+  for(const auto& w:route) {
+    if((w->GetLocation()-ego).SquaredLength()>2500) break;
+    path.push_back(w->GetLocation());
+    if(w->CheckJunction()) entered=true;
+    else if(entered) break;
+  }
+  if(path.size()<2) return true;
+  auto distance=[](const cg::Location& p,const cg::Location& a,const cg::Location& b){
+    const float dx=b.x-a.x,dy=b.y-a.y;
+    const float t=std::max(0.f,std::min(1.f,((p.x-a.x)*dx+(p.y-a.y)*dy)/std::max(.001f,dx*dx+dy*dy)));
+    const float x=p.x-a.x-t*dx,y=p.y-a.y-t*dy;return x*x+y*y;
+  };
+  for(const auto other:simulation_state.GetActorIds()) {
+    if(other==id || simulation_state.IsDormant(other)) continue;
+    const auto location=simulation_state.GetLocation(other),relative=location-ego;
+    if(relative.SquaredLength()>3600 || std::abs(relative.z)>3) continue;
+    const auto other_heading=simulation_state.GetHeading(other);
+    const float parallel=heading.x*other_heading.x+heading.y*other_heading.y;
+    if(parallel>.75f && relative.x*heading.x+relative.y*heading.y<0) continue;
+    float speed=simulation_state.GetVelocity(other).Length();
+    const auto other_tls=simulation_state.GetTLS(other);
+    const int other_move=GetMovement(other);
+    if(other_tls.at_traffic_light && (other_tls.movement_states&0x8000) && other_move>=0) {
+      const int other_indication=(other_tls.movement_states>>(other_move*3))&7;
+      if(other_indication==2) {
+        // A stopped protected approach will accelerate when green is granted.
+        // Current velocity alone under-predicts its occupation of the conflict.
+        speed=std::max(speed,8.f);
+        const auto other_buffer=buffer_map.find(other);
+        if (ego_movement==0 && other_move==1 && parallel<-.5f &&
+            relative.x*heading.x+relative.y*heading.y>0 &&
+            ego_junction>=0 && other_buffer!=buffer_map.end() && junction(other_buffer->second)==ego_junction)
+          return true;
+      }
+      // Deterministic priority only resolves two yielding approaches. All
+      // protected approaches and pedestrians retain precedence.
+      if(other_indication==3 && other>id && speed<.5f) continue;
+    }
+    const auto dim=simulation_state.GetDimensions(other);
+    const float margin=simulation_state.GetDimensions(id).y+std::max(dim.y,.4f)+.6f;
+    std::vector<cg::Location> predicted;
+    predicted.push_back(location);
+    const auto other_route=buffer_map.find(other);
+    if(other_route!=buffer_map.end() && speed>.2f) {
+      float travel=0;cg::Location previous=location;
+      for(const auto& w:other_route->second){travel+=(w->GetLocation()-previous).Length();if(travel>speed*4.5f+dim.x)break;predicted.push_back(w->GetLocation());previous=w->GetLocation();}
+    } else if(speed>.2f) {
+      const auto velocity=simulation_state.GetVelocity(other);
+      for(float t=.25f;t<=4.5f;t+=.25f) predicted.push_back(location+cg::Location(velocity*t));
+    }
+    for(const auto& point:predicted) for(size_t i=1;i<path.size();++i)
+      if(distance(point,path[i-1],path[i])<margin*margin) return true;
+  }
+  return false;
+}
+} }

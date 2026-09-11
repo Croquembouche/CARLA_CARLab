@@ -1,0 +1,30 @@
+{
+  "stock": {
+    "bounds": "<Struct 'BoxSphereBounds' (0x8aeb6b7e380) {origin: {x: -0.621552, y: 0.000000, z: 76.324526}, box_extent: {x: 244.598511, y: 91.782303, z: 76.205946}, sphere_radius: 272.139245}>",
+    "bones": {
+      "Vehicle_Base": "<Struct 'Transform' (0x7f27c6759410) {rotation: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}, translation: {x: 0.000000, y: -0.000006, z: 0.000000}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+      "Wheel_Front_Left": "<Struct 'Transform' (0x7f27c6759410) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: 147.020645, y: -79.645973, z: 37.115238}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+      "Wheel_Front_Right": "<Struct 'Transform' (0x7f27c6759410) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: 147.020645, y: 79.645988, z: 37.115238}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+      "Wheel_Rear_Right": "<Struct 'Transform' (0x7f27c6759410) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: -139.706787, y: 79.645988, z: 37.115238}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+      "Wheel_Rear_Left": "<Struct 'Transform' (0x7f27c6759410) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: -139.706787, y: -79.634727, z: 37.115238}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+      "Door_Front_Right": "<Struct 'Transform' (0x7f27c6759410) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: 95.953064, y: 88.020973, z: 87.398903}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+      "Door_Front_Left": "<Struct 'Transform' (0x7f27c6759410) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: 95.953064, y: -87.410202, z: 87.399002}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+      "Door_Rear_Right": "<Struct 'Transform' (0x7f27c6759410) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: -15.953276, y: 89.504417, z: 88.142204}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+      "Door_Rear_Left": "<Struct 'Transform' (0x7f27c6759410) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: -15.953773, y: -89.694778, z: 90.428513}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>"
+    }
+  },
+  "final": {
+    "bounds": "<Struct 'BoxSphereBounds' (0x8aeb6b7e640) {origin: {x: -0.621559, y: 0.000015, z: 76.324526}, box_extent: {x: 244.598503, y: 91.782303, z: 76.205946}, sphere_radius: 272.139238}>",
+    "bones": {
+      "Vehicle_Base": "<Struct 'Transform' (0x7f27c6759410) {rotation: {x: 0.707107, y: -0.000000, z: 0.000000, w: -0.707107}, translation: {x: -0.000000, y: -0.000006, z: 0.000000}, scale3d: {x: 100.000000, y: 100.000000, z: 100.000000}}>",
+      "Wheel_Front_Left": "<Struct 'Transform' (0x7f27c6759410) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: 1.470206, y: -0.371152, z: -0.796460}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+      "Wheel_Front_Right": "<Struct 'Transform' (0x7f27c6759410) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: 1.470206, y: -0.371152, z: 0.796460}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+      "Wheel_Rear_Right": "<Struct 'Transform' (0x7f27c6759410) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: -1.397068, y: -0.371152, z: 0.796460}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+      "Wheel_Rear_Left": "<Struct 'Transform' (0x7f27c6759410) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: -1.397068, y: -0.371152, z: -0.796347}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+      "Door_Front_Right": "<Struct 'Transform' (0x7f27c6759410) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: 0.959531, y: -0.873989, z: 0.880210}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+      "Door_Front_Left": "<Struct 'Transform' (0x7f27c6759410) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: 0.959531, y: -0.873990, z: -0.874102}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+      "Door_Rear_Right": "<Struct 'Transform' (0x7f27c6759410) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: -0.159533, y: -0.881422, z: 0.895044}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+      "Door_Rear_Left": "<Struct 'Transform' (0x7f27c6759410) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: -0.159538, y: -0.904285, z: -0.896948}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>"
+    }
+  }
+}

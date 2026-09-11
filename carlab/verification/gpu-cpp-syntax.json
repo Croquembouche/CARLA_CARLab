@@ -1,0 +1,72 @@
+[
+  {
+    "file": "Sensor/GpuSensorDispatcher.cpp",
+    "exit_code": 0,
+    "log": "/media/william/mist1/Simulations/logs/GpuSensorDispatcher.cpp.carla-syntax.log"
+  },
+  {
+    "file": "Sensor/GpuSensorSelfTest.cpp",
+    "exit_code": 0,
+    "log": "/media/william/mist1/Simulations/logs/GpuSensorSelfTest.cpp.carla-syntax.log"
+  },
+  {
+    "file": "Sensor/RayCastLidar.cpp",
+    "exit_code": 0,
+    "log": "/media/william/mist1/Simulations/logs/RayCastLidar.cpp.carla-syntax.log"
+  },
+  {
+    "file": "Sensor/RayCastSemanticLidar.cpp",
+    "exit_code": 0,
+    "log": "/media/william/mist1/Simulations/logs/RayCastSemanticLidar.cpp.carla-syntax.log"
+  },
+  {
+    "file": "Sensor/Radar.cpp",
+    "exit_code": 0,
+    "log": "/media/william/mist1/Simulations/logs/Radar.cpp.carla-syntax.log"
+  },
+  {
+    "file": "Sensor/ImageUtil.cpp",
+    "exit_code": 0,
+    "log": "/media/william/mist1/Simulations/logs/ImageUtil.cpp.carla-syntax.log"
+  },
+  {
+    "file": "Game/CarlaEngine.cpp",
+    "exit_code": 0,
+    "log": "/media/william/mist1/Simulations/logs/CarlaEngine.cpp.carla-syntax.log"
+  },
+  {
+    "file": "Carla.cpp",
+    "exit_code": 0,
+    "log": "/media/william/mist1/Simulations/logs/Carla.cpp.carla-syntax.log"
+  },
+  {
+    "file": "Sensor/SceneCaptureCamera.cpp",
+    "exit_code": 0,
+    "log": "/media/william/mist1/Simulations/logs/SceneCaptureCamera.cpp.carla-syntax.log"
+  },
+  {
+    "file": "Sensor/DepthCamera.cpp",
+    "exit_code": 0,
+    "log": "/media/william/mist1/Simulations/logs/DepthCamera.cpp.carla-syntax.log"
+  },
+  {
+    "file": "Sensor/NormalsCamera.cpp",
+    "exit_code": 0,
+    "log": "/media/william/mist1/Simulations/logs/NormalsCamera.cpp.carla-syntax.log"
+  },
+  {
+    "file": "Sensor/SemanticSegmentationCamera.cpp",
+    "exit_code": 0,
+    "log": "/media/william/mist1/Simulations/logs/SemanticSegmentationCamera.cpp.carla-syntax.log"
+  },
+  {
+    "file": "Sensor/InstanceSegmentationCamera.cpp",
+    "exit_code": 0,
+    "log": "/media/william/mist1/Simulations/logs/InstanceSegmentationCamera.cpp.carla-syntax.log"
+  },
+  {
+    "file": "Sensor/OpticalFlowCamera.cpp",
+    "exit_code": 0,
+    "log": "/media/william/mist1/Simulations/logs/OpticalFlowCamera.cpp.carla-syntax.log"
+  }
+]

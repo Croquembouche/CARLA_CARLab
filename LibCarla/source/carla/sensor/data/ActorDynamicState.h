@@ -105,6 +105,7 @@ namespace detail {
     uint32_t pole_index;
     bool time_is_frozen;
     rpc::TrafficLightState state;
+    uint16_t movement_states; // Enabled bit, flash phase and left/through/right indications.
   };
 #pragma pack(pop)
 
@@ -145,7 +146,7 @@ namespace detail {
 #pragma pack(pop)
 
  static_assert(
-    sizeof(ActorDynamicState) == 119u,
+    sizeof(ActorDynamicState) == 121u,
     "Invalid ActorDynamicState size! "
     "If you modified this class please update the size here, else you may "
     "comment this assert, but your platform may have compatibility issues "

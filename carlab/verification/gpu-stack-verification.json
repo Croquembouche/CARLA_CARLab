@@ -1,0 +1,192 @@
+{
+  "functional_checks_passed": true,
+  "single_worker_cpu_reduction_fraction": 0.7191139529572962,
+  "four_worker_cpu_reduction_fraction": 0.8868215211240817,
+  "workload_note": "Single worker: one camera, lidar and radar. Four workers: four of each, distributed across GPUs. High quality with a 2000 MiB texture pool throughout.",
+  "render_vs_collision_geometry": [
+    {
+      "sensor_index": 2,
+      "cpu_hits": 47068,
+      "gpu_hits": 46556,
+      "matched_beams": 46395,
+      "hit_miss_disagreements": 834,
+      "absolute_depth_difference_m": {
+        "median": 0.00032806396484375,
+        "p95": 0.1116657257080074,
+        "maximum": 73.20238494873047
+      }
+    }
+  ],
+  "geometry_equivalence_certified": false,
+  "baseline_note": "Both modes include the camera readback optimization; this comparison isolates the ray backend.",
+  "reports": {
+    "sensors-single-cpu": {
+      "passed": true,
+      "map": "Carla/Maps/Town10HD_Opt",
+      "sensors": [
+        "sensor.camera.rgb",
+        "sensor.lidar.ray_cast",
+        "sensor.other.radar"
+      ],
+      "shader_workers_idle_at_measurement_start": true,
+      "warmup_frames": 30,
+      "capture_timestamps_verified": true,
+      "frames": 100,
+      "wall_seconds": 8.316282266001508,
+      "frames_per_second": 12.024603879646847,
+      "server_cpu_seconds": 87.57999999999998,
+      "average_server_cpu_cores": 10.531148077794706,
+      "cpu_seconds_per_simulated_second": 17.516,
+      "pids": [
+        1137228
+      ],
+      "limitations": "CPU includes all threads of the supplied processes, excludes client and shader child processes. GPU utilization is sampled. Render and collision geometry may differ."
+    },
+    "sensors-single-gpu": {
+      "passed": true,
+      "map": "Carla/Maps/Town10HD_Opt",
+      "sensors": [
+        "sensor.camera.rgb",
+        "sensor.lidar.ray_cast",
+        "sensor.other.radar"
+      ],
+      "shader_workers_idle_at_measurement_start": true,
+      "warmup_frames": 30,
+      "capture_timestamps_verified": true,
+      "frames": 100,
+      "wall_seconds": 9.081384684002842,
+      "frames_per_second": 11.011536619096567,
+      "server_cpu_seconds": 24.599999999999994,
+      "average_server_cpu_cores": 2.708838008297755,
+      "cpu_seconds_per_simulated_second": 4.919999999999999,
+      "pids": [
+        1141299
+      ],
+      "limitations": "CPU includes all threads of the supplied processes, excludes client and shader child processes. GPU utilization is sampled. Render and collision geometry may differ."
+    },
+    "sensors-four-cpu": {
+      "passed": true,
+      "map": "Carla/Maps/Town10HD_Opt",
+      "sensors": [
+        "sensor.camera.rgb",
+        "sensor.camera.rgb",
+        "sensor.camera.rgb",
+        "sensor.camera.rgb",
+        "sensor.lidar.ray_cast",
+        "sensor.lidar.ray_cast",
+        "sensor.lidar.ray_cast",
+        "sensor.lidar.ray_cast",
+        "sensor.other.radar",
+        "sensor.other.radar",
+        "sensor.other.radar",
+        "sensor.other.radar"
+      ],
+      "shader_workers_idle_at_measurement_start": true,
+      "warmup_frames": 30,
+      "capture_timestamps_verified": true,
+      "frames": 100,
+      "wall_seconds": 90.72958319399913,
+      "frames_per_second": 1.1021763407220635,
+      "server_cpu_seconds": 2103.05,
+      "average_server_cpu_cores": 23.17931953355536,
+      "cpu_seconds_per_simulated_second": 420.61,
+      "pids": [
+        1145489,
+        1149177,
+        1149178,
+        1149179,
+        1149180
+      ],
+      "limitations": "CPU includes all threads of the supplied processes, excludes client and shader child processes. GPU utilization is sampled. Render and collision geometry may differ.",
+      "verified_texture_pools_mib": {
+        "gpu-0": 2000,
+        "gpu-1": 2000,
+        "gpu-2": 2000,
+        "gpu-3": 2000
+      },
+      "verified_worker_gpu_pci_ids": {
+        "1149177": [
+          "00000000:05:00.0"
+        ],
+        "1149178": [
+          "00000000:0A:00.0"
+        ],
+        "1149179": [
+          "00000000:09:00.0"
+        ],
+        "1149180": [
+          "00000000:06:00.0"
+        ]
+      }
+    },
+    "sensors-four-gpu": {
+      "passed": true,
+      "map": "Carla/Maps/Town10HD_Opt",
+      "sensors": [
+        "sensor.camera.rgb",
+        "sensor.camera.rgb",
+        "sensor.camera.rgb",
+        "sensor.camera.rgb",
+        "sensor.lidar.ray_cast",
+        "sensor.lidar.ray_cast",
+        "sensor.lidar.ray_cast",
+        "sensor.lidar.ray_cast",
+        "sensor.other.radar",
+        "sensor.other.radar",
+        "sensor.other.radar",
+        "sensor.other.radar"
+      ],
+      "shader_workers_idle_at_measurement_start": true,
+      "warmup_frames": 30,
+      "capture_timestamps_verified": true,
+      "frames": 100,
+      "wall_seconds": 31.06051659300283,
+      "frames_per_second": 3.2195214686972573,
+      "server_cpu_seconds": 238.01999999999998,
+      "average_server_cpu_cores": 7.663104999793211,
+      "cpu_seconds_per_simulated_second": 47.604,
+      "pids": [
+        1186426,
+        1190534,
+        1190535,
+        1190536,
+        1190537
+      ],
+      "limitations": "CPU includes all threads of the supplied processes, excludes client and shader child processes. GPU utilization is sampled. Render and collision geometry may differ.",
+      "verified_texture_pools_mib": {
+        "gpu-0": 2000,
+        "gpu-1": 2000,
+        "gpu-2": 2000,
+        "gpu-3": 2000
+      },
+      "verified_worker_gpu_pci_ids": {
+        "1190536": [
+          "00000000:09:00.0"
+        ],
+        "1190537": [
+          "00000000:06:00.0"
+        ],
+        "1190534": [
+          "00000000:05:00.0"
+        ],
+        "1190535": [
+          "00000000:0A:00.0"
+        ]
+      },
+      "semantic_lidar_stream_check": {
+        "passed": true,
+        "frames": 8,
+        "point_counts": [
+          2043,
+          11959,
+          10567,
+          12566,
+          14434,
+          11363,
+          10688,
+          10348
+        ]
+      }
+    }
+  }
+}

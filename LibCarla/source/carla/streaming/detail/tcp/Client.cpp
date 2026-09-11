@@ -13,6 +13,8 @@
 #include "carla/Time.h"
 
 #include <boost/asio/connect.hpp>
+#include <boost/asio/dispatch.hpp>
+#include <boost/asio/post.hpp>
 #include <boost/asio/read.hpp>
 #include <boost/asio/write.hpp>
 #include <boost/asio/bind_executor.hpp>
@@ -85,6 +87,10 @@ namespace tcp {
 
   void Client::Connect() {
     auto self = shared_from_this();
+    if (!_strand.running_in_this_thread()) {
+      boost::asio::post(_strand, [self]() { self->Connect(); });
+      return;
+    }
       if (_done) {
         return;
       }
@@ -92,7 +98,8 @@ namespace tcp {
       using boost::system::error_code;
 
       if (_socket.is_open()) {
-        _socket.close();
+        boost::system::error_code ignored;
+        _socket.close(ignored);
       }
 
       DEBUG_ASSERT(_token.is_valid());
@@ -140,22 +147,23 @@ namespace tcp {
   }
 
   void Client::Stop() {
-    _connection_timer.cancel();
+    _done = true;
     auto self = shared_from_this();
-      _done = true;
-      if (_socket.is_open()) {
-        _socket.close();
-      }
+    boost::asio::dispatch(_strand, [self]() {
+      boost::system::error_code ignored;
+      self->_connection_timer.cancel();
+      self->_socket.close(ignored);
+    });
   }
 
   void Client::Reconnect() {
     auto self = shared_from_this();
     _connection_timer.expires_after(time_duration::seconds(1u).to_chrono());
-    _connection_timer.async_wait([this, self](boost::system::error_code ec) {
+    _connection_timer.async_wait(boost::asio::bind_executor(_strand, [this, self](boost::system::error_code ec) {
       if (!ec) {
         Connect();
       }
-    });
+    }));
   }
 
   void Client::ReadData() {

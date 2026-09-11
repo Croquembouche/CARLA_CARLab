@@ -18,6 +18,7 @@
 
 #include <util/ue-header-guard-begin.h>
 #include "Components/BoxComponent.h"
+#include "Components/SpotLightComponent.h"
 #include "Engine/CollisionProfile.h"
 #include "MovementComponents/DefaultMovementComponent.h"
 #include "Rendering/SkeletalMeshRenderData.h"
@@ -164,7 +165,14 @@ void ACarlaWheeledVehicle::BeginPlay()
 }
 
 void ACarlaWheeledVehicle::TickActor(float DeltaTime, enum ELevelTick TickType, FActorTickFunction& ThisTickFunction){
-  Super::TickActor(DeltaTime, TickType, ThisTickFunction);
+  // Legacy motorcycle Blueprint ticks normalize engine animation against live
+  // physics values. While parked (or on a physics-free render replica), those
+  // values are unavailable. Keep the skeletal pose snapshot but skip that
+  // unnecessary Blueprint animation update until physics is re-enabled.
+  if (bPhysicsEnabled || !IsTwoWheeledVehicle())
+  {
+    Super::TickActor(DeltaTime, TickType, ThisTickFunction);
+  }
 
   FPoseSnapshot pose;
   GetMesh()->SnapshotPose(pose);
@@ -379,6 +387,13 @@ FVehiclePhysicsControl ACarlaWheeledVehicle::GetVehiclePhysicsControl() const
   auto VehicleMovComponentPtr = GetChaosWheeledVehicleMovementComponent();
   check(VehicleMovComponentPtr != nullptr);
   auto& VehicleMovComponent = *VehicleMovComponentPtr;
+  // DestroyPhysicsState removes the live wheel objects for parked vehicles.
+  // Recorder and RPC callers still need the complete retained configuration.
+  if (VehicleMovComponent.Wheels.Num() != VehicleMovComponent.WheelSetups.Num()
+      && LastPhysicsControl.Wheels.Num() == VehicleMovComponent.WheelSetups.Num())
+  {
+    return LastPhysicsControl;
+  }
   auto& EngineSetup = VehicleMovComponent.EngineSetup;
   auto RCurve = EngineSetup.TorqueCurve.GetRichCurve();
   check(RCurve != nullptr);
@@ -746,8 +761,37 @@ void ACarlaWheeledVehicle::SetVehicleLightState(const FVehicleLightState& LightS
     LightState.Special1 != InputControl.LightState.Special1 ||
     LightState.Special2 != InputControl.LightState.Special2)
   {
+    const bool bHeadlightChanged = LightState.LowBeam != InputControl.LightState.LowBeam;
     InputControl.LightState = LightState;
     RefreshLightState(LightState);
+    // Some UE5 vehicle blueprints toggle the headlight state but leave their
+    // spot components at zero intensity. Repair only that broken on-state;
+    // keep authored working lamps and other light types unchanged.
+    static const FName FallbackTag(TEXT("CarlaHeadlightFallback"));
+    TArray<USpotLightComponent*> Lights;
+    GetComponents(Lights);
+    for (auto* Light : Lights)
+    {
+      const FString Name = Light->GetName();
+      const bool bLow = Name.Contains(TEXT("low_beam"));
+      const bool bHigh = Name.Contains(TEXT("high_beam"));
+      if (!bLow && !bHigh) continue;
+      const bool bOn = bLow ? LightState.LowBeam : LightState.HighBeam;
+      if ((bOn && Light->Intensity <= KINDA_SMALL_NUMBER) || Light->ComponentHasTag(FallbackTag))
+      {
+        Light->ComponentTags.AddUnique(FallbackTag);
+        Light->SetMobility(EComponentMobility::Movable);
+        Light->SetVisibility(true);
+        Light->SetHiddenInGame(false);
+        Light->SetIntensityUnits(ELightUnits::Lumens);
+        Light->SetUseInverseSquaredFalloff(true);
+        Light->SetAttenuationRadius(FMath::Max(Light->AttenuationRadius, bLow ? 6000.f : 10000.f));
+        Light->SetIntensity(bOn ? (bLow ? 1200.f : 1800.f) : 0.f);
+      }
+      if (bHeadlightChanged && bLow && GetName().Contains(TEXT("Lincoln")))
+        UE_LOG(LogCarla, Log, TEXT("Vehicle headlight: actor=%s requested=%d component=%s visible=%d hidden=%d intensity=%.2f fallback=%d"),
+          *GetName(), bOn, *Name, Light->IsVisible(), Light->bHiddenInGame, Light->Intensity, Light->ComponentHasTag(FallbackTag));
+    }
   }
 }
 
@@ -769,11 +813,9 @@ void ACarlaWheeledVehicle::SetWheelSteerDirection(EVehicleWheelLocation WheelLoc
 {
   if (bPhysicsEnabled == false)
   {
-    check((uint8)WheelLocation >= 0)
-      UVehicleAnimationInstance* VehicleAnim = Cast<UVehicleAnimationInstance>(GetMesh()->GetAnimInstance());
-    check(VehicleAnim != nullptr)
-      // ToDo We need to investigate about this
-      //VehicleAnim->GetWheelAnimData()SetWheelRotYaw((uint8)WheelLocation, AngleInDeg);
+    // Wheel animation overrides are not implemented in the UE5 path yet.
+    // Do not require a particular AnimInstance for this no-op, including replay
+    // vehicles and motorcycles with their own animation blueprint.
   }
   else
   {
@@ -816,19 +858,22 @@ void ACarlaWheeledVehicle::SetSimulatePhysics(bool enabled) {
     if (bPhysicsEnabled == enabled)
       return;
 
+    if (!enabled)
+    {
+      LastPhysicsControl = GetVehiclePhysicsControl();
+    }
     SetActorEnableCollision(true);
     UPrimitiveComponent* RootPrimitive =
       Cast<UPrimitiveComponent>(GetRootComponent());
     RootPrimitive->SetSimulatePhysics(enabled);
     RootPrimitive->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 
-    UVehicleAnimationInstance* VehicleAnim = Cast<UVehicleAnimationInstance>(GetMesh()->GetAnimInstance());
-    check(VehicleAnim != nullptr)
-
+    // Physics state does not depend on the visual animation class. Motorcycles
+    // can use their own AnimInstance; requiring UVehicleAnimationInstance here
+    // crashed the server when pausing physics on an otherwise valid vehicle.
       if (enabled)
       {
         Movement->RecreatePhysicsState();
-        //VehicleAnim->ResetWheelCustomRotations();
       }
       else
       {

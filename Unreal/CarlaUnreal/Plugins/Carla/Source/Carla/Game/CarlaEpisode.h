@@ -105,6 +105,9 @@ public:
     return ElapsedGameTime;
   }
 
+  // Apply the primary clock before sensor capture on replicated workers.
+  void SetReplicatedElapsedGameTime(double Time);
+
   /// Visual game seconds
   double GetVisualGameTime() const
   {

@@ -1,0 +1,61 @@
+diff --git a/send2ue/core/extension.py b/send2ue/core/extension.py
+index 5a956c2..c92e8c9 100644
+--- a/send2ue/core/extension.py
++++ b/send2ue/core/extension.py
+@@ -274,15 +274,16 @@ class ExtensionCollector(ast.NodeVisitor):
+         """
+         Gets the module from the file path.
+         """
+-        path = os.path.dirname(file_path)
+-        name, file_extension = os.path.splitext(os.path.basename(file_path))
+-        if path not in sys.path:
+-            sys.path.insert(0, path)
+-        module = importlib.import_module(name)
+-        importlib.reload(module)
+-
+-        # remove to prevent root module naming conflicts
+-        sys.path.remove(path)
++        # Extensions must not replace installed addons such as ue2rigify in
++        # sys.modules. Give each file a private, path-specific module name.
++        import hashlib
++        name = "_send2ue_extension_" + hashlib.sha256(
++            os.path.realpath(file_path).encode()
++        ).hexdigest()[:16]
++        spec = importlib.util.spec_from_file_location(name, file_path)
++        module = importlib.util.module_from_spec(spec)
++        sys.modules[name] = module
++        spec.loader.exec_module(module)
+         return module
+ 
+     def get_extension_classes(self):
+diff --git a/send2ue/core/io/fbx.py b/send2ue/core/io/fbx.py
+index fc843bf..2101a61 100644
+--- a/send2ue/core/io/fbx.py
++++ b/send2ue/core/io/fbx.py
+@@ -2,7 +2,6 @@ import os
+ import bpy
+ from ..utilities import report_error
+ from mathutils import Vector
+-from importlib.machinery import SourceFileLoader
+ 
+ SCALE_FACTOR = 100
+ 
+@@ -17,14 +16,10 @@ def export(**keywords):
+     https://github.com/blender/blender-addons/blob/master/io_scene_fbx/export_fbx_bin.py
+     """
+     import addon_utils
+-    addons = {os.path.basename(os.path.dirname(module.__file__)): module.__file__ for module in addon_utils.modules()}
+-    addon_folder_path = os.path.dirname(addons.get('io_scene_fbx'))
+-
+-    # this load the io_scene_fbx module from the blender FBX addon
+-    try:
+-        SourceFileLoader('io_scene_fbx', os.path.join(addon_folder_path, '__init__.py')).load_module()
+-    except RuntimeError as error:
+-        print(error)
++    # Reuse the registered FBX addon. Reloading its module recreates Blender
++    # RNA classes and breaks unregister/repeated exports on current Blender.
++    if not addon_utils.check('io_scene_fbx')[1]:
++        addon_utils.enable('io_scene_fbx')
+ 
+     import io_scene_fbx.export_fbx_bin as export_fbx_bin
+     from io_scene_fbx.export_fbx_bin import (

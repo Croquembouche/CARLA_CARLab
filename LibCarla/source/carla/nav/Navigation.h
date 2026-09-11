@@ -66,6 +66,9 @@ namespace nav {
     /// load navigation data from memory
     bool Load(std::vector<uint8_t> content);
     /// return the path points to go from one position to another
+    std::vector<carla::geom::Location> GetCompletePath(ActorId id,
+        carla::geom::Location from, carla::geom::Location to);
+
     bool GetPath(carla::geom::Location from, carla::geom::Location to, dtQueryFilter * filter,
     std::vector<carla::geom::Location> &path, std::vector<unsigned char> &area);
     bool GetAgentRoute(ActorId id, carla::geom::Location from, carla::geom::Location to,

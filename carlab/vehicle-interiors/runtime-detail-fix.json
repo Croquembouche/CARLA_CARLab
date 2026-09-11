@@ -1,0 +1,11 @@
+{
+  "lod_cpu_before": [
+    false
+  ],
+  "collision_before": {
+    "visible": "False",
+    "hidden_in_game": "True",
+    "render_in_main_pass": "True",
+    "cast_shadow": "True"
+  }
+}

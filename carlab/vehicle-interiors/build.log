@@ -1,0 +1,68 @@
+Setting up bundled DotNet SDK
+Running command : dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll CarlaUnrealEditor Linux Development /mnt/simulations/carla/Unreal/CarlaUnreal/CarlaUnreal.uproject -WaitMutex -MaxParallelActions=12
+Log file: /media/william/mist1/Simulations/linux/UnrealEngine5_carla/Engine/Programs/UnrealBuildTool/Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (/media/william/mist1/Simulations/linux/UnrealEngine5_carla).
+Creating makefile for CarlaUnrealEditor (.uproject file is newer)
+/mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/CarlaTools/Source/CarlaTools/CarlaTools.Build.cs(12,8): warning CS0414: The field 'CarlaTools.Verbose' is assigned but its value is never used
+/mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Source/Carla/Carla.Build.cs(13,8): warning CS0414: The field 'Carla.Verbose' is assigned but its value is never used
+Unity build is enabled.
+Slate UI is disabled.
+Online Subsystem is disabled.
+CarSim support is disabled.
+Chrono support is disabled.
+PyTorch support is disabled.
+OSM2ODR support is disabled.
+Ros2 support is enabled.
+Ros2 demo is disabled.
+Dynamic Library Added: /mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Source/Carla/../../Binaries/Linux/libcarla-ros2-native.so
+Unknown option "ROS2".
+OSM2ODR support is disabled.
+Warning: /mnt/simulations/carla/Unreal/CarlaUnreal/CarlaUnreal.uproject does not list plugin 'XRBase' as a dependency, but module 'CarlaUnreal' depends on 'XRBase'.
+Parsing headers for CarlaUnrealEditor
+  Running Internal UnrealHeaderTool /mnt/simulations/carla/Unreal/CarlaUnreal/CarlaUnreal.uproject /mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/CarlaUnrealEditor/Development/CarlaUnrealEditor.uhtmanifest -WarningsAsErrors
+Total of 372 written
+Reflection code generated for CarlaUnrealEditor in 71.2709196 seconds
+------- Build details --------
+Using toolchain located at '/media/william/mist1/Simulations/linux/UnrealEngine5_carla/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu'.
+Using clang (/media/william/mist1/Simulations/linux/UnrealEngine5_carla/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++) version 'clang version 18.1.0rc (github.com/llvm/llvm-project 461274b81d8641eab64d494accddc81d7db8a09e)
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+InstalledDir: /media/william/mist1/Simulations/linux/UnrealEngine5_carla/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin' (string), 18 (major), 1 (minor), 0 (patch)
+Using bundled libc++ standard C++ library.
+Using lld linker
+Using llvm-ar (/media/william/mist1/Simulations/linux/UnrealEngine5_carla/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/llvm-ar) version 'LLVM (http://llvm.org/):
+  LLVM version 18.1.0rc
+  Optimized build. (string)'
+Using fast way to relink  circularly dependent libraries (no FixDeps).
+Compressing debug files
+Targeted minimum CPU architecture: None
+------------------------------
+Building CarlaUnrealEditor...
+[Adaptive Build] Excluded from Renderer unity file: DeferredShadingRenderer.cpp, SceneRendering.cpp, RayTracingInstanceCulling.cpp
+[Adaptive Build] Excluded from Engine unity file: RayTracingGeometryManager.cpp
+Executing up to 12 actions based on MaxProcessorCount override
+Using Unreal Build Accelerator local executor to run 2419 action(s)
+  Storage capacity 40Gb
+---- Starting trace ----
+UbaSessionServer - Disable remote execution (remote sessions will finish current processes)
+------ Building 2419 action(s) started ------
+[1/2419] Compile Module.BuildSettings.cpp
+[2/2419] Link (lld) libUnrealEditor-BuildSettings.so (UBA disabled)
+[3/2419] Compile Module.CorePreciseFP.cpp
+[4/2419] Compile MiMalloc.c
+[5/2419] Compile Module.TraceLog.cpp
+[6/2419] Link (lld) libUnrealEditor-TraceLog.so (UBA disabled)
+[7/2419] Generate Header [x86-64] BonePose.ispc
+[8/2419] Generate Header [x86-64] AnimationRuntime.ispc
+[9/2419] Generate Header [x86-64] AnimEncoding_ConstantKeyLerp.ispc
+[10/2419] Compile SharedPCH.Core.Cpp20.h
+[11/2419] Compile Module.NetCommon.cpp
+[12/2419] Generate Header [x86-64] GPUSkinVertexFactory.ispc
+[13/2419] Generate Header [x86-64] AnimEncoding_VariableKeyLerp.ispc
+[14/2419] Compile PCH.Core.h
+[15/2419] Generate Header [x86-64] SkinnedAsset.ispc
+[16/2419] Generate Header [x86-64] AnimEncoding_PerTrackCompression.ispc
+[17/2419] Generate Header [x86-64] KAggregateGeom.ispc
+[18/2419] Compile SharedPCH.CoreUObject.Cpp20.h
+[19/2419] Compile Module.Sockets.cpp
+Canceling actions...

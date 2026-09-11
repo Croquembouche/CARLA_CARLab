@@ -1,0 +1,14 @@
+{
+  "carla_source_commit": "1360bb9aff0f1aaa6216876ceee777528128306f",
+  "unreal_engine": {
+    "MajorVersion": 5,
+    "MinorVersion": 5,
+    "PatchVersion": 4,
+    "Changelist": 0,
+    "CompatibleChangelist": 37670630,
+    "IsLicenseeVersion": 0,
+    "IsPromotedBuild": 0,
+    "BranchName": "UE5"
+  },
+  "note": "Source trees include local modifications; use matching CARLA UE5 content. Native scenery removal does not depend on Control Center."
+}

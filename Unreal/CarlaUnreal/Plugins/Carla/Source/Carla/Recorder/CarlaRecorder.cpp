@@ -13,6 +13,7 @@
 #include "Carla/Lights/CarlaLight.h"
 #include "Carla/Lights/CarlaLightSubsystem.h"
 #include "Carla/Traffic/TrafficLightController.h"
+#include "Carla/Traffic/TrafficLightComponent.h"
 #include "Carla/Traffic/TrafficLightGroup.h"
 #include "Carla/Traffic/TrafficLightBase.h"
 #include "Carla/Walker/WalkerControl.h"
@@ -285,6 +286,9 @@ void ACarlaRecorder::AddWalkerAnimation(FCarlaActor *CarlaActor)
 
 void ACarlaRecorder::AddTrafficLightState(FCarlaActor *CarlaActor)
 {
+  if (const auto* Light=Cast<ATrafficLightBase>(CarlaActor->GetActor()))
+    if (const auto* Component=Light->GetTrafficLightComponent())
+      MovementSignals.Add({CarlaActor->GetActorId(),Component->GetMovementStates()});
   check(CarlaActor != nullptr);
 
   ETrafficLightState LightState = CarlaActor->GetTrafficLightState();
@@ -512,6 +516,7 @@ void ACarlaRecorder::Clear(void)
   Collisions.Clear();
   Positions.Clear();
   States.Clear();
+  MovementSignals.Clear();
   Vehicles.Clear();
   Walkers.Clear();
   LightVehicles.Clear();
@@ -547,6 +552,7 @@ void ACarlaRecorder::Write(double DeltaSeconds)
   // positions and states
   Positions.Write(File);
   States.Write(File);
+  MovementSignals.Write(File);
 
   // animations
   Vehicles.Write(File);

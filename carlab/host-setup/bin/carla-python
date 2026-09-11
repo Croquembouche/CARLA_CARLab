@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -e
+source /mnt/simulations/carla/carlab/host-setup/env.sh
+exec env -u PYTHONPATH -u PYTHONHOME "$CARLA_VENV/bin/python" "$@"

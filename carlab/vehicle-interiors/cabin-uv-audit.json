@@ -1,0 +1,73 @@
+{
+  "source": {
+    "layers": [
+      "DiffuseUV",
+      "LightMapUV",
+      "DiffuseUV.001",
+      "DiffuseUV.002"
+    ],
+    "active": "DiffuseUV",
+    "render": [
+      "DiffuseUV"
+    ]
+  },
+  "export": {
+    "layers": [
+      "DiffuseUV",
+      "LightMapUV",
+      "DiffuseUV.001",
+      "DiffuseUV.002",
+      "WebbingUV",
+      "UVMap",
+      "UpholsteryUV"
+    ],
+    "active": "DiffuseUV",
+    "render": [
+      "DiffuseUV"
+    ],
+    "uv_range": {
+      "DiffuseUV": [
+        0.0,
+        0.9768166542053223,
+        0.0,
+        0.8941532373428345
+      ],
+      "LightMapUV": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "DiffuseUV.001": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "DiffuseUV.002": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "WebbingUV": [
+        0.0,
+        1.0,
+        0.0,
+        1.0
+      ],
+      "UVMap": [
+        0.0,
+        1.0,
+        0.0,
+        1.0
+      ],
+      "UpholsteryUV": [
+        0.0,
+        1.0000001192092896,
+        0.0,
+        1.0000001192092896
+      ]
+    }
+  }
+}

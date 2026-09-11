@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -e
+source /mnt/simulations/carla/carlab/host-setup/env.sh
+export LD_LIBRARY_PATH="$CARLA_UNREAL_ENGINE_PATH/Engine/Source/ThirdParty/EOSSDK/SDK/Bin:$CARLA_UNREAL_ENGINE_PATH/Engine/Source/ThirdParty/Boost/boost-1_82_0/lib/Unix/x86_64-unknown-linux-gnu:$CARLA_UNREAL_ENGINE_PATH/Engine/Plugins/Developer/TextureFormatOodle/Sdks/2.9.12/redist/Linux:$CARLA_UNREAL_ENGINE_PATH/Engine/Plugins/Developer/TextureFormatOodle/Sdks/2.9.5/redist/Linux${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+exec env -u PYTHONHOME -u PYTHONPATH "UE_LocalDataCachePath=$SIMULATIONS_LINUX/cache/unreal" "UE_ZenDataPath=$SIMULATIONS_LINUX/cache/zen" "$CARLA_UNREAL_ENGINE_PATH/Engine/Binaries/Linux/UnrealEditor" "$CARLA_ROOT/Unreal/CarlaUnreal/CarlaUnreal.uproject" "$@"

@@ -1,0 +1,32 @@
+{
+  "cabin_faces": 107049,
+  "cabin_vertices": 117959,
+  "materials": [
+    "MI_LincolnMKZ_Bodywork",
+    "MI_LincolnMKZ_Interior2",
+    "MI_LincolnMKZ_Interior01",
+    "MKZ_Seatbelt_Webbing",
+    "MKZ_Seat_Base_Plastic",
+    "MKZ_Seat_Hardware",
+    "MKZ_Belt_Release",
+    "M_Interior_Mat",
+    "M_Interior_Edge",
+    "MKZ_Ebony_Leather",
+    "MKZ_Perforated_Leather",
+    "MKZ_Stitch_Charcoal"
+  ],
+  "removed_original_cabin_faces": 18367,
+  "exterior_bones": [
+    "Vehicle_Base",
+    "Wheel_Front_Left",
+    "Wheel_Front_Right",
+    "Wheel_Rear_Right",
+    "Wheel_Rear_Left",
+    "Door_Front_Right",
+    "Door_Front_Left",
+    "Door_Rear_Right",
+    "Door_Rear_Left"
+  ],
+  "exterior_faces": 568675,
+  "root_weighted_vertices": 178233
+}

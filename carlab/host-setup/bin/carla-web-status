@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+systemctl --user --no-pager status carla-control-center.service

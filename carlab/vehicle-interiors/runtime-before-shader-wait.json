@@ -1,0 +1,13 @@
+{
+  "result": "INCOMPLETE_VISUAL_CHECK",
+  "vehicle": "vehicle.lincoln.mkz_interior",
+  "map": "Carla/Maps/Town10HD_Opt",
+  "cameras": [
+    "carla_dashboard"
+  ],
+  "server": "0.10.0",
+  "texture_pool_mb": 2048,
+  "simultaneous_cameras": 1,
+  "note": "RGB cabin visibility. Epic scalability with bounded texture and virtual-shadow pools; no VR test.",
+  "visual_note": "Fallback shaders visible; retesting with synchronous shader compilation."
+}

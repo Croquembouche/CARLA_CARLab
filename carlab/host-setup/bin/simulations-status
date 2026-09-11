@@ -1,0 +1,15 @@
+#!/usr/bin/env python3
+from pathlib import Path
+import subprocess
+root=Path('/mnt/simulations/carla/carlab/host-setup')
+for unit in ('simulations-build', 'simulations-runtime-verification', 'simulations-gpu-verification'):
+    result = subprocess.run(['systemctl','--user','show',unit,'-p','ActiveState','-p','SubState'],capture_output=True,text=True)
+    if 'ActiveState=active' in result.stdout or 'ActiveState=failed' in result.stdout:
+        print(unit + ': ' + result.stdout.strip().replace('\n', ', '))
+for name in ('build-status.txt','gpu-verification.log'):
+    path=root/'logs'/name
+    if path.exists():
+        with path.open('rb') as stream:
+            stream.seek(max(0,path.stat().st_size-8192))
+            lines=stream.read().decode(errors='replace').replace('\r','\n').splitlines()
+        print(name+': '+next((line for line in reversed(lines) if line.strip()),'empty'))

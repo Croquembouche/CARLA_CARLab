@@ -5,6 +5,7 @@
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
 #include "Carla/Sensor/RayCastSemanticLidar.h"
+#include "Carla/Sensor/GpuSensorDispatcher.h"
 #include "Carla.h"
 #include "Carla/Actor/ActorBlueprintFunctionLibrary.h"
 #include "Carla/Game/Tagger.h"
@@ -73,9 +74,18 @@ void ARayCastSemanticLidar::CreateLasers()
 void ARayCastSemanticLidar::PostPhysTick(UWorld *World, ELevelTick TickType, float DeltaTime)
 {
   TRACE_CPUPROFILER_EVENT_SCOPE(ARayCastSemanticLidar::PostPhysTick);
-  SimulateLidar(DeltaTime);
-
+  // Multi-GPU worlds replicate sensors, but only the assigned stream worker
+  // should spend time tracing. Retain recording and ROS consumers.
+  // AreClientsListening also includes enabled ROS streams and forced activity.
+  const bool Needed = AreClientsListening() || bSavingDataToDisk;
+  if (!Needed) return;
+  CarlaGpuSensors::BeginSensorTick(*this);
+  const AActor* ParentAtCapture = GetAttachParentActor();
+  const FTransform RelativeAtCapture = ParentAtCapture
+      ? GetActorTransform().GetRelativeTransform(ParentAtCapture->GetActorTransform()) : GetActorTransform();
   auto DataStream = GetDataStream(*this);
+  auto Send = [this, RelativeAtCapture, DataStream = MoveTemp(DataStream)]() mutable
+  {
   auto SensorTransform = DataStream.GetSensorTransform();
   {
     TRACE_CPUPROFILER_EVENT_SCOPE_STR("Send Stream");
@@ -91,7 +101,7 @@ void ARayCastSemanticLidar::PostPhysTick(UWorld *World, ELevelTick TickType, flo
     AActor* ParentActor = GetAttachParentActor();
     if (ParentActor)
     {
-      FTransform LocalTransformRelativeToParent = GetActorTransform().GetRelativeTransform(ParentActor->GetActorTransform());
+      FTransform LocalTransformRelativeToParent = RelativeAtCapture;
       ROS2->ProcessDataFromSemanticLidar(DataStream.GetSensorType(), StreamId, LocalTransformRelativeToParent, SemanticLidarData, this);
     }
     else
@@ -100,6 +110,15 @@ void ARayCastSemanticLidar::PostPhysTick(UWorld *World, ELevelTick TickType, flo
     }
   }
   #endif
+  };
+  if (CarlaGpuSensors::IsEnabled())
+    SimulateLidarGpu(DeltaTime, MoveTemp(Send));
+  else
+  {
+    SimulateLidar(DeltaTime);
+    Send();
+  }
+
 }
 
 void ARayCastSemanticLidar::SimulateLidar(const float DeltaTime)
@@ -173,6 +192,50 @@ void ARayCastSemanticLidar::ResetRecordedHits(uint32_t Channels, uint32_t MaxPoi
   }
 }
 
+void ARayCastSemanticLidar::SimulateLidarGpu(float DeltaTime, TUniqueFunction<void()>&& Complete)
+{
+  TRACE_CPUPROFILER_EVENT_SCOPE(CarlaGpuLidarSubmit);
+  // Complete the preceding GPU batch before consuming the next random values.
+  CarlaGpuSensors::Pump();
+  const uint32 Channels = Description.Channels;
+  const uint32 Count = FMath::Max(0, FMath::RoundHalfFromZero(
+      Description.PointsPerSecond * DeltaTime / float(Channels)));
+  const FTransform Transform = GetActorTransform();
+  const float Start = carla::geom::Math::ToDegrees(SemanticLidarData.GetHorizontalAngle());
+  const float Sweep = Description.RotationFrequency * Description.HorizontalFov * DeltaTime;
+  const float NextAngle = carla::geom::Math::ToRadians(FMath::Fmod(Start + Sweep, Description.HorizontalFov));
+  PreprocessRays(Channels, Count);
+  TArray<FCarlaGpuRay> Rays;
+  TArray<uint32> ChannelIndices;
+  Rays.Reserve(Channels * Count);
+  ChannelIndices.Reserve(Channels * Count);
+  for (uint32 Channel = 0; Channel < Channels; ++Channel)
+    for (uint32 Point = 0; Point < Count; ++Point)
+    {
+      if (!RayPreprocessCondition[Channel][Point]) continue;
+      const float Horizontal = FMath::Fmod(Start + Sweep * Point / Count,
+          Description.HorizontalFov) - Description.HorizontalFov * 0.5f;
+      // Rotate the unit direction directly: avoid converting the sensor's
+      // quaternion to Euler angles and back for every point in the batch.
+      const FVector Direction = Transform.TransformVectorNoScale(
+          FRotator(LaserAngles[Channel], Horizontal, 0).Vector());
+      Rays.Add({Transform.GetLocation(), Direction, Description.Range});
+      ChannelIndices.Add(Channel);
+    }
+  CarlaGpuSensors::Submit(*this, MoveTemp(Rays),
+      [this, Transform, Channels, Count, NextAngle, ChannelIndices = MoveTemp(ChannelIndices),
+       Complete = MoveTemp(Complete)](TArray<FCarlaGpuHit>&& Hits) mutable
+  {
+    TRACE_CPUPROFILER_EVENT_SCOPE(CarlaGpuLidarComplete);
+    ResetRecordedHits(Channels, Count);
+    for (int32 I = 0; I < Hits.Num(); ++I)
+      if (Hits[I].Hit.bBlockingHit) WritePointAsync(ChannelIndices[I], Hits[I].Hit);
+    ComputeAndSaveDetections(Transform);
+    SemanticLidarData.SetHorizontalAngle(NextAngle);
+    Complete();
+  });
+}
+
 void ARayCastSemanticLidar::PreprocessRays(uint32_t Channels, uint32_t MaxPointsPerChannel) {
   RayPreprocessCondition.resize(Channels);
 
@@ -220,11 +283,14 @@ void ARayCastSemanticLidar::ComputeRawDetection(const FHitResult& HitInfo, const
     Detection.object_idx = 0;
     
     // Given that landscapes do not have tags for now, asign it here if the actor is a landscape, otherwise get the component tag
-    if (actor->IsA<ALandscape>()){
+    if (actor && actor->IsA<ALandscape>()){
       Detection.object_tag = static_cast<uint32_t>(ATagger::GetTagFromString("Terrain"));
     }
-    else {
+    else if (HitInfo.Component.IsValid() && !HitInfo.Component->ComponentTags.IsEmpty()) {
       Detection.object_tag = static_cast<uint32_t>(ATagger::GetTagFromString(HitInfo.Component->ComponentTags[0].ToString()));
+    }
+    else {
+      Detection.object_tag = 0;
     }
 
     if (actor != nullptr) {

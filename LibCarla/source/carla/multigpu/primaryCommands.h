@@ -41,7 +41,9 @@ class PrimaryCommands {
     // send to know if a connection is alive
     void SendIsAlive();
 
-    token_type GetToken(stream_id sensor_id);
+    token_type GetToken(stream_id sensor_id, double cost = 1., uint32_t actor_id = 0);
+
+    void ReleaseSensor(stream_id sensor_id);
 
     void EnableForROS(stream_id sensor_id);
 
@@ -52,7 +54,7 @@ class PrimaryCommands {
   private:
 
     // send to one secondary to get the token of a sensor
-    token_type SendGetToken(carla::streaming::detail::stream_id_type sensor_id);
+    token_type SendGetToken(stream_id sensor_id, std::weak_ptr<Primary> server, uint32_t actor_id);
 
     // manage ROS enable/disable of sensor
     void SendEnableForROS(stream_id sensor_id);

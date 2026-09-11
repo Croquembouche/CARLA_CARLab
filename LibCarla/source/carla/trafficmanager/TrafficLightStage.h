@@ -43,6 +43,8 @@ private:
 
   /// Get current affected junction id for the vehicle
   JunctionID GetAffectedJunctionId(const ActorId ego_actor_id);
+  int GetMovement(const ActorId actor_id) const;
+  bool MovementYieldHazard(const ActorId actor_id) const;
 
 public:
   TrafficLightStage(const std::vector<ActorId> &vehicle_id_list,

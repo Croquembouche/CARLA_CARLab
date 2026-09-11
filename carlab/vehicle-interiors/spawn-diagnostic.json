@@ -1,0 +1,9 @@
+{
+  "vehicle.lincoln.mkz": {
+    "wheels": 4,
+    "extent": "Vector3D(x=2.445985, y=0.917823, z=0.762059)"
+  },
+  "vehicle.lincoln.mkz_interior": {
+    "error": "std::exception"
+  }
+}

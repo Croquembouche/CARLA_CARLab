@@ -113,6 +113,7 @@ public:
   UTrafficLightController* Controller;
 
   ETrafficLightState LightState;
+  uint16 MovementStates = 0;
 
   FString SignId;
 

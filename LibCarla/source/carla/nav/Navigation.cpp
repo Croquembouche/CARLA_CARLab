@@ -264,6 +264,31 @@ namespace nav {
   }
 
   // return the path points to go from one position to another
+  std::vector<carla::geom::Location> Navigation::GetCompletePath(ActorId id,
+      carla::geom::Location from, carla::geom::Location to) {
+    std::scoped_lock<std::mutex> lock(_mutex);
+    if (!_ready || !_nav_query || !_crowd) return {};
+    const dtQueryFilter *filter = _crowd->getFilter(0);
+    const auto walker = _mapped_walkers_id.find(id);
+    if (walker != _mapped_walkers_id.end())
+      filter = _crowd->getFilter(_crowd->getAgent(walker->second)->params.queryFilterType);
+    float ext[3] = {2.f,4.f,2.f};
+    float start[3] = {from.x,from.z,from.y}, end[3] = {to.x,to.z,to.y};
+    float projected_start[3], projected_end[3]; dtPolyRef a=0,b=0;
+    if (dtStatusFailed(_nav_query->findNearestPoly(start,ext,filter,&a,projected_start)) ||
+        dtStatusFailed(_nav_query->findNearestPoly(end,ext,filter,&b,projected_end)) || !a || !b) return {};
+    dtPolyRef corridor[MAX_POLYS]; int count=0;
+    auto status=_nav_query->findPath(a,b,projected_start,projected_end,filter,corridor,&count,MAX_POLYS);
+    if (dtStatusFailed(status) || dtStatusDetail(status,DT_BUFFER_TOO_SMALL) ||
+        dtStatusDetail(status,DT_OUT_OF_NODES) || !count || corridor[count-1]!=b) return {};
+    float points[MAX_POLYS*3]; unsigned char flags[MAX_POLYS]; dtPolyRef refs[MAX_POLYS]; int n=0;
+    status=_nav_query->findStraightPath(projected_start,projected_end,corridor,count,points,flags,refs,&n,MAX_POLYS,DT_STRAIGHTPATH_AREA_CROSSINGS);
+    if (dtStatusFailed(status) || dtStatusDetail(status,DT_BUFFER_TOO_SMALL) || !n || !(flags[n-1]&DT_STRAIGHTPATH_END)) return {};
+    std::vector<carla::geom::Location> result; result.reserve(n);
+    for(int i=0;i<n;++i) result.emplace_back(points[3*i],points[3*i+2],points[3*i+1]);
+    return result;
+  }
+
   bool Navigation::GetPath(carla::geom::Location from,
                            carla::geom::Location to,
                            dtQueryFilter * filter,
@@ -895,7 +920,7 @@ namespace nav {
           _walkers_blocked_position[i] = current;
 
           // check to assign a new target position
-          if (reset_target_pos) {
+          if (reset_target_pos && !_walker_manager.HasExplicitTarget(_mapped_by_index[i])) {
             // set if the agent can cross roads or not
             if (!use_same_filter) {
               if (frand() <= _probability_crossing) {

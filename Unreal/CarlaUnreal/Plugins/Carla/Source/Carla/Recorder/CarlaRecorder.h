@@ -33,7 +33,8 @@
 #include "CarlaRecorderVisualTime.h"
 #include "CarlaRecorderWalkerBones.h"
 #include "CarlaRecorderDoorVehicle.h"
-#include "CarlaRecorderWeather.h"
+#include "Carla/Recorder/CarlaRecorderWeather.h"
+#include "Carla/Recorder/CarlaRecorderMovementSignal.h"
 #include "CarlaReplayer.h"
 #include "Carla/Vehicle/CarlaWheeledVehicle.h"
 
@@ -72,7 +73,8 @@ enum class CarlaRecorderPacketId : uint8_t
   AnimVehicleWheels,
   AnimBiker,
   VehicleDoor,
-  Weather
+  Weather,
+  MovementSignal
 };
 
 /// Recorder for the simulation
@@ -212,6 +214,7 @@ private:
   CarlaRecorderCollisions Collisions;
   CarlaRecorderPositions Positions;
   CarlaRecorderStates States;
+  CarlaRecorderMovementSignals MovementSignals;
   CarlaRecorderAnimVehicles Vehicles;
   CarlaRecorderAnimVehicleWheels Wheels;
   CarlaRecorderAnimWalkers Walkers;

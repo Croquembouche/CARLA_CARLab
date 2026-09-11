@@ -5,6 +5,7 @@
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
 #include "Carla/Sensor/Radar.h"
+#include "Carla/Sensor/GpuSensorDispatcher.h"
 #include "Carla.h"
 #include "Carla/Actor/ActorBlueprintFunctionLibrary.h"
 
@@ -80,10 +81,18 @@ void ARadar::PostPhysTick(UWorld *World, ELevelTick TickType, float DeltaTime)
   TRACE_CPUPROFILER_EVENT_SCOPE(ARadar::PostPhysTick);
   CalculateCurrentVelocity(DeltaTime);
 
-  RadarData.Reset();
-  SendLineTraces(DeltaTime);
-
+  // Multi-GPU worlds replicate sensors, but only the assigned stream worker
+  // should spend time tracing. Retain recording and ROS consumers.
+  // AreClientsListening also includes enabled ROS streams and forced activity.
+  const bool Needed = AreClientsListening() || bSavingDataToDisk;
+  if (!Needed) return;
+  CarlaGpuSensors::BeginSensorTick(*this);
+  const AActor* ParentAtCapture = GetAttachParentActor();
+  const FTransform RelativeAtCapture = ParentAtCapture
+      ? GetActorTransform().GetRelativeTransform(ParentAtCapture->GetActorTransform()) : GetActorTransform();
   auto DataStream = GetDataStream(*this);
+  auto Send = [this, RelativeAtCapture, DataStream = MoveTemp(DataStream)]() mutable
+  {
 
   // ROS2
   #if defined(WITH_ROS2)
@@ -95,7 +104,7 @@ void ARadar::PostPhysTick(UWorld *World, ELevelTick TickType, float DeltaTime)
     AActor* ParentActor = GetAttachParentActor();
     if (ParentActor)
     {
-      FTransform LocalTransformRelativeToParent = GetActorTransform().GetRelativeTransform(ParentActor->GetActorTransform());
+      FTransform LocalTransformRelativeToParent = RelativeAtCapture;
       ROS2->ProcessDataFromRadar(DataStream.GetSensorType(), StreamId, LocalTransformRelativeToParent, RadarData, this);
     }
     else
@@ -109,6 +118,15 @@ void ARadar::PostPhysTick(UWorld *World, ELevelTick TickType, float DeltaTime)
     TRACE_CPUPROFILER_EVENT_SCOPE_STR("Send Stream");
     DataStream.SerializeAndSend(*this, RadarData, DataStream.PopBufferFromPool());
   }
+  };
+  if (CarlaGpuSensors::IsEnabled()) SendGpuTraces(DeltaTime, MoveTemp(Send));
+  else
+  {
+    RadarData.Reset();
+    SendLineTraces(DeltaTime);
+    Send();
+  }
+
 }
 
 void ARadar::CalculateCurrentVelocity(const float DeltaTime)
@@ -218,4 +236,44 @@ float ARadar::CalculateRelativeVelocity(const FHitResult& OutHit, const FVector&
   const float V = TO_METERS * FVector::DotProduct(DeltaVelocity, Direction);
 
   return V;
+}
+
+void ARadar::SendGpuTraces(float DeltaTime, TUniqueFunction<void()>&& Complete)
+{
+  TRACE_CPUPROFILER_EVENT_SCOPE(CarlaGpuRadarSubmit);
+  CarlaGpuSensors::Pump();
+  const FTransform Transform = GetActorTransform();
+  const FVector Velocity = CurrentVelocity;
+  const float MaxX = FMath::Tan(FMath::DegreesToRadians(HorizontalFOV * 0.5f)) * Range;
+  const float MaxY = FMath::Tan(FMath::DegreesToRadians(VerticalFOV * 0.5f)) * Range;
+  const int32 Count = FMath::Max(0, int32(PointsPerSecond * DeltaTime));
+  TArray<FCarlaGpuRay> Rays;
+  TArray<FVector2D> Angles;
+  TArray<FVector> Directions;
+  Rays.Reserve(Count);
+  for (int32 I = 0; I < Count; ++I)
+  {
+    const float Radius = RandomEngine->GetUniformFloat();
+    const float Angle = RandomEngine->GetUniformFloatInRange(0, carla::geom::Math::Pi2<float>());
+    float Sin, Cos;
+    FMath::SinCos(&Sin, &Cos, Angle);
+    const FVector Delta = Transform.GetRotation().RotateVector(FVector(Range, MaxX * Radius * Cos, MaxY * Radius * Sin));
+    const FVector Direction = Delta.GetSafeNormal();
+    Rays.Add({Transform.GetLocation(), Direction, float(Delta.Size())});
+    Directions.Add(Direction);
+    Angles.Add(FMath::GetAzimuthAndElevation(Direction * Range,
+        Transform.GetUnitAxis(EAxis::X), Transform.GetUnitAxis(EAxis::Y), Transform.GetUnitAxis(EAxis::Z)));
+  }
+  CarlaGpuSensors::Submit(*this, MoveTemp(Rays),
+      [this, Velocity, Directions = MoveTemp(Directions), Angles = MoveTemp(Angles),
+       Complete = MoveTemp(Complete)](TArray<FCarlaGpuHit>&& Hits) mutable
+  {
+    TRACE_CPUPROFILER_EVENT_SCOPE(CarlaGpuRadarComplete);
+    RadarData.Reset();
+    for (int32 I = 0; I < Hits.Num(); ++I)
+      if (Hits[I].Hit.bBlockingHit)
+        RadarData.WriteDetection({float(0.01 * FVector::DotProduct(Hits[I].TargetVelocity - Velocity, Directions[I])),
+            float(Angles[I].X), float(Angles[I].Y), Hits[I].Hit.Distance * 0.01f});
+    Complete();
+  });
 }

@@ -948,7 +948,9 @@ void ASceneCaptureSensor::BeginPlay()
 
   CaptureComponent2D->CaptureSource = ESceneCaptureSource::SCS_FinalToneCurveHDR;
 
-  CaptureComponent2D->UpdateContent();
+  // PostPhysTick captures only when a stream or GBuffer has a consumer.
+  // An eager UpdateContent here renders every replicated camera once and
+  // retains unused Lumen/view resources on every GPU worker.
   CaptureComponent2D->Activate();
 
   // Nudge texture streaming priority at the new sensor's location so

@@ -1,0 +1,9 @@
+{
+  "result": "PASS",
+  "cameras": 4,
+  "outboard_seats": 4,
+  "rear_center_seat": true,
+  "stitch_curves": 1920,
+  "textures_packed": true,
+  "finite_geometry": true
+}

@@ -1,0 +1,29 @@
+{
+  "material": "/Game/VehicleInteriors/Lincoln/MI_MKZ_Ebony_Interior.MI_MKZ_Ebony_Interior",
+  "overrides": [
+    [
+      "CabinReplacement_GEN_VARIABLE",
+      0
+    ],
+    [
+      "SM_LincolnDoor_Back_R_GEN_VARIABLE",
+      2
+    ],
+    [
+      "SM_LincolnDoor_Back_L_GEN_VARIABLE",
+      2
+    ],
+    [
+      "SM_LincolnDoor_Front_L_GEN_VARIABLE",
+      2
+    ],
+    [
+      "SM_LincolnDoor_Front_R_GEN_VARIABLE",
+      2
+    ]
+  ],
+  "cabin": "/Game/VehicleInteriors/Lincoln/SM_MKZ_Cabin_v2.SM_MKZ_Cabin_v2",
+  "bounds_cm": "<Struct 'BoxSphereBounds' (0x96e1c733340) {origin: {x: -2.167137, y: 0.000008, z: 88.695197}, box_extent: {x: 237.496208, y: 89.839760, z: 62.848031}, sphere_radius: 244.716364}>",
+  "replacement_component": "CabinReplacement_GEN_VARIABLE",
+  "seating": "new contoured geometry"
+}

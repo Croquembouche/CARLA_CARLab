@@ -76,6 +76,7 @@ void CarlaReplayer::Rewind(void)
 double CarlaReplayer::GetTotalTime(void)
 {
   std::streampos Current = File.tellg();
+  double LastDuration = 0.05; // Legacy single-frame files contain no measured interval.
 
   // parse only frames
   while (File)
@@ -91,6 +92,7 @@ double CarlaReplayer::GetTotalTime(void)
     {
       case static_cast<char>(CarlaRecorderPacketId::FrameStart):
         Frame.Read(File);
+        if (Frame.DurationThis > 0.0) LastDuration = Frame.DurationThis;
         break;
       default:
         SkipPacket();
@@ -100,7 +102,8 @@ double CarlaReplayer::GetTotalTime(void)
 
   File.clear();
   File.seekg(Current, std::ios::beg);
-  return Frame.Elapsed;
+  // Include the interval containing the final sample.
+  return Frame.Elapsed + LastDuration;
 }
 
 std::string CarlaReplayer::ReplayFile(
@@ -280,6 +283,7 @@ void CarlaReplayer::ProcessToTime(double Time, bool IsFirstTime)
 {
   double Per = 0.0f;
   double NewTime = CurrentTime + Time;
+  const bool bAtEnd = NewTime + 1.e-7 >= TotalTime;
   bool bFrameFound = false;
   bool bExitAtNextFrame = false;
   bool bExitLoop = false;
@@ -305,10 +309,14 @@ void CarlaReplayer::ProcessToTime(double Time, bool IsFirstTime)
       case static_cast<char>(CarlaRecorderPacketId::FrameStart):
         // only read if we are not in the right frame
         Frame.Read(File);
+        // The recorder leaves -1 in the final frame duration until another
+        // frame arrives. Use the final interval inferred during the scan.
+        if (Frame.DurationThis <= 0.0)
+          Frame.DurationThis = FMath::Max(1.e-7, TotalTime - Frame.Elapsed);
         // check if target time is in this frame
         if (NewTime < Frame.Elapsed + Frame.DurationThis)
         {
-          Per = (NewTime - Frame.Elapsed) / Frame.DurationThis;
+          Per = Frame.DurationThis > 0.0 ? (NewTime - Frame.Elapsed) / Frame.DurationThis : 1.0;
           bFrameFound = true;
         }
         break;
@@ -419,6 +427,10 @@ void CarlaReplayer::ProcessToTime(double Time, bool IsFirstTime)
         break;
 
       // weather
+      case static_cast<char>(CarlaRecorderPacketId::MovementSignal):
+        ProcessMovementSignals();
+        break;
+
       case static_cast<char>(CarlaRecorderPacketId::Weather):
         ProcessWeather();
         break;
@@ -439,19 +451,28 @@ void CarlaReplayer::ProcessToTime(double Time, bool IsFirstTime)
   }
 
   // update all positions
-  if (Enabled && bFrameFound)
+  if (Enabled && (bFrameFound || bAtEnd))
   {
-    UpdatePositions(Per, Time);
+    UpdatePositions(bAtEnd ? 1.0 : Per, Time);
   }
 
   // save current time
   CurrentTime = NewTime;
 
   // stop replay?
-  if (CurrentTime >= TimeToStop)
+  if (Enabled && CurrentTime + 1.e-7 >= TimeToStop)
   {
-    // keep actors in scene and let them continue with autopilot
-    Stop(true);
+    if (bAtEnd)
+    {
+      // Hold the last recorded transforms. Re-enabling physics here can restore
+      // a stale body transform and move vehicles backwards at the replay end.
+      Enabled = false;
+      if (File.is_open()) File.close();
+    }
+    else
+    {
+      Stop(true);
+    }
   }
 }
 
@@ -857,4 +878,9 @@ void CarlaReplayer::Tick(float Delta)
   {
     ProcessToTime(Delta * TimeFactor, false);
   }
+}
+
+void CarlaReplayer::ProcessMovementSignals() {
+  CarlaRecorderMovementSignals Signals; Signals.Read(File);
+  for (const auto& S : Signals.Signals) Helper.ProcessMovementSignal(MappedId[S.DatabaseId],S.States);
 }

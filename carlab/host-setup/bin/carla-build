@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec /bin/bash /mnt/simulations/carla/carlab/host-setup/scripts/build-stack.sh "$@"

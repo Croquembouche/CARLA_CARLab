@@ -5,6 +5,7 @@
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
 #include <Carla/Sensor/ImageUtil.h>
+#include "Carla/Sensor/GpuSensorDispatcher.h"
 #include <Carla/Sensor/ShaderBasedSensor.h>
 #include <Carla/Carla.h>
 
@@ -209,6 +210,8 @@ namespace ImageUtil
     TUniquePtr<FRHIGPUTextureReadback> FallbackReadback;
     FRHIGPUReadbackPoolPtr Pool;
     int32 SlotIndex = INDEX_NONE;
+    double Enqueued=0;
+    FRenderQueryRHIRef CopyStart,CopyEnd;
   };
 
   static void ReadImageDataBegin(
@@ -217,12 +220,11 @@ namespace ImageUtil
     FRHIGPUReadbackPoolPtr Pool,
     ReadImageDataAsyncCallback&& Callback)
   {
-    static thread_local auto RenderQueryPool =
-        RHICreateRenderQueryPool(RQT_AbsoluteTime);
-
     auto& CmdList = FRHICommandListImmediate::Get();
     auto Resource = static_cast<FTextureRenderTarget2DResource*>(
       RenderTarget.GetResource());
+    if (Resource == nullptr)
+      return;
     auto Texture = Resource->GetRenderTargetTexture();
     if (Texture == nullptr)
       return;
@@ -241,26 +243,20 @@ namespace ImageUtil
     Self.Size = Texture->GetSizeXY();
     Self.Format = Texture->GetFormat();
     auto ResolveRect = FResolveRect();
+    CmdList.Transition(FRHITransitionInfo(Texture, ERHIAccess::Unknown, ERHIAccess::CopySrc));
+    Self.Enqueued=FPlatformTime::Seconds();
+    if (GSupportsTimestampRenderQueries) {Self.CopyStart=RHICreateRenderQuery(RQT_AbsoluteTime);Self.CopyEnd=RHICreateRenderQuery(RQT_AbsoluteTime);CmdList.EndRenderQuery(Self.CopyStart);}
     Self.Readback->EnqueueCopy(CmdList, Texture, ResolveRect);
+    if (Self.CopyEnd) CmdList.EndRenderQuery(Self.CopyEnd);
+    CmdList.Transition(FRHITransitionInfo(Texture, ERHIAccess::CopySrc, ERHIAccess::SRVMask));
 
-    auto Query = RenderQueryPool->AllocateQuery();
-    CmdList.EndRenderQuery(Query.GetQuery());
-    CmdList.ImmediateFlush(EImmediateFlushType::FlushRHIThread);
-    uint64 DeltaTime;
-    RHIGetRenderQueryResult(Query.GetQuery(), DeltaTime, true);
-    Query.ReleaseQuery();
+    // The copy's GPU fence is polled by the shared readback queue. No
+    // per-camera RHI flush or blocking timestamp query is necessary.
+
   }
 
-  static void ReadImageDataEnd(
-    ReadImageDataContext& Self)
+  static void ReadImageDataRelease(ReadImageDataContext& Self)
   {
-    int32 RowPitch, BufferHeight;
-    auto MappedPtr = Self.Readback->Lock(RowPitch, &BufferHeight);
-    if (MappedPtr != nullptr)
-    {
-      ScopedCallback Unlock = [&] { Self.Readback->Unlock(); };
-      Self.Callback(MappedPtr, RowPitch, BufferHeight, Self.Format, Self.Size);
-    }
     if (Self.Pool && Self.SlotIndex != INDEX_NONE)
     {
       Self.Pool->Release(Self.SlotIndex);
@@ -268,16 +264,45 @@ namespace ImageUtil
     }
   }
 
+  static void ReadImageDataEnd(ReadImageDataContext&& Self)
+  {
+    check(IsInRenderingThread());
+    int32 RowPitch, BufferHeight;
+    auto MappedPtr = Self.Readback->Lock(RowPitch, &BufferHeight);
+    if (!MappedPtr) { ReadImageDataRelease(Self); return; }
+    // RHI mapping/unmapping stays on the render thread. Keep the staging slot
+    // locked while a background task converts its pixels, without a raw copy.
+    CarlaGpuSensors::DispatchReadbackCallback([
+      Self = std::move(Self), MappedPtr, RowPitch, BufferHeight]() mutable
+    {
+      ScopedCallback Release = [&Self]
+      {
+        ENQUEUE_RENDER_COMMAND(CarlaUnmapImageReadback)([
+          Self = std::move(Self)](FRHICommandListImmediate&) mutable
+        {
+          Self.Readback->Unlock();
+          ReadImageDataRelease(Self);
+        });
+      };
+      const double Started=FPlatformTime::Seconds();
+      Self.Callback(MappedPtr, RowPitch, BufferHeight, Self.Format, Self.Size);
+      CarlaGpuSensors::ProfileSample(TEXT("camera_convert_serialize_ms"),(FPlatformTime::Seconds()-Started)*1000);
+    });
+  }
+
   static void ReadImageDataEndAsync(
     ReadImageDataContext&& Self)
   {
-    AsyncTask(
-      ENamedThreads::HighTaskPriority, [
-      Self = std::move(Self)]() mutable
+    if (!Self.Readback) return;
+    CarlaGpuSensors::PollReadback([Self = std::move(Self)]() mutable
     {
-      while (!Self.Readback->IsReady())
-        std::this_thread::sleep_for(std::chrono::microseconds(100));
-      ReadImageDataEnd(Self);
+      if (!Self.Readback->IsReady()) return false;
+      CarlaGpuSensors::ProfileSample(TEXT("camera_readback_ready_ms"),(FPlatformTime::Seconds()-Self.Enqueued)*1000);
+      uint64 Start=0,End=0;
+      if (Self.CopyStart && RHIGetRenderQueryResult(Self.CopyStart,Start,false) && RHIGetRenderQueryResult(Self.CopyEnd,End,false) && End>=Start)
+        CarlaGpuSensors::ProfileSample(TEXT("camera_copy_gpu_ms"),double(End-Start)/1000.);
+      ReadImageDataEnd(std::move(Self));
+      return true;
     });
   }
 
@@ -313,7 +338,7 @@ namespace ImageUtil
       {
         ReadImageDataContext Context = { };
         ReadImageDataBegin(Context, RenderTarget, std::move(Pool), std::move(Callback));
-        ReadImageDataEnd(Context);
+        ReadImageDataEndAsync(std::move(Context));
       });
 
     }
@@ -375,7 +400,23 @@ namespace ImageUtil
     auto RenderTarget = Sensor.GetCaptureRenderTarget();
     if (RenderTarget == nullptr)
       return false;
-    return ReadImageDataAsyncFColor(*RenderTarget, std::move(Callback));
+    TWeakObjectPtr<AShaderBasedSensor> WeakSensor(&Sensor);
+    return ReadImageDataAsync(*RenderTarget, Sensor.GetReadbackPool(),
+      [WeakSensor, Callback = std::move(Callback)](
+        const void* Mapping, size_t RowPitch, size_t BufferHeight,
+        EPixelFormat Format, FIntPoint Size) mutable -> bool
+      {
+        FReadSurfaceDataFlags Flags;
+        TArray<FColor> Pixels;
+        Pixels.SetNum(Size.X * Size.Y);
+        if (!DecodePixelsByFormat(Mapping, RowPitch, Size, Format, Flags, Pixels)) return false;
+        CarlaGpuSensors::EnqueueGameThread([
+          WeakSensor, Callback = std::move(Callback), Pixels = MoveTemp(Pixels), Size]() mutable
+        {
+          if (WeakSensor.IsValid() && WeakSensor->HasActorBegunPlay()) Callback(Pixels, Size);
+        });
+        return true;
+      });
   }
 
 
@@ -409,6 +450,22 @@ namespace ImageUtil
     auto RenderTarget = Sensor.GetCaptureRenderTarget();
     if (RenderTarget == nullptr)
       return false;
-    return ReadImageDataAsyncFLinearColor(*RenderTarget, std::move(Callback));
+    TWeakObjectPtr<AShaderBasedSensor> WeakSensor(&Sensor);
+    return ReadImageDataAsync(*RenderTarget, Sensor.GetReadbackPool(),
+      [WeakSensor, Callback = std::move(Callback)](
+        const void* Mapping, size_t RowPitch, size_t BufferHeight,
+        EPixelFormat Format, FIntPoint Size) mutable -> bool
+      {
+        FReadSurfaceDataFlags Flags;
+        TArray<FLinearColor> Pixels;
+        Pixels.SetNum(Size.X * Size.Y);
+        if (!DecodePixelsByFormat(Mapping, RowPitch, Size, Format, Flags, Pixels)) return false;
+        CarlaGpuSensors::EnqueueGameThread([
+          WeakSensor, Callback = std::move(Callback), Pixels = MoveTemp(Pixels), Size]() mutable
+        {
+          if (WeakSensor.IsValid() && WeakSensor->HasActorBegunPlay()) Callback(Pixels, Size);
+        });
+        return true;
+      });
   }
 }

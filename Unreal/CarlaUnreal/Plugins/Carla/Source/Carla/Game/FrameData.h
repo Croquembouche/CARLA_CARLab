@@ -25,6 +25,8 @@
 #include "Carla/Recorder/CarlaRecorderInfo.h"
 #include "Carla/Recorder/CarlaRecorderPosition.h"
 #include "Carla/Recorder/CarlaRecorderFrameCounter.h"
+#include "Carla/Recorder/CarlaRecorderWeather.h"
+#include "Carla/Recorder/CarlaRecorderMovementSignal.h"
 #include "Carla/Recorder/CarlaRecorderState.h"
 #include "Carla/Actor/ActorDescription.h"
 #include "Carla/Lights/CarlaLight.h"
@@ -48,6 +50,7 @@ class FFrameData
   CarlaRecorderCollisions Collisions;
   CarlaRecorderPositions Positions;
   CarlaRecorderStates States;
+  CarlaRecorderMovementSignals MovementSignals;
   CarlaRecorderAnimVehicles Vehicles;
   CarlaRecorderAnimVehicleWheels Wheels;
   CarlaRecorderAnimWalkers Walkers;
@@ -61,6 +64,10 @@ class FFrameData
   CarlaRecorderPhysicsControls PhysicsControls;
   CarlaRecorderTrafficLightTimes TrafficLightTimes;
   CarlaRecorderFrameCounter FrameCounter;
+  CarlaRecorderFrame SimulationFrame{};
+  bool bHasSimulationFrame = false;
+  CarlaRecorderWeather ReplicatedWeather{};
+  bool bHasWeather = false;
 
   #pragma pack(push, 1)
   struct Header

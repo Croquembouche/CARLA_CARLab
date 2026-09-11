@@ -176,7 +176,8 @@ protected:
   static void SendDataToClient(
     SensorType&& Sensor,                  // The data's owning sensor.
     TArrayView<ElementType> SensorData,   // Data to send to the client.
-    uint64_t FrameIndex                   // Current frame index.
+    uint64_t FrameIndex,                  // Current frame index.
+    FAsyncDataStream* CapturedStream = nullptr // Immutable capture-time header.
     )
   {
     using carla::sensor::SensorRegistry;
@@ -186,7 +187,7 @@ protected:
     if (!Sensor.AreClientsListening())
         return;
 
-    auto Stream = Sensor.GetDataStream(Sensor);
+    auto Stream = CapturedStream ? MoveTemp(*CapturedStream) : Sensor.GetDataStream(Sensor);
     Stream.SetFrameNumber(FrameIndex);
     
     auto Buffer = Stream.PopBufferFromPool();

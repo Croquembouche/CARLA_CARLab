@@ -1,0 +1,771 @@
+Setting up bundled DotNet SDK
+Running command : dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll CarlaUnrealEditor Linux Development -project=/mnt/simulations/carla/Unreal/CarlaUnreal/CarlaUnreal.uproject -Module=CarlaUnreal -WaitMutex -MaxParallelActions=12
+Log file: /mnt/simulations/UnrealEngine5_carla/Engine/Programs/UnrealBuildTool/Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (/mnt/simulations/UnrealEngine5_carla).
+Creating makefile for CarlaUnrealEditor (command line arguments changed)
+Unity build is enabled.
+Slate UI is disabled.
+Online Subsystem is disabled.
+CarSim support is disabled.
+Chrono support is disabled.
+PyTorch support is disabled.
+OSM2ODR support is disabled.
+Ros2 support is enabled.
+Ros2 demo is disabled.
+Dynamic Library Added: /mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Source/Carla/../../Binaries/Linux/libcarla-ros2-native.so
+Unknown option "ROS2".
+OSM2ODR support is disabled.
+------- Build details --------
+Using toolchain located at '/mnt/simulations/UnrealEngine5_carla/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu'.
+Using clang (/mnt/simulations/UnrealEngine5_carla/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++) version 'clang version 18.1.0rc (github.com/llvm/llvm-project 461274b81d8641eab64d494accddc81d7db8a09e)
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+InstalledDir: /mnt/simulations/UnrealEngine5_carla/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin' (string), 18 (major), 1 (minor), 0 (patch)
+Using bundled libc++ standard C++ library.
+Using lld linker
+Using llvm-ar (/mnt/simulations/UnrealEngine5_carla/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/llvm-ar) version 'LLVM (http://llvm.org/):
+  LLVM version 18.1.0rc
+  Optimized build. (string)'
+Using fast way to relink  circularly dependent libraries (no FixDeps).
+Compressing debug files
+Targeted minimum CPU architecture: None
+------------------------------
+Building CarlaUnrealEditor...
+[Adaptive Build] Excluded from Renderer unity file: DeferredShadingRenderer.cpp, SceneRendering.cpp, RayTracingInstanceCulling.cpp
+[Adaptive Build] Excluded from Engine unity file: RayTracingGeometryManager.cpp
+Executing up to 12 actions based on MaxProcessorCount override
+Using Unreal Build Accelerator local executor to run 346 action(s)
+  Storage capacity 40Gb
+UbaSessionServer - Starting shared memory files at 6
+---- Starting trace ----
+UbaSessionServer - Disable remote execution (remote sessions will finish current processes)
+------ Building 346 action(s) started ------
+[1/346] Compile Module.RawMesh.cpp
+[2/346] Link (lld) libUnrealEditor-RawMesh.so (UBA disabled)
+[3/346] Compile Module.MeshUtilitiesCommon.cpp
+[4/346] Link (lld) libUnrealEditor-MeshUtilitiesCommon.so (UBA disabled)
+[5/346] Compile Module.NetCore.cpp
+[6/346] Link (lld) libUnrealEditor-NetCore.so (UBA disabled)
+[7/346] Compile Module.SignalProcessing.2.cpp
+[8/346] Compile Module.SignalProcessing.1.cpp
+[9/346] Compile Module.Chaos.9.cpp
+[10/346] Compile Module.MeshDescription.cpp
+[11/346] Compile Module.Chaos.7.cpp
+[12/346] Compile Module.Chaos.22.cpp
+[13/346] Compile Module.Chaos.3.cpp
+[14/346] Compile Module.AudioMixerCore.cpp
+[15/346] Compile Module.StaticMeshDescription.cpp
+[16/346] Compile Module.HTTPServer.cpp
+[17/346] Compile Module.MessagingRpc.cpp
+[18/346] Compile Module.Chaos.8.cpp
+[19/346] Link (lld) libUnrealEditor-MeshDescription.so (UBA disabled)
+[20/346] Compile Module.RSA.cpp
+[21/346] Compile Module.Chaos.21.cpp
+[22/346] Link (lld) libUnrealEditor-MessagingRpc.so (UBA disabled)
+[23/346] Compile Module.ReliableHComp.cpp
+[24/346] Compile Module.AnalyticsET.cpp
+[25/346] Link (lld) libUnrealEditor-HTTPServer.so (UBA disabled)
+[26/346] Compile Module.AssetRegistry.1.cpp
+[27/346] Compile Module.Chaos.6.cpp
+[28/346] Compile Module.Chaos.15.cpp
+[29/346] Link (lld) libUnrealEditor-ReliabilityHandlerComponent.so (UBA disabled)
+[30/346] Link (lld) libUnrealEditor-StaticMeshDescription.so (UBA disabled)
+[31/346] Link (lld) libUnrealEditor-UnrealEd.so (UBA disabled)
+[32/346] Compile Module.AudioLinkCore.cpp
+[33/346] Link (lld) libUnrealEditor-RSA.so (UBA disabled)
+[34/346] Link (lld) libUnrealEditor-AnalyticsET.so (UBA disabled)
+[35/346] Compile Module.AudioPlatformConfiguration.cpp
+[36/346] Link (lld) libUnrealEditor-SignalProcessing.so (UBA disabled)
+[37/346] Link (lld) libUnrealEditor-AudioLinkCore.so (UBA disabled)
+[38/346] Compile Module.AssetRegistry.2.cpp
+[39/346] Link (lld) libUnrealEditor-AudioPlatformConfiguration.so (UBA disabled)
+[40/346] Link (lld) libUnrealEditor-AudioMixerCore.so (UBA disabled)
+[41/346] Compile Module.ClothingSystemEditorInterface.cpp
+[42/346] Link (lld) libUnrealEditor-ClothingSystemEditorInterface.so (UBA disabled)
+[43/346] Compile Module.AudioExtensions.cpp
+[44/346] Link (lld) libUnrealEditor-AssetRegistry.so (UBA disabled)
+[45/346] Link (lld) libUnrealEditor-AudioExtensions.so (UBA disabled)
+[46/346] Compile Module.CoreOnline.cpp
+[47/346] Link (lld) libUnrealEditor-CoreOnline.so (UBA disabled)
+[48/346] Compile Module.AnimationCore.cpp
+[49/346] Link (lld) libUnrealEditor-AnimationCore.so (UBA disabled)
+[50/346] Compile Module.EditorAnalyticsSession.cpp
+[51/346] Compile Module.ClothSysRuntimeIntrfc.cpp
+[52/346] Link (lld) libUnrealEditor-EditorAnalyticsSession.so (UBA disabled)
+[53/346] Compile Module.EngineMessages.cpp
+[54/346] Link (lld) libUnrealEditor-EngineMessages.so (UBA disabled)
+[55/346] Compile Module.EngineSettings.cpp
+[56/346] Link (lld) libUnrealEditor-EngineSettings.so (UBA disabled)
+[57/346] Compile Module.DeveloperToolSettings.cpp
+[58/346] Compile Module.FieldNotification.cpp
+[59/346] Link (lld) libUnrealEditor-FieldNotification.so (UBA disabled)
+[60/346] Link (lld) libUnrealEditor-DeveloperToolSettings.so (UBA disabled)
+[61/346] Link (lld) libUnrealEditor-SkeletalMeshDescription.so (UBA disabled)
+[62/346] Link (lld) libUnrealEditor-EditorStyle.so (UBA disabled)
+[63/346] Link (lld) libUnrealEditor-MeshConversion.so (UBA disabled)
+[64/346] Compile Module.IrisCore.1.cpp
+[65/346] Compile Module.Icmp.cpp
+[66/346] Link (lld) libUnrealEditor-Icmp.so (UBA disabled)
+[67/346] Compile Module.Horde.cpp
+[68/346] Compile Module.MoviePlayerProxy.cpp
+[69/346] Compile Module.IrisCore.7.cpp
+[70/346] Compile Module.JsonUtilities.cpp
+[71/346] Compile Module.IrisCore.2.cpp
+[72/346] Compile Module.NetworkReplayStreaming.cpp
+[73/346] Compile Module.Messaging.cpp
+[74/346] Compile Module.PhysicsCore.cpp
+[75/346] Link (lld) libUnrealEditor-Chaos.so (UBA disabled)
+[76/346] Compile Module.IrisCore.6.cpp
+[77/346] Compile Module.IrisCore.5.cpp
+[78/346] Compile Module.IrisCore.4.cpp
+[79/346] Compile Module.IrisCore.3.cpp
+[80/346] Link (lld) libUnrealEditor-NetworkReplayStreaming.so (UBA disabled)
+[81/346] Link (lld) libUnrealEditor-Horde.so (UBA disabled)
+[82/346] Link (lld) libUnrealEditor-MoviePlayerProxy.so (UBA disabled)
+[83/346] Link (lld) libUnrealEditor-JsonUtilities.so (UBA disabled)
+[84/346] Compile Module.PacketHandler.cpp
+[85/346] Link (lld) libUnrealEditor-PacketHandler.so (UBA disabled)
+[86/346] Link (lld) libUnrealEditor-PhysicsCore.so (UBA disabled)
+[87/346] Link (lld) libUnrealEditor-Messaging.so (UBA disabled)
+[88/346] Compile Module.PortalServices.cpp
+[89/346] Compile Module.PerfCounters.cpp
+[90/346] Compile Module.SynthBenchmark.cpp
+[91/346] Link (lld) libUnrealEditor-ClothingSystemRuntimeInterface.so (UBA disabled)
+[92/346] Link (lld) libUnrealEditor-IrisCore.so (UBA disabled)
+[93/346] Link (lld) libUnrealEditor-PerfCounters.so (UBA disabled)
+[94/346] Compile Module.PortalRpc.cpp
+[95/346] Link (lld) libUnrealEditor-PortalRpc.so (UBA disabled)
+[96/346] Link (lld) libUnrealEditor-SynthBenchmark.so (UBA disabled)
+[97/346] Link (lld) libUnrealEditor-PortalServices.so (UBA disabled)
+[98/346] Compile Module.UniversalObjectLocator.cpp
+[99/346] Link (lld) libUnrealEditor-UniversalObjectLocator.so (UBA disabled)
+[100/346] Compile Module.TextureCompressor.cpp
+[101/346] Link (lld) libUnrealEditor-TextureCompressor.so (UBA disabled)
+[102/346] Compile Module.TypedElementRuntime.cpp
+[103/346] Link (lld) libUnrealEditor-TypedElementRuntime.so (UBA disabled)
+[104/346] Link (lld) libUnrealEditor-CinematicCamera.so (UBA disabled)
+[105/346] Link (lld) libUnrealEditor-ChaosVehiclesCore.so (UBA disabled)
+[106/346] Link (lld) libUnrealEditor-MaterialUtilities.so (UBA disabled)
+[107/346] Link (lld) libUnrealEditor-MaterialShaderQualitySettings.so (UBA disabled)
+[108/346] Link (lld) libUnrealEditor-GameplayTags.so (UBA disabled)
+[109/346] Link (lld) libUnrealEditor-CollisionAnalyzer.so (UBA disabled)
+[110/346] Link (lld) libUnrealEditor-DataflowCore.so (UBA disabled)
+[111/346] Link (lld) libUnrealEditor-AudioMixer.so (UBA disabled)
+[112/346] Compile [x86-64] GPUSkinVertexFactory.ispc
+[113/346] Compile [x86-64] BonePose.ispc
+[114/346] Link (lld) libUnrealEditor-LogVisualizer.so (UBA disabled)
+[115/346] Compile [x86-64] KAggregateGeom.ispc
+[116/346] Compile [x86-64] AnimationRuntime.ispc
+[117/346] Compile [x86-64] AnimEncoding_ConstantKeyLerp.ispc
+[118/346] Compile [x86-64] AnimEncoding_VariableKeyLerp.ispc
+[119/346] Link (lld) libUnrealEditor-UMG.so (UBA disabled)
+[120/346] Link (lld) libUnrealEditor-Landscape.so (UBA disabled)
+[121/346] Compile [x86-64] AnimEncoding_PerTrackCompression.ispc
+[122/346] Compile Module.PakFile.cpp
+[123/346] Link (lld) libUnrealEditor-PakFile.so (UBA disabled)
+[124/346] Link (lld) libUnrealEditor-Kismet.so (UBA disabled)
+[125/346] Compile Module.Engine.11.cpp
+[126/346] Compile Module.Engine.16.cpp
+[127/346] Compile Module.Engine.15.cpp
+[128/346] Compile Module.Engine.19.cpp
+[129/346] Compile Module.Engine.14.cpp
+[130/346] Compile Module.Engine.12.cpp
+[131/346] Compile Module.Engine.13.cpp
+[132/346] Compile Module.Engine.10.cpp
+[133/346] Compile Module.Engine.18.cpp
+[134/346] Compile Module.Engine.17.cpp
+[135/346] Compile Module.Engine.2.cpp
+[136/346] Compile Module.Engine.21.cpp
+[137/346] Compile Module.Engine.1.cpp
+[138/346] Compile Module.Engine.20.cpp
+[139/346] Compile Module.Engine.23.cpp
+[140/346] Compile Module.Engine.22.cpp
+[141/346] Compile Module.Engine.24.cpp
+[142/346] Compile Module.Engine.3.cpp
+[143/346] Compile Module.Engine.34.cpp
+[144/346] Compile Module.Engine.27.cpp
+[145/346] Compile Module.Engine.28.cpp
+[146/346] Compile Module.Engine.29.cpp
+[147/346] Compile Module.Engine.26.cpp
+[148/346] Compile Module.Engine.31.cpp
+[149/346] Compile Module.Engine.36.cpp
+[150/346] Compile Module.Engine.4.cpp
+[151/346] Compile Module.Engine.25.cpp
+[152/346] Compile Module.Engine.32.cpp
+[153/346] Compile Module.Engine.35.cpp
+[154/346] Compile Module.Engine.30.cpp
+[155/346] Compile Module.Engine.37.cpp
+[156/346] Compile Module.Engine.38.cpp
+[157/346] Compile Module.Engine.41.cpp
+[158/346] Compile Module.Engine.42.cpp
+[159/346] Compile Module.Engine.39.cpp
+[160/346] Compile Module.Engine.47.cpp
+[161/346] Compile Module.Engine.40.cpp
+[162/346] Compile Module.Engine.5.cpp
+[163/346] Compile Module.Engine.43.cpp
+[164/346] Compile Module.Engine.48.cpp
+[165/346] Compile Module.Engine.45.cpp
+[166/346] Compile Module.Engine.44.cpp
+[167/346] Compile Module.Engine.33.cpp
+[168/346] Compile Module.Engine.49.cpp
+[169/346] Compile Module.Engine.6.cpp
+[170/346] Compile Module.Engine.46.cpp
+[171/346] Compile Module.Engine.55.cpp
+[172/346] Compile Module.Engine.54.cpp
+[173/346] Compile Module.Engine.50.cpp
+[174/346] Compile Module.Engine.51.cpp
+[175/346] Compile Module.Engine.52.cpp
+[176/346] Compile Module.Engine.53.cpp
+[177/346] Compile Module.Engine.56.cpp
+[178/346] Compile Module.Engine.59.cpp
+[179/346] Compile Module.Engine.58.cpp
+[180/346] Compile Module.Engine.61.cpp
+[181/346] Compile Module.Engine.7.cpp
+[182/346] Compile Module.Engine.57.cpp
+[183/346] Compile Module.Engine.62.cpp
+[184/346] Compile Module.Engine.60.cpp
+[185/346] Compile Module.Engine.63.cpp
+[186/346] Compile Module.Engine.65.cpp
+[187/346] Compile Module.Engine.64.cpp
+[188/346] Compile Module.Engine.66.cpp
+[189/346] Compile Module.Engine.8.cpp
+[190/346] Compile Module.Engine.67.cpp
+[191/346] Compile RayTracingGeometryManager.cpp
+[192/346] Compile Module.Engine.9.cpp
+[193/346] Compile [x86-64] SkinnedAsset.ispc
+[194/346] Link (lld) libUnrealEditor-PropertyEditor.so (UBA disabled)
+[195/346] Compile Module.Engine.69.cpp
+[196/346] Compile Module.Settings.cpp
+[197/346] Link (lld) libUnrealEditor-Settings.so (UBA disabled)
+[198/346] Compile Module.Engine.68.cpp
+[199/346] Compile Module.ToolMenus.cpp
+[200/346] Link (lld) libUnrealEditor-ToolMenus.so (UBA disabled)
+[201/346] Compile Module.Engine.72.cpp
+[202/346] Link (lld) libUnrealEditor-MainFrame.so (UBA disabled)
+[203/346] Link (lld) libUnrealEditor-SourceControl.so (UBA disabled)
+[204/346] Compile Module.WorkspaceMenuStructure.cpp
+[205/346] Link (lld) libUnrealEditor-WorkspaceMenuStructure.so (UBA disabled)
+[206/346] Link (lld) libUnrealEditor-GraphEditor.so (UBA disabled)
+[207/346] Compile Module.DesktopWidgets.cpp
+[208/346] Link (lld) libUnrealEditor-DesktopWidgets.so (UBA disabled)
+[209/346] Compile Module.LauncherPlatform.cpp
+[210/346] Link (lld) libUnrealEditor-LauncherPlatform.so (UBA disabled)
+[211/346] Compile Module.WidgetCarousel.cpp
+[212/346] Link (lld) libUnrealEditor-WidgetCarousel.so (UBA disabled)
+[213/346] Link (lld) libUnrealEditor-EditorInteractiveToolsFramework.so (UBA disabled)
+[214/346] Link (lld) libUnrealEditor-KismetCompiler.so (UBA disabled)
+[215/346] Link (lld) libUnrealEditor-BlueprintGraph.so (UBA disabled)
+[216/346] Compile Module.Engine.71.cpp
+[217/346] Compile Module.AssetTagsEditor.cpp
+[218/346] Compile Module.Engine.73.cpp
+[219/346] Compile Module.DirectoryWatcher.cpp
+[220/346] Link (lld) libUnrealEditor-AssetTagsEditor.so (UBA disabled)
+[221/346] Link (lld) libUnrealEditor-DirectoryWatcher.so (UBA disabled)
+[222/346] Compile Module.Media.cpp
+[223/346] Link (lld) libUnrealEditor-Media.so (UBA disabled)
+[224/346] Compile Module.Engine.75.cpp
+[225/346] Compile Module.PIEPreviewDeviceSpecification.cpp
+[226/346] Link (lld) libUnrealEditor-PIEPreviewDeviceSpecification.so (UBA disabled)
+[227/346] Link (lld) libUnrealEditor-TranslationEditor.so (UBA disabled)
+[228/346] Compile Module.Engine.74.cpp
+[229/346] Compile Module.Navmesh.3.cpp
+[230/346] Link (lld) libUnrealEditor-AITestSuite.so (UBA disabled)
+[231/346] Link (lld) libUnrealEditor-VREditor.so (UBA disabled)
+[232/346] Compile Module.PropertyPath.cpp
+[233/346] Link (lld) libUnrealEditor-PropertyPath.so (UBA disabled)
+[234/346] Compile Module.Navmesh.1.cpp
+[235/346] Compile Module.MediaUtils.cpp
+[236/346] Compile Module.Navmesh.2.cpp
+[237/346] Link (lld) libUnrealEditor-Navmesh.so (UBA disabled)
+[238/346] Compile Module.ToolWidgets.cpp
+[239/346] Link (lld) libUnrealEditor-ToolWidgets.so (UBA disabled)
+[240/346] Compile Module.InterchangeCore.cpp
+[241/346] Compile Module.Engine.70.cpp
+[242/346] Link (lld) libUnrealEditor-InterchangeCore.so (UBA disabled)
+[243/346] Link (lld) libUnrealEditor-PackagesDialog.so (UBA disabled)
+[244/346] Compile Module.Carla.1.cpp
+[245/346] Compile Module.MessageLog.cpp
+[246/346] Link (lld) libUnrealEditor-MessageLog.so (UBA disabled)
+[247/346] Compile Module.Carla.14.cpp
+[248/346] Compile Module.Carla.3.cpp
+[249/346] Compile Module.Carla.2.cpp
+[250/346] Compile Module.Carla.4.cpp
+[251/346] Compile Module.Carla.5.cpp
+[252/346] Compile Module.Carla.10.cpp
+In file included from /mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Intermediate/Build/Linux/x64/UnrealEditor/Development/Carla/Module.Carla.10.cpp:26:
+/mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Source/Carla/CityMapGenerator.cpp:69:28: warning: 'OnObjectSaved' is deprecated: Use OnObjectPreSave instead. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+   69 |     FCoreUObjectDelegates::OnObjectSaved.Broadcast(this);
+      |                            ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/UObjectGlobals.h:3142:2: note: 'OnObjectSaved' has been explicitly marked deprecated here
+ 3142 |         UE_DEPRECATED(5.0, "Use OnObjectPreSave instead.")
+      |         ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:276:43: note: expanded from macro 'UE_DEPRECATED'
+  276 | #define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+      |                                           ^
+1 warning generated.
+[253/346] Compile Module.Carla.6.cpp
+[254/346] Compile Module.Carla.7.cpp
+[255/346] Compile Module.Carla.8.cpp
+[256/346] Compile Module.Carla.11.cpp
+[257/346] Compile Module.Carla.9.cpp
+[258/346] Compile PCH.CarlaUnreal.h
+[259/346] Compile Module.Carla.13.cpp
+In file included from /mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Intermediate/Build/Linux/x64/UnrealEditor/Development/Carla/Module.Carla.13.cpp:23:
+/mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Source/Carla/Util/CameraModelUtil.cpp:753:9: warning: 'FTexture2DRHIRef' is deprecated: The separate RHI texture types were unified in UE 5.1. FTexture2DRHIRef is now deprecated. Use FTextureRHIRef instead. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+  753 |         FTexture2DRHIRef TextureRHIs[6] = {};
+      |         ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/RHI/Public/RHIFwd.h:146:29: note: 'FTexture2DRHIRef' has been explicitly marked deprecated here
+  146 | using FTexture2DRHIRef      UE_DEPRECATED(5.5, "The separate RHI texture types were unified in UE 5.1. FTexture2DRHIRef is now deprecated. Use FTextureRHIRef instead."     ) = FTextureRHIRef;
+      |                             ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:276:43: note: expanded from macro 'UE_DEPRECATED'
+  276 | #define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+      |                                           ^
+In file included from /mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Intermediate/Build/Linux/x64/UnrealEditor/Development/Carla/Module.Carla.13.cpp:26:
+/mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Source/Carla/Util/GeometryImporter.cpp:98:22: warning: 'TryGetArrayField' is deprecated: Passing an ANSI string to TryGetArrayField has been deprecated outside of UTF-8 mode. Please use the overload that takes a TCHAR string. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+   98 |     if (!JsonParsed->TryGetArrayField("features", Features))
+      |                      ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Json/Public/Dom/JsonObject.h:428:2: note: 'TryGetArrayField' has been explicitly marked deprecated here
+  428 |         UE_DEPRECATED(5.4, "Passing an ANSI string to TryGetArrayField has been deprecated outside of UTF-8 mode. Please use the overload that takes a TCHAR string.")
+      |         ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:276:43: note: expanded from macro 'UE_DEPRECATED'
+  276 | #define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+      |                                           ^
+In file included from /mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Intermediate/Build/Linux/x64/UnrealEditor/Development/Carla/Module.Carla.13.cpp:26:
+/mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Source/Carla/Util/GeometryImporter.cpp:108:62: warning: 'GetObjectField' is deprecated: Passing an ANSI string to GetObjectField has been deprecated outside of UTF-8 mode. Please use the overload that takes a TCHAR string. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+  108 |         const TSharedPtr<FJsonObject> Geometry = FeatureObj->GetObjectField("geometry");
+      |                                                              ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Json/Public/Dom/JsonObject.h:434:2: note: 'GetObjectField' has been explicitly marked deprecated here
+  434 |         UE_DEPRECATED(5.4, "Passing an ANSI string to GetObjectField has been deprecated outside of UTF-8 mode. Please use the overload that takes a TCHAR string.")
+      |         ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:276:43: note: expanded from macro 'UE_DEPRECATED'
+  276 | #define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+      |                                           ^
+In file included from /mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Intermediate/Build/Linux/x64/UnrealEditor/Development/Carla/Module.Carla.13.cpp:26:
+/mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Source/Carla/Util/GeometryImporter.cpp:110:42: warning: 'GetStringField' is deprecated: Passing an ANSI string to GetStringField has been deprecated outside of UTF-8 mode. Please use the overload that takes a TCHAR string. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+  110 |         FString GeometryType = Geometry->GetStringField("type");
+      |                                          ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Json/Public/Dom/JsonObject.h:385:2: note: 'GetStringField' has been explicitly marked deprecated here
+  385 |         UE_DEPRECATED(5.4, "Passing an ANSI string to GetStringField has been deprecated outside of UTF-8 mode. Please use the overload that takes a TCHAR string.")
+      |         ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:276:43: note: expanded from macro 'UE_DEPRECATED'
+  276 | #define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+      |                                           ^
+In file included from /mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Intermediate/Build/Linux/x64/UnrealEditor/Development/Carla/Module.Carla.13.cpp:26:
+/mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Source/Carla/Util/GeometryImporter.cpp:115:24: warning: 'TryGetArrayField' is deprecated: Passing an ANSI string to TryGetArrayField has been deprecated outside of UTF-8 mode. Please use the overload that takes a TCHAR string. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+  115 |         if (!Geometry->TryGetArrayField("coordinates", Rings) || Rings->Num() == 0)
+      |                        ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Json/Public/Dom/JsonObject.h:428:2: note: 'TryGetArrayField' has been explicitly marked deprecated here
+  428 |         UE_DEPRECATED(5.4, "Passing an ANSI string to TryGetArrayField has been deprecated outside of UTF-8 mode. Please use the overload that takes a TCHAR string.")
+      |         ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:276:43: note: expanded from macro 'UE_DEPRECATED'
+  276 | #define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+      |                                           ^
+5 warnings generated.
+[260/346] Compile InteriorOccupantComponent.cpp
+In file included from /mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:1:
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.h:13:1: error: unknown type name 'FID_carla_Unreal_CarlaUnreal_Source_CarlaUnreal_InteriorOccupantComponent_h_13_PROLOG'
+   13 | UCLASS(ClassGroup=(Interior), meta=(BlueprintSpawnableComponent))
+      | ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:742:21: note: expanded from macro 'UCLASS'
+  742 | #define UCLASS(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_PROLOG)
+      |                     ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:727:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  727 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:726:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  726 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^
+<scratch space>:11:1: note: expanded from here
+   11 | FID_carla_Unreal_CarlaUnreal_Source_CarlaUnreal_InteriorOccupantComponent_h_13_PROLOG
+      | ^
+In file included from /mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:1:
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.h:16:5: error: a type specifier is required for all declarations
+   16 |     GENERATED_BODY()
+      |     ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:732:29: note: expanded from macro 'GENERATED_BODY'
+  732 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:727:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  727 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:726:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  726 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^
+<scratch space>:15:1: note: expanded from here
+   15 | FID_carla_Unreal_CarlaUnreal_Source_CarlaUnreal_InteriorOccupantComponent_h_16_GENERATED_BODY
+      | ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:19:12: error: cannot initialize object parameter of type 'UActorComponent' with an expression of type 'UInteriorOccupantComponent'
+   19 |     Super::BeginPlay();
+      |            ^~~~~~~~~
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:20:46: error: no matching member function for call to 'GetOwner'
+   20 |     Body = NewObject<UPoseableMeshComponent>(GetOwner(), NAME_None);
+      |                                              ^~~~~~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Components/ActorComponent.h:1324:49: note: candidate function not viable: no known conversion from 'UInteriorOccupantComponent' to 'const UActorComponent' for object argument
+ 1324 | FORCEINLINE_DEBUGGABLE AActor* UActorComponent::GetOwner() const
+      |                                                 ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Components/ActorComponent.h:419:5: note: candidate template ignored: couldn't infer template argument 'T'
+  419 |         T* GetOwner() const
+      |            ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:21:27: error: cannot initialize a parameter of type 'USceneComponent *' with an rvalue of type 'UInteriorOccupantComponent *'
+   21 |     Body->SetupAttachment(this);
+      |                           ^~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Components/SceneComponent.h:683:51: note: passing argument to parameter 'InParent' here
+  683 |         ENGINE_API void SetupAttachment(USceneComponent* InParent, FName InSocketName = NAME_None);
+      |                                                          ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:22:11: warning: 'SetSkeletalMesh' is deprecated: Use USkeletalMeshComponent::SetSkeletalMesh() or SetSkinnedAssetAndUpdate() instead. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+   22 |     Body->SetSkeletalMesh(MannequinMesh);
+      |           ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Components/SkinnedMeshComponent.h:1049:2: note: 'SetSkeletalMesh' has been explicitly marked deprecated here
+ 1049 |         UE_DEPRECATED(5.1, "Use USkeletalMeshComponent::SetSkeletalMesh() or SetSkinnedAssetAndUpdate() instead.")
+      |         ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:276:43: note: expanded from macro 'UE_DEPRECATED'
+  276 | #define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+      |                                           ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:26:40: error: cannot initialize a parameter of type 'UActorComponent *' with an rvalue of type 'UInteriorOccupantComponent *'
+   26 |     Body->AddTickPrerequisiteComponent(this);
+      |                                        ^~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Components/ActorComponent.h:1139:72: note: passing argument to parameter 'PrerequisiteComponent' here
+ 1139 |         ENGINE_API virtual void AddTickPrerequisiteComponent(UActorComponent* PrerequisiteComponent);
+      |                                                                               ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:34:13: error: cannot initialize object parameter of type 'UActorComponent' with an expression of type 'UInteriorOccupantComponent'
+   34 |             SetComponentTickEnabled(false);
+      |             ^~~~~~~~~~~~~~~~~~~~~~~
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:38:49: error: no matching member function for call to 'GetOwner'
+   38 |     TrackingOrigin = NewObject<USceneComponent>(GetOwner());
+      |                                                 ^~~~~~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Components/ActorComponent.h:1324:49: note: candidate function not viable: no known conversion from 'UInteriorOccupantComponent' to 'const UActorComponent' for object argument
+ 1324 | FORCEINLINE_DEBUGGABLE AActor* UActorComponent::GetOwner() const
+      |                                                 ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Components/ActorComponent.h:419:5: note: candidate template ignored: couldn't infer template argument 'T'
+  419 |         T* GetOwner() const
+      |            ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:39:37: error: cannot initialize a parameter of type 'USceneComponent *' with an rvalue of type 'UInteriorOccupantComponent *'
+   39 |     TrackingOrigin->SetupAttachment(this);
+      |                                     ^~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Components/SceneComponent.h:683:51: note: passing argument to parameter 'InParent' here
+  683 |         ENGINE_API void SetupAttachment(USceneComponent* InParent, FName InSocketName = NAME_None);
+      |                                                          ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:41:60: error: no matching member function for call to 'GetOwner'
+   41 |     LeftController = NewObject<UMotionControllerComponent>(GetOwner());
+      |                                                            ^~~~~~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Components/ActorComponent.h:1324:49: note: candidate function not viable: no known conversion from 'UInteriorOccupantComponent' to 'const UActorComponent' for object argument
+ 1324 | FORCEINLINE_DEBUGGABLE AActor* UActorComponent::GetOwner() const
+      |                                                 ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Components/ActorComponent.h:419:5: note: candidate template ignored: couldn't infer template argument 'T'
+  419 |         T* GetOwner() const
+      |            ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:45:61: error: no matching member function for call to 'GetOwner'
+   45 |     RightController = NewObject<UMotionControllerComponent>(GetOwner());
+      |                                                             ^~~~~~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Components/ActorComponent.h:1324:49: note: candidate function not viable: no known conversion from 'UInteriorOccupantComponent' to 'const UActorComponent' for object argument
+ 1324 | FORCEINLINE_DEBUGGABLE AActor* UActorComponent::GetOwner() const
+      |                                                 ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Components/ActorComponent.h:419:5: note: candidate template ignored: couldn't infer template argument 'T'
+  419 |         T* GetOwner() const
+      |            ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:49:44: error: no matching member function for call to 'GetOwner'
+   49 |     VRCamera = NewObject<UCameraComponent>(GetOwner());
+      |                                            ^~~~~~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Components/ActorComponent.h:1324:49: note: candidate function not viable: no known conversion from 'UInteriorOccupantComponent' to 'const UActorComponent' for object argument
+ 1324 | FORCEINLINE_DEBUGGABLE AActor* UActorComponent::GetOwner() const
+      |                                                 ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Components/ActorComponent.h:419:5: note: candidate template ignored: couldn't infer template argument 'T'
+  419 |         T* GetOwner() const
+      |            ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:63:9: error: cannot initialize object parameter of type 'USceneComponent' with an expression of type 'UInteriorOccupantComponent'
+   63 |         SetRelativeLocation(SeatLocations[Index]);
+      |         ^~~~~~~~~~~~~~~~~~~
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:102:60: error: cannot initialize a parameter of type 'const UObject *' with an rvalue of type 'UInteriorOccupantComponent *'
+  102 |         if (auto* PC=UGameplayStatics::GetPlayerController(this,0)) PC->SetViewTarget(GetOwner());
+      |                                                            ^~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Kismet/GameplayStatics.h:192:80: note: passing argument to parameter 'WorldContextObject' here
+  192 |         static ENGINE_API class APlayerController* GetPlayerController(const UObject* WorldContextObject, int32 PlayerIndex);
+      |                                                                                       ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:102:87: error: no matching member function for call to 'GetOwner'
+  102 |         if (auto* PC=UGameplayStatics::GetPlayerController(this,0)) PC->SetViewTarget(GetOwner());
+      |                                                                                       ^~~~~~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Components/ActorComponent.h:1324:49: note: candidate function not viable: no known conversion from 'UInteriorOccupantComponent' to 'const UActorComponent' for object argument
+ 1324 | FORCEINLINE_DEBUGGABLE AActor* UActorComponent::GetOwner() const
+      |                                                 ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Components/ActorComponent.h:419:5: note: candidate template ignored: couldn't infer template argument 'T'
+  419 |         T* GetOwner() const
+      |            ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:138:12: error: cannot initialize object parameter of type 'UActorComponent' with an expression of type 'UInteriorOccupantComponent'
+  138 |     Super::TickComponent(Dt,TickType,Fn);
+      |            ^~~~~~~~~~~~~
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:142:83: error: cannot initialize a parameter of type 'const UObject *' with an rvalue of type 'UInteriorOccupantComponent *'
+  142 |     if (bEnableDesktopControls) if(auto* PC=UGameplayStatics::GetPlayerController(this,0)) {
+      |                                                                                   ^~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Kismet/GameplayStatics.h:192:80: note: passing argument to parameter 'WorldContextObject' here
+  192 |         static ENGINE_API class APlayerController* GetPlayerController(const UObject* WorldContextObject, int32 PlayerIndex);
+      |                                                                                       ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:150:70: error: cannot initialize a parameter of type 'const UObject *' with an rvalue of type 'UInteriorOccupantComponent *'
+  150 |     if (bTrackXR) if (auto* PC=UGameplayStatics::GetPlayerController(this,0)) {
+      |                                                                      ^~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Kismet/GameplayStatics.h:192:80: note: passing argument to parameter 'WorldContextObject' here
+  192 |         static ENGINE_API class APlayerController* GetPlayerController(const UObject* WorldContextObject, int32 PlayerIndex);
+      |                                                                                       ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:167:45: error: cannot initialize object parameter of type 'const USceneComponent' with an expression of type 'UInteriorOccupantComponent'
+  167 |     if(bLeftHandTracked) SetHandTarget(true,GetComponentTransform().InverseTransformPosition(LeftController->GetComponentLocation()),(GetComponentQuat().Inverse()*LeftController->GetComponentQuat()).Rotator());
+      |                                             ^~~~~~~~~~~~~~~~~~~~~
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+1 warning and 20 errors generated.
+[261/346] Compile InteriorOccupantTests.cpp
+In file included from /mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantTests.cpp:3:
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.h:13:1: error: unknown type name 'FID_carla_Unreal_CarlaUnreal_Source_CarlaUnreal_InteriorOccupantComponent_h_13_PROLOG'
+   13 | UCLASS(ClassGroup=(Interior), meta=(BlueprintSpawnableComponent))
+      | ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:742:21: note: expanded from macro 'UCLASS'
+  742 | #define UCLASS(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_PROLOG)
+      |                     ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:727:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  727 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:726:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  726 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^
+<scratch space>:11:1: note: expanded from here
+   11 | FID_carla_Unreal_CarlaUnreal_Source_CarlaUnreal_InteriorOccupantComponent_h_13_PROLOG
+      | ^
+In file included from /mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantTests.cpp:3:
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.h:16:5: error: a type specifier is required for all declarations
+   16 |     GENERATED_BODY()
+      |     ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:732:29: note: expanded from macro 'GENERATED_BODY'
+  732 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:727:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  727 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:726:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  726 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^
+<scratch space>:15:1: note: expanded from here
+   15 | FID_carla_Unreal_CarlaUnreal_Source_CarlaUnreal_InteriorOccupantComponent_h_16_GENERATED_BODY
+      | ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantTests.cpp:18:29: error: cannot initialize a parameter of type 'USceneComponent *' with an lvalue of type 'UInteriorOccupantComponent *'
+   18 |     Actor->SetRootComponent(C);C->MannequinMesh=Mesh;C->RegisterComponent();C->BeginPlay();
+      |                             ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/GameFramework/Actor.h:2406:52: note: passing argument to parameter 'NewRootComponent' here
+ 2406 |         ENGINE_API bool SetRootComponent(USceneComponent* NewRootComponent);
+      |                                                           ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantTests.cpp:18:54: error: cannot initialize object parameter of type 'UActorComponent' with an expression of type 'UInteriorOccupantComponent'
+   18 |     Actor->SetRootComponent(C);C->MannequinMesh=Mesh;C->RegisterComponent();C->BeginPlay();
+      |                                                      ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantTests.cpp:20:100: error: cannot initialize object parameter of type 'const USceneComponent' with an expression of type 'UInteriorOccupantComponent'
+   20 |     for(int32 I=0;I<5;++I) {C->SetSeat(I);TestTrue(TEXT("Seat position matches calibrated anchor"),C->GetRelativeLocation().Equals(C->SeatLocations[I],.01f));}
+      |                                                                                                    ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantTests.cpp:46:5: error: cannot initialize object parameter of type 'USceneComponent' with an expression of type 'UInteriorOccupantComponent'
+   46 |     C->EndPlay(EEndPlayReason::Destroyed);World->DestroyWorld(false);
+      |     ^
+6 errors generated.
+[262/346] Compile CarlaUnreal.init.gen.cpp
+[263/346] Compile InteriorOccupantComponent.gen.cpp
+In file included from /mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:8:
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.h:13:1: error: unknown type name 'FID_carla_Unreal_CarlaUnreal_Source_CarlaUnreal_InteriorOccupantComponent_h_13_PROLOG'
+   13 | UCLASS(ClassGroup=(Interior), meta=(BlueprintSpawnableComponent))
+      | ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:742:21: note: expanded from macro 'UCLASS'
+  742 | #define UCLASS(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_PROLOG)
+      |                     ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:727:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  727 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:726:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  726 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^
+<scratch space>:145:1: note: expanded from here
+  145 | FID_carla_Unreal_CarlaUnreal_Source_CarlaUnreal_InteriorOccupantComponent_h_13_PROLOG
+      | ^
+In file included from /mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:8:
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.h:16:5: error: a type specifier is required for all declarations
+   16 |     GENERATED_BODY()
+      |     ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:732:29: note: expanded from macro 'GENERATED_BODY'
+  732 | #define GENERATED_BODY(...) BODY_MACRO_COMBINE(CURRENT_FILE_ID,_,__LINE__,_GENERATED_BODY);
+      |                             ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:727:37: note: expanded from macro 'BODY_MACRO_COMBINE'
+  727 | #define BODY_MACRO_COMBINE(A,B,C,D) BODY_MACRO_COMBINE_INNER(A,B,C,D)
+      |                                     ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:726:43: note: expanded from macro 'BODY_MACRO_COMBINE_INNER'
+  726 | #define BODY_MACRO_COMBINE_INNER(A,B,C,D) A##B##C##D
+      |                                           ^
+<scratch space>:149:1: note: expanded from here
+  149 | FID_carla_Unreal_CarlaUnreal_Source_CarlaUnreal_InteriorOccupantComponent_h_16_GENERATED_BODY
+      | ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:64:45: error: out-of-line definition of 'execActivateVR' does not match any declaration in 'UInteriorOccupantComponent'
+   64 | DEFINE_FUNCTION(UInteriorOccupantComponent::execActivateVR)
+      |                                             ^~~~~~~~~~~~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:751:36: note: expanded from macro 'DEFINE_FUNCTION'
+  751 | #define DEFINE_FUNCTION(func) void func( UObject* Context, FFrame& Stack, RESULT_DECL )
+      |                                    ^~~~
+/mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:68:34: error: no member named 'ActivateVR' in 'USceneComponent'
+   68 |         *(bool*)Z_Param__Result=P_THIS->ActivateVR();
+      |                                 ~~~~~~  ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:94:45: error: out-of-line definition of 'execBlink' does not match any declaration in 'UInteriorOccupantComponent'
+   94 | DEFINE_FUNCTION(UInteriorOccupantComponent::execBlink)
+      |                                             ^~~~~~~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:751:36: note: expanded from macro 'DEFINE_FUNCTION'
+  751 | #define DEFINE_FUNCTION(func) void func( UObject* Context, FFrame& Stack, RESULT_DECL )
+      |                                    ^~~~
+/mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:98:10: error: no member named 'Blink' in 'USceneComponent'
+   98 |         P_THIS->Blink();
+      |         ~~~~~~  ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:124:45: error: out-of-line definition of 'execCalibrateXR' does not match any declaration in 'UInteriorOccupantComponent'
+  124 | DEFINE_FUNCTION(UInteriorOccupantComponent::execCalibrateXR)
+      |                                             ^~~~~~~~~~~~~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:751:36: note: expanded from macro 'DEFINE_FUNCTION'
+  751 | #define DEFINE_FUNCTION(func) void func( UObject* Context, FFrame& Stack, RESULT_DECL )
+      |                                    ^~~~
+/mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:128:10: error: no member named 'CalibrateXR' in 'USceneComponent'
+  128 |         P_THIS->CalibrateXR();
+      |         ~~~~~~  ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:179:45: error: out-of-line definition of 'execSetHandTarget' does not match any declaration in 'UInteriorOccupantComponent'
+  179 | DEFINE_FUNCTION(UInteriorOccupantComponent::execSetHandTarget)
+      |                                             ^~~~~~~~~~~~~~~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:751:36: note: expanded from macro 'DEFINE_FUNCTION'
+  751 | #define DEFINE_FUNCTION(func) void func( UObject* Context, FFrame& Stack, RESULT_DECL )
+      |                                    ^~~~
+/mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:186:10: error: no member named 'SetHandTarget' in 'USceneComponent'
+  186 |         P_THIS->SetHandTarget(Z_Param_bLeft,Z_Param_Position,Z_Param_Rotation);
+      |         ~~~~~~  ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:228:45: error: out-of-line definition of 'execSetLook' does not match any declaration in 'UInteriorOccupantComponent'
+  228 | DEFINE_FUNCTION(UInteriorOccupantComponent::execSetLook)
+      |                                             ^~~~~~~~~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:751:36: note: expanded from macro 'DEFINE_FUNCTION'
+  751 | #define DEFINE_FUNCTION(func) void func( UObject* Context, FFrame& Stack, RESULT_DECL )
+      |                                    ^~~~
+/mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:234:10: error: no member named 'SetLook' in 'USceneComponent'
+  234 |         P_THIS->SetLook(Z_Param_Yaw,Z_Param_Pitch);
+      |         ~~~~~~  ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:272:45: error: out-of-line definition of 'execSetSeat' does not match any declaration in 'UInteriorOccupantComponent'
+  272 | DEFINE_FUNCTION(UInteriorOccupantComponent::execSetSeat)
+      |                                             ^~~~~~~~~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:751:36: note: expanded from macro 'DEFINE_FUNCTION'
+  751 | #define DEFINE_FUNCTION(func) void func( UObject* Context, FFrame& Stack, RESULT_DECL )
+      |                                    ^~~~
+/mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:277:10: error: no member named 'SetSeat' in 'USceneComponent'
+  277 |         P_THIS->SetSeat(Z_Param_Index);
+      |         ~~~~~~  ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:283:34: error: out-of-line definition of 'StaticRegisterNativesUInteriorOccupantComponent' does not match any declaration in 'UInteriorOccupantComponent'
+  283 | void UInteriorOccupantComponent::StaticRegisterNativesUInteriorOccupantComponent()
+      |                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:296:1: error: out-of-line definition of 'GetPrivateStaticClass' does not match any declaration in 'UInteriorOccupantComponent'
+  296 | IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(UInteriorOccupantComponent);
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectMacros.h:2075:18: note: expanded from macro 'IMPLEMENT_CLASS_NO_AUTO_REGISTRATION'
+ 2075 |         UClass* TClass::GetPrivateStaticClass() \
+      |                         ^~~~~~~~~~~~~~~~~~~~~
+/mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:473:392: error: 'TrackingOrigin' is a private member of 'UInteriorOccupantComponent'
+  473 | const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UInteriorOccupantComponent_Statics::NewProp_TrackingOrigin = { "TrackingOrigin", nullptr, (EPropertyFlags)0x0144000000080008, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UInteriorOccupantComponent, TrackingOrigin), Z_Construct_UClass_USceneComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_TrackingOrigin_MetaData), NewProp_TrackingOrigin_MetaData) };
+      |                                                                                                                                                                                                                                                                                                                                                                                                        ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.h:42:45: note: declared private here
+   42 |     UPROPERTY() TObjectPtr<USceneComponent> TrackingOrigin;
+      |                                             ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:474:392: error: 'LeftController' is a private member of 'UInteriorOccupantComponent'
+  474 | const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UInteriorOccupantComponent_Statics::NewProp_LeftController = { "LeftController", nullptr, (EPropertyFlags)0x0144000000080008, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UInteriorOccupantComponent, LeftController), Z_Construct_UClass_UMotionControllerComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_LeftController_MetaData), NewProp_LeftController_MetaData) };
+      |                                                                                                                                                                                                                                                                                                                                                                                                        ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.h:43:56: note: declared private here
+   43 |     UPROPERTY() TObjectPtr<UMotionControllerComponent> LeftController;
+      |                                                        ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/UnrealEditor/Inc/CarlaUnreal/UHT/InteriorOccupantComponent.gen.cpp:475:394: error: 'RightController' is a private member of 'UInteriorOccupantComponent'
+  475 | const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UInteriorOccupantComponent_Statics::NewProp_RightController = { "RightController", nullptr, (EPropertyFlags)0x0144000000080008, UECodeGen_Private::EPropertyGenFlags::Object | UECodeGen_Private::EPropertyGenFlags::ObjectPtr, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(UInteriorOccupantComponent, RightController), Z_Construct_UClass_UMotionControllerComponent_NoRegister, METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_RightController_MetaData), NewProp_RightController_MetaData) };
+      |                                                                                                                                                                                                                                                                                                                                                                                                          ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.h:44:56: note: declared private here
+   44 |     UPROPERTY() TObjectPtr<UMotionControllerComponent> RightController;
+      |                                                        ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+[264/346] Compile PerModuleInline.gen.cpp
+[265/346] Compile CarlaUnreal.cpp
+[266/346] Link (lld) libUnrealEditor-Engine.so (UBA disabled)
+[267/346] Link (lld) libUnrealEditor-MeshUtilitiesEngine.so (UBA disabled)
+[268/346] Link (lld) libUnrealEditor-EditorSubsystem.so (UBA disabled)
+[269/346] Link (lld) libUnrealEditor-BSPUtils.so (UBA disabled)
+[270/346] Link (lld) libUnrealEditor-ImageWriteQueue.so (UBA disabled)
+[271/346] Link (lld) libUnrealEditor-DataflowEngine.so (UBA disabled)
+[272/346] Link (lld) libUnrealEditor-AssetDefinition.so (UBA disabled)
+[273/346] Link (lld) libUnrealEditor-TargetPlatform.so (UBA disabled)
+[274/346] Link (lld) libUnrealEditor-AdvancedPreviewScene.so (UBA disabled)
+[275/346] Link (lld) libUnrealEditor-TimeManagement.so (UBA disabled)
+[276/346] Link (lld) libUnrealEditor-ChaosVehiclesEngine.so (UBA disabled)
+[277/346] Link (lld) libUnrealEditor-ClothingSystemRuntimeCommon.so (UBA disabled)
+[278/346] Link (lld) libUnrealEditor-PhysicsUtilities.so (UBA disabled)
+[279/346] Link (lld) libUnrealEditor-ContentBrowserData.so (UBA disabled)
+[280/346] Link (lld) libUnrealEditor-DataflowSimulation.so (UBA disabled)
+[281/346] Link (lld) libUnrealEditor-CommonMenuExtensions.so (UBA disabled)
+[282/346] Link (lld) libUnrealEditor-ActionableMessage.so (UBA disabled)
+[283/346] Link (lld) libUnrealEditor-MediaUtils.so (UBA disabled)
+[284/346] Link (lld) libUnrealEditor-NaniteUtilities.so (UBA disabled)
+[285/346] Link (lld) libUnrealEditor-ProceduralMeshComponent.so (UBA disabled)
+[286/346] Link (lld) libUnrealEditor-EditorConfig.so (UBA disabled)
+[287/346] Link (lld) libUnrealEditor-Foliage.so (UBA disabled)
+[288/346] Link (lld) libUnrealEditor-EnvironmentLightingViewer.so (UBA disabled)
+[289/346] Link (lld) libUnrealEditor-ChaosSolverEngine.so (UBA disabled)
+[290/346] Link (lld) libUnrealEditor-InteractiveToolsFramework.so (UBA disabled)
+[291/346] Link (lld) libUnrealEditor-SkeletalMeshUtilitiesCommon.so (UBA disabled)
+[292/346] Link (lld) libUnrealEditor-AnimationEditMode.so (UBA disabled)
+[293/346] Link (lld) libUnrealEditor-FieldSystemEngine.so (UBA disabled)
+[294/346] Link (lld) libUnrealEditor-EditorFramework.so (UBA disabled)
+[295/346] Link (lld) libUnrealEditor-ActorPickerMode.so (UBA disabled)
+[296/346] Link (lld) libUnrealEditor-HierarchicalLODUtilities.so (UBA disabled)
+[297/346] Link (lld) libUnrealEditor-GameplayTasks.so (UBA disabled)
+[298/346] Link (lld) libUnrealEditor-UncontrolledChangelists.so (UBA disabled)
+[299/346] Link (lld) libUnrealEditor-MRMesh.so (UBA disabled)
+[300/346] Link (lld) libUnrealEditor-EditorWidgets.so (UBA disabled)
+[301/346] Link (lld) libUnrealEditor-InterchangeEngine.so (UBA disabled)
+[302/346] Link (lld) libUnrealEditor-DeviceProfileServices.so (UBA disabled)
+[303/346] Link (lld) libUnrealEditor-HardwareTargeting.so (UBA disabled)
+[304/346] Link (lld) libUnrealEditor-UnsavedAssetsTracker.so (UBA disabled)
+[305/346] Link (lld) libUnrealEditor-StatsViewer.so (UBA disabled)
+[306/346] Link (lld) libUnrealEditor-ClassViewer.so (UBA disabled)
+[307/346] Link (lld) libUnrealEditor-HierarchicalLODOutliner.so (UBA disabled)
+[308/346] Link (lld) libUnrealEditor-AddContentDialog.so (UBA disabled)
+[309/346] Link (lld) libUnrealEditor-AugmentedReality.so (UBA disabled)
+[310/346] Link (lld) libUnrealEditor-MovieScene.so (UBA disabled)
+[311/346] Link (lld) libUnrealEditor-Constraints.so (UBA disabled)
+[312/346] Link (lld) libUnrealEditor-KismetWidgets.so (UBA disabled)
+[313/346] Link (lld) libUnrealEditor-MaterialEditor.so (UBA disabled)
+[314/346] Link (lld) libUnrealEditor-AssetTools.so (UBA disabled)
+[315/346] Link (lld) libUnrealEditor-GameProjectGeneration.so (UBA disabled)
+[316/346] Link (lld) libUnrealEditor-SourceControlWindows.so (UBA disabled)
+[317/346] Link (lld) libUnrealEditor-SubobjectDataInterface.so (UBA disabled)
+[318/346] Link (lld) libUnrealEditor-StatusBar.so (UBA disabled)
+[319/346] Link (lld) libUnrealEditor-Renderer.so (UBA disabled)
+[320/346] Link (lld) libUnrealEditor-HeadMountedDisplay.so (UBA disabled)
+[321/346] Link (lld) libUnrealEditor-PixelInspectorModule.so (UBA disabled)
+[322/346] Link (lld) libUnrealEditor-MediaAssets.so (UBA disabled)
+[323/346] Link (lld) libUnrealEditor-DrawPrimitiveDebugger.so (UBA disabled)
+[324/346] Link (lld) libUnrealEditor-SubobjectEditor.so (UBA disabled)
+[325/346] Link (lld) libUnrealEditor-OutputLog.so (UBA disabled)
+[326/346] Link (lld) libUnrealEditor-XRBase.so (UBA disabled)
+[327/346] Link (lld) libUnrealEditor-UATHelper.so (UBA disabled)
+[328/346] Link (lld) libUnrealEditor-SceneOutliner.so (UBA disabled)
+[329/346] Link (lld) libUnrealEditor-DerivedDataEditor.so (UBA disabled)
+[330/346] Link (lld) libUnrealEditor-GeometryCollectionEngine.so (UBA disabled)
+[331/346] Link (lld) libUnrealEditor-DataLayerEditor.so (UBA disabled)
+[332/346] Link (lld) libUnrealEditor-AnimGraphRuntime.so (UBA disabled)
+[333/346] Link (lld) libUnrealEditor-NavigationSystem.so (UBA disabled)
+[334/346] Link (lld) libUnrealEditor-ContentBrowser.so (UBA disabled)
+[335/346] Compile Module.Carla.12.cpp
+In file included from /mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Intermediate/Build/Linux/x64/UnrealEditor/Development/Carla/Module.Carla.12.cpp:50:
+/mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Source/Carla/Server/CarlaServer.cpp:501:46: warning: 'GetNamesOfAllActors' is deprecated: This command no longer makes sense since the apply_textures API relies on IDs. [-Wdeprecated-declarations]
+  501 |     TArray<FString> NamesFString = GameMode->GetNamesOfAllActors();
+      |                                              ^
+/mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Source/Carla/Game/CarlaGameModeBase.h:118:5: note: 'GetNamesOfAllActors' has been explicitly marked deprecated here
+  118 |   [[deprecated("This command no longer makes sense since the apply_textures API relies on IDs.")]]
+      |     ^
+1 warning generated.
+[336/346] Link (lld) libUnrealEditor-ChaosVehicles.so (UBA disabled)
+[337/346] Link (lld) libUnrealEditor-AnimGraph.so (UBA disabled)
+[338/346] Link (lld) libUnrealEditor-AnimationBlueprintLibrary.so (UBA disabled)
+[339/346] Link (lld) libUnrealEditor-MovieSceneTracks.so (UBA disabled)
+[340/346] Link (lld) libUnrealEditor-LevelSequence.so (UBA disabled)
+[341/346] Link (lld) libUnrealEditor-LevelEditor.so (UBA disabled)
+[342/346] Link (lld) libUnrealEditor-GameplayDebugger.so (UBA disabled)
+[343/346] Link (lld) libUnrealEditor-GameplayDebuggerEditor.so (UBA disabled)
+[344/346] Link (lld) libUnrealEditor-AIModule.so (UBA disabled)
+[345/346] Link (lld) libUnrealEditor-Carla.so (UBA disabled)
+Trace file written to /mnt/simulations/UnrealEngine5_carla/Engine/Programs/UnrealBuildTool/Log.uba with size 127.0kb
+Total time in Unreal Build Accelerator local executor: 807.50 seconds
+Total execution time: 820.21 seconds

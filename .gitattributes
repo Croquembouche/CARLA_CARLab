@@ -1,1 +1,76 @@
 * text=auto
+
+# CARLab data snapshot; restore with git lfs pull
+"carlab/content-overrides/Carla/Maps/Town10HD_Opt.umap" filter=lfs diff=lfs merge=lfs -text
+"carlab/content-overrides/VehicleInteriors/Lincoln/SK_MKZ_ExteriorOnly.uasset" filter=lfs diff=lfs merge=lfs -text
+"carlab/content-overrides/VehicleInteriors/Lincoln/SK_MKZ_Exterior_Final.uasset" filter=lfs diff=lfs merge=lfs -text
+"carlab/content-overrides/VehicleInteriors/Lincoln/SK_SeatedMannequin.uasset" filter=lfs diff=lfs merge=lfs -text
+"carlab/content-overrides/VehicleInteriors/Lincoln/SM_MKZ_Cabin_Final.uasset" filter=lfs diff=lfs merge=lfs -text
+"carlab/content-overrides/VehicleInteriors/Lincoln/SM_MKZ_Cabin_v2.uasset" filter=lfs diff=lfs merge=lfs -text
+"carlab/content-overrides/VehicleInteriors/Lincoln/T_MKZ_Ebony_BaseColor.uasset" filter=lfs diff=lfs merge=lfs -text
+"carlab/content-overrides/VehicleInteriors/Lincoln/T_MKZ_Ebony_ORM.uasset" filter=lfs diff=lfs merge=lfs -text
+"carlab/maps/Town10HD_Opt-cleaned.zip" filter=lfs diff=lfs merge=lfs -text
+"carlab/maps/Town10HD_Opt-cleaned/Content/Carla/Maps/Town10HD_Opt.umap" filter=lfs diff=lfs merge=lfs -text
+"carlab/maps/Town10HD_Opt-cleaned/backup/Carla/Maps/Town10HD_Opt.umap" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/Lincoln_Interior_Mannequin.blend" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/Lincoln_Interior_Mannequin.blend1" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/Lincoln_MKZ_Exterior_Rig.blend" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/Lincoln_MKZ_Interior_Final.blend" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/Lincoln_MKZ_Interior_Final.blend1" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/Lincoln_MKZ_Interior_v2.blend" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/Lincoln_MKZ_Interior_v2.blend1" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/backups/before-passenger-render.blend" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/backups/before-session-save-20260909-125323/Lincoln_Interior_Mannequin.blend" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/backups/before-session-save-20260909-125323/Lincoln_MKZ_Interior_v2.blend" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/exports/SK_MKZ_ExteriorOnly.fbx" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/exports/SM_MKZ_Cabin_Final.fbx" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/exports/SM_MKZ_Cabin_v2.fbx" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/exports/SM_MKZ_Seating_v2.fbx" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/exports/T_MKZ_Ebony_BaseColor.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/exports/T_MKZ_Ebony_ORM.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/finish-unreal.log" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/material-usage-fix.log" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/reference/SK_LincolnMKZ.fbx" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/reference/T_LincolnMKZ_Interior01_d.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/reference/T_LincolnMKZ_Interior01_d.tga" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/reference/T_LincolnMKZ_Interior01_n.tga" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/reference/T_LincolnMKZ_Interior01_ormh.tga" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/reference/T_LincolnMKZ_Interior02_d.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/reference/T_LincolnMKZ_Interior02_d.tga" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/reference/T_LincolnMKZ_Interior02_n.tga" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/reference/T_LincolnMKZ_Interior02_orm.tga" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/reference/lincoln-stock.blend" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/renders/Camera_Cabin.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/renders/Camera_Passenger.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/renders/Final_Dashboard.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/renders/Final_Passenger.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/renders/Final_Rear.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/renders/Lincoln_Back_Seat.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/renders/Lincoln_Passenger_Seat.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/renders/MKZ_Dashboard.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/renders/MKZ_Dashboard_Daylight.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/renders/MKZ_Driver_View.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/renders/MKZ_Front_Seats.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/renders/MKZ_Front_Seats_Daylight.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/renders/MKZ_Rear_Seats.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/renders/MKZ_Rear_Seats_Daylight.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/renders/carla_dashboard.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/renders/carla_passenger.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/renders/carla_rear_seats.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/vehicle-interiors/runtime-three-camera-oom.log" filter=lfs diff=lfs merge=lfs -text
+"carlab/verification/archive-4000mib-texture-pool/sensors-single-cpu.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/verification/sensors-four-cpu-sensor.lidar.ray_cast-5.npy" filter=lfs diff=lfs merge=lfs -text
+"carlab/verification/sensors-four-cpu-sensor.lidar.ray_cast-6.npy" filter=lfs diff=lfs merge=lfs -text
+"carlab/verification/sensors-four-cpu-sensor.lidar.ray_cast-7.npy" filter=lfs diff=lfs merge=lfs -text
+"carlab/verification/sensors-four-cpu-sensor.lidar.ray_cast-8.npy" filter=lfs diff=lfs merge=lfs -text
+"carlab/verification/sensors-four-cpu.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/verification/sensors-four-gpu-sensor.lidar.ray_cast-5.npy" filter=lfs diff=lfs merge=lfs -text
+"carlab/verification/sensors-four-gpu-sensor.lidar.ray_cast-6.npy" filter=lfs diff=lfs merge=lfs -text
+"carlab/verification/sensors-four-gpu-sensor.lidar.ray_cast-7.npy" filter=lfs diff=lfs merge=lfs -text
+"carlab/verification/sensors-four-gpu-sensor.lidar.ray_cast-8.npy" filter=lfs diff=lfs merge=lfs -text
+"carlab/verification/sensors-four-gpu.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/verification/sensors-single-cpu.png" filter=lfs diff=lfs merge=lfs -text
+"carlab/verification/sensors-single-gpu.png" filter=lfs diff=lfs merge=lfs -text
+
+# Preserve custom snapshot bytes and manifest checksums.
+carlab/** -text

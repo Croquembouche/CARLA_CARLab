@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/mnt/simulations/vehicle-interiors/scripts/diagnose_final_spawn.py", line 14, in <module>
+    try:w=c.get_world();break
+TimeoutError: World did not become ready

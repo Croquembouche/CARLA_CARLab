@@ -1,0 +1,117 @@
+00:00.869  blend            | Read blend: "/mnt/simulations/vehicle-interiors/reference/lincoln-stock.blend"
+Reloading external rigs...
+Reloading external metarigs...
+{
+  "x intersections y=0.36 z=0.55": [
+    -1.111,
+    -1.095,
+    -0.589,
+    -0.572,
+    -0.012,
+    0.494,
+    0.511,
+    1.211,
+    2.405
+  ],
+  "x intersections y=0.36 z=0.7": [
+    -1.179,
+    -0.992,
+    -0.105,
+    0.091,
+    0.84,
+    2.302,
+    2.368
+  ],
+  "x intersections y=0.36 z=1.0": [
+    -1.317,
+    -1.178,
+    -0.25,
+    -0.073,
+    0.799,
+    0.874,
+    1.075,
+    1.191,
+    1.263,
+    1.854
+  ],
+  "x intersections y=0.43 z=0.55": [
+    -1.111,
+    -1.095,
+    -0.572,
+    -0.012,
+    0.511,
+    1.21,
+    2.384
+  ],
+  "x intersections y=0.43 z=0.7": [
+    -1.179,
+    -0.992,
+    -0.105,
+    0.091,
+    0.846,
+    2.342,
+    2.355
+  ],
+  "x intersections y=0.43 z=1.0": [
+    -1.317,
+    -1.176,
+    -0.25,
+    -0.075,
+    0.793,
+    0.857,
+    1.093,
+    1.172,
+    1.245,
+    1.813
+  ],
+  "z intersections x=-0.9": [
+    0.592,
+    0.412,
+    0.41,
+    0.324,
+    0.29
+  ],
+  "z intersections x=-0.6": [
+    0.681,
+    0.515,
+    0.397,
+    0.375,
+    0.313,
+    0.285
+  ],
+  "z intersections x=-0.2": [
+    1.193,
+    1.19,
+    0.897,
+    0.379,
+    0.279
+  ],
+  "z intersections x=0": [
+    0.905,
+    0.556,
+    0.504,
+    0.37,
+    0.276
+  ],
+  "z intersections x=0.2": [
+    0.596,
+    0.418,
+    0.362,
+    0.272
+  ],
+  "z intersections x=0.4": [
+    0.639,
+    0.487,
+    0.353,
+    0.269
+  ],
+  "z intersections x=0.6": [
+    0.971,
+    0.862,
+    0.344,
+    0.266
+  ]
+}
+unregister_class(...):, missing bl_rna attribute from '_RNAMeta' instance (may not be registered)Blender 5.2.1 LTS (hash 9e2066aef7ef built 2026-08-25 02:12:34)
+
+Blender quit

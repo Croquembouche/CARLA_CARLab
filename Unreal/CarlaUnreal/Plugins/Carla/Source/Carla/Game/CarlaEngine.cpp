@@ -5,6 +5,7 @@
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
 #include "Carla/Game/CarlaEngine.h"
+#include "Carla/Sensor/GpuSensorDispatcher.h"
 #include "Carla.h"
 #include "Carla/Game/CarlaEpisode.h"
 #include "Carla/Game/CarlaStaticDelegates.h"
@@ -138,6 +139,27 @@ void FCarlaEngine::NotifyInitGame(const UCarlaSettings &Settings)
           {
             FString FinalPath((char *) Data.data());
             UGameplayStatics::OpenLevel(CurrentEpisode->GetWorld(), *FinalPath, true);
+            break;
+          }
+          case carla::multigpu::MultiGPUCommand::GET_TOKEN_BY_ACTOR:
+          {
+            const uint32_t ActorId = *reinterpret_cast<const uint32_t *>(Data.data());
+            std::unique_lock<std::mutex> Lock(SensorRoutingMutex);
+            const bool Ready = SensorRoutingReady.wait_for(Lock, std::chrono::seconds(25), [this, ActorId]() {
+              return SensorStreamsByPrimaryActor.find(ActorId) != SensorStreamsByPrimaryActor.end();
+            });
+            if (!Ready)
+            {
+              UE_LOG(LogCarla, Error, TEXT("GPU sensor actor %u was not replicated before subscription"), ActorId);
+              Secondary->Write(carla::Buffer());
+              break;
+            }
+            const auto LocalStream = SensorStreamsByPrimaryActor.at(ActorId);
+            Lock.unlock();
+            carla::streaming::detail::token_type Token(Server.GetStreamingServer().GetToken(LocalStream));
+            UE_LOG(LogCarla, Log, TEXT("GPU_SENSOR_LOCAL actor=%u local_stream=%u"), ActorId, LocalStream);
+            carla::Buffer Reply(reinterpret_cast<unsigned char *>(&Token), sizeof(Token));
+            Secondary->Write(std::move(Reply));
             break;
           }
           case carla::multigpu::MultiGPUCommand::GET_TOKEN:
@@ -305,17 +327,20 @@ void FCarlaEngine::OnPreTick(UWorld *, ELevelTick TickType, float DeltaSeconds)
       do
       {
         Server.RunSome(1u);
+        CarlaGpuSensors::Pump();
       }
       while (bSynchronousMode && !Server.TickCueReceived());
     }
     else
     {
-      // process frame data
+      // Drain GPU queries before applying another replicated world state,
+      // including startup frames already queued before clients subscribe.
       do
       {
         Server.RunSome(1u);
+        CarlaGpuSensors::Pump();
       }
-      while (!FramesToProcess.size());
+      while (!FramesToProcess.size() || CarlaGpuSensors::HasPendingFrames());
     }
 
     // update frame counter
@@ -332,7 +357,64 @@ void FCarlaEngine::OnPreTick(UWorld *, ELevelTick TickType, float DeltaSeconds)
           TRACE_CPUPROFILER_EVENT_SCOPE_STR("FramesToProcess.PlayFrameData");
           std::scoped_lock<std::mutex> Lock(FrameToProcessMutex);
           FramesToProcess.front().PlayFrameData(CurrentEpisode, MappedId);
+          // Late-joining workers have independent stream counters. Publish the
+          // replicated actor -> local stream mapping before serving subscriptions.
+          {
+            std::scoped_lock<std::mutex> RoutingLock(SensorRoutingMutex);
+            SensorStreamsByPrimaryActor.clear();
+            for (const auto &Mapping : MappedId)
+            {
+              auto *Actor = CurrentEpisode->FindCarlaActor(Mapping.second);
+              auto *Sensor = Actor ? Cast<ASensor>(Actor->GetActor()) : nullptr;
+              if (Sensor) SensorStreamsByPrimaryActor[Mapping.first] =
+                carla::streaming::detail::token_type(Sensor->GetToken()).get_stream_id();
+            }
+          }
+          SensorRoutingReady.notify_all();
           FramesToProcess.erase(FramesToProcess.begin()); // remove first element
+          // Evaluate after applying the frame: subscriptions can arrive while
+          // the synchronous worker is waiting for its next replicated snapshot.
+          if (CarlaGpuSensors::IsEnabled())
+          {
+            bool NeedsRayView = CarlaGpuSensors::HasPendingFrames();
+            bool NeedsCameraView = false;
+            for (const auto &Item : CurrentEpisode->GetActorRegistry())
+            {
+              auto *Sensor = Cast<ASensor>(Item.Value->GetActor());
+              const auto &Description = Item.Value->GetActorInfo()->Description.Id;
+              if (Sensor && (Description.StartsWith(TEXT("sensor.lidar.")) || Description == TEXT("sensor.other.radar"))
+                  && Sensor->AreClientsListening()) NeedsRayView = true;
+              if (Sensor && Description.StartsWith(TEXT("sensor.camera.")) && Sensor->AreClientsListening())
+                NeedsCameraView = true;
+            }
+            auto *Queries = IConsoleManager::Get().FindConsoleVariable(TEXT("r.RayTracing.ExternalQueries"));
+            if (Queries && Queries->GetInt() != int32(NeedsRayView))
+            {
+              Queries->Set(int32(NeedsRayView), ECVF_SetByConsole);
+              UE_LOG(LogCarla, Log, TEXT("GPU_RAY_DEMAND active=%d"), int32(NeedsRayView));
+            }
+            // Camera-only captures still need a regular view-family boundary
+            // to advance the scene frame and retire per-frame renderer caches.
+            // Keep the tiny unlit maintenance view; external ray tracing stays
+            // separately demand-gated and camera capture quality is unchanged.
+            const bool NeedsRenderView = NeedsRayView || NeedsCameraView;
+            CurrentSettings.bNoRenderingMode = !NeedsRenderView;
+#if WITH_EDITOR
+            if (GEngine && GEngine->GameViewport)
+            {
+              GEngine->GameViewport->bDisableWorldRendering = !NeedsRenderView;
+              GEngine->GameViewport->ViewModeIndex = VMI_Unlit;
+              auto &Flags = GEngine->GameViewport->EngineShowFlags;
+              Flags.SetLighting(false);
+              Flags.SetPostProcessing(false);
+              Flags.SetDynamicShadows(false);
+              Flags.SetGlobalIllumination(false);
+              Flags.SetLumenGlobalIllumination(false);
+              Flags.SetLumenReflections(false);
+              Flags.SetReflectionEnvironment(false);
+            }
+#endif
+          }
         }
       }
     }

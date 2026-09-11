@@ -7,6 +7,7 @@
 
 #include "carla/client/Actor.h"
 #include "carla/client/Vehicle.h"
+#include "carla/client/TrafficLight.h"
 #include "carla/client/Walker.h"
 
 #include "carla/trafficmanager/Constants.h"
@@ -258,6 +259,7 @@ void ALSM::UpdateData(const bool hybrid_physics_mode, const Actor &vehicle,
 
   // Updated traffic light state object.
   TrafficLightState tl_state = {vehicle_ptr->GetTrafficLightState(), vehicle_ptr->IsAtTrafficLight()};
+  if (tl_state.at_traffic_light) { const auto light=vehicle_ptr->GetTrafficLight(); if (light) tl_state.movement_states=light->GetMovementStates(); }
 
   // Update simulation state.
   if (state_entry_present) {
@@ -298,6 +300,7 @@ void ALSM::UpdateUnregisteredActorsData() {
       kinematic_state.speed_limit = vehicle_ptr->GetSpeedLimit();
 
       tl_state = {vehicle_ptr->GetTrafficLightState(), vehicle_ptr->IsAtTrafficLight()};
+  if (tl_state.at_traffic_light) { const auto light=vehicle_ptr->GetTrafficLight(); if (light) tl_state.movement_states=light->GetMovementStates(); }
 
       if (state_entry_not_present) {
         dimensions = vehicle_ptr->GetBoundingBox().extent;

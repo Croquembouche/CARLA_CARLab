@@ -234,6 +234,7 @@ void FTrafficLightData::RecordActorData(FCarlaActor* CarlaActor, UCarlaEpisode* 
   Controller->RemoveTrafficLight(Component);
   Controller->AddCarlaActorTrafficLight(CarlaActor);
   LightState = TrafficLight->GetTrafficLightState();
+  MovementStates = Component->GetMovementStates();
   PoleIndex = TrafficLight->GetPoleIndex();
 }
 
@@ -250,6 +251,7 @@ void FTrafficLightData::RestoreActorData(FCarlaActor* CarlaActor, UCarlaEpisode*
   Component->SetLightState(Controller->GetCurrentState().State);
   TrafficLight->SetPoleIndex(PoleIndex);
   TrafficLight->SetTrafficLightState(LightState);
+  Component->SetMovementStates(MovementStates);
 }
 
 void FActorSensorData::RecordActorData(FCarlaActor* CarlaActor, UCarlaEpisode* CarlaEpisode)

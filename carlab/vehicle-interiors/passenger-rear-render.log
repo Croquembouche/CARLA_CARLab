@@ -1,0 +1,10 @@
+00:01.030  blend            | Read blend: "/mnt/simulations/vehicle-interiors/Lincoln_MKZ_Interior_v2.blend"
+00:02.231  cycles           | WARNING HIPEW initialization failed: Error opening HIP dynamic library
+Blender 5.2.1 LTS (hash 9e2066aef7ef built 2026-08-25 02:12:34)
+00:18.782  render           | Saved: '/mnt/simulations/vehicle-interiors/renders/Lincoln_Passenger_Seat.png'
+00:34.357  render           | Saved: '/mnt/simulations/vehicle-interiors/renders/Lincoln_Back_Seat.png'
+Reloading external rigs...
+Reloading external metarigs...
+Info: Saved as "Lincoln_MKZ_Interior_v2.blend"
+unregister_class(...):, missing bl_rna attribute from '_RNAMeta' instance (may not be registered)
+Blender quit

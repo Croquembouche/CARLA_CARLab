@@ -1,0 +1,34 @@
+{
+  "result": "PASS_IMPORT",
+  "bones": [
+    "Vehicle_Base",
+    "Wheel_Front_Left",
+    "Wheel_Front_Right",
+    "Wheel_Rear_Right",
+    "Wheel_Rear_Left",
+    "Door_Front_Right",
+    "Door_Front_Left",
+    "Door_Rear_Right",
+    "Door_Rear_Left"
+  ],
+  "exterior": "/Game/VehicleInteriors/Lincoln/SK_MKZ_Exterior_Final.SK_MKZ_Exterior_Final",
+  "cabin": "/Game/VehicleInteriors/Lincoln/SM_MKZ_Cabin_Final.SM_MKZ_Cabin_Final",
+  "exterior_bounds": "<Struct 'BoxSphereBounds' (0x4db4fd955f0) {origin: {x: -0.621559, y: 0.000015, z: 76.324526}, box_extent: {x: 244.598503, y: 91.782303, z: 76.205946}, sphere_radius: 272.139238}>",
+  "cabin_bounds": "<Struct 'BoxSphereBounds' (0x4db4fd1efc0) {origin: {x: -2.167137, y: 0.000008, z: 88.695197}, box_extent: {x: 237.496208, y: 89.839760, z: 62.848031}, sphere_radius: 244.716364}>",
+  "changes": [
+    "CabinReplacement",
+    "VehicleMesh"
+  ],
+  "cabin_materials": [
+    "/Game/VehicleInteriors/Lincoln/MI_MKZ_Final_Interior.MI_MKZ_Final_Interior",
+    "/Game/VehicleInteriors/Lincoln/M_Interior_Mat.M_Interior_Mat",
+    "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.MKZ_Seat_Base_Plastic",
+    "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Hardware.MKZ_Seat_Hardware",
+    "/Game/VehicleInteriors/Lincoln/MKZ_Belt_Release.MKZ_Belt_Release",
+    "/Game/VehicleInteriors/Lincoln/M_Interior_Mat.M_Interior_Mat",
+    "/Game/VehicleInteriors/Lincoln/M_Interior_Edge.M_Interior_Edge",
+    "/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather",
+    "/Game/VehicleInteriors/Lincoln/MKZ_Perforated_Leather.MKZ_Perforated_Leather",
+    "/Game/VehicleInteriors/Lincoln/MKZ_Stitch_Charcoal.MKZ_Stitch_Charcoal"
+  ]
+}

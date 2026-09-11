@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "camera_types": [
+    "rgb",
+    "depth",
+    "normals",
+    "semantic_segmentation",
+    "instance_segmentation",
+    "optical_flow"
+  ],
+  "frames": [
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+  ],
+  "capture_timestamps_and_poses_verified": true,
+  "actor_destruction_after_unconsumed_frame_verified": true
+}

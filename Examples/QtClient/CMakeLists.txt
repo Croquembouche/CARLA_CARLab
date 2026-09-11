@@ -69,6 +69,14 @@ target_link_libraries (
   ${CARLA_QT_WIDGETS}
 )
 
+# The Unreal Linux compiler uses a bundled sysroot, while Qt may come from
+# the host distribution. Let the linker find Qt's transitive shared libraries
+# beside QtCore without changing the simulator's library search paths.
+target_link_options (
+  carla_studio_example_tool PRIVATE
+  "$<$<PLATFORM_ID:Linux>:LINKER:-rpath-link,$<TARGET_FILE_DIR:Qt${Qt_VERSION}::Core>>"
+)
+
 # -----------------------------------------------------------------------------
 # Plugin shared library: same source compiled without main() and dlopen-loaded
 # by CARLA Studio at runtime.

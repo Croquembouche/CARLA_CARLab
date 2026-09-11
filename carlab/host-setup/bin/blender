@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -e
+source /mnt/simulations/carla/carlab/host-setup/env.sh
+export BLENDER_USER_RESOURCES="$SIMULATIONS_LINUX/blender-config/5.2"
+exec "$BLENDER_BIN" "$@"

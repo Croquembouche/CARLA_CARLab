@@ -79,7 +79,7 @@ namespace nav {
                         _nav->GetWalkerPosition(it.first, current);
                         // check distance to the target point
                         carla::geom::Vector3D dist(target.x - current.x, target.z - current.z, target.y - current.y);
-                        if (dist.SquaredLength() <= 1) {
+                        if (dist.SquaredLength() <= (info.explicit_target && info.currentIndex+1==info.route.size() ? .01f : 1.f)) {
                             info.state = WALKER_IN_EVENT;
                         }
                     }
@@ -95,7 +95,8 @@ namespace nav {
                             break;
                         case EventResult::TimeOut:
                             // unblock changing the route
-                            SetWalkerRoute(it.first);
+                            if (!info.explicit_target) SetWalkerRoute(it.first);
+                            else { info.state=WALKER_STOP;_nav->PauseAgent(it.first,true); }
                             break;
                     }
                     break;
@@ -120,7 +121,9 @@ namespace nav {
         _nav->GetRandomLocation(location, nullptr);
 
         // set the route
-        return SetWalkerRoute(id, location);
+        const bool result=SetWalkerRoute(id, location);
+        auto it=_walkers.find(id);if (it!=_walkers.end()) it->second.explicit_target=false;
+        return result;
     }
 
 	// set a new route from its current position
@@ -142,6 +145,7 @@ namespace nav {
         // save both points for the route
         _nav->GetWalkerPosition(id, info.from);
         info.to = to;
+        info.explicit_target = true;
         info.currentIndex = 0;
         info.state = WALKER_IDLE;
 
@@ -207,8 +211,8 @@ namespace nav {
             // change the state
             info.state = WALKER_STOP;
             _nav->PauseAgent(id, true);
-            // we need a new route from here
-            SetWalkerRoute(id);
+            // Explicit destinations remain fixed until a client changes them.
+            if (!info.explicit_target) SetWalkerRoute(id);
         }
 
         return true;

@@ -22,6 +22,14 @@ namespace client {
     return GetEpisode().Lock()->GetActorSnapshot(*this).state.traffic_light_data.state;
   }
 
+  void TrafficLight::SetMovementStates(uint16_t states) {
+    GetEpisode().Lock()->SetTrafficLightMovementStates(*this, states);
+  }
+
+  uint16_t TrafficLight::GetMovementStates() const {
+    return GetEpisode().Lock()->GetActorSnapshot(*this).state.traffic_light_data.movement_states;
+  }
+
   void TrafficLight::SetGreenTime(float green_time) {
     GetEpisode().Lock()->SetTrafficLightGreenTime(*this, green_time);
   }
@@ -53,6 +61,10 @@ namespace client {
   void TrafficLight::Freeze(bool freeze) {
     //GetEpisode().Lock()->FreezeTrafficLight(*this, freeze);
     GetEpisode().Lock()->FreezeAllTrafficLights(freeze);
+  }
+
+  void TrafficLight::FreezeGroup(bool freeze) {
+    GetEpisode().Lock()->FreezeTrafficLight(*this, freeze);
   }
 
   bool TrafficLight::IsFrozen() const {

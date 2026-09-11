@@ -1,0 +1,20 @@
+{
+  "skeleton": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Skel_LincolnMKZ.Skel_LincolnMKZ",
+  "physics_asset": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Phys_LincolnMKZ.Phys_LincolnMKZ",
+  "bones": [
+    "Vehicle_Base",
+    "Wheel_Front_Left",
+    "Wheel_Front_Right",
+    "Wheel_Rear_Right",
+    "Wheel_Rear_Left",
+    "Door_Front_Right",
+    "Door_Front_Left",
+    "Door_Rear_Right",
+    "Door_Rear_Left"
+  ],
+  "materials": [
+    "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
+    "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior2.MI_LincolnMKZ_Interior2",
+    "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior01.MI_LincolnMKZ_Interior01"
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "VehicleMesh": {
+    "materials": [
+      "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
+      "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior2.MI_LincolnMKZ_Interior2",
+      "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior01.MI_LincolnMKZ_Interior01"
+    ],
+    "scale": "<Struct 'Vector' (0x7fcd98703b20) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+    "bounds": "",
+    "collision": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>"
+  },
+  "CustomCollision": {
+    "materials": [
+      "/Engine/EngineMaterials/WorldGridMaterial.WorldGridMaterial"
+    ],
+    "scale": "<Struct 'Vector' (0x7fcdb036a130) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+    "bounds": "(<Struct 'Vector' (0x7fcdb036a130) {x: -245.201309, y: -91.722923, z: 0.209557}>, <Struct 'Vector' (0x7fcd98703b20) {x: 243.394882, y: 91.722923, z: 152.233757}>)",
+    "collision": "<CollisionEnabled.QUERY_ONLY: 1>"
+  },
+  "SM_Lincolnv1_lights": {
+    "materials": [
+      "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Emissive.MI_LincolnMKZ_Emissive"
+    ],
+    "scale": "<Struct 'Vector' (0x7fcdb036a130) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+    "bounds": "(<Struct 'Vector' (0x7fcdb036a130) {x: -241.701668, y: -89.196617, z: 46.071533}>, <Struct 'Vector' (0x7fcd98703b20) {x: 234.288445, y: 89.196617, z: 113.399765}>)",
+    "collision": "<CollisionEnabled.NO_COLLISION: 0>"
+  },
+  "SM_LincolnDoor_Back_L": {
+    "materials": [
+      "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
+      "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior2.MI_LincolnMKZ_Interior2",
+      "/Game/VehicleInteriors/Lincoln/M_MKZ_Interior_PBR.M_MKZ_Interior_PBR"
+    ],
+    "scale": "<Struct 'Vector' (0x7fcd98703b20) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+    "bounds": "(<Struct 'Vector' (0x7fcd98703b20) {x: -105.272125, y: -2.104446, z: -55.090935}>, <Struct 'Vector' (0x7fcd98703c60) {x: 3.908089, y: 28.969681, z: 56.082596}>)",
+    "collision": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>"
+  },
+  "SM_Glass_DoorL_Lincoln_Rear_Ext1": {
+    "materials": [
+      "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext"
+    ],
+    "scale": "<Struct 'Vector' (0x7fcd98703c60) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+    "bounds": "(<Struct 'Vector' (0x7fcd98703c60) {x: -99.459717, y: -78.157791, z: 108.750908}>, <Struct 'Vector' (0x7fcd987298c0) {x: -29.833412, y: -62.211224, z: 144.925888}>)",
+    "collision": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>"
+  },
+  "SM_LincolnDoor_Back_R": {
+    "materials": [
+      "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
+      "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior2.MI_LincolnMKZ_Interior2",
+      "/Game/VehicleInteriors/Lincoln/M_MKZ_Interior_PBR.M_MKZ_Interior_PBR"
+    ],
+    "scale": "<Struct 'Vector' (0x7fcd98703c60) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+    "bounds": "(<Struct 'Vector' (0x7fcd98703c60) {x: -105.272629, y: -28.779305, z: -52.804626}>, <Struct 'Vector' (0x7fcd987298c0) {x: 3.907585, y: 2.294823, z: 58.368904}>)",
+    "collision": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>"
+  },
+  "SM_Glass_DoorR_Lincoln_Rear_Ext1": {
+    "materials": [
+      "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext"
+    ],
+    "scale": "<Struct 'Vector' (0x7fcd987298c0) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+    "bounds": "(<Struct 'Vector' (0x7fcd987298c0) {x: -99.459717, y: 62.211155, z: 108.750946}>, <Struct 'Vector' (0x7fcd987299b0) {x: -29.833412, y: 78.157738, z: 144.925919}>)",
+    "collision": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>"
+  },
+  "SM_LincolnDoor_Front_L": {
+    "materials": [
+      "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
+      "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior2.MI_LincolnMKZ_Interior2",
+      "/Game/VehicleInteriors/Lincoln/M_MKZ_Interior_PBR.M_MKZ_Interior_PBR"
+    ],
+    "scale": "<Struct 'Vector' (0x7fcd987298c0) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+    "bounds": "(<Struct 'Vector' (0x7fcd987298c0) {x: -122.664513, y: -23.922256, z: -55.530519}>, <Struct 'Vector' (0x7fcd987299b0) {x: -1.339012, y: 26.466587, z: 58.825087}>)",
+    "collision": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>"
+  },
+  "SM_Glass_DoorL_Lincoln_Ext1": {
+    "materials": [
+      "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext"
+    ],
+    "scale": "<Struct 'Vector' (0x7fcd987299b0) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+    "bounds": "(<Struct 'Vector' (0x7fcd987299b0) {x: -18.889832, y: -78.242958, z: 103.051094}>, <Struct 'Vector' (0x7fcd98729960) {x: 91.996376, y: -62.722775, z: 144.255569}>)",
+    "collision": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>"
+  },
+  "SM_LincolnDoor_Front_R": {
+    "materials": [
+      "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
+      "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior2.MI_LincolnMKZ_Interior2",
+      "/Game/VehicleInteriors/Lincoln/M_MKZ_Interior_PBR.M_MKZ_Interior_PBR"
+    ],
+    "scale": "<Struct 'Vector' (0x7fcd98729960) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+    "bounds": "(<Struct 'Vector' (0x7fcd98729960) {x: -122.664513, y: -27.077347, z: -55.530420}>, <Struct 'Vector' (0x7fcd98729a00) {x: -1.339012, y: 23.311501, z: 58.825186}>)",
+    "collision": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>"
+  },
+  "SM_Glass_DoorR_Lincoln_Ext1": {
+    "materials": [
+      "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext"
+    ],
+    "scale": "<Struct 'Vector' (0x7fcd98729a00) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+    "bounds": "(<Struct 'Vector' (0x7fcd98729a00) {x: -18.889832, y: 62.722706, z: 103.051132}>, <Struct 'Vector' (0x7fcd98729a50) {x: 91.996376, y: 78.242912, z: 144.255615}>)",
+    "collision": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>"
+  },
+  "SM_Glass_Lincoln_Ext1": {
+    "materials": [
+      "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext",
+      "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext"
+    ],
+    "scale": "<Struct 'Vector' (0x7fcd98729a50) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+    "bounds": "(<Struct 'Vector' (0x7fcd98729a50) {x: -242.173660, y: -89.894073, z: 49.227570}>, <Struct 'Vector' (0x7fcd98729aa0) {x: 235.231812, y: 89.894073, z: 155.425858}>)",
+    "collision": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>"
+  },
+  "CabinDetails": {
+    "materials": [
+      "/Game/VehicleInteriors/Lincoln/M_Interior_Mat.M_Interior_Mat",
+      "/Game/VehicleInteriors/Lincoln/M_Interior_Edge.M_Interior_Edge"
+    ],
+    "scale": "<Struct 'Vector' (0x7fcd98729aa0) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+    "bounds": "(<Struct 'Vector' (0x7fcd98729aa0) {x: -55.000008, y: -55.000011, z: 34.549999}>, <Struct 'Vector' (0x7fcd98729af0) {x: 99.000008, y: 55.000008, z: 40.150002}>)",
+    "collision": "<CollisionEnabled.NO_COLLISION: 0>"
+  },
+  "MannequinPreview": {
+    "materials": [
+      "/Game/VehicleInteriors/Lincoln/M_Mannequin_Shell.M_Mannequin_Shell",
+      "/Game/VehicleInteriors/Lincoln/M_Mannequin_Joints.M_Mannequin_Joints",
+      "/Game/VehicleInteriors/Lincoln/M_Mannequin_Eye.M_Mannequin_Eye",
+      "/Game/VehicleInteriors/Lincoln/M_Mannequin_Iris.M_Mannequin_Iris"
+    ],
+    "scale": "<Struct 'Vector' (0x7fcd98729aa0) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+    "bounds": "",
+    "collision": "<CollisionEnabled.NO_COLLISION: 0>"
+  },
+  "CabinReplacement": {
+    "materials": [
+      "/Game/VehicleInteriors/Lincoln/M_MKZ_Interior_PBR.M_MKZ_Interior_PBR",
+      "/Game/VehicleInteriors/Lincoln/M_Interior_Mat.M_Interior_Mat",
+      "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.MKZ_Seat_Base_Plastic",
+      "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Hardware.MKZ_Seat_Hardware",
+      "/Game/VehicleInteriors/Lincoln/MKZ_Belt_Release.MKZ_Belt_Release",
+      "/Game/VehicleInteriors/Lincoln/M_Interior_Mat.M_Interior_Mat",
+      "/Game/VehicleInteriors/Lincoln/M_Interior_Edge.M_Interior_Edge",
+      "/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather",
+      "/Game/VehicleInteriors/Lincoln/MKZ_Perforated_Leather.MKZ_Perforated_Leather",
+      "/Game/VehicleInteriors/Lincoln/MKZ_Stitch_Charcoal.MKZ_Stitch_Charcoal"
+    ],
+    "scale": "<Struct 'Vector' (0x7fcd98729af0) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+    "bounds": "(<Struct 'Vector' (0x7fcd98729af0) {x: -239.663345, y: -89.839752, z: 25.847166}>, <Struct 'Vector' (0x7fcd98729b40) {x: 235.329071, y: 89.839767, z: 151.543228}>)",
+    "collision": "<CollisionEnabled.NO_COLLISION: 0>"
+  },
+  "pbr": {
+    "base_color": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/M_MKZ_Interior_PBR.M_MKZ_Interior_PBR:MaterialExpressionTextureSample_0' (0x84c81d7af00) Class 'MaterialExpressionTextureSample'>",
+      "texture": "<Object '/Game/VehicleInteriors/Lincoln/T_MKZ_Ebony_BaseColor.T_MKZ_Ebony_BaseColor' (0x84c81e5ea00) Class 'Texture2D'>"
+    },
+    "roughness": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/M_MKZ_Interior_PBR.M_MKZ_Interior_PBR:MaterialExpressionTextureSample_1' (0x84c81d7b180) Class 'MaterialExpressionTextureSample'>",
+      "texture": "<Object '/Game/VehicleInteriors/Lincoln/T_MKZ_Ebony_ORM.T_MKZ_Ebony_ORM' (0x84c81e5f000) Class 'Texture2D'>"
+    }
+  }
+}

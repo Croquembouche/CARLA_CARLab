@@ -5,6 +5,7 @@
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
 #include "Carla/Sensor/OpticalFlowCamera.h"
+#include "Carla/Sensor/GpuSensorDispatcher.h"
 #include "Carla.h"
 #include "Carla/Actor/ActorBlueprintFunctionLibrary.h"
 
@@ -40,9 +41,11 @@ void AOpticalFlowCamera::PostPhysTick(UWorld *World, ELevelTick TickType, float 
   }
 
   const auto FrameIndex = FCarlaEngine::GetFrameCounter();
+  auto CaptureStream = MakeShared<FAsyncDataStream, ESPMode::ThreadSafe>(GetDataStream(*this));
+  TWeakObjectPtr<AOpticalFlowCamera> WeakThis(this);
   ImageUtil::ReadSensorImageDataAsync(
       *this,
-      [this, FrameIndex](
+      [WeakThis, FrameIndex, CaptureStream](
           const void* MappedPtr,
           size_t RowPitch,
           size_t BufferHeight,
@@ -71,10 +74,12 @@ void AOpticalFlowCamera::PostPhysTick(UWorld *World, ELevelTick TickType, float 
           }
           BasePtr += RowPitch;
         }
-        SendDataToClient(
-            *this,
-            TArrayView<FVector2f>(ImageData),
-            FrameIndex);
+        CarlaGpuSensors::EnqueueGameThread([
+            WeakThis, FrameIndex, CaptureStream, ImageData = MoveTemp(ImageData)]() mutable
+        {
+          if (WeakThis.IsValid() && WeakThis->HasActorBegunPlay())
+            SendDataToClient(*WeakThis.Get(), TArrayView<FVector2f>(ImageData), FrameIndex, &CaptureStream.Get());
+        });
         return true;
       });
 }

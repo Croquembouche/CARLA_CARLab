@@ -5,6 +5,8 @@
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
 #include "carla/multigpu/router.h"
+#include <limits>
+#include <stdexcept>
 
 #include "carla/multigpu/listener.h"
 #include "carla/streaming/EndPoint.h"
@@ -100,6 +102,15 @@ void Router::DisconnectSession(std::shared_ptr<Primary> session) {
   _sessions.erase(
       std::remove(_sessions.begin(), _sessions.end(), session),
       _sessions.end());
+  auto promise = _promises.find(session.get());
+  if (promise != _promises.end()) {
+    promise->second->set_exception(std::make_exception_ptr(std::runtime_error("GPU worker disconnected")));
+    _promises.erase(promise);
+  }
+  for (auto it = _sensor_load.begin(); it != _sensor_load.end();) {
+    if (it->second.server.lock() == session || it->second.server.expired()) it = _sensor_load.erase(it);
+    else ++it;
+  }
   log_info("Connected secondary servers:", _sessions.size());
 }
 
@@ -183,6 +194,26 @@ std::future<SessionInfo> Router::WriteToOne(std::weak_ptr<Primary> server, Multi
     s->Write(message);
   }
   return response->get_future();
+}
+
+std::weak_ptr<Primary> Router::ReserveSensor(stream_id sensor_id, double cost) {
+  std::scoped_lock<std::mutex> lock(_mutex);
+  std::shared_ptr<Primary> selected;
+  double minimum = std::numeric_limits<double>::max();
+  for (const auto &session : _sessions) {
+    double load = 0.;
+    for (const auto &entry : _sensor_load)
+      if (entry.first != sensor_id && entry.second.server.lock() == session) load += entry.second.cost;
+    if (load < minimum) { minimum = load; selected = session; }
+  }
+  if (!selected) throw std::runtime_error("No GPU worker available for sensor");
+  _sensor_load[sensor_id] = {selected, cost};
+  return selected;
+}
+
+void Router::ReleaseSensor(stream_id sensor_id) {
+  std::scoped_lock<std::mutex> lock(_mutex);
+  _sensor_load.erase(sensor_id);
 }
 
 std::weak_ptr<Primary> Router::GetNextServer() {

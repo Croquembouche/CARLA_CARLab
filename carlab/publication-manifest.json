@@ -1,0 +1,1771 @@
+{
+  "snapshot": "2026-09-11",
+  "files": [
+    {
+      "path": "carlab/ASSET-NOTICES.md",
+      "bytes": 1008,
+      "sha256": "c84e76e584066732acc704edf0808431fc669286d645a1205a3a135e36d9ed2d"
+    },
+    {
+      "path": "carlab/CARLA-ASSET-LICENSE.txt",
+      "bytes": 251,
+      "sha256": "f58b048829e10ff840767a5153181244eff3896b89ee3f7244ed2693b2b1fbb8"
+    },
+    {
+      "path": "carlab/GPU-SENSORS.md",
+      "bytes": 10709,
+      "sha256": "e4b1a1ba0d27bd181b178bb1b45cafb9cf3681f8f46b1fa6ba2d2c34092ec771"
+    },
+    {
+      "path": "carlab/RESTRICTED-ENGINE-FILES.md",
+      "bytes": 340,
+      "sha256": "d718d9fea0811e90362ea2a507b83c4768097121f1027d1a744c3e0a29fc905f"
+    },
+    {
+      "path": "carlab/SETUP.md",
+      "bytes": 4252,
+      "sha256": "98eb4de5baed17422801231ccd9e80df3b913fcf3b35f574a4307b9611a238bc"
+    },
+    {
+      "path": "carlab/UPSTREAM-README.md",
+      "bytes": 10334,
+      "sha256": "5ef2343f8c83a4089be60064a2a5abb2e8b292f9852dd66b6971a2b9dd1212c7"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Blueprints/Vehicles/SceneControllable/BP_HarleyBackground.uasset",
+      "bytes": 63181,
+      "sha256": "7e8a9b0da7f5a0498e55b0d3572eede13005851431dffaa3cdd1ca8ebd6e2222"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Blueprints/Vehicles/SceneControllable/BP_Harley_FW.uasset",
+      "bytes": 5727,
+      "sha256": "1e7850623b23903e402242a6d37a4499e2472ac0249e1825d00ffcbaf26a61d9"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Blueprints/Vehicles/SceneControllable/BP_Harley_RW.uasset",
+      "bytes": 5725,
+      "sha256": "999d547b16d24548ef5b2c1c57cd013e838adb54f7cb65ff8651bb8ad492bb7b"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Blueprints/Vehicles/SceneControllable/BP_KawasakiNinjaBackground.uasset",
+      "bytes": 42727,
+      "sha256": "6a4fc941f96f07780b951f927e10c3b5b63b5100ac06bd85711faa86cecb719c"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Blueprints/Vehicles/SceneControllable/BP_KawasakiNinja_FW.uasset",
+      "bytes": 5804,
+      "sha256": "39a66084851cfee1937f297d3d038ae5a72a15bce5bb82da025c0e1f8c261d74"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Blueprints/Vehicles/SceneControllable/BP_KawasakiNinja_RW.uasset",
+      "bytes": 5802,
+      "sha256": "375649e1ceaa2da9e4dbca540142fe7ee81f191908466bc0a85d5e0d86e6cb52"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Blueprints/Vehicles/SceneControllable/BP_VespaBackground.uasset",
+      "bytes": 41805,
+      "sha256": "ab4f99c7bb3547ff8cee054f878dd8f63be09326e4d28c87dec81de34376f1c1"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Blueprints/Vehicles/SceneControllable/BP_Vespa_FW.uasset",
+      "bytes": 5716,
+      "sha256": "bad243941bd1fc9c2af92fd6ffb148a22212e034fbeab0129227b14d78607974"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Blueprints/Vehicles/SceneControllable/BP_Vespa_RW.uasset",
+      "bytes": 5714,
+      "sha256": "0e8d50e69bc554e5f5e3c58d9ec07c37fb9946282f97f3ce5d57dc203fb8340d"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Blueprints/Vehicles/SceneControllable/BP_YamahaBackground.uasset",
+      "bytes": 62558,
+      "sha256": "8a41bffa996c1db4f9581aa3804c82562d491c73b84f254f6aa19761b9e7d73f"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Blueprints/Vehicles/SceneControllable/BP_Yamaha_FW.uasset",
+      "bytes": 5727,
+      "sha256": "d3975774e8f8c6c4384e0a77b98b27c2a82ca4615b294695606a9b4b38c372ab"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Blueprints/Vehicles/SceneControllable/BP_Yamaha_RW.uasset",
+      "bytes": 5725,
+      "sha256": "731d83270b8b72b3648fa2428322ad71558573843834bca8dc6e1d279202b23f"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Config/PostProcess/AmbulanceCabinObservation.json",
+      "bytes": 20432,
+      "sha256": "4e76eb3aa19ebcf3e95d680d93ec0f37094fa87ce5e5fb79edd3bda1a3206ce8"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Config/PostProcess/CabinObservation.json",
+      "bytes": 20431,
+      "sha256": "5fd8786168fd2a38103a670b477a0f632785b9185dce193565aad808d9a963fc"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Config/VehicleParameters.json",
+      "bytes": 12371,
+      "sha256": "3d02a757521cd5f6fa5573c1817f1ee5915466ec7dafb2e80bac97f949fb3617"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Maps/Town10HD_Opt.umap",
+      "bytes": 32840527,
+      "sha256": "501fe36a03725a0a9d084b4bd4b67e3f5f7437863f00e864e0c497ea51e79b42"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Static/TrafficSignal/M_MovementSignal.uasset",
+      "bytes": 6196,
+      "sha256": "d3dcd8f6b0d2f7ac65db08d42c6b17929541f79905695be76145c6090468ec81"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/BP_LincolnMKZ_Interior.uasset",
+      "bytes": 114785,
+      "sha256": "e768e3e0ecf63fbd6fdffd65c16452615b313b1a360dff5b9e7665a29a5530e7"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/L_LincolnInteriorLab.umap",
+      "bytes": 6657,
+      "sha256": "378a77af89de80e0e31128cb9fbf252ca1048f4a2b16379707b429fcfd52c2d4"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/MI_MKZ_Ebony_Interior.uasset",
+      "bytes": 7246,
+      "sha256": "956189edfcb4913c61534795a9743116761f09dcdbc1c10890637698e4da0429"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/MI_MKZ_Final_Interior.uasset",
+      "bytes": 7102,
+      "sha256": "31eb91027cc8f4e3debdc52f688b80e83f44098d0c271d22f8e4eee1b85e4a42"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/MKZ_Belt_Release.uasset",
+      "bytes": 5438,
+      "sha256": "1f2ebcfd4e1d6c6335794e1bcd9e9135d08a7f92c0cc75cad70df9bcb77f2c40"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.uasset",
+      "bytes": 5443,
+      "sha256": "917687de3edb1333f9188a8df2581043d410630e75c7eef86fba5672c07cd6a6"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/MKZ_Perforated_Leather.uasset",
+      "bytes": 5468,
+      "sha256": "145079c80af4a5ce01e775561485fbd68561127ab4367b1591bc4ec3fa46e4a7"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.uasset",
+      "bytes": 5463,
+      "sha256": "16ad391e726b96ec4f25750d844a0ad4aa397d872da9faaa8d796312efc6e8d9"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/MKZ_Seat_Hardware.uasset",
+      "bytes": 5472,
+      "sha256": "e9896a056f9ebb238bbd87fddc986ca23f68a5967ecbffb530d6fa6f17a737d5"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/MKZ_Stitch_Charcoal.uasset",
+      "bytes": 5453,
+      "sha256": "d21161ea80d8a680961d0acf318f311fe813a84dd464febf8412d57a5add419b"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/M_Hidden_StockCabin.uasset",
+      "bytes": 4666,
+      "sha256": "3db71d55ff62c706ecf71334f0d212d98a309a5ee2602f320da633966e7326e8"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/M_Interior_Edge.uasset",
+      "bytes": 5433,
+      "sha256": "e2a731e13a57ded97a66879c40f970a12e9068543e595cec892a4108a8ac32eb"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/M_Interior_Mat.uasset",
+      "bytes": 5428,
+      "sha256": "a65bcf278cb11362a9474d5af566663043d3cd37b8a5a04bbf1b2b175ec79ff4"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/M_MKZ_Interior_PBR.uasset",
+      "bytes": 6563,
+      "sha256": "f919b11a79d635c8e75320cd1cd6d73e080371e736d6f9b8b2d56d9abe58d90d"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/M_Mannequin_Eye.uasset",
+      "bytes": 5439,
+      "sha256": "d9cfa9369cd06bdeca97b14ca2825e202c2e0fc043766b59251bc1b70ca90ae1"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/M_Mannequin_Iris.uasset",
+      "bytes": 5473,
+      "sha256": "c02d8f10aa3abb70008301e9cec2cb19e446ed45c1d455e7856e9935a8f3bf5c"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/M_Mannequin_Joints.uasset",
+      "bytes": 5483,
+      "sha256": "7b329346c28a4dc37877f543d0ff333425514bd59b8993663bd2ab9962e10995"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/M_Mannequin_Shell.uasset",
+      "bytes": 5478,
+      "sha256": "18169e5fcb1f38ccd2fe6613298529af61fdece0f9b823af43b19a765dc713db"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/SK_MKZ_ExteriorOnly.uasset",
+      "bytes": 73253041,
+      "sha256": "9fe76b27319220ad510cd7f3c82d98201655d6ad8f9989fd3c366bbe1095b33d"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/SK_MKZ_Exterior_Final.uasset",
+      "bytes": 73199072,
+      "sha256": "b4c383cd55f2d2e8b71e3675ec0d645e4b6ab77314e8eb9aa8b5f5d2f9ac1eb6"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/SK_SeatedMannequin.uasset",
+      "bytes": 6379998,
+      "sha256": "165ccb579413837f919e1f87141eb351ea2efe5c2f2c4848222d209d25a8f9e2"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/SK_SeatedMannequin_Skeleton.uasset",
+      "bytes": 5974,
+      "sha256": "dd309bb0331151684cfc03dcbb53fe4e8e21a74f65031fa081f3fb2ea6570118"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/SM_LincolnCabinDetails.uasset",
+      "bytes": 127314,
+      "sha256": "a1526f6e2b1fccdd6b322c963d9495470deca9e92b6ee218b17694eafab3feda"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/SM_MKZ_Cabin_Final.uasset",
+      "bytes": 7855425,
+      "sha256": "c14b667dd116559a38d2ff45682f187f4af2c134271e96d4f9317cf998bc7289"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/SM_MKZ_Cabin_v2.uasset",
+      "bytes": 7233162,
+      "sha256": "a71e842e0a5f15ebd3ee7bc0447119c49e7778132cff419def8331114f3a807c"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/T_MKZ_Ebony_BaseColor.uasset",
+      "bytes": 10897790,
+      "sha256": "a10044b030c49dcbbc2c8a6e37d52b0db182ebb973c50980d915ae01a800b2a3"
+    },
+    {
+      "path": "carlab/content-overrides/VehicleInteriors/Lincoln/T_MKZ_Ebony_ORM.uasset",
+      "bytes": 13836044,
+      "sha256": "c751578dfec24efebf0693b057c9862c36e66925d135b4ebe91e5d2972be40a4"
+    },
+    {
+      "path": "carlab/host-setup/CONTROL-CENTER.md",
+      "bytes": 744,
+      "sha256": "29459278f1284170da057b7126fdfebbeacf9255f9801dc432c75e31f61f90c1"
+    },
+    {
+      "path": "carlab/host-setup/GPU-SENSORS.md",
+      "bytes": 10709,
+      "sha256": "e4b1a1ba0d27bd181b178bb1b45cafb9cf3681f8f46b1fa6ba2d2c34092ec771"
+    },
+    {
+      "path": "carlab/host-setup/README.md",
+      "bytes": 6450,
+      "sha256": "b679c8019fff54e8fc4b330782306a0690e087ac00024d8df4c61839edbd1ec9"
+    },
+    {
+      "path": "carlab/host-setup/bin/blender",
+      "bytes": 177,
+      "sha256": "24bded86beef3c2b3c5fe2b8d707bc46692447eeacc2e91ac0112e02fa09f0f3"
+    },
+    {
+      "path": "carlab/host-setup/bin/blender-carla",
+      "bytes": 125,
+      "sha256": "50e7509a16bc0519cf4a85458f14860ea39ee5f31d70fdc87d571a43c11df3a7"
+    },
+    {
+      "path": "carlab/host-setup/bin/carla-build",
+      "bytes": 104,
+      "sha256": "d9e6b2b1eac3eee0abdb4e3a6beb70e19543b7c0a1e6603c26fb07d7f5f83d50"
+    },
+    {
+      "path": "carlab/host-setup/bin/carla-editor",
+      "bytes": 764,
+      "sha256": "b56413dad7058491c613ccb93697167d9a16294f00a77a5e6ce4674ce624d7b8"
+    },
+    {
+      "path": "carlab/host-setup/bin/carla-multigpu",
+      "bytes": 163,
+      "sha256": "fe676ef7bec8014ea3fcb7f6e24ab95da883e61a926314705040b73d7c4a1f25"
+    },
+    {
+      "path": "carlab/host-setup/bin/carla-python",
+      "bytes": 149,
+      "sha256": "798e37a55d38158464ae76946e9c4f15ff7d9a212e63242bc3c495e0de3a89ec"
+    },
+    {
+      "path": "carlab/host-setup/bin/carla-sim",
+      "bytes": 794,
+      "sha256": "c282046b486ccc1ebd7b2e728e22152414a586091e89ed9ba7316dac628de63d"
+    },
+    {
+      "path": "carlab/host-setup/bin/carla-web-status",
+      "bytes": 84,
+      "sha256": "f990a8806e71d998d77f4dbf41cf32cb619064b769492b12de679ca000f91e57"
+    },
+    {
+      "path": "carlab/host-setup/bin/simulations-status",
+      "bytes": 891,
+      "sha256": "5250bc031785cb1802ff14eb03360c3f80efd4a47d92499de10451f6bb3c080e"
+    },
+    {
+      "path": "carlab/host-setup/bin/ue5-editor",
+      "bytes": 289,
+      "sha256": "ce383846800edb5f7be46e6732d8d141f596041312322bb25d4a97b4a533393f"
+    },
+    {
+      "path": "carlab/host-setup/env.sh",
+      "bytes": 1198,
+      "sha256": "3595f3ca44601f45fd87f506f772c875232baa2f1318a948bbe50cf2ebc57c6c"
+    },
+    {
+      "path": "carlab/host-setup/installation.json",
+      "bytes": 3990,
+      "sha256": "97544f7f7b077347a998ecea0991c0505e20ff471d326d01117da13f01e40ea0"
+    },
+    {
+      "path": "carlab/host-setup/scripts/assets/M_MovementSignal.uasset",
+      "bytes": 6196,
+      "sha256": "d3dcd8f6b0d2f7ac65db08d42c6b17929541f79905695be76145c6090468ec81"
+    },
+    {
+      "path": "carlab/host-setup/scripts/benchmark-sensors.py",
+      "bytes": 9609,
+      "sha256": "eb88023b903a4136956c3dcfafc3896be05cbcd5d7f68fae4ff1cb0c56a19668"
+    },
+    {
+      "path": "carlab/host-setup/scripts/blender-tools-local-compatibility.patch",
+      "bytes": 2526,
+      "sha256": "810ccbd55e18db87824e1e0752d0d1c20eb4170faafbe6d14aaab8d8b7a384ae"
+    },
+    {
+      "path": "carlab/host-setup/scripts/build-stack.sh",
+      "bytes": 3056,
+      "sha256": "9fbb29e1a82bb9c2e0809419d4d612956b8072c0f169c4f4390f9bb3f63ef0c9"
+    },
+    {
+      "path": "carlab/host-setup/scripts/carla-local-changes.patch",
+      "bytes": 121507,
+      "sha256": "d98ae60b63d74acf89c1aac8eb9690cc1032e8d6af6f5ac3aa43cefff6503b5c"
+    },
+    {
+      "path": "carlab/host-setup/scripts/carla-multigpu.py",
+      "bytes": 9120,
+      "sha256": "6d7c55650a13bbed53d58f10550b8ceb265a0ab5357ed68d8ccf374a8c576c5b"
+    },
+    {
+      "path": "carlab/host-setup/scripts/check-gpu-cpp.py",
+      "bytes": 2371,
+      "sha256": "b24d9534fa5fedef4402284e027b922ce301f87acf2e7f6d819597f63f96fe05"
+    },
+    {
+      "path": "carlab/host-setup/scripts/compile-carla-early.sh",
+      "bytes": 984,
+      "sha256": "7a19841f4d6569e168e98143c10080f93221ffef07b72dfcec1302c2ce29a093"
+    },
+    {
+      "path": "carlab/host-setup/scripts/resume-assets.sh",
+      "bytes": 543,
+      "sha256": "76976089fd8c55324cdb44cbe0ee86e41c210acd573fd49253c9790b53be2c17"
+    },
+    {
+      "path": "carlab/host-setup/scripts/run-runtime-verification.sh",
+      "bytes": 766,
+      "sha256": "ae33dbb27838d2ccaab50cc8accc33cb2378990f80288312da88a48a5eba521b"
+    },
+    {
+      "path": "carlab/host-setup/scripts/verify-blender-gpu.py",
+      "bytes": 734,
+      "sha256": "1bbcaf766b7be23268bdea2f5a207d667e3626a38bb798d578d7b4c66b699698"
+    },
+    {
+      "path": "carlab/host-setup/scripts/verify-blender.py",
+      "bytes": 1125,
+      "sha256": "fbd5471b42e3735e6858ee4d5c34897b4bc73f3bacb8623432868ad1b2a271c4"
+    },
+    {
+      "path": "carlab/host-setup/scripts/verify-camera-streams.py",
+      "bytes": 2934,
+      "sha256": "0ef35713e19065cbce35d0f4339fc1cf5617a77fe6ff8c3651b283474c3bcb7e"
+    },
+    {
+      "path": "carlab/host-setup/scripts/verify-carla.py",
+      "bytes": 6078,
+      "sha256": "f193988070d6cb151a07059b5c160969b8bbf5cf5c0b7a32584f25a38008eb2a"
+    },
+    {
+      "path": "carlab/host-setup/scripts/verify-gpu-preflight.py",
+      "bytes": 2311,
+      "sha256": "11c402f2b416438726b81363d61ac4d003efb76568878809c36fef6b7ea5b090"
+    },
+    {
+      "path": "carlab/host-setup/scripts/verify-gpu-stack.py",
+      "bytes": 14300,
+      "sha256": "6053bb3ec9d931f75b4a2496651095ab03aac981aa0a39426acf30e5258d1bf5"
+    },
+    {
+      "path": "carlab/maps/Town10HD_Opt-cleaned.zip",
+      "bytes": 3763551,
+      "sha256": "477b645b40307c83081164d9125439fb4cd451a25d552d28b5f0948b6a25fd07"
+    },
+    {
+      "path": "carlab/maps/Town10HD_Opt-cleaned/Content/Carla/Maps/Town10HD_Opt.umap",
+      "bytes": 32840527,
+      "sha256": "501fe36a03725a0a9d084b4bd4b67e3f5f7437863f00e864e0c497ea51e79b42"
+    },
+    {
+      "path": "carlab/maps/Town10HD_Opt-cleaned/README.md",
+      "bytes": 2945,
+      "sha256": "78afb017969c71d25a898fa8b5e9650a3fc46258411c352fb7cd04d452ac42d0"
+    },
+    {
+      "path": "carlab/maps/Town10HD_Opt-cleaned/SHA256SUMS.json",
+      "bytes": 973,
+      "sha256": "bcdf05f084a2629ae44d9d1c1ee46afcee30058ec7398f3357874e9ba42dd662"
+    },
+    {
+      "path": "carlab/maps/Town10HD_Opt-cleaned/apply-report.json",
+      "bytes": 494,
+      "sha256": "a095da9a92eda2d7fedb74a098ccebeb66a82999e7f15067048aa2c70aad0989"
+    },
+    {
+      "path": "carlab/maps/Town10HD_Opt-cleaned/apply_cleanup.py",
+      "bytes": 3103,
+      "sha256": "975f2f1328e98a91e72cdf70aa34327dfd5e1fa1d11cf152bbce72fd7d1cdc2f"
+    },
+    {
+      "path": "carlab/maps/Town10HD_Opt-cleaned/backup/Carla/Maps/Town10HD_Opt.umap",
+      "bytes": 32873764,
+      "sha256": "013f97735dcd6be505ccdec3bf7121c34b761743a9eb092c9139b6dac304b990"
+    },
+    {
+      "path": "carlab/maps/Town10HD_Opt-cleaned/cleanup-manifest.json",
+      "bytes": 10973,
+      "sha256": "6e83bb2cd9a265ba50e4f4d922226496674426b9b8b239ebe5206b62a4e1fa16"
+    },
+    {
+      "path": "carlab/maps/Town10HD_Opt-cleaned/compatibility.json",
+      "bytes": 448,
+      "sha256": "2c666c0cd66f3b79fdef7579a888b1f23919efbd01fc839d8845d63fbc2455ed"
+    },
+    {
+      "path": "carlab/maps/Town10HD_Opt-cleaned/control-center/map-revisions/Town10HD_Opt.json",
+      "bytes": 10973,
+      "sha256": "6e83bb2cd9a265ba50e4f4d922226496674426b9b8b239ebe5206b62a4e1fa16"
+    },
+    {
+      "path": "carlab/maps/Town10HD_Opt-cleaned/live-verification.json",
+      "bytes": 554,
+      "sha256": "e778819c40dccfadfb772cb1b71a8b6f47dd966595b4686974947415bae087dd"
+    },
+    {
+      "path": "carlab/maps/Town10HD_Opt-cleaned/native-runtime-verification.json",
+      "bytes": 554,
+      "sha256": "e778819c40dccfadfb772cb1b71a8b6f47dd966595b4686974947415bae087dd"
+    },
+    {
+      "path": "carlab/maps/Town10HD_Opt-cleaned/scenario.json",
+      "bytes": 216305,
+      "sha256": "4e25b1bfb3304dbe3785212a337b94bdda44d2f562d35bff26d4016420aa5df8"
+    },
+    {
+      "path": "carlab/setup_content.py",
+      "bytes": 1392,
+      "sha256": "3550aad7ef03014288a8aa33e3c6e2aeb56d39916012194258bb85025117f71b"
+    },
+    {
+      "path": "carlab/source-changes.json",
+      "bytes": 5214,
+      "sha256": "72766e806662fac548824877164cc7d9708c28b881d0159e2ade348c0cebeb00"
+    },
+    {
+      "path": "carlab/upstream-lock.json",
+      "bytes": 704,
+      "sha256": "50c08121c016cbb29b516e04d4571379322d8ec88b209e18374718b4318ec51b"
+    },
+    {
+      "path": "carlab/vehicle-interiors/Lincoln_Interior_Mannequin.blend",
+      "bytes": 74774892,
+      "sha256": "5decdc0c44827a510f2378a468e69153a9cee82d91125e45f56f898c5e86f7fb"
+    },
+    {
+      "path": "carlab/vehicle-interiors/Lincoln_Interior_Mannequin.blend1",
+      "bytes": 74754850,
+      "sha256": "0d1f97962e9b587d3a9cfd77266530ce17c0a0c5e81f5d954536c5fef9bdd4b4"
+    },
+    {
+      "path": "carlab/vehicle-interiors/Lincoln_MKZ_Exterior_Rig.blend",
+      "bytes": 20704845,
+      "sha256": "df95026c680967d1ea925265a600531bcb3c062123950add035dbf5d0589ca80"
+    },
+    {
+      "path": "carlab/vehicle-interiors/Lincoln_MKZ_Interior_Final.blend",
+      "bytes": 76269854,
+      "sha256": "29eea923ebdc7b4716411172d96dc45f6de3e495e2f96f21bf8386c977ab4f57"
+    },
+    {
+      "path": "carlab/vehicle-interiors/Lincoln_MKZ_Interior_Final.blend1",
+      "bytes": 76271079,
+      "sha256": "20db126c5fdd8b6f0fff8f3509647d9b74c81836f0ec067e55ea74a7a4696622"
+    },
+    {
+      "path": "carlab/vehicle-interiors/Lincoln_MKZ_Interior_v2.blend",
+      "bytes": 76266992,
+      "sha256": "b65e2ea7efb3a6f5dc225632e7e9a3759fa8039f39da37f518246f40399e4264"
+    },
+    {
+      "path": "carlab/vehicle-interiors/Lincoln_MKZ_Interior_v2.blend1",
+      "bytes": 76266019,
+      "sha256": "b9b8819a0061acf58518df49c6413a5a725d09f28086975e4f0c24108a558d05"
+    },
+    {
+      "path": "carlab/vehicle-interiors/README.md",
+      "bytes": 12366,
+      "sha256": "188080ef2c58bd2ac09b513f3a2b0d552e28ad130521923b766f00214fd45a9f"
+    },
+    {
+      "path": "carlab/vehicle-interiors/actual-runtime-materials-error.txt",
+      "bytes": 53,
+      "sha256": "cc26369930576868fc7a34f0e1a15fc014ffa0afb94b5499e8327bfb3d7609c4"
+    },
+    {
+      "path": "carlab/vehicle-interiors/actual-runtime-materials.json",
+      "bytes": 9061,
+      "sha256": "4a9bf049d20eaf81ff2e86495a44212c83e60d7fcdce4a27a30c2562d108862c"
+    },
+    {
+      "path": "carlab/vehicle-interiors/atlas.log",
+      "bytes": 1278,
+      "sha256": "090d1650ab96b3847ed04b044175d4c21a19a5076a6dbd35aa7c75ef4ca6e7fc"
+    },
+    {
+      "path": "carlab/vehicle-interiors/audit-CRC.log",
+      "bytes": 8560,
+      "sha256": "93bd6cf063bfc7dff3f8746fa7695e14b5ba3dffb75b268d8abeed2383406b42"
+    },
+    {
+      "path": "carlab/vehicle-interiors/audit-render-stdout.log",
+      "bytes": 294628,
+      "sha256": "459034db844698f7c6bd6b99791ab9016e5e6d0fb218058f4ebc504ce3217f47"
+    },
+    {
+      "path": "carlab/vehicle-interiors/audit-render.log",
+      "bytes": 202399,
+      "sha256": "c3f0457eb0b4820da90689f9d35e0aa9f7249755aa989763d9a6ffaef3ed370f"
+    },
+    {
+      "path": "carlab/vehicle-interiors/audit-rhi-CRC.log",
+      "bytes": 8564,
+      "sha256": "28660e435d25fd26466f58108c1eca162d1c5c77a611e9626e6c975b098f5b26"
+    },
+    {
+      "path": "carlab/vehicle-interiors/audit-rhi-stdout.log",
+      "bytes": 156192,
+      "sha256": "503ef84e23e643442f486803586197b655b396647486afdb9f0ddf5bcb724d13"
+    },
+    {
+      "path": "carlab/vehicle-interiors/audit-rhi.log",
+      "bytes": 136446,
+      "sha256": "e380d5ff4884daa271a9b48b245471027fd3d11e3a7613f62c234a129818189c"
+    },
+    {
+      "path": "carlab/vehicle-interiors/audit-stdout.log",
+      "bytes": 157321,
+      "sha256": "f093444562a6b1f3e66013223addf1ea9a8e6a23ace66efa114c6d002e8f8d82"
+    },
+    {
+      "path": "carlab/vehicle-interiors/audit-vehicle-rig.log",
+      "bytes": 143285,
+      "sha256": "bf50473ab27914e65c458cc37c9f8ad84d3cc0105c840a89b4e53025c161d9de"
+    },
+    {
+      "path": "carlab/vehicle-interiors/audit.log",
+      "bytes": 137747,
+      "sha256": "f6a15fb8b15af0e8bc026a3939ad87260e4c203f20fdb560f9c7de1d8b02a510"
+    },
+    {
+      "path": "carlab/vehicle-interiors/backups/VehicleParameters.json",
+      "bytes": 14483,
+      "sha256": "67a06af623fde8491cd33d1c011150f07f143989db20cc1190d912478c17d168"
+    },
+    {
+      "path": "carlab/vehicle-interiors/backups/XRBase-UnrealEditor.modules",
+      "bytes": 167,
+      "sha256": "6a5e5aa67e001ad5326007fd787c5b50b8e23d4bf66d5646c5388a7d56b5147c"
+    },
+    {
+      "path": "carlab/vehicle-interiors/backups/before-passenger-render.blend",
+      "bytes": 76266019,
+      "sha256": "b9b8819a0061acf58518df49c6413a5a725d09f28086975e4f0c24108a558d05"
+    },
+    {
+      "path": "carlab/vehicle-interiors/backups/before-session-save-20260909-125323/Lincoln_Interior_Mannequin.blend",
+      "bytes": 74754850,
+      "sha256": "0d1f97962e9b587d3a9cfd77266530ce17c0a0c5e81f5d954536c5fef9bdd4b4"
+    },
+    {
+      "path": "carlab/vehicle-interiors/backups/before-session-save-20260909-125323/Lincoln_MKZ_Interior_v2.blend",
+      "bytes": 76266019,
+      "sha256": "b9b8819a0061acf58518df49c6413a5a725d09f28086975e4f0c24108a558d05"
+    },
+    {
+      "path": "carlab/vehicle-interiors/blender-audit.log",
+      "bytes": 288,
+      "sha256": "af61efbec50ec55cb23818f71863d3ef83c72789f3821ca8257c3755c554170a"
+    },
+    {
+      "path": "carlab/vehicle-interiors/blender-build-final.log",
+      "bytes": 2144,
+      "sha256": "e5c238f7d272e5434da96f590864557fca761b64a2ef5c926ccae100e4f00b6c"
+    },
+    {
+      "path": "carlab/vehicle-interiors/blender-build.log",
+      "bytes": 2346,
+      "sha256": "db3d3f98848c77bdae4efc071ceb3d24713e7172a290fa08c9da6edd27dd3f5f"
+    },
+    {
+      "path": "carlab/vehicle-interiors/blender-final-verification.json",
+      "bytes": 380,
+      "sha256": "d125388fcbcccf6b85dc0d4e3c6d4a4f5f4f795cdd292b28f8742d65540563f8"
+    },
+    {
+      "path": "carlab/vehicle-interiors/blender-ui.log",
+      "bytes": 603,
+      "sha256": "89a8c8a1703bc7e4efbff51a3ee519570d809f2ce23aeafd4d5fa1a0c0ebcc4b"
+    },
+    {
+      "path": "carlab/vehicle-interiors/blender-verification.json",
+      "bytes": 1338,
+      "sha256": "92fa2ef06fd04e6745d1df716c4781955046a4de64e5fe761283361247c8d43c"
+    },
+    {
+      "path": "carlab/vehicle-interiors/blender-verify.log",
+      "bytes": 477,
+      "sha256": "c3c2f61dfcd5bfe96b73e716f8490a3b3d5c49655067694cf36aca4eb2de3d4c"
+    },
+    {
+      "path": "carlab/vehicle-interiors/build-canonical.log",
+      "bytes": 11716,
+      "sha256": "389a6fed34b155f2843065bc818e3e872dfad609ce5fb677425fb4ac1bfd50fc"
+    },
+    {
+      "path": "carlab/vehicle-interiors/build-final.log",
+      "bytes": 3000,
+      "sha256": "9a985fa8f3b5c8ff7ffdfc723e147d0fee185ffddaf056500b5088045b6849a1"
+    },
+    {
+      "path": "carlab/vehicle-interiors/build-module.log",
+      "bytes": 65862,
+      "sha256": "a47d4a02595a0171b07107a22499daff8a6d14494a8c28722d593f45416dd0b0"
+    },
+    {
+      "path": "carlab/vehicle-interiors/build.log",
+      "bytes": 4744,
+      "sha256": "4faaea5aa33623a2c0b24dc42ee79286a730ca72ad6c4c8fad2b73a3254d7683"
+    },
+    {
+      "path": "carlab/vehicle-interiors/cabin-section-build.log",
+      "bytes": 2540,
+      "sha256": "85ca6fc33edfadbef7a224a66fc85017987ff2bdde5cd92ac4f16242644630d7"
+    },
+    {
+      "path": "carlab/vehicle-interiors/cabin-uv-audit.json",
+      "bytes": 1103,
+      "sha256": "7d3287dab671491e91c3f0741cd6f11adb5048a4b5fa5b5204332e10255ea8d5"
+    },
+    {
+      "path": "carlab/vehicle-interiors/cabin-uv-audit.log",
+      "bytes": 363,
+      "sha256": "296f0a8610994adf268d2871bb92b8e833f99634b97facfef9aca7c086a273ec"
+    },
+    {
+      "path": "carlab/vehicle-interiors/check-final-rig.log",
+      "bytes": 143636,
+      "sha256": "32837b79690408017dcf8733c0f664219636e2116e649484b2683ab0662faf28"
+    },
+    {
+      "path": "carlab/vehicle-interiors/constructed-audit.log",
+      "bytes": 148601,
+      "sha256": "6e98bf5f934f2d7c8926c1f239badb94d9a066c19e6a62c3016186e0b15f5874"
+    },
+    {
+      "path": "carlab/vehicle-interiors/constructed-vehicle-audit.json",
+      "bytes": 6586,
+      "sha256": "7049208e2bb0f395817dec9a2c68dc2580707ec2fe7a49570496325f684d5d68"
+    },
+    {
+      "path": "carlab/vehicle-interiors/daylight-rear.log",
+      "bytes": 623,
+      "sha256": "a7ef4753800f4a94ae2ad247074df74ca36b0300d73258464aba75cb54643238"
+    },
+    {
+      "path": "carlab/vehicle-interiors/daylight-review.log",
+      "bytes": 7200,
+      "sha256": "5091707894b1d8a3a4294834adf05177240dffbf720548ddad453510b0a0082d"
+    },
+    {
+      "path": "carlab/vehicle-interiors/deep-material-audit.json",
+      "bytes": 1059,
+      "sha256": "76e3e34a068d2a51d5e80b7832d45b2245cb7dea5e5d7b40ab4249dfa98733d4"
+    },
+    {
+      "path": "carlab/vehicle-interiors/direct-pbr.log",
+      "bytes": 150675,
+      "sha256": "5bbb42ea9bbbc51aa2da69ce473d00ac378987ea3065d83ceb21112b0b3abaa5"
+    },
+    {
+      "path": "carlab/vehicle-interiors/export-final.log",
+      "bytes": 752,
+      "sha256": "d4be742300fab775b66efabc176494c46445aa9b28423f72af5a6f89e566076b"
+    },
+    {
+      "path": "carlab/vehicle-interiors/export-finish.log",
+      "bytes": 699,
+      "sha256": "2d0ea55d3b0153ace461c3a6f37ee4150b85a49a526b983599be048742f1c199"
+    },
+    {
+      "path": "carlab/vehicle-interiors/exports/SK_MKZ_ExteriorOnly.fbx",
+      "bytes": 23336700,
+      "sha256": "a22a2cb46663e1a6e6ece24f62d41a59e68ce846e9ba422e3e9e3e993464b0ac"
+    },
+    {
+      "path": "carlab/vehicle-interiors/exports/SK_SeatedMannequin.fbx",
+      "bytes": 1007452,
+      "sha256": "99751d8ddfffc68f2dce1e0efa53c8ffd4f0d25801cda177a6673bae61a42310"
+    },
+    {
+      "path": "carlab/vehicle-interiors/exports/SM_LincolnCabinDetails.fbx",
+      "bytes": 72044,
+      "sha256": "481599e1779282864a2ea64090b29ea6727bef798a35a770db9623071a342c06"
+    },
+    {
+      "path": "carlab/vehicle-interiors/exports/SM_MKZ_Cabin_Final.fbx",
+      "bytes": 8224924,
+      "sha256": "bdd43ac6496e7f338cb3f69766950c4b7ca1508dc7608a5b6c54e5a77e5c8c68"
+    },
+    {
+      "path": "carlab/vehicle-interiors/exports/SM_MKZ_Cabin_v2.fbx",
+      "bytes": 7575452,
+      "sha256": "a906418766c3de052873d15a34faf8cbbf4980e8cc70985ba5d119979fd961c2"
+    },
+    {
+      "path": "carlab/vehicle-interiors/exports/SM_MKZ_Seating_v2.fbx",
+      "bytes": 9014748,
+      "sha256": "4f8044374552b669af644c78752f66c31135450ddc6af3b34b70d34d1c0641f4"
+    },
+    {
+      "path": "carlab/vehicle-interiors/exports/T_MKZ_Ebony_BaseColor.png",
+      "bytes": 13605903,
+      "sha256": "1da6cc576e2bda81813f4d48d3fd19ce83b1e7dcb920b7089a26955bb0860ace"
+    },
+    {
+      "path": "carlab/vehicle-interiors/exports/T_MKZ_Ebony_ORM.png",
+      "bytes": 16615406,
+      "sha256": "54347cf106e53d24bca69b1fbefce5fd83046b2f435c087e6012ff2d018a2cc1"
+    },
+    {
+      "path": "carlab/vehicle-interiors/final-export-report.json",
+      "bytes": 741,
+      "sha256": "a178aa564b9540c9f23c2be7e5d394917042fc52a8c7ee6b0165e40b24b4c089"
+    },
+    {
+      "path": "carlab/vehicle-interiors/final-import-verification.log",
+      "bytes": 150667,
+      "sha256": "800350c925b4c64416ca104c59ad47a19445e0b7a8aaa51ebbdc12ecad6d68f5"
+    },
+    {
+      "path": "carlab/vehicle-interiors/final-material-audit.json",
+      "bytes": 9751,
+      "sha256": "6de691289dd84ac2c09d9babe91cdecfeb6b6b74792732ad2aaba165e75e91ee"
+    },
+    {
+      "path": "carlab/vehicle-interiors/final-material-audit.log",
+      "bytes": 144845,
+      "sha256": "eb0317808ff0b013d96ee13b08e7aae9f965a98c21de4efc0a65596f77bbf7d8"
+    },
+    {
+      "path": "carlab/vehicle-interiors/final-rig-compatibility.json",
+      "bytes": 4366,
+      "sha256": "c8e6e3ed1d6d28557813e655cfa15c39ad684d50586c08ec146863accf04fefc"
+    },
+    {
+      "path": "carlab/vehicle-interiors/final-rig-poses.json",
+      "bytes": 4797,
+      "sha256": "766d5c5158017a3db2d9e7e8480bf26200a87288135784b101490fb65e960894"
+    },
+    {
+      "path": "carlab/vehicle-interiors/final-texture-mask.log",
+      "bytes": 320342,
+      "sha256": "539ff2e15897e5d906a5b2e26a8ed1eb504743325af52eb48fd745d98bf91b69"
+    },
+    {
+      "path": "carlab/vehicle-interiors/final-unreal-import.json",
+      "bytes": 1673,
+      "sha256": "e0666b1e78c95f6187071c60c62f7975112092fdbfc3b7a4d2c3644d9d71ff7a"
+    },
+    {
+      "path": "carlab/vehicle-interiors/finish-audit.log",
+      "bytes": 3311,
+      "sha256": "f96d88d055be8e9abb49504a8fe93c1b6a3c1d8fd7f91f93a21c2e0c95efc547"
+    },
+    {
+      "path": "carlab/vehicle-interiors/finish-blender.log",
+      "bytes": 1103,
+      "sha256": "1071a605d9d55912c5e3c91bdb1c17eef5e584d5b6aa1a9042452c5d429203ae"
+    },
+    {
+      "path": "carlab/vehicle-interiors/finish-import-report.json",
+      "bytes": 810,
+      "sha256": "940ab9ea327d2de6f1e90fe6fd2c0485792d52ba32337f06783a084479e9aa35"
+    },
+    {
+      "path": "carlab/vehicle-interiors/finish-unreal.log",
+      "bytes": 1064185,
+      "sha256": "d22d34578d6abc3d1404c21fbf67ddab965a8dc0bbad64c8e8c8a4bbc1cacf6d"
+    },
+    {
+      "path": "carlab/vehicle-interiors/finish-v3-audit.json",
+      "bytes": 3882,
+      "sha256": "73df5d9f2f007cd4c5a1edb08b442be6871690e813bfbbf93a5b65dd826393df"
+    },
+    {
+      "path": "carlab/vehicle-interiors/finish-v3-audit.log",
+      "bytes": 342,
+      "sha256": "431bd2732ff3db509c1d1709419bdbdb5c25daaa9a36abec33608c45a3adc052"
+    },
+    {
+      "path": "carlab/vehicle-interiors/fix-exterior-export.log",
+      "bytes": 957,
+      "sha256": "1b41d90450ce22b723aaf3f443e8f0e4891f6825855efe3b25f4b6c49f56ef65"
+    },
+    {
+      "path": "carlab/vehicle-interiors/import-backup-2026.09.09-14.55.28.log",
+      "bytes": 17226,
+      "sha256": "7fd6e0e310d32028b6256cd98b1c967375e928d48d0718d2282ba724c5e3b872"
+    },
+    {
+      "path": "carlab/vehicle-interiors/import-backup-2026.09.09-15.16.18.log",
+      "bytes": 277006,
+      "sha256": "7c928ac2e882917c5d54be944f8d49b4bff85fbe7eaf9a5ebea91e3b2b47afdc"
+    },
+    {
+      "path": "carlab/vehicle-interiors/import-final-rigfix.log",
+      "bytes": 154371,
+      "sha256": "7f91a73b02408f854c8e758e84cca405773ae11b27d9796b76a3042e78b65d14"
+    },
+    {
+      "path": "carlab/vehicle-interiors/import-final.log",
+      "bytes": 154705,
+      "sha256": "135337eb7f7225e537d911f75509675af750a500af560c3e825d1657f0bedaa2"
+    },
+    {
+      "path": "carlab/vehicle-interiors/import-report.json",
+      "bytes": 1152,
+      "sha256": "fa97fafa2ad0ece38fb8da44c445da0cde6f018b98c8e8d024a16ac8af42b73b"
+    },
+    {
+      "path": "carlab/vehicle-interiors/import-stdout.log",
+      "bytes": 285784,
+      "sha256": "659db2f5afab7b3ba4dc1bf82457aba60d9cb1eaa17163f95878be10b4d7b889"
+    },
+    {
+      "path": "carlab/vehicle-interiors/import.log",
+      "bytes": 200260,
+      "sha256": "8662e0c8c314c57d6b586d7ebd0211062cdd494eaaf0011831c36ac11f546694"
+    },
+    {
+      "path": "carlab/vehicle-interiors/inspect-scene.log",
+      "bytes": 1860,
+      "sha256": "f9857a663eff3d8209c3078132bb9632877766df0f0ae25e3b01830bf732e33b"
+    },
+    {
+      "path": "carlab/vehicle-interiors/interior-delivery-status.json",
+      "bytes": 1673,
+      "sha256": "a7fadc72d4bb61bad9a38fa869d2568c7e5e528d0604922825d827d94a8282d5"
+    },
+    {
+      "path": "carlab/vehicle-interiors/interior-v2-verification.json",
+      "bytes": 168,
+      "sha256": "23d743abffb9f716e061366118a0696899d51f50784812cb0c4916a24a214dd6"
+    },
+    {
+      "path": "carlab/vehicle-interiors/material-usage-fix.log",
+      "bytes": 72782470,
+      "sha256": "322760f169482f695b78410d15ccc8aa77f35a918d51f18b7bfb12ca4247faae"
+    },
+    {
+      "path": "carlab/vehicle-interiors/material-usage-local.log",
+      "bytes": 227614,
+      "sha256": "0e92656cc108a7b48cc71535d1e5ab5a70aae13cea925f520ac3ebfd864b55bc"
+    },
+    {
+      "path": "carlab/vehicle-interiors/material-usage-verification.json",
+      "bytes": 147,
+      "sha256": "8cd2fb3aa3c2cb277cbf21dcec8e376b6a4b374ad3c9b54a29aaeb8896a634d6"
+    },
+    {
+      "path": "carlab/vehicle-interiors/materials.log",
+      "bytes": 147842,
+      "sha256": "366d2ea1b4f94e36baf2b6e1e7727363c3bd889e8fb3fc0b95465bd0d494d2e1"
+    },
+    {
+      "path": "carlab/vehicle-interiors/open-lab.sh",
+      "bytes": 227,
+      "sha256": "8dc8f0c3f02deaec5b99cffe8b7a52ddc1449823d59c299d89607112fd841611"
+    },
+    {
+      "path": "carlab/vehicle-interiors/open-v2.log",
+      "bytes": 221,
+      "sha256": "e7d2bbb64de3079339fd3f27f194ba3af8615b128311afaadc5aac8d9897c6cc"
+    },
+    {
+      "path": "carlab/vehicle-interiors/parts.log",
+      "bytes": 345,
+      "sha256": "128a290bf07ed494305af0a4b88e6db5dc95810548a5cc323318563d2c018b22"
+    },
+    {
+      "path": "carlab/vehicle-interiors/passenger-rear-render-report.json",
+      "bytes": 293,
+      "sha256": "f9464b6f9d43121519ee1fa5cd07fbe1e0453aefeb469a737d0e6708884c8cd5"
+    },
+    {
+      "path": "carlab/vehicle-interiors/passenger-rear-render.log",
+      "bytes": 703,
+      "sha256": "c7354bbe26c1f2126311e4ab9d6bb0546b0bd1489133b06bb8beb6510302a949"
+    },
+    {
+      "path": "carlab/vehicle-interiors/pbr-inprocess-compile.log",
+      "bytes": 303939,
+      "sha256": "fcf18ae26457c6073c822cd2ca5caabf7cb94168011c9053071ff51bac2f09d1"
+    },
+    {
+      "path": "carlab/vehicle-interiors/pbr-render-compile.log",
+      "bytes": 159332,
+      "sha256": "cde8423320854d5147bb541bc8d4884fd0ea55b3fe9cb061c7d26b59d639841e"
+    },
+    {
+      "path": "carlab/vehicle-interiors/pbr-shared-compile.log",
+      "bytes": 195988,
+      "sha256": "d42d6ff15ec3b8a054739e225f895270df72a51f6709491fd3834a60b53465b8"
+    },
+    {
+      "path": "carlab/vehicle-interiors/preserve-slots.log",
+      "bytes": 144987,
+      "sha256": "c6312d5a4bbf7986a3333a22c937bfcccc116758a3b67cc54574b55a129bde48"
+    },
+    {
+      "path": "carlab/vehicle-interiors/preview-cleanup.json",
+      "bytes": 163,
+      "sha256": "7660548941cde3d7170cea08170fc9cda0546b70e75abc393f6a1f7b112a7100"
+    },
+    {
+      "path": "carlab/vehicle-interiors/preview-cleanup.log",
+      "bytes": 146607,
+      "sha256": "5fe8ad54476cc21008b128dc3024f6537dd1bd63643ea35c2b5f89315206328b"
+    },
+    {
+      "path": "carlab/vehicle-interiors/probe.log",
+      "bytes": 1747,
+      "sha256": "ba738cf5eed84af8963efab9f57cf2a1c8c93bd10da727fbb0213f7173687ec0"
+    },
+    {
+      "path": "carlab/vehicle-interiors/reference/SK_LincolnMKZ.fbx",
+      "bytes": 12869824,
+      "sha256": "a3e1078e3f546b12c6f8e29305434ff7cc5b32bdf484ef522ed28f774aa1dae5"
+    },
+    {
+      "path": "carlab/vehicle-interiors/reference/SM_LincolnMKZ_Door_FL.fbx",
+      "bytes": 885184,
+      "sha256": "6818b721ed81fdfdf3aa8d3e7967c3531c7283c5d5d22533f101bbbf3614257c"
+    },
+    {
+      "path": "carlab/vehicle-interiors/reference/SM_LincolnMKZ_Door_FR.fbx",
+      "bytes": 874240,
+      "sha256": "7c25fbf8b8d8ef26b44e15e1e65e621ac5ce8a4d8a43a9c5b32843586e73fb49"
+    },
+    {
+      "path": "carlab/vehicle-interiors/reference/SM_LincolnMKZ_Door_RL.fbx",
+      "bytes": 749728,
+      "sha256": "0d56cd77655206e32427adc2679e17a863bf9e613f1d7224ac5ba575b9820f59"
+    },
+    {
+      "path": "carlab/vehicle-interiors/reference/SM_LincolnMKZ_Door_RR.fbx",
+      "bytes": 770752,
+      "sha256": "b06ff10f240afee482b6a429c87793e2acbb731fca0f6c778b32d802297db383"
+    },
+    {
+      "path": "carlab/vehicle-interiors/reference/T_LincolnMKZ_Interior01_d.png",
+      "bytes": 9517381,
+      "sha256": "721a2079043c9ddc2a3c08b4c26eaf8b98f2b1656a7aaf27cc5ec08fb06d31d9"
+    },
+    {
+      "path": "carlab/vehicle-interiors/reference/T_LincolnMKZ_Interior01_d.tga",
+      "bytes": 67108882,
+      "sha256": "79adfc21e22921e615bd4c1c99fa711fa7071642ba1a7bdec6432a44a4768fc1"
+    },
+    {
+      "path": "carlab/vehicle-interiors/reference/T_LincolnMKZ_Interior01_n.tga",
+      "bytes": 50331666,
+      "sha256": "79f4c1c4ee6658df18dee7b43a8240a410cc23e9e21d67623fb61591e3ab0f37"
+    },
+    {
+      "path": "carlab/vehicle-interiors/reference/T_LincolnMKZ_Interior01_ormh.tga",
+      "bytes": 67108882,
+      "sha256": "8be860d2f7aa295ff47e6680b8528f661075b5f52390332a21542121ac7b1037"
+    },
+    {
+      "path": "carlab/vehicle-interiors/reference/T_LincolnMKZ_Interior02_d.png",
+      "bytes": 1233006,
+      "sha256": "ffa2da5690a32d46eda16f2e70721287649c1004f38953200fafaf77c0a97cdd"
+    },
+    {
+      "path": "carlab/vehicle-interiors/reference/T_LincolnMKZ_Interior02_d.tga",
+      "bytes": 12582930,
+      "sha256": "3ddf225fe5539432d41b4c0fb49ab65bdc9fde75abaf458505d2be63cae050b1"
+    },
+    {
+      "path": "carlab/vehicle-interiors/reference/T_LincolnMKZ_Interior02_n.tga",
+      "bytes": 12582930,
+      "sha256": "c50b398d84ee105fedceef3ae0163962a5b38aaf8d380cf27da2dd1e402f9006"
+    },
+    {
+      "path": "carlab/vehicle-interiors/reference/T_LincolnMKZ_Interior02_orm.tga",
+      "bytes": 16777234,
+      "sha256": "8a9db62a0ef98a70a932c0dfc5f6c3ff43fedd59696e9cb370292a0281cadf43"
+    },
+    {
+      "path": "carlab/vehicle-interiors/reference/audit.json",
+      "bytes": 41971,
+      "sha256": "278cdc782cb31550e6ef0dfa8f817714f2422fde925c3a2bf0c5b8cde43f7142"
+    },
+    {
+      "path": "carlab/vehicle-interiors/reference/blender-audit.json",
+      "bytes": 2877,
+      "sha256": "ee566d1c9a567fc965c5c3b7ef59ed26ad6a9861e1efd0a2ed800aebbf50f356"
+    },
+    {
+      "path": "carlab/vehicle-interiors/reference/lincoln-stock.blend",
+      "bytes": 21106789,
+      "sha256": "94f5def36c1927913894ab5b0fe3abcb19b80427a4f2d61c0980b23d228e19ce"
+    },
+    {
+      "path": "carlab/vehicle-interiors/reference/materials.json",
+      "bytes": 6419,
+      "sha256": "dc65a5c3eea3e2ac81b1062b6f01ba4feb867404f3c158d37e65c5bb23e4f2bf"
+    },
+    {
+      "path": "carlab/vehicle-interiors/reference/parts.json",
+      "bytes": 425996,
+      "sha256": "1b57eccfcaedc6a27f94f6d810d375c48ca4ec18450fa0aa127a89771da63153"
+    },
+    {
+      "path": "carlab/vehicle-interiors/refine.log",
+      "bytes": 1532,
+      "sha256": "a969c8a5095410638a113e7510801fb64867cef3c25cdd97dc9aa700c4d52c7e"
+    },
+    {
+      "path": "carlab/vehicle-interiors/refinement-report.json",
+      "bytes": 194,
+      "sha256": "86ebf3603ac743f368c9d19401c998c31e73ead28f227874a91e0766a95f92c1"
+    },
+    {
+      "path": "carlab/vehicle-interiors/relink-scripts.json",
+      "bytes": 3236,
+      "sha256": "c638568c5b5f1890cd0e283b795e10a95614fef4b28ad906c380f5a79bcfe13a"
+    },
+    {
+      "path": "carlab/vehicle-interiors/relink.log",
+      "bytes": 1028,
+      "sha256": "207ac4cbd289d88692023467469c6d132c8e011f195ffcb7ba2a9a39641e2339"
+    },
+    {
+      "path": "carlab/vehicle-interiors/renders/Camera_Cabin.png",
+      "bytes": 1456040,
+      "sha256": "eed3576cc2faa50362bb7029f0db58ed40619cca05fd18a32b3d4c65c62f979b"
+    },
+    {
+      "path": "carlab/vehicle-interiors/renders/Camera_Passenger.png",
+      "bytes": 1480883,
+      "sha256": "1a3979d8c9d98099cf8a083c8651cdf29f9e8b20721184e318987dc5e7ff1f03"
+    },
+    {
+      "path": "carlab/vehicle-interiors/renders/Camera_Rear_Occupant.png",
+      "bytes": 787106,
+      "sha256": "390e5b76ca5bf75420fc379fc1db6afd742efebc472cf7aad4d8c15e24bbf6fa"
+    },
+    {
+      "path": "carlab/vehicle-interiors/renders/Final_Dashboard.png",
+      "bytes": 2556944,
+      "sha256": "d55575c208e581fc2d05c4beb43ac1442bc48f208fe7abce1315c2cb67884153"
+    },
+    {
+      "path": "carlab/vehicle-interiors/renders/Final_Passenger.png",
+      "bytes": 2356755,
+      "sha256": "073c40c20fcbb4aa91d5136be866c868b969e5a3d08aab95d361f0799a6a273d"
+    },
+    {
+      "path": "carlab/vehicle-interiors/renders/Final_Rear.png",
+      "bytes": 2365022,
+      "sha256": "ac00f2ce7785b5b4b4e441e1dc9b46f850a5b0777e73cd74984a875366f977f4"
+    },
+    {
+      "path": "carlab/vehicle-interiors/renders/Lincoln_Back_Seat.png",
+      "bytes": 2360080,
+      "sha256": "6edba6cdccd234298f9d7a305abe84c7d60c6e062d13f5b33ca4f66954c15aee"
+    },
+    {
+      "path": "carlab/vehicle-interiors/renders/Lincoln_Passenger_Seat.png",
+      "bytes": 2355546,
+      "sha256": "2804b5c60e29eede0e1177395068f416e84e7fc7563032744ef859af136b83c2"
+    },
+    {
+      "path": "carlab/vehicle-interiors/renders/MKZ_Dashboard.png",
+      "bytes": 1622823,
+      "sha256": "4c4473cfccf03af51c70c8d977f537633fdb980796b37be667ec77a0a68c27bc"
+    },
+    {
+      "path": "carlab/vehicle-interiors/renders/MKZ_Dashboard_Daylight.png",
+      "bytes": 1800089,
+      "sha256": "3d6bf09ef846310341cc53c377d9b20406cfae47d5dfcf7b445a4a8ef2be463a"
+    },
+    {
+      "path": "carlab/vehicle-interiors/renders/MKZ_Driver_View.png",
+      "bytes": 1554436,
+      "sha256": "69cd4d552ffabfc01420a2d251920aae913dfbd426662aafcf4c09003322b05a"
+    },
+    {
+      "path": "carlab/vehicle-interiors/renders/MKZ_Front_Seats.png",
+      "bytes": 1581050,
+      "sha256": "9886e6da2203d4d3f351b17a5d9204a3f3d4c29c765426c360006ec9d4891555"
+    },
+    {
+      "path": "carlab/vehicle-interiors/renders/MKZ_Front_Seats_Daylight.png",
+      "bytes": 1649176,
+      "sha256": "d333d29b76416ee1051d279b70d39dcd65f9053b65c2c18d5e06d9fd3f9e3707"
+    },
+    {
+      "path": "carlab/vehicle-interiors/renders/MKZ_Rear_Seats.png",
+      "bytes": 1455380,
+      "sha256": "f1f82bd179f6e131c6f48a62dace4eeafae86ec0024efbf19245acf061f0b40f"
+    },
+    {
+      "path": "carlab/vehicle-interiors/renders/MKZ_Rear_Seats_Daylight.png",
+      "bytes": 1581933,
+      "sha256": "e18127967d12500ed556937c9341b6ac81d1ec00c645d0e08b76db1f279fc83d"
+    },
+    {
+      "path": "carlab/vehicle-interiors/renders/carla_dashboard.png",
+      "bytes": 1600188,
+      "sha256": "31ca2aceedf7797d913cd84092caf85ae8c2b89c00ccaca95c3c64e7878839f5"
+    },
+    {
+      "path": "carlab/vehicle-interiors/renders/carla_passenger.png",
+      "bytes": 1518953,
+      "sha256": "a5b91f62132181cb04f31f91be4562bd76b271e3c5bed4e8d661dadd9d8e1231"
+    },
+    {
+      "path": "carlab/vehicle-interiors/renders/carla_rear_seats.png",
+      "bytes": 1607303,
+      "sha256": "a592feaf8f9f7a1eeb2266bb20e38bfc8f7156ac2cb1c09979156103d9165dd6"
+    },
+    {
+      "path": "carlab/vehicle-interiors/review-render.log",
+      "bytes": 693,
+      "sha256": "1ca1a2b0e834dddd244327aa051e7a300fac59d3fdbdc710f81b6e8a67d194f2"
+    },
+    {
+      "path": "carlab/vehicle-interiors/runtime-before-shader-wait.json",
+      "bytes": 446,
+      "sha256": "5cf3bcdc969143646e17578d8fdbbde96727976f9d243d2bc6acca6edc41afe4"
+    },
+    {
+      "path": "carlab/vehicle-interiors/runtime-before-usage-fix.log",
+      "bytes": 481865,
+      "sha256": "3e8fa90d30c8055f35196a6c6ec636713d1e7d3f8f5b6fb9089329d302d59ca9"
+    },
+    {
+      "path": "carlab/vehicle-interiors/runtime-check.log",
+      "bytes": 640,
+      "sha256": "0f4442ef7b9fe9ee3237596c04da063d6d3c98a1744f96f808f8a4efd6f031c3"
+    },
+    {
+      "path": "carlab/vehicle-interiors/runtime-detail-fix.json",
+      "bytes": 183,
+      "sha256": "6c1d6688e7c7d5a501ab186555ee5e6fdbd8e9f08a8e1dd360a7e03ed9fc4b89"
+    },
+    {
+      "path": "carlab/vehicle-interiors/runtime-detail-fix.log",
+      "bytes": 287204,
+      "sha256": "84b94ece92ab848dda8920106d068a2497314051ed9ae788cbdb118d6ec8d24a"
+    },
+    {
+      "path": "carlab/vehicle-interiors/runtime-diagnostic-build.log",
+      "bytes": 2540,
+      "sha256": "7ca86e771c3035c958bedf927786be9869eb65e158e9d2610a90a45695c8486c"
+    },
+    {
+      "path": "carlab/vehicle-interiors/runtime-first-visible-material-issue.json",
+      "bytes": 459,
+      "sha256": "b2de62d2a6328e5d55f97cb6c05d1f4d3867cdc0d3cd72eff6ef02d18a01db29"
+    },
+    {
+      "path": "carlab/vehicle-interiors/runtime-material-audit.json",
+      "bytes": 3729,
+      "sha256": "78b1766afc7320d88c30fb6f65b368eb550783cac2b07caaa31d397a7deca324"
+    },
+    {
+      "path": "carlab/vehicle-interiors/runtime-material-audit.log",
+      "bytes": 144207,
+      "sha256": "3204e6ca27a9430f6b021f26d4b745e80d303fd3a9c2622b7b759df119c6f208"
+    },
+    {
+      "path": "carlab/vehicle-interiors/runtime-no-nanite-diagnostic.log",
+      "bytes": 488715,
+      "sha256": "bc475c288ecdc9559c1a5c3c18013219a6ec0470079f1ff0fde38a2acc208b07"
+    },
+    {
+      "path": "carlab/vehicle-interiors/runtime-report.json",
+      "bytes": 1193,
+      "sha256": "1800df8b54cae3063fb50f7d16bf61f6fa0cbf6a55c283eacd09277657313862"
+    },
+    {
+      "path": "carlab/vehicle-interiors/runtime-three-camera-oom.log",
+      "bytes": 8755926,
+      "sha256": "4039ea537b70e98217b9b11926d87455c62e9a548bb2b40a366c7a1d03523801"
+    },
+    {
+      "path": "carlab/vehicle-interiors/runtime.log",
+      "bytes": 582147,
+      "sha256": "1b343708c5a8c61f111304f6534aa507eb6e95a50572fc4bc2bb07bf61bbaef1"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/apply_finish_unreal.py",
+      "bytes": 6482,
+      "sha256": "84a14080353c8f62dd5f96048c0c65bd8d8ec32c9026cfc8fe25d6853e845393"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/audit_constructed_vehicle.py",
+      "bytes": 1104,
+      "sha256": "44fa3a2e55853065acd2596ea161045f0c660c310f6f5584c4f7de2e6e3c704c"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/audit_final_materials.py",
+      "bytes": 1013,
+      "sha256": "e49334d3449ea09567956a5bbf3debda6bb7a5cad80365d222c430c84bbee569"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/audit_finish_v3.py",
+      "bytes": 782,
+      "sha256": "826fb41ea3e69ca2c5a47ae500eff786a00d4d9b4ce4b4107d7b7864b9e87675"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/audit_lincoln.py",
+      "bytes": 2188,
+      "sha256": "0da4637e4d841808be729731818c855ed1293898cec5f1f96a0a8ab8663728b1"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/audit_materials.py",
+      "bytes": 918,
+      "sha256": "ad17d89554b8ab38cef12d80b9d1f529168e488ce277fb84e2eb5a4e723f1945"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/audit_runtime_materials.py",
+      "bytes": 1080,
+      "sha256": "000214b567b4d57dd14955f84da763dcb6226a107c10658ba29f7dacb19194fd"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/audit_vehicle_rig.py",
+      "bytes": 508,
+      "sha256": "2f12c23a193bba4e806dab2f69d16e553c2a9e3d7d3f154be35c9bf64ab120e5"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/build_lincoln.py",
+      "bytes": 12917,
+      "sha256": "911c96f866a18837df933d938f4f13eb92f9a6b4a2de559bf54f83840088c63e"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/capture_existing_test.py",
+      "bytes": 4041,
+      "sha256": "fa53fd3b7aaa894f452f15f540a8ea6d6c0d53c73744a3d1c4f4c382f0a838d5"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/check_cabin_uv.py",
+      "bytes": 909,
+      "sha256": "2d619c6fa353eba8beb8fc1840ad4dfe17c706d01dd7aeafa79f842c68d44f42"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/check_final_rig.py",
+      "bytes": 525,
+      "sha256": "b85ff6ce89f61d73f10e4e398f13c0d28cd94d8433a7c35cb5c4e54273e806b6"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/daylight_review.py",
+      "bytes": 1320,
+      "sha256": "d81684c20214415f43b0ec9b5f9e10cd024ed383a814e3e76df160eac2f002f3"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/diagnose_final_spawn.py",
+      "bytes": 2024,
+      "sha256": "d948098b2a6d85588e69aace53e7316d334e6dd82b3c5e79dbcaace3e1736a75"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/export_final_interior.py",
+      "bytes": 1450,
+      "sha256": "3d772ed9ccb4d07946cd558c6c6b227d03c72ade1711bda470488194d981302c"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/export_finish.py",
+      "bytes": 3217,
+      "sha256": "dd27c8ddfa39e0e4635cbf8408e683ea6e109a044b99af81076b62f979f4cf42"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/finish_blender_interior.py",
+      "bytes": 5666,
+      "sha256": "4911dc82fe3d53ce7bf87db3eb3dfd78fc6c4e262ddb2f069012f612f6b8764d"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/fix_cabin_pbr.py",
+      "bytes": 2502,
+      "sha256": "b0ba20bea5360c32eef984d4f9185137f4a4f47b758bf761cd479405b80666d2"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/fix_exterior_export.py",
+      "bytes": 2324,
+      "sha256": "f2f0238d4e34f9d9e2030ee1630ac34733f294e0d7c05077b5e247e3898b6cc9"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/fix_material_usage.py",
+      "bytes": 591,
+      "sha256": "875e96019c3c9edc16e82f00b83da035b9b4fa8ccb92c83ee27d1f84b2705ee9"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/fix_runtime_details.py",
+      "bytes": 1322,
+      "sha256": "39dacec8a6e96414e9a5d1bd087dfdf8d976d038b50024e3518ff440c4b9065a"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/fix_texture_and_mask.py",
+      "bytes": 586,
+      "sha256": "f096babddeb1b023f5b08ccbd04c2de34e9ba2f0ddf5cddad27ab6810426688b"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/import_final_interior.py",
+      "bytes": 5860,
+      "sha256": "5f2aa5efa48477c7ef2fed801e2692ff649a38a020190f36e9d6c975880440f6"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/import_unreal.py",
+      "bytes": 8391,
+      "sha256": "c6d84c582a6c427fcc88b42322b48772cfdb21ac1622d099e6518325301f4ec4"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/inspect_blender.py",
+      "bytes": 1238,
+      "sha256": "2b2a3a040d95c7a2f205f9772f62386501748adcc0c3c2a57f5a25bc711a2bd7"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/inspect_finish.py",
+      "bytes": 663,
+      "sha256": "64e394895c7bdcfb639629d3263a683c6b6edaed247862651ac3007ff91c1ea5"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/inspect_parts.py",
+      "bytes": 1078,
+      "sha256": "4951e2e8197f85dbc7d06995fa33ef4aea081a4d5df50bad82fb807c7f8570d3"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/inspect_scene.py",
+      "bytes": 307,
+      "sha256": "c38e7311b769f8517f8c8bae9088c9bec9c57a1aafe9f47edf1399909fb5812b"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/preserve_vehicle_slots.py",
+      "bytes": 833,
+      "sha256": "ca2a29356363119be07791d55ed4c8300f1261e14a9de12770dea7e75b14b3ee"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/probe_seats.py",
+      "bytes": 1014,
+      "sha256": "b699cff8e04cabdab604ed7c51b9f4b68fe499e72465af8eb8b9753da05ed552"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/probe_uv.py",
+      "bytes": 474,
+      "sha256": "c29929d36404ab3f738c06c06cda025b75497d6029a479298dd21f6d235da0c9"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/refine_lincoln.py",
+      "bytes": 9458,
+      "sha256": "201b37541bbdf1d03f852e4589e6eb62e288d41730e8fb37f4b64252f0d92652"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/remove_editor_mannequin_preview.py",
+      "bytes": 1000,
+      "sha256": "ced2963c9e6327115ac524c2909d8edaf091ecbab60a339b652bedf7e24a9a54"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/render_passenger_and_rear.py",
+      "bytes": 1785,
+      "sha256": "bae95648a3a3a485701a145d849d7e22871da470fcff3a2e5622f58639b929a0"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/render_review.py",
+      "bytes": 1216,
+      "sha256": "5be4bd96fdb5a322031d7b4af4d915297c568499abf628c62aa44e47f7558e2d"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/sample_atlas.py",
+      "bytes": 432,
+      "sha256": "de682eecf382b8de0455d35b5cc394fbc3223552027cc453c6dac39f2c591024"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/seat_upgrade.py",
+      "bytes": 7163,
+      "sha256": "57e2037e8eeedf38e2b4805a291be052f5573783c6f63ce07607168f7c080799"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/spawn_lincoln.py",
+      "bytes": 1278,
+      "sha256": "2963ee5fa2e85a167dc209db9c74802362d2c192b4c8a7f3962d14b9e04e6e82"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/test_session_shutdown.py",
+      "bytes": 447,
+      "sha256": "4de16997458dd67b64268a19c9073acf71abe346463fe4a1ca86ce7915f161b3"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/use_stock_cabin_master.py",
+      "bytes": 1634,
+      "sha256": "b8e50a15424e7b4e3ada387dbac451ed7b78b85a4f3a9c5e78c651f28cc35d9b"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/verify_blender.py",
+      "bytes": 1734,
+      "sha256": "b3deda9ba1da9d70468a2a23cd9a4944335ceeeb98181d14c0afaa5ee074579c"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/verify_carla.py",
+      "bytes": 5892,
+      "sha256": "08e9506777b16b3517adfe9653e741856c8a887792f5b1008abb93d2b7f69d38"
+    },
+    {
+      "path": "carlab/vehicle-interiors/scripts/verify_interior_v2.py",
+      "bytes": 1175,
+      "sha256": "1311b632f56692b4a2aefe378bbc9bee9b88379cd9499635a3db4ebed9d3318d"
+    },
+    {
+      "path": "carlab/vehicle-interiors/seat-layout.json",
+      "bytes": 671,
+      "sha256": "5ded3dd1d6d9725f3a2f39edff6bf140064cb9a07573ef6375e211b577107a9b"
+    },
+    {
+      "path": "carlab/vehicle-interiors/spawn-diagnostic-client.log",
+      "bytes": 204,
+      "sha256": "7ec2c63664a3bbdcd3b8867b2b25645892eacea8416f58d3b63c1c6fcc5ec787"
+    },
+    {
+      "path": "carlab/vehicle-interiors/spawn-diagnostic.json",
+      "bytes": 183,
+      "sha256": "257664b18b707cce8772b1f873f1aaccf05b3165ad551c58f463ba5348c30345"
+    },
+    {
+      "path": "carlab/vehicle-interiors/spawn-diagnostic.log",
+      "bytes": 482879,
+      "sha256": "c9f956c490de34f5d83e8cc467c695044e7c542d8d69015b046d9759e77fcbaa"
+    },
+    {
+      "path": "carlab/vehicle-interiors/spawn-startup-timeout.log",
+      "bytes": 171729,
+      "sha256": "226a942855b89b6e4edf098a1b2642fc1c8cf83d30d9cfdb39b666b6164c2b44"
+    },
+    {
+      "path": "carlab/vehicle-interiors/stock-master-material-fix.json",
+      "bytes": 90,
+      "sha256": "df976d2582957c39fc6122fae5a89c209fee9047b51aa42c4a9e6f055a02e857"
+    },
+    {
+      "path": "carlab/vehicle-interiors/stock-master-material-fix.log",
+      "bytes": 147373,
+      "sha256": "5d16d7032e5063e2b7b05887d0e4045d23960cd0f3cf7736ffc2b25da7f43db9"
+    },
+    {
+      "path": "carlab/vehicle-interiors/texture-preview.log",
+      "bytes": 233,
+      "sha256": "925145de243526bfe5263b7909372bf487a67952872b88cc420ac3eb76d7d77e"
+    },
+    {
+      "path": "carlab/vehicle-interiors/uv.log",
+      "bytes": 930,
+      "sha256": "5f30dde953057925ccd002fd87619b0a3a16fa8a562c425c4b69a714e09be3f0"
+    },
+    {
+      "path": "carlab/vehicle-interiors/vehicle-rig-original.json",
+      "bytes": 761,
+      "sha256": "ecf80c657289845057de647d5aacbafa1797870b0c87e1a68685ef18100e7593"
+    },
+    {
+      "path": "carlab/vehicle-interiors/verify-v2.log",
+      "bytes": 495,
+      "sha256": "d8d073f66f6cb06a20eeeaa2f2ad215a13bdd19ce56c3dd162e95b7ee3780c4d"
+    },
+    {
+      "path": "carlab/verification/archive-4000mib-texture-pool/sensors-single-cpu-sensor.lidar.ray_cast-2.npy",
+      "bytes": 753440,
+      "sha256": "dbed8cab78fd109f8d687bab8438422dacfebd8610890fac4df78a9e7a7d6433"
+    },
+    {
+      "path": "carlab/verification/archive-4000mib-texture-pool/sensors-single-cpu-sensor.other.radar-3.npy",
+      "bytes": 39152,
+      "sha256": "ed9a409472ffd5c5b87571cf228639ed4ddb3ac0540e2adac85cc6520e291fc4"
+    },
+    {
+      "path": "carlab/verification/archive-4000mib-texture-pool/sensors-single-cpu.json",
+      "bytes": 20512,
+      "sha256": "891550f03bad6aa819a1730e49f4520a2a8c0e423106b8a2d0a7f952560c799f"
+    },
+    {
+      "path": "carlab/verification/archive-4000mib-texture-pool/sensors-single-cpu.png",
+      "bytes": 2110362,
+      "sha256": "2001cd96be379cbf70f1c76b6655ea56171dd5284dd1261780487590bd778d88"
+    },
+    {
+      "path": "carlab/verification/blender-cube.png",
+      "bytes": 56195,
+      "sha256": "d3c392e986df8eae57817dfc548f3414de13a7a0e2addef80882ad20e98e2534"
+    },
+    {
+      "path": "carlab/verification/blender-optix.png",
+      "bytes": 56228,
+      "sha256": "436f162c0cec92275af54943249b2db222e898d6a09264622b4e866a3b9e19ee"
+    },
+    {
+      "path": "carlab/verification/camera-streams.json",
+      "bytes": 353,
+      "sha256": "9b099386f905f69bd0033fca890bc0905ca173bb2c1bcda7a1fa7a3981efbefe"
+    },
+    {
+      "path": "carlab/verification/carla-rgb.png",
+      "bytes": 136728,
+      "sha256": "295745325f3e35fbca11bccdbf0d8946b178fcf71b0309eb1d799f1ab0d544bc"
+    },
+    {
+      "path": "carlab/verification/carla-runtime.json",
+      "bytes": 253,
+      "sha256": "a0ad970e11555e51569a9490c02f92c0ae165bf58c0f072d797c8187e9753ab1"
+    },
+    {
+      "path": "carlab/verification/four-gpu-launch-commands.json",
+      "bytes": 3238,
+      "sha256": "1f294b3e910ffc64438decc70424c0685c475b78fee420df11aebfc6b72f8556"
+    },
+    {
+      "path": "carlab/verification/gpu-cpp-syntax.json",
+      "bytes": 2217,
+      "sha256": "4556bff912c44c0c604ae214cf854390038dddcc03287a2b21e463c4a63cb38d"
+    },
+    {
+      "path": "carlab/verification/gpu-ray-preflight.json",
+      "bytes": 144,
+      "sha256": "5bcadee425f9b311d4a00ad386c9d0000b2a53ef74d01032ecb4f775606a1363"
+    },
+    {
+      "path": "carlab/verification/gpu-ray-self-test.json",
+      "bytes": 126,
+      "sha256": "54d5f55d78db531098ce6eaa7fa083b5e466e49f0068f71b128a5f86da1b4705"
+    },
+    {
+      "path": "carlab/verification/gpu-ray-self-test.previous-1788820609264845722.json",
+      "bytes": 124,
+      "sha256": "4739236c5ad5463722d23144c9d2c547a5002d9fdf9430f58cc58ea64e3eceb2"
+    },
+    {
+      "path": "carlab/verification/gpu-ray-self-test.previous-1788820907810194162.json",
+      "bytes": 126,
+      "sha256": "b4284351b038a0d9033e01e6049fe1dcdb6cbbf269bcce70753db16ef2ff280f"
+    },
+    {
+      "path": "carlab/verification/gpu-ray-self-test.previous-1788821903831855647.json",
+      "bytes": 125,
+      "sha256": "c897d5e45a502e002244e7e6867a666dc823b5f5c448b7777f3d892b99319ce1"
+    },
+    {
+      "path": "carlab/verification/gpu-ray-self-test.previous-1788822141765944180.json",
+      "bytes": 124,
+      "sha256": "a5bcf8ef4156d7d63edfe4808a8685571f8d9d2c5ebd1a53d226573a0f13ce34"
+    },
+    {
+      "path": "carlab/verification/gpu-ray-self-test.previous-1788823324704768687.json",
+      "bytes": 124,
+      "sha256": "1ec32d80d658b729c3f32f329045512848e679ee42b84c61b9d53302113b9c3e"
+    },
+    {
+      "path": "carlab/verification/gpu-ray-self-test.previous-1788827432826275618.json",
+      "bytes": 125,
+      "sha256": "38a42a64c730740bb4162ff9c8c2a33b629d78fc3d6aba453625ee2acf7f0486"
+    },
+    {
+      "path": "carlab/verification/gpu-ray-self-test.previous-1788922030673176954.json",
+      "bytes": 125,
+      "sha256": "4a3fbcc991c33595c737f1c746480de1fdf59ea172b8c41329b1f49341c8dfeb"
+    },
+    {
+      "path": "carlab/verification/gpu-stack-verification.json",
+      "bytes": 5998,
+      "sha256": "a1648518f1fab122993d2bf963023775481d426f126bfae98983c9dd827dbb2c"
+    },
+    {
+      "path": "carlab/verification/multigpu-launch-plan.json",
+      "bytes": 2302,
+      "sha256": "7ce95717c346430a7b0c980b2002ab0c02930f1878f5c7ee92ab7ce243d4cadc"
+    },
+    {
+      "path": "carlab/verification/send2ue-cube.fbx",
+      "bytes": 16332,
+      "sha256": "bd6549f2be015094bcf60f143b72ba9221dce79aa660fb58288597f75c59f248"
+    },
+    {
+      "path": "carlab/verification/sensors-four-cpu-sensor.lidar.ray_cast-5.npy",
+      "bytes": 6025856,
+      "sha256": "d15bd72c24fc437a9cf6b41a3bf03a3222b3f8042b32425ab0717373b429d80e"
+    },
+    {
+      "path": "carlab/verification/sensors-four-cpu-sensor.lidar.ray_cast-6.npy",
+      "bytes": 6016144,
+      "sha256": "1e862e495bd4642ba80350d4c4cf5a1bbd2688cd941279583842fb6d96d36e8d"
+    },
+    {
+      "path": "carlab/verification/sensors-four-cpu-sensor.lidar.ray_cast-7.npy",
+      "bytes": 6042336,
+      "sha256": "2938f3f30266fb9ada3149f7f57648ccd45c98b114e8c0dcfcf3732f29259faa"
+    },
+    {
+      "path": "carlab/verification/sensors-four-cpu-sensor.lidar.ray_cast-8.npy",
+      "bytes": 6075216,
+      "sha256": "54e0e3758b9ef09a1f83ecd5167cec90ae95364887db98d1620efae8dcccb860"
+    },
+    {
+      "path": "carlab/verification/sensors-four-cpu-sensor.other.radar-10.npy",
+      "bytes": 320096,
+      "sha256": "2cbae1744af107ee253de9a84d9aff07e1f0e0b3a952a6d24d862f027fb94536"
+    },
+    {
+      "path": "carlab/verification/sensors-four-cpu-sensor.other.radar-11.npy",
+      "bytes": 244816,
+      "sha256": "fe732dfb0850097eab64dc67d526f808f47768eac8cf0257d0e65f246096440b"
+    },
+    {
+      "path": "carlab/verification/sensors-four-cpu-sensor.other.radar-12.npy",
+      "bytes": 312720,
+      "sha256": "86b5a1721bf8e3c63fd92ce1ffcce3bd69a14ccac461ea97c4cc38937c81f07f"
+    },
+    {
+      "path": "carlab/verification/sensors-four-cpu-sensor.other.radar-9.npy",
+      "bytes": 313424,
+      "sha256": "b165a3a1ec06b03ea991ab910d6b2046050796dbfc936d47d29afc0f745b65f1"
+    },
+    {
+      "path": "carlab/verification/sensors-four-cpu.json",
+      "bytes": 35434,
+      "sha256": "a06fe0907aa7e85b8d2b3f1b138e42163b00809b7f75421b0d421d1ab1908591"
+    },
+    {
+      "path": "carlab/verification/sensors-four-cpu.png",
+      "bytes": 1837295,
+      "sha256": "9d7e79cdc230ded4af86a663ee044afdb6e3ca6082e0ea68f5a2858f3820b997"
+    },
+    {
+      "path": "carlab/verification/sensors-four-gpu-sensor.lidar.ray_cast-5.npy",
+      "bytes": 4205184,
+      "sha256": "eec17c41a2f5604aa7416db8cd186c11a5cdef4048ffef98cc22764bf353f94a"
+    },
+    {
+      "path": "carlab/verification/sensors-four-gpu-sensor.lidar.ray_cast-6.npy",
+      "bytes": 4070992,
+      "sha256": "31bca7e0df6e6e95c33419336742fc385ee6be8297b62d40ca7efb02b044e6db"
+    },
+    {
+      "path": "carlab/verification/sensors-four-gpu-sensor.lidar.ray_cast-7.npy",
+      "bytes": 4093872,
+      "sha256": "2909291b93e563cf3e9b73406927decaca076700b4f8beaab39d6fce8ee25d1d"
+    },
+    {
+      "path": "carlab/verification/sensors-four-gpu-sensor.lidar.ray_cast-8.npy",
+      "bytes": 4214704,
+      "sha256": "bfce8b2efc32a24eb078b490320a890ab4112d759369953c69c5fbb39b2ff9f0"
+    },
+    {
+      "path": "carlab/verification/sensors-four-gpu-sensor.other.radar-10.npy",
+      "bytes": 218864,
+      "sha256": "08b890c2e7335ce99adbbed987f632a4b98727d03a1c212f2115784e821a52a7"
+    },
+    {
+      "path": "carlab/verification/sensors-four-gpu-sensor.other.radar-11.npy",
+      "bytes": 160176,
+      "sha256": "98efe01f8213449b1714c1fe285e679969bcd054f84b948e3b4a1a53b4ad082e"
+    },
+    {
+      "path": "carlab/verification/sensors-four-gpu-sensor.other.radar-12.npy",
+      "bytes": 218880,
+      "sha256": "3d4b83bad9d13b24d283241eaa1291d7f516a9c6e2cc795dd0de9d7ca124b1e7"
+    },
+    {
+      "path": "carlab/verification/sensors-four-gpu-sensor.other.radar-9.npy",
+      "bytes": 218768,
+      "sha256": "325ec396d28ad65972196bfb03ed933134117a31a128a1f7d5fcb0926708d55b"
+    },
+    {
+      "path": "carlab/verification/sensors-four-gpu.json",
+      "bytes": 35707,
+      "sha256": "37cfc2cdc0cfb55d47e540a39692516af7c60064123f5fe639a709ed84504f7f"
+    },
+    {
+      "path": "carlab/verification/sensors-four-gpu.png",
+      "bytes": 1729103,
+      "sha256": "494b244ae0be2e0c772dd49250edc6918162a6c6b3ec7060b3acddeb0e28dd86"
+    },
+    {
+      "path": "carlab/verification/sensors-single-cpu-sensor.lidar.ray_cast-2.npy",
+      "bytes": 753216,
+      "sha256": "a853e50cd4462b8867adaf6a5e26d8f98388dd6157b715d705fc6cfc345d126d"
+    },
+    {
+      "path": "carlab/verification/sensors-single-cpu-sensor.other.radar-3.npy",
+      "bytes": 39152,
+      "sha256": "ed9a409472ffd5c5b87571cf228639ed4ddb3ac0540e2adac85cc6520e291fc4"
+    },
+    {
+      "path": "carlab/verification/sensors-single-cpu.json",
+      "bytes": 20509,
+      "sha256": "4a834c679e481e8cd20536eaeafa3db505d0fe28c383f6854ea30b0673e30efe"
+    },
+    {
+      "path": "carlab/verification/sensors-single-cpu.png",
+      "bytes": 2104991,
+      "sha256": "d28488e78f4e38b661b363134f2738c8c305e883836183cb0341704028d51d68"
+    },
+    {
+      "path": "carlab/verification/sensors-single-gpu-sensor.lidar.ray_cast-2.npy",
+      "bytes": 745024,
+      "sha256": "505370b46157606965c36eda57b15bb2b3bc140c298ef65a774b604e2101b96a"
+    },
+    {
+      "path": "carlab/verification/sensors-single-gpu-sensor.other.radar-3.npy",
+      "bytes": 38768,
+      "sha256": "e0666f97b4533ba1a5466e7e1d0251c29e74358ebfad05a51b289e8472d1c7f8"
+    },
+    {
+      "path": "carlab/verification/sensors-single-gpu.json",
+      "bytes": 20547,
+      "sha256": "de3bd3e18b384a89323650dd7199677eb619e1b8a5c79f7338e6e56d9a500e59"
+    },
+    {
+      "path": "carlab/verification/sensors-single-gpu.png",
+      "bytes": 2109545,
+      "sha256": "434beda6bd1fc72f8b4fe9179b508537e59256482ea7e012825c6ad7d913d1f5"
+    }
+  ],
+  "note": "Custom files present before the manifest itself was written; generated dependencies and transient process files are excluded."
+}

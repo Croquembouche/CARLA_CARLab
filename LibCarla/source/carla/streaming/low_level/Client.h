@@ -13,6 +13,7 @@
 
 #include <memory>
 #include <unordered_map>
+#include <mutex>
 
 namespace carla {
 namespace streaming {
@@ -53,7 +54,8 @@ namespace low_level {
         boost::asio::io_context &io_context,
         token_type token,
         Functor &&callback) {
-      DEBUG_ASSERT_EQ(_clients.find(token.get_stream_id()), _clients.end());
+      std::scoped_lock<std::mutex> lock(_clients_mutex);
+      DEBUG_ASSERT_EQ(_clients.find(Key(token)), _clients.end());
       if (!token.has_address()) {
         token.set_address(_fallback_address);
       }
@@ -62,12 +64,13 @@ namespace low_level {
           token,
           std::forward<Functor>(callback));
       client->Connect();
-      _clients.emplace(token.get_stream_id(), std::move(client));
+      _clients.emplace(Key(token), std::move(client));
     }
 
     void UnSubscribe(token_type token) {
       log_debug("calling sensor UnSubscribe()");
-      auto it = _clients.find(token.get_stream_id());
+      std::scoped_lock<std::mutex> lock(_clients_mutex);
+      auto it = _clients.find(Key(token));
       if (it != _clients.end()) {
         it->second->Stop();
         _clients.erase(it);
@@ -76,10 +79,15 @@ namespace low_level {
 
   private:
 
+    std::string Key(token_type token) const {
+      if (!token.has_address()) token.set_address(_fallback_address);
+      return token.get_address().to_string() + "|" + std::to_string(token.get_port()) + "|" + std::to_string(token.get_stream_id());
+    }
+    std::mutex _clients_mutex;
     boost::asio::ip::address _fallback_address;
 
     std::unordered_map<
-        detail::stream_id_type,
+        std::string,
         std::shared_ptr<underlying_client>> _clients;
   };
 

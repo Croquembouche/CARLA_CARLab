@@ -17,6 +17,7 @@
 #include "Carla/Lights/CarlaLightSubsystem.h"
 #include "Carla/MapGen/LargeMapManager.h"
 #include "Carla/Traffic/TrafficLightBase.h"
+#include "Carla/Traffic/TrafficLightComponent.h"
 #include "Carla/Traffic/TrafficLightController.h"
 #include "Carla/Traffic/TrafficLightGroup.h"
 #include "Carla/Traffic/TrafficSignBase.h"
@@ -615,4 +616,10 @@ void CarlaReplayerHelper::RemoveStaticProps()
       Actor->Destroy();
     }
   }
+}
+
+void CarlaReplayerHelper::ProcessMovementSignal(uint32_t Id, uint16_t States) {
+  auto* Actor=Episode->FindCarlaActor(Id);
+  auto* Light=Actor ? Cast<ATrafficLightBase>(Actor->GetActor()) : nullptr;
+  if (Light && Light->GetTrafficLightComponent()) Light->GetTrafficLightComponent()->SetMovementStates(States);
 }

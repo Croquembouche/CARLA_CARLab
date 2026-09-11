@@ -18,6 +18,10 @@ ExternalProject_add (
     -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
     -DBUILD_SHARED_LIBS=ON
     -DFOONATHAN_MEMORY_FORCE_VENDORED_BUILD=ON
+    -DBUILD_TESTING=OFF
+    # This vendored library does not need the host ROS test framework, whose
+    # Python packages may be outside CARLA's isolated virtual environment.
+    -DCMAKE_DISABLE_FIND_PACKAGE_ament_cmake_test=ON
 )
 
 # Note: We are using GIT_REPOSITORY instead URL for fastdds because fastdss contains submodules

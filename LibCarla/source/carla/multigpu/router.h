@@ -52,6 +52,7 @@ namespace multigpu {
     boost::asio::ip::tcp::endpoint GetLocalEndpoint() const;
 
     bool HasClientsConnected() {
+      std::scoped_lock<std::mutex> lock(_mutex);
       return (!_sessions.empty());
     }
 
@@ -60,6 +61,8 @@ namespace multigpu {
     }
 
     std::weak_ptr<Primary> GetNextServer();
+    std::weak_ptr<Primary> ReserveSensor(stream_id sensor_id, double cost);
+    void ReleaseSensor(stream_id sensor_id);
 
   private:
     void ConnectSession(std::shared_ptr<Primary> session);
@@ -73,6 +76,8 @@ namespace multigpu {
     std::vector<std::shared_ptr<Primary>>   _sessions;
     std::shared_ptr<Listener>               _listener;
     uint32_t                                _next;
+    struct SensorReservation { std::weak_ptr<Primary> server; double cost; };
+    std::unordered_map<stream_id, SensorReservation> _sensor_load;
     std::unordered_map<Primary *, std::shared_ptr<std::promise<SessionInfo>>> _promises;
     PrimaryCommands                         _commander;
     std::function<void(void)>               _callback;

@@ -1,0 +1,8 @@
+{
+	"BuildId": "d7d67961-34e6-4455-a8af-21084adc8eb3",
+	"Modules": 
+	{
+		"XRBase": "libUnrealEditor-XRBase.so",
+		"XRBaseEditor": "libUnrealEditor-XRBaseEditor.so"
+	}
+}

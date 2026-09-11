@@ -1,0 +1,7 @@
+{
+  "deleted": 1,
+  "skeletal_components": [
+    "VehicleMesh"
+  ],
+  "runtime_mannequin": "Preserved: InteriorOccupant creates a poseable mesh during BeginPlay"
+}

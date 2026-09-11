@@ -155,6 +155,7 @@ private:
   void ProcessPositions(bool IsFirstTime = false);
 
   void ProcessStates(void);
+  void ProcessMovementSignals();
 
   void ProcessAnimVehicle(void);
   void ProcessAnimVehicleWheels(void);

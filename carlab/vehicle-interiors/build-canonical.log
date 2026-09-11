@@ -1,0 +1,220 @@
+Setting up bundled DotNet SDK
+Building ShaderCompileWorker...
+Log file: /mnt/simulations/UnrealEngine5_carla/Engine/Programs/UnrealBuildTool/Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (/mnt/simulations/UnrealEngine5_carla).
+Building ShaderCompileWorker...
+Executing up to 24 actions based on MaxProcessorCount override
+Using Unreal Build Accelerator local executor to run 4 action(s)
+  Storage capacity 40Gb
+UbaSessionServer - Starting shared memory files at 3
+---- Starting trace ----
+UbaSessionServer - Disable remote execution (remote sessions will finish current processes)
+------ Building 4 action(s) started ------
+[1/4] Copy libOpenColorIO.so
+[2/4] Copy libOpenColorIO.so.2.3
+[3/4] WriteMetadata ShaderCompileWorker.version (UBA disabled)
+[4/4] WriteMetadata ShaderCompileWorker.target (UBA disabled)
+Trace file written to /mnt/simulations/UnrealEngine5_carla/Engine/Programs/UnrealBuildTool/Log.uba with size 2.1kb
+Total time in Unreal Build Accelerator local executor: 1.21 seconds
+Total execution time: 3.69 seconds
+Running command : dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll CarlaUnrealEditor Linux Development -project=/mnt/simulations/carla/Unreal/CarlaUnreal/CarlaUnreal.uproject -game -buildscw -WaitMutex -MaxParallelActions=12
+Log file: /mnt/simulations/UnrealEngine5_carla/Engine/Programs/UnrealBuildTool/Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (/mnt/simulations/UnrealEngine5_carla).
+Creating makefile for CarlaUnrealEditor (.uproject file is newer)
+Unity build is enabled.
+Slate UI is disabled.
+Online Subsystem is disabled.
+CarSim support is disabled.
+Chrono support is disabled.
+PyTorch support is disabled.
+OSM2ODR support is disabled.
+Ros2 support is enabled.
+Ros2 demo is disabled.
+Dynamic Library Added: /mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Source/Carla/../../Binaries/Linux/libcarla-ros2-native.so
+Unknown option "ROS2".
+OSM2ODR support is disabled.
+Parsing headers for CarlaUnrealEditor
+  Running Internal UnrealHeaderTool /mnt/simulations/carla/Unreal/CarlaUnreal/CarlaUnreal.uproject /mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/CarlaUnrealEditor/Development/CarlaUnrealEditor.uhtmanifest -WarningsAsErrors
+Total of 371 written
+Reflection code generated for CarlaUnrealEditor in 7.9321988 seconds
+------- Build details --------
+Using toolchain located at '/mnt/simulations/UnrealEngine5_carla/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu'.
+Using clang (/mnt/simulations/UnrealEngine5_carla/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++) version 'clang version 18.1.0rc (github.com/llvm/llvm-project 461274b81d8641eab64d494accddc81d7db8a09e)
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+InstalledDir: /mnt/simulations/UnrealEngine5_carla/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin' (string), 18 (major), 1 (minor), 0 (patch)
+Using bundled libc++ standard C++ library.
+Using lld linker
+Using llvm-ar (/mnt/simulations/UnrealEngine5_carla/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/llvm-ar) version 'LLVM (http://llvm.org/):
+  LLVM version 18.1.0rc
+  Optimized build. (string)'
+Using fast way to relink  circularly dependent libraries (no FixDeps).
+Compressing debug files
+Targeted minimum CPU architecture: None
+------------------------------
+Building CarlaUnrealEditor...
+[Adaptive Build] Excluded from Renderer unity file: DeferredShadingRenderer.cpp, SceneRendering.cpp, RayTracingInstanceCulling.cpp
+[Adaptive Build] Excluded from Engine unity file: RayTracingGeometryManager.cpp
+Executing up to 12 actions based on MaxProcessorCount override
+Using Unreal Build Accelerator local executor to run 1371 action(s)
+  Storage capacity 40Gb
+UbaSessionServer - Starting shared memory files at 3
+---- Starting trace ----
+UbaSessionServer - Disable remote execution (remote sessions will finish current processes)
+------ Building 1371 action(s) started ------
+[1/1371] Link (lld) libUnrealEditor-BuildSettings.so (UBA disabled)
+[2/1371] Link (lld) libUnrealEditor-TraceLog.so (UBA disabled)
+[3/1371] Compile Module.Core.13.cpp
+[4/1371] Compile Module.Core.18.cpp
+[5/1371] Compile Module.Core.1.cpp
+[6/1371] Compile Module.Core.3.cpp
+[7/1371] Compile Module.Core.16.cpp
+[8/1371] Compile Module.Core.11.cpp
+[9/1371] Compile Module.Core.10.cpp
+[10/1371] Compile Module.Core.17.cpp
+[11/1371] Compile Module.Core.2.cpp
+[12/1371] Compile Module.SSL.cpp
+[13/1371] Compile Module.Core.12.cpp
+[14/1371] Compile Module.Core.4.cpp
+[15/1371] Compile Module.Core.14.cpp
+[16/1371] Compile Module.Json.cpp
+[17/1371] Compile Module.Core.15.cpp
+[18/1371] Compile Module.Core.6.cpp
+[19/1371] Compile Module.DerivedDataCache.3.cpp
+[20/1371] Compile Module.CoreUObject.1.cpp
+[21/1371] Compile Module.ApplicationCore.cpp
+[22/1371] Compile Module.Core.9.cpp
+[23/1371] Compile Module.Zen.cpp
+[24/1371] Compile Module.DesktopPlatform.cpp
+[25/1371] Compile Module.Core.7.cpp
+[26/1371] Compile Module.CoreUObject.16.cpp
+[27/1371] Compile Module.CoreUObject.15.cpp
+[28/1371] Compile Module.DerivedDataCache.2.cpp
+[29/1371] Compile Module.Core.5.cpp
+[30/1371] Compile Module.Projects.cpp
+[31/1371] Compile Module.CoreUObject.14.cpp
+[32/1371] Compile Module.Core.8.cpp
+[33/1371] Compile Module.DerivedDataCache.1.cpp
+[34/1371] Compile Module.CoreUObject.10.cpp
+[35/1371] Link (lld) libUnrealEditor-Core.so (UBA disabled)
+[36/1371] Compile Module.CoreUObject.4.cpp
+[37/1371] Compile Module.CoreUObject.11.cpp
+[38/1371] Compile Module.CoreUObject.2.cpp
+[39/1371] Compile Module.CoreUObject.12.cpp
+[40/1371] Compile Module.CoreUObject.5.cpp
+[41/1371] Compile Module.CoreUObject.6.cpp
+[42/1371] Compile Module.CoreUObject.13.cpp
+[43/1371] Link (lld) libUnrealEditor-NetCommon.so (UBA disabled)
+[44/1371] Link (lld) libUnrealEditor-CorePreciseFP.so (UBA disabled)
+[45/1371] Link (lld) libUnrealEditor-Sockets.so (UBA disabled)
+[46/1371] Link (lld) libUnrealEditor-SSL.so (UBA disabled)
+[47/1371] Link (lld) libUnrealEditor-Json.so (UBA disabled)
+[48/1371] Link (lld) libUnrealEditor-ApplicationCore.so (UBA disabled)
+[49/1371] Link (lld) libUnrealEditor-Zen.so (UBA disabled)
+[50/1371] Compile Module.DeveloperSettings.cpp
+[51/1371] Link (lld) libUnrealEditor-DesktopPlatform.so (UBA disabled)
+[52/1371] Link (lld) libUnrealEditor-DerivedDataCache.so (UBA disabled)
+[53/1371] Link (lld) libUnrealEditor-Projects.so (UBA disabled)
+[54/1371] Compile Module.Nanosvg.cpp
+[55/1371] Link (lld) libUnrealEditor-Nanosvg.so (UBA disabled)
+[56/1371] Link (lld) libUnrealEditor-XmlParser.so (UBA disabled)
+[57/1371] Compile Module.InputCore.cpp
+[58/1371] Link (lld) libUnrealEditor-GeometryCore.so (UBA disabled)
+[59/1371] Compile Module.CoreUObject.3.cpp
+[60/1371] Link (lld) libUnrealEditor-GeometryFlowCore.so (UBA disabled)
+[61/1371] Link (lld) libUnrealEditor-MeshFileUtils.so (UBA disabled)
+[62/1371] Link (lld) libUnrealEditor-GeometryAlgorithms.so (UBA disabled)
+[63/1371] Compile Module.ImageCore.cpp
+[64/1371] Compile Module.SlateCore.5.cpp
+[65/1371] Compile Module.CoreUObject.8.cpp
+[66/1371] Link (lld) libUnrealEditor-DynamicMesh.so (UBA disabled)
+[67/1371] Compile Module.CoreUObject.7.cpp
+[68/1371] Compile Module.CoreUObject.9.cpp
+[69/1371] Link (lld) libUnrealEditor-GeometryFlowMeshProcessing.so (UBA disabled)
+[70/1371] Compile Module.SlateCore.1.cpp
+[71/1371] Compile Module.Networking.cpp
+[72/1371] Link (lld) libUnrealEditor-CoreUObject.so (UBA disabled)
+[73/1371] Link (lld) libUnrealEditor-Networking.so (UBA disabled)
+[74/1371] Link (lld) libUnrealEditor-DeveloperSettings.so (UBA disabled)
+[75/1371] Link (lld) libUnrealEditor-ImageCore.so (UBA disabled)
+[76/1371] Link (lld) libUnrealEditor-InputCore.so (UBA disabled)
+[77/1371] Compile Module.CookOnTheFly.cpp
+[78/1371] Link (lld) libUnrealEditor-CookOnTheFly.so (UBA disabled)
+[79/1371] Compile Module.Slate.1.cpp
+[80/1371] Compile Module.ImageWrapper.cpp
+[81/1371] Compile Module.EventLoop.cpp
+[82/1371] Link (lld) libUnrealEditor-ImageWrapper.so (UBA disabled)
+[83/1371] Link (lld) libUnrealEditor-EventLoop.so (UBA disabled)
+[84/1371] Compile Module.SlateCore.3.cpp
+[85/1371] Compile Module.SlateCore.4.cpp
+[86/1371] Compile Module.Slate.6.cpp
+[87/1371] Compile Module.RHI.2.cpp
+[88/1371] Compile Module.Slate.4.cpp
+[89/1371] Compile Module.HTTP.cpp
+[90/1371] Link (lld) libUnrealEditor-HTTP.so (UBA disabled)
+[91/1371] Compile Module.ChaosCore.cpp
+[92/1371] Link (lld) libUnrealEditor-ChaosCore.so (UBA disabled)
+[93/1371] Compile Module.Slate.2.cpp
+[94/1371] Compile Module.RHI.1.cpp
+[95/1371] Compile Module.TextureFormat.cpp
+[96/1371] Link (lld) libUnrealEditor-TextureFormat.so (UBA disabled)
+[97/1371] Link (lld) libUnrealEditor-RHI.so (UBA disabled)
+[98/1371] Compile Module.Slate.5.cpp
+[99/1371] Compile Module.UELibSampleRate.cpp
+[100/1371] Link (lld) libUnrealEditor-UELibSampleRate.so (UBA disabled)
+[101/1371] Compile c_loops.cc
+[102/1371] Compile Module.Slate.3.cpp
+[103/1371] Compile pre_container.cc
+[104/1371] Compile container.cc
+[105/1371] Compile v_base.cc
+[106/1371] Compile Module.ChaosVDRuntime.cpp
+[107/1371] Link (lld) libUnrealEditor-ChaosVDRuntime.so (UBA disabled)
+[108/1371] Compile Module.Voronoi.cpp
+[109/1371] Compile unitcell.cc
+[110/1371] Compile cell.cc
+[111/1371] Compile wall.cc
+[112/1371] Compile v_compute.cc
+[113/1371] Link (lld) libUnrealEditor-Voronoi.so (UBA disabled)
+[114/1371] Compile Module.RenderCore.5.cpp
+[115/1371] Compile Module.AppFramework.3.cpp
+[116/1371] Compile Module.Chaos.10.cpp
+[117/1371] Compile Module.RenderCore.2.cpp
+[118/1371] Compile Module.RenderCore.4.cpp
+[119/1371] Compile Module.RenderCore.3.cpp
+[120/1371] Compile Module.RenderCore.1.cpp
+[121/1371] Link (lld) libUnrealEditor-RenderCore.so (UBA disabled)
+[122/1371] Compile Module.TypedElementFramework.cpp
+[123/1371] Compile Module.Chaos.1.cpp
+[124/1371] Compile Module.Chaos.17.cpp
+[125/1371] Compile Module.Chaos.16.cpp
+[126/1371] Compile Module.Chaos.11.cpp
+[127/1371] Compile Module.Chaos.18.cpp
+[128/1371] Compile Module.Chaos.12.cpp
+[129/1371] Compile Module.SlateCore.2.cpp
+[130/1371] Compile Module.Chaos.14.cpp
+[131/1371] Link (lld) libUnrealEditor-SlateCore.so (UBA disabled)
+[132/1371] Compile Module.Chaos.19.cpp
+[133/1371] Link (lld) libUnrealEditor-Slate.so (UBA disabled)
+[134/1371] Compile Module.Chaos.13.cpp
+[135/1371] Compile Module.Chaos.2.cpp
+[136/1371] Link (lld) libUnrealEditor-TypedElementFramework.so (UBA disabled)
+[137/1371] Compile Module.AppFramework.2.cpp
+[138/1371] Compile Module.AppFramework.1.cpp
+[139/1371] Link (lld) libUnrealEditor-AppFramework.so (UBA disabled)
+[140/1371] Compile Module.Chaos.23.cpp
+[141/1371] Compile Module.Chaos.20.cpp
+[142/1371] Compile Module.MathCore.cpp
+[143/1371] Link (lld) libUnrealEditor-MathCore.so (UBA disabled)
+[144/1371] Compile Module.MessagingCommon.cpp
+[145/1371] Link (lld) libUnrealEditor-MessagingCommon.so (UBA disabled)
+[146/1371] Compile Module.TextureBuildUtilities.cpp
+[147/1371] Link (lld) libUnrealEditor-TextureBuildUtilities.so (UBA disabled)
+[148/1371] Compile Module.OpenColorIOWrapper.cpp
+[149/1371] Link (lld) libUnrealEditor-OpenColorIOWrapper.so (UBA disabled)
+[150/1371] Compile Module.Analytics.cpp
+[151/1371] Link (lld) libUnrealEditor-Analytics.so (UBA disabled)
+[152/1371] Compile Module.Chaos.4.cpp
+[153/1371] Compile Module.SignalProcessing.3.cpp
+[154/1371] Compile Module.Chaos.5.cpp
+[155/1371] Compile Module.TelemetryUtils.cpp
+[156/1371] Link (lld) libUnrealEditor-TelemetryUtils.so (UBA disabled)

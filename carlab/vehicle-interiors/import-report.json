@@ -1,0 +1,65 @@
+{
+  "stock_lincoln_entries": [
+    {
+      "make": "Lincoln",
+      "model": "Mkz"
+    },
+    {
+      "make": "lincoln",
+      "model": "mkz_interior"
+    }
+  ],
+  "blueprint": "/Game/VehicleInteriors/Lincoln/BP_LincolnMKZ_Interior",
+  "carla_id": "vehicle.lincoln.mkz_interior",
+  "seat_locations": {
+    "driver": [
+      18.0,
+      -40.0,
+      69.0
+    ],
+    "front_passenger": [
+      18.0,
+      40.0,
+      69.0
+    ],
+    "rear_left": [
+      -84.0,
+      -40.0,
+      69.0
+    ],
+    "rear_center": [
+      -84.0,
+      0,
+      69.0
+    ],
+    "rear_right": [
+      -84.0,
+      40.0,
+      69.0
+    ]
+  },
+  "lab_map": "/Game/VehicleInteriors/Lincoln/L_LincolnInteriorLab",
+  "imported_bone_names": [
+    "root",
+    "pelvis",
+    "spine",
+    "head",
+    "eye_l",
+    "lid_l",
+    "eye_r",
+    "lid_r",
+    "upperarm_l",
+    "forearm_l",
+    "hand_l",
+    "thigh_l",
+    "shin_l",
+    "foot_l",
+    "upperarm_r",
+    "forearm_r",
+    "hand_r",
+    "thigh_r",
+    "shin_r",
+    "foot_r"
+  ],
+  "pose_probe_note": "Bone names verified. The unregistered editor component did not initialize transforms; runtime pose validation is separate."
+}

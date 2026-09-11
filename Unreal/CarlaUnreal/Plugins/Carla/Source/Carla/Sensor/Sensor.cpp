@@ -118,6 +118,7 @@ void ASensor::EndPlay(EEndPlayReason::Type EndPlayReason)
   auto *GameInstance = UCarlaStatics::GetGameInstance(GetEpisode().GetWorld());
   auto &StreamingServer = GameInstance->GetServer().GetStreamingServer();
   auto StreamId = carla::streaming::detail::token_type(Stream.GetToken()).get_stream_id();
+  GameInstance->GetServer().GetSecondaryServer()->GetCommander().ReleaseSensor(StreamId);
   StreamingServer.CloseStream(StreamId);
 
   UCarlaEpisode* CurrentEpisode = UCarlaStatics::GetCurrentEpisode(GetWorld());

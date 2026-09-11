@@ -5,11 +5,13 @@
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
 #include "FrameData.h"
+#include "Carla/Weather/Weather.h"
 
 #include "Carla/Game/CarlaEpisode.h"
 #include "Carla/Actor/CarlaActor.h"
 #include "Carla/Game/CarlaEngine.h"
 #include "Carla/Traffic/TrafficLightController.h"
+#include "Carla/Traffic/TrafficLightComponent.h"
 #include "Carla/Traffic/TrafficLightGroup.h"
 #include "Carla/MapGen/LargeMapManager.h"
 #include "Carla/Game/CarlaStatics.h"
@@ -27,7 +29,32 @@
 void FFrameData::GetFrameData(UCarlaEpisode *ThisEpisode, bool bAdditionalData, bool bIncludeActorsAgain)
 {
   Episode = ThisEpisode;
-  // PlatformTime.UpdateTime();
+  // Secondary sensor headers must use the primary episode clock, not the
+  // elapsed time since that worker finished loading its map.
+  SimulationFrame.Id = FCarlaEngine::GetFrameCounter();
+  SimulationFrame.Elapsed = Episode->GetElapsedGameTime();
+  SimulationFrame.DurationThis = Episode->GetWorld()->GetDeltaSeconds();
+  bHasSimulationFrame = true;
+  // Include the current weather in every snapshot, including late-joining workers.
+  if (const AWeather* Weather = Episode->GetWeather())
+  {
+    const auto& Current = Weather->GetCurrentWeather();
+    ReplicatedWeather.Cloudiness = Current.Cloudiness;
+    ReplicatedWeather.Precipitation = Current.Precipitation;
+    ReplicatedWeather.PrecipitationDeposits = Current.PrecipitationDeposits;
+    ReplicatedWeather.WindIntensity = Current.WindIntensity;
+    ReplicatedWeather.SunAzimuthAngle = Current.SunAzimuthAngle;
+    ReplicatedWeather.SunAltitudeAngle = Current.SunAltitudeAngle;
+    ReplicatedWeather.FogDensity = Current.FogDensity;
+    ReplicatedWeather.FogDistance = Current.FogDistance;
+    ReplicatedWeather.FogFalloff = Current.FogFalloff;
+    ReplicatedWeather.Wetness = Current.Wetness;
+    ReplicatedWeather.ScatteringIntensity = Current.ScatteringIntensity;
+    ReplicatedWeather.MieScatteringScale = Current.MieScatteringScale;
+    ReplicatedWeather.RayleighScatteringScale = Current.RayleighScatteringScale;
+    ReplicatedWeather.DustStorm = Current.DustStorm;
+    bHasWeather = true;
+  }
   const FActorRegistry &Registry = Episode->GetActorRegistry();
 
   if (bIncludeActorsAgain)
@@ -84,6 +111,48 @@ void FFrameData::PlayFrameData(
     std::unordered_map<uint32_t, uint32_t>& MappedId)
 {
 
+  // Apply on the game thread before secondary sensor capture. Avoid refreshing
+  // weather blueprints every tick when the snapshot has not changed.
+  if (bHasWeather && ThisEpisode->GetWeather())
+  {
+    AWeather* Weather = ThisEpisode->GetWeather();
+    FWeatherParameters Updated = Weather->GetCurrentWeather();
+    const bool bChanged =
+      Updated.Cloudiness != ReplicatedWeather.Cloudiness ||
+      Updated.Precipitation != ReplicatedWeather.Precipitation ||
+      Updated.PrecipitationDeposits != ReplicatedWeather.PrecipitationDeposits ||
+      Updated.WindIntensity != ReplicatedWeather.WindIntensity ||
+      Updated.SunAzimuthAngle != ReplicatedWeather.SunAzimuthAngle ||
+      Updated.SunAltitudeAngle != ReplicatedWeather.SunAltitudeAngle ||
+      Updated.FogDensity != ReplicatedWeather.FogDensity ||
+      Updated.FogDistance != ReplicatedWeather.FogDistance ||
+      Updated.FogFalloff != ReplicatedWeather.FogFalloff ||
+      Updated.Wetness != ReplicatedWeather.Wetness ||
+      Updated.ScatteringIntensity != ReplicatedWeather.ScatteringIntensity ||
+      Updated.MieScatteringScale != ReplicatedWeather.MieScatteringScale ||
+      Updated.RayleighScatteringScale != ReplicatedWeather.RayleighScatteringScale ||
+      Updated.DustStorm != ReplicatedWeather.DustStorm;
+    if (bChanged)
+    {
+      Updated.Cloudiness = ReplicatedWeather.Cloudiness;
+      Updated.Precipitation = ReplicatedWeather.Precipitation;
+      Updated.PrecipitationDeposits = ReplicatedWeather.PrecipitationDeposits;
+      Updated.WindIntensity = ReplicatedWeather.WindIntensity;
+      Updated.SunAzimuthAngle = ReplicatedWeather.SunAzimuthAngle;
+      Updated.SunAltitudeAngle = ReplicatedWeather.SunAltitudeAngle;
+      Updated.FogDensity = ReplicatedWeather.FogDensity;
+      Updated.FogDistance = ReplicatedWeather.FogDistance;
+      Updated.FogFalloff = ReplicatedWeather.FogFalloff;
+      Updated.Wetness = ReplicatedWeather.Wetness;
+      Updated.ScatteringIntensity = ReplicatedWeather.ScatteringIntensity;
+      Updated.MieScatteringScale = ReplicatedWeather.MieScatteringScale;
+      Updated.RayleighScatteringScale = ReplicatedWeather.RayleighScatteringScale;
+      Updated.DustStorm = ReplicatedWeather.DustStorm;
+      Weather->ApplyWeather(Updated);
+      UE_LOG(LogCarla, Log, TEXT("Replicated weather applied: sun=%.1f cloud=%.1f rain=%.1f"), Updated.SunAltitudeAngle, Updated.Cloudiness, Updated.Precipitation);
+    }
+  }
+
   for(const CarlaRecorderEventAdd &EventAdd : EventsAdd.GetEvents())
   {
     uint32_t OldId = EventAdd.DatabaseId;
@@ -136,6 +205,12 @@ void FFrameData::PlayFrameData(
     }
   }
 
+  for (const auto& Signal : MovementSignals.Signals)
+  {
+    FCarlaActor* Actor=Episode->FindCarlaActor(MappedId[Signal.DatabaseId]);
+    auto* Light=Actor ? Cast<ATrafficLightBase>(Actor->GetActor()) : nullptr;
+    if (Light && Light->GetTrafficLightComponent()) Light->GetTrafficLightComponent()->SetMovementStates(Signal.States);
+  }
   for (const CarlaRecorderStateTrafficLight &State : States.GetStates())
   {
     CarlaRecorderStateTrafficLight StateTrafficLight = State;
@@ -184,6 +259,13 @@ void FFrameData::PlayFrameData(
   }
 
   SetFrameCounter();
+  if (bHasSimulationFrame)
+  {
+    if (SimulationFrame.Id != FrameCounter.FrameCounter ||
+        !FMath::IsFinite(SimulationFrame.Elapsed) || SimulationFrame.Elapsed < 0)
+      UE_LOG(LogCarla, Fatal, TEXT("Invalid replicated simulation frame timestamp"));
+    ThisEpisode->SetReplicatedElapsedGameTime(SimulationFrame.Elapsed);
+  }
 }
 
 void FFrameData::Clear()
@@ -194,6 +276,7 @@ void FFrameData::Clear()
   Collisions.Clear();
   Positions.Clear();
   States.Clear();
+  MovementSignals.Clear();
   Vehicles.Clear();
   Wheels.Clear();
   Walkers.Clear();
@@ -206,6 +289,9 @@ void FFrameData::Clear()
   PhysicsControls.Clear();
   TrafficLightTimes.Clear();
   FrameCounter.FrameCounter = 0;
+  bHasWeather = false;
+  bHasSimulationFrame = false;
+  SimulationFrame = {};
 }
 
 void FFrameData::Write(std::ostream& OutStream)
@@ -215,6 +301,7 @@ void FFrameData::Write(std::ostream& OutStream)
   EventsParent.Write(OutStream);
   Positions.Write(OutStream);
   States.Write(OutStream);
+  MovementSignals.Write(OutStream);
   Vehicles.Write(OutStream);
   Wheels.Write(OutStream);
   Walkers.Write(OutStream);
@@ -223,6 +310,21 @@ void FFrameData::Write(std::ostream& OutStream)
   LightScenes.Write(OutStream);
   TrafficLightTimes.Write(OutStream);
   FrameCounter.Write(OutStream);
+  if (bHasWeather)
+  {
+    WriteValue<char>(OutStream, static_cast<char>(CarlaRecorderPacketId::Weather));
+    WriteValue<uint32_t>(OutStream, sizeof(uint16_t) + sizeof(CarlaRecorderWeather));
+    WriteValue<uint16_t>(OutStream, 1);
+    ReplicatedWeather.Write(OutStream);
+  }
+  if (bHasSimulationFrame)
+  {
+    // Reuse the existing recorder frame packet format. Older readers skip this
+    // packet; all workers in this installation use the same modified build.
+    WriteValue<char>(OutStream, static_cast<char>(CarlaRecorderPacketId::FrameStart));
+    WriteValue<uint32_t>(OutStream, sizeof(CarlaRecorderFrame));
+    SimulationFrame.Write(OutStream);
+  }
 }
 
 void FFrameData::Read(std::istream& InStream)
@@ -230,9 +332,11 @@ void FFrameData::Read(std::istream& InStream)
   Clear();
   while(!InStream.eof())
   {
-    Header header;
+    Header header{};
     ReadValue<char>(InStream, header.Id);
+    if (InStream.eof()) break;
     ReadValue<uint32_t>(InStream, header.Size);
+    if (!InStream) UE_LOG(LogCarla, Fatal, TEXT("Truncated replicated frame packet header"));
     switch (header.Id)
     {
       // events add
@@ -253,6 +357,10 @@ void FFrameData::Read(std::istream& InStream)
       // positions
       case static_cast<char>(CarlaRecorderPacketId::Position):
         Positions.Read(InStream);
+        break;
+
+      case static_cast<char>(CarlaRecorderPacketId::MovementSignal):
+        MovementSignals.Read(InStream);
         break;
 
       // states
@@ -288,6 +396,27 @@ void FFrameData::Read(std::istream& InStream)
       // scene lights animation
       case static_cast<char>(CarlaRecorderPacketId::SceneLight):
         LightScenes.Read(InStream);
+        break;
+
+      case static_cast<char>(CarlaRecorderPacketId::Weather):
+      {
+        uint16_t Count = 0;
+        if (header.Size != sizeof(uint16_t) + sizeof(CarlaRecorderWeather))
+          UE_LOG(LogCarla, Fatal, TEXT("Invalid replicated weather packet size"));
+        ReadValue<uint16_t>(InStream, Count);
+        if (Count != 1) UE_LOG(LogCarla, Fatal, TEXT("Invalid replicated weather count"));
+        ReplicatedWeather.Read(InStream);
+        if (!InStream) UE_LOG(LogCarla, Fatal, TEXT("Truncated replicated weather"));
+        bHasWeather = true;
+        break;
+      }
+
+      case static_cast<char>(CarlaRecorderPacketId::FrameStart):
+        if (header.Size != sizeof(CarlaRecorderFrame))
+          UE_LOG(LogCarla, Fatal, TEXT("Invalid replicated simulation timestamp packet size"));
+        SimulationFrame.Read(InStream);
+        if (!InStream) UE_LOG(LogCarla, Fatal, TEXT("Truncated replicated simulation timestamp"));
+        bHasSimulationFrame = true;
         break;
 
       case static_cast<char>(CarlaRecorderPacketId::FrameCounter):
@@ -487,6 +616,9 @@ void FFrameData::AddWalkerAnimation(FCarlaActor *CarlaActor)
 
 void FFrameData::AddTrafficLightState(FCarlaActor *CarlaActor)
 {
+  if (const auto* Light=Cast<ATrafficLightBase>(CarlaActor->GetActor()))
+    if (const auto* Component=Light->GetTrafficLightComponent())
+      MovementSignals.Add({CarlaActor->GetActorId(),Component->GetMovementStates()});
   check(CarlaActor != nullptr);
 
   ETrafficLightState LightState = CarlaActor->GetTrafficLightState();

@@ -1,0 +1,43 @@
+{
+  "stage": "COMPLETE: final Blender model and CARLA UE5 integration",
+  "blender": {
+    "file": "Lincoln_MKZ_Interior_Final.blend",
+    "verification": {
+      "seatbelt_webbing": 5,
+      "new_detail_objects": 19,
+      "cameras": [
+        "Camera_Cabin",
+        "Camera_Passenger",
+        "Camera_Driver",
+        "MKZ_Dashboard",
+        "MKZ_Driver_View",
+        "MKZ_Rear_Seats",
+        "MKZ_Front_Seats",
+        "MKZ_Passenger_Seat"
+      ],
+      "unpacked_images": [],
+      "result": "PASS",
+      "file": "/mnt/simulations/vehicle-interiors/Lincoln_MKZ_Interior_Final.blend"
+    }
+  },
+  "unreal": {
+    "blueprint": "/Game/VehicleInteriors/Lincoln/BP_LincolnMKZ_Interior",
+    "carla_id": "vehicle.lincoln.mkz_interior",
+    "runtime_visual_review": "PASS",
+    "cache_graph": "LincolnInteriorDDC",
+    "compiler": "in-process Linux Vulkan",
+    "material_compile": "Latest texture and mask compilation completed without material compile errors",
+    "import": "PASS: final cabin and exterior assets saved and Blueprint construction checked",
+    "spawn_and_physics": "PASS: four wheels; stock-sized vehicle bounds",
+    "shutdown": "PASS: normal engine exit, return code 0",
+    "material": "MI_MKZ_Final_Interior",
+    "rig": "PASS: all nine bone reference transforms match stock",
+    "runtime_report": "runtime-report.json"
+  },
+  "quest": "Deferred by user",
+  "limitations": [
+    "Seats and trim are modeled approximations, not manufacturer CAD or scans.",
+    "Dashboard control textures retain visible source-resolution limits in close views.",
+    "Blender procedural leather detail is richer than the basic Unreal upholstery materials."
+  ]
+}

@@ -1,0 +1,28 @@
+Setting up bundled DotNet SDK
+Running command : dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll CarlaUnrealEditor Linux Development -project=/mnt/simulations/carla/Unreal/CarlaUnreal/CarlaUnreal.uproject -Module=CarlaUnreal -WaitMutex -MaxParallelActions=8
+Log file: /mnt/simulations/UnrealEngine5_carla/Engine/Programs/UnrealBuildTool/Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (/mnt/simulations/UnrealEngine5_carla).
+Building CarlaUnrealEditor...
+[Adaptive Build] Excluded from Renderer unity file: DeferredShadingRenderer.cpp, SceneRendering.cpp, RayTracingInstanceCulling.cpp
+[Adaptive Build] Excluded from Engine unity file: RayTracingGeometryManager.cpp
+Executing up to 8 actions based on MaxProcessorCount override
+Using Unreal Build Accelerator local executor to run 2 action(s)
+  Storage capacity 40Gb
+---- Starting trace ----
+UbaSessionServer - Disable remote execution (remote sessions will finish current processes)
+------ Building 2 action(s) started ------
+[1/2] Compile InteriorOccupantComponent.cpp
+/mnt/simulations/carla/Unreal/CarlaUnreal/Source/CarlaUnreal/InteriorOccupantComponent.cpp:31:11: warning: 'SetSkeletalMesh' is deprecated: Use USkeletalMeshComponent::SetSkeletalMesh() or SetSkinnedAssetAndUpdate() instead. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+   31 |     Body->SetSkeletalMesh(MannequinMesh);
+      |           ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Engine/Classes/Components/SkinnedMeshComponent.h:1049:2: note: 'SetSkeletalMesh' has been explicitly marked deprecated here
+ 1049 |         UE_DEPRECATED(5.1, "Use USkeletalMeshComponent::SetSkeletalMesh() or SetSkinnedAssetAndUpdate() instead.")
+      |         ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:276:43: note: expanded from macro 'UE_DEPRECATED'
+  276 | #define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+      |                                           ^
+1 warning generated.
+[2/2] Link (lld) libUnrealEditor-CarlaUnreal.so (UBA disabled)
+Trace file written to /mnt/simulations/UnrealEngine5_carla/Engine/Programs/UnrealBuildTool/Log.uba with size 1.9kb
+Total time in Unreal Build Accelerator local executor: 5.64 seconds
+Total execution time: 10.84 seconds

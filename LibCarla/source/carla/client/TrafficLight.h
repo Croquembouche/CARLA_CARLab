@@ -53,6 +53,15 @@ namespace client {
 
     void Freeze(bool freeze);
 
+    /// Freeze only this traffic light's junction group.
+    void FreezeGroup(bool freeze);
+
+    /// Bit 15 enables custom movements; bit 14 is the permissive flash phase.
+    /// Three 3-bit indications: left, through, right. 0 stop, 1 caution,
+    /// 2 protected, 3 permissive, 4 off. Zero disables custom movements.
+    void SetMovementStates(uint16_t states);
+    uint16_t GetMovementStates() const;
+
     /// @note This function does not call the simulator, it returns the data
     /// received in the last tick.
     bool IsFrozen() const;

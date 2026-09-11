@@ -1,0 +1,38 @@
+{
+  "Vehicle_Base": {
+    "stock": "<Struct 'Transform' (0x7fba52d41890) {rotation: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}, translation: {x: 0.000000, y: -0.000006, z: 0.000000}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+    "final": "<Struct 'Transform' (0x7fba52d43ae0) {rotation: {x: 0.000000, y: 0.000000, z: 0.000000, w: -1.000000}, translation: {x: 0.000000, y: 0.000000, z: 0.000000}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>"
+  },
+  "Wheel_Front_Left": {
+    "stock": "<Struct 'Transform' (0x7fba52d42f10) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: 147.020645, y: -79.645973, z: 37.115238}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+    "final": "<Struct 'Transform' (0x7fba52d41890) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: 147.020645, y: -79.645981, z: 37.115238}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>"
+  },
+  "Wheel_Front_Right": {
+    "stock": "<Struct 'Transform' (0x7fba52d43ae0) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: 147.020645, y: 79.645988, z: 37.115238}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+    "final": "<Struct 'Transform' (0x7fba52d42f10) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: 147.020645, y: 79.645981, z: 37.115238}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>"
+  },
+  "Wheel_Rear_Right": {
+    "stock": "<Struct 'Transform' (0x7fba52d41890) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: -139.706787, y: 79.645988, z: 37.115238}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+    "final": "<Struct 'Transform' (0x7fba52d43ae0) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: -139.706772, y: 79.645981, z: 37.115238}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>"
+  },
+  "Wheel_Rear_Left": {
+    "stock": "<Struct 'Transform' (0x7fba52d42f10) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: -139.706787, y: -79.634727, z: 37.115238}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+    "final": "<Struct 'Transform' (0x7fba52d41890) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: -139.706772, y: -79.634735, z: 37.115238}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>"
+  },
+  "Door_Front_Right": {
+    "stock": "<Struct 'Transform' (0x7fba52d43ae0) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: 95.953064, y: 88.020973, z: 87.398903}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+    "final": "<Struct 'Transform' (0x7fba52d42f10) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: 95.953056, y: 88.020966, z: 87.398895}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>"
+  },
+  "Door_Front_Left": {
+    "stock": "<Struct 'Transform' (0x7fba52d41890) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: 95.953064, y: -87.410202, z: 87.399002}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+    "final": "<Struct 'Transform' (0x7fba52d43ae0) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: 95.953056, y: -87.410202, z: 87.399002}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>"
+  },
+  "Door_Rear_Right": {
+    "stock": "<Struct 'Transform' (0x7fba52d42f10) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: -15.953276, y: 89.504417, z: 88.142204}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+    "final": "<Struct 'Transform' (0x7fba52d41890) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: -15.953276, y: 89.504410, z: 88.142204}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>"
+  },
+  "Door_Rear_Left": {
+    "stock": "<Struct 'Transform' (0x7fba52d43ae0) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: -15.953773, y: -89.694778, z: 90.428513}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+    "final": "<Struct 'Transform' (0x7fba52d42f10) {rotation: {x: 0.000000, y: -0.000000, z: 0.000000, w: -1.000000}, translation: {x: -15.953772, y: -89.694778, z: 90.428513}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>"
+  }
+}

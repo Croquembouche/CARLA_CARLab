@@ -28,6 +28,7 @@
 #include <util/ue-header-guard-end.h>
 
 #include <mutex>
+#include <condition_variable>
 
 class UCarlaSettings;
 struct FEpisodeSettings;
@@ -139,6 +140,9 @@ private:
 
   std::vector<FFrameData> FramesToProcess;
   std::mutex FrameToProcessMutex;
+  std::mutex SensorRoutingMutex;
+  std::condition_variable SensorRoutingReady;
+  std::unordered_map<uint32_t, uint32_t> SensorStreamsByPrimaryActor;
 };
 
 // Note: this has a circular dependency with FCarlaEngine; it must be included late.

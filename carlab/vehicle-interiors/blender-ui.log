@@ -1,0 +1,9 @@
+01:23.750  blend            | Read blend: "/mnt/simulations/vehicle-interiors/Lincoln_Interior_Mannequin.blend"
+02:09:58.051  operator         | Saved "Lincoln_Interior_Mannequin.blend"
+02:10:37.734  blend            | Saved session recovery to "/tmp/quit.blend"
+02:10:37.737  blend            | Writing user preferences: "/mnt/simulations/blender-config/5.2/config/userpref.blend" 
+02:10:37.755  reports          | Preferences saved
+unregister_class(...):, missing bl_rna attribute from '_RNAMeta' instance (may not be registered)Reloading external rigs...
+Reloading external metarigs...
+
+Blender quit

@@ -12,6 +12,8 @@
 #include "Carla/Vehicle/WheeledVehicleAIController.h"
 #include "TrafficLightComponent.generated.h"
 
+class UProceduralMeshComponent;
+class UPrimitiveComponent;
 class ATrafficLightManager;
 class ATrafficLightGroup;
 class UTrafficLightController;
@@ -45,6 +47,10 @@ public:
 
   void SetController(UTrafficLightController* Controller);
 
+  void SetMovementStates(uint16 States);
+  uint16 GetMovementStates() const { return MovementStates; }
+  void RebuildMovementDisplay();
+
   UFUNCTION(Category = "Traffic Light", BlueprintPure)
   UTrafficLightController* GetController();
 
@@ -76,6 +82,15 @@ protected:
 private:
 
   friend ATrafficLightManager;
+
+  UPROPERTY()
+  uint16 MovementStates = 0;
+  UPROPERTY()
+  UProceduralMeshComponent* MovementMesh = nullptr;
+  UPROPERTY()
+  TArray<UPrimitiveComponent*> MovementOriginalMeshes;
+  TArray<FTransform> MovementHeadTransforms;
+
 
   void GenerateTrafficLightBox(
       const FTransform BoxTransform,
