@@ -19,14 +19,7 @@ The WebUI's physical parking controller, scenario authoring, sensor previews, RO
 
 Read [SETUP.md](carlab/SETUP.md) for the pinned engine/content setup, applying custom content, compilation, Blender tools and service installation.
 
-```bash
-git clone https://github.com/Croquembouche/CARLA_CARLab.git /mnt/simulations/carla
-cd /mnt/simulations/carla
-git lfs install --local
-git lfs pull
-python3 carlab/setup_content.py
-# Build the matched engine first, then follow carlab/SETUP.md.
-```
+Use the [end-to-end installation steps](carlab/SETUP.md), starting with system prerequisites and the writable `/mnt/simulations` layout. Install Git LFS before cloning, use this repository's `main` branch, restore the stock/custom content once, then build both the native dependencies and `CarlaUnrealEditor`. The guide also covers first launch and later rebuilds.
 
 `setup_content.py` fetches the pinned upstream content repository when absent, checks its revision, and overlays the committed custom content. It refuses a mismatched revision or pre-existing local modifications. The upstream asset download is large (the installed content occupies about 82 GB). Custom content is stored separately so an upstream asset checkout cannot hide it from Git.
 

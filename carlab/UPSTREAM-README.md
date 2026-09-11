@@ -1,20 +1,22 @@
+> Upstream reference preserved from the pinned base. For this customized CARLab stack, use [the current setup guide](https://github.com/Croquembouche/CARLA_CARLab/blob/main/carlab/SETUP.md); upstream branch/download instructions do not restore the CARLab modifications. Local links have been adjusted for this archived document location.
+
 CARLA Simulator
 ===============
 
 [![Documentation](https://readthedocs.org/projects/carla/badge/?version=latest)](https://carla-ue5.readthedocs.io)
 
-[![carla.org](Docs/img/btn/web.png)](http://carla.org)
-[![download](Docs/img/btn/download.png)](https://github.com/carla-simulator/carla/releases)
-[![documentation](Docs/img/btn/docs.png)](https://carla-ue5.readthedocs.io)
-[![forum](Docs/img/btn/forum.png)](https://github.com/carla-simulator/carla/discussions)
-[![discord](Docs/img/btn/chat.png)](https://discord.gg/8kqACuC)
+[![carla.org](../Docs/img/btn/web.png)](http://carla.org)
+[![download](../Docs/img/btn/download.png)](https://github.com/carla-simulator/carla/releases)
+[![documentation](../Docs/img/btn/docs.png)](https://carla-ue5.readthedocs.io)
+[![forum](../Docs/img/btn/forum.png)](https://github.com/carla-simulator/carla/discussions)
+[![discord](../Docs/img/btn/chat.png)](https://discord.gg/8kqACuC)
 
 CARLA is an open-source simulator for autonomous driving research. CARLA has been developed from the ground up to support development, training, and
 validation of autonomous driving systems. In addition to open-source code and protocols, CARLA provides open digital assets (urban layouts, buildings,
 vehicles) that were created for this purpose and can be used freely. The simulation platform supports flexible specification of sensor suites and
 environmental conditions.
 
-[![CARLA Video](Docs/img/carla_ue5_readme_img.webp)](https://www.youtube.com/watch?v=q4V9GYjA1pE)
+[![CARLA Video](../Docs/img/carla_ue5_readme_img.webp)](https://www.youtube.com/watch?v=q4V9GYjA1pE)
 
 >[!NOTE]
 > This is the development branch `ue5-dev` for the **Unreal Engine 5.5 version of CARLA**. This branch exists in parallel with the Unreal Engine 4.26 version of CARLA, in the `ue4-dev` branch. Please be sure that this version of CARLA is suitable for your needs as there are significant differences between the UE 5.5 and UE 4.26 versions of CARLA. 

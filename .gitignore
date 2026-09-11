@@ -41,3 +41,6 @@ _images*
 
 # Temp
 Help.md
+
+# Local output from the published host setup helpers.
+/carlab/host-setup/logs/

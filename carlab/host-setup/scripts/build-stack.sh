@@ -1,62 +1,54 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 source /mnt/simulations/carla/carlab/host-setup/env.sh
-export PATH="$CARLA_VENV/bin:$SIMULATIONS_LINUX/bin:/opt/cmake-3.28.3-linux-x86_64/bin:/usr/local/bin:/usr/bin:/bin"
+verify_runtime=0
+if [[ "${1:-}" == --verify-runtime && $# == 1 ]]; then
+  verify_runtime=1
+elif [[ $# != 0 ]]; then
+  echo 'Usage: build-stack.sh [--verify-runtime]' >&2; exit 2
+fi
+export PATH="$CARLA_VENV/bin:$SIMULATIONS_LINUX/bin:$PATH"
+export BUILD_JOBS="${BUILD_JOBS:-8}"
+[[ "$BUILD_JOBS" =~ ^[1-9][0-9]*$ ]] || { echo 'BUILD_JOBS must be a positive integer' >&2; exit 2; }
 export TMPDIR="$SIMULATIONS_LINUX/tmp"
 export PIP_CACHE_DIR="$SIMULATIONS_LINUX/cache/pip"
-export CMAKE_BUILD_PARALLEL_LEVEL=24
 export NUGET_PACKAGES="$SIMULATIONS_LINUX/cache/nuget"
 export DOTNET_CLI_HOME="$SIMULATIONS_LINUX/cache/dotnet"
-export GIT_TERMINAL_PROMPT=0
 unset PYTHONHOME PYTHONPATH
+[[ -x "$CARLA_VENV/bin/python" ]] || { echo 'Create the CARLA build venv using carlab/SETUP.md first' >&2; exit 1; }
+[[ -d "$CARLA_ROOT/Unreal/CarlaUnreal/Content/Carla/.git" ]] || { echo 'Restore content using carlab/SETUP.md first' >&2; exit 1; }
+mkdir -p "$TMPDIR" "$PIP_CACHE_DIR" "$NUGET_PACKAGES" "$DOTNET_CLI_HOME" "$SIMULATIONS_ROOT/logs" "$SIMULATIONS_LINUX/verification"
 exec 9>"$SIMULATIONS_LINUX/.build-stack.lock"
 flock -n 9 || { echo 'Another build is running'; exit 1; }
 status() { printf '%s %s\n' "$(date --iso-8601=seconds)" "$*" | tee "$SIMULATIONS_ROOT/logs/build-status.txt"; }
-trap 'status "FAILED at line $LINENO; see build-stack.log"' ERR
-# Allow downloads launched during initial installation to complete.
-status 'Downloading Unreal dependencies and CARLA assets'
-initial_engine_pid="${1:-}"
-initial_content_pid="${2:-}"
-if [[ -f "$SIMULATIONS_LINUX/.asset-download.pid" ]]; then
-  initial_content_pid=$(cat "$SIMULATIONS_LINUX/.asset-download.pid")
-fi
-if [[ -n "$initial_engine_pid" ]]; then
-  while kill -0 "$initial_engine_pid" 2>/dev/null; do sleep 10; done
-fi
-status 'Checking Unreal dependencies'
+trap 'status "FAILED at line $LINENO"' ERR
+status 'Installing build dependencies'
+python -m pip install -r "$CARLA_ROOT/requirements.txt" 'numpy==1.26.4' 'cmake==3.28.3'
 cd "$CARLA_UNREAL_ENGINE_PATH"
-if [[ ! -f Engine/Build/OneTimeSetupPerformed ]]; then bash Setup.sh --force --threads=12; fi
-status 'Generating Unreal project files'
+status 'Checking Unreal dependencies'
+if [[ ! -f Engine/Build/OneTimeSetupPerformed ]]; then bash Setup.sh; fi
 if [[ ! -f Makefile ]]; then bash GenerateProjectFiles.sh; fi
-status 'Compiling Unreal Engine 5.5.4'
+status 'Compiling Unreal Engine'
 make -j1 UnrealEditor ShaderCompileWorker UnrealPak
-status 'Installing CARLA Python build dependencies'
-python -m pip install -r "$CARLA_ROOT/requirements.txt"
-status 'Checking CARLA assets'
-if [[ -f "$SIMULATIONS_LINUX/.asset-download.pid" ]]; then
-  initial_content_pid=$(cat "$SIMULATIONS_LINUX/.asset-download.pid")
-fi
-if [[ -n "$initial_content_pid" ]]; then
-  while kill -0 "$initial_content_pid" 2>/dev/null; do sleep 10; done
-fi
-git -C "$CARLA_ROOT/Unreal/CarlaUnreal/Content/Carla" lfs pull
-while [[ -e "$SIMULATIONS_LINUX/.sensor-source-editing" ]]; do
-  status 'Unreal ready; waiting for GPU sensor source edits'
-  sleep 10
-done
-status 'Configuring CARLA UE5 with ROS2'  
+status 'Configuring CARLA'
 cd "$CARLA_ROOT"
 cmake -G Ninja -S . -B Build --toolchain="$CARLA_ROOT/CMake/Toolchain.cmake" \
- -DCMAKE_BUILD_TYPE=Release -DENABLE_ROS2=ON \
- -DPython_ROOT_DIR="$CARLA_VENV" -DPython3_ROOT_DIR="$CARLA_VENV" \
- -DPython_EXECUTABLE="$CARLA_VENV/bin/python" -DPython3_EXECUTABLE="$CARLA_VENV/bin/python" \
- -DCARLA_UNREAL_ENGINE_PATH="$CARLA_UNREAL_ENGINE_PATH"
-status 'Compiling CARLA and Python API'
-cmake --build Build --parallel 24
-cmake --build Build --target carla-python-api-install --parallel 24
-status 'Checking compiled Python API'
+  -DCMAKE_BUILD_TYPE=Release -DENABLE_ROS2=ON \
+  -DPython_ROOT_DIR="$CARLA_VENV" -DPython3_ROOT_DIR="$CARLA_VENV" \
+  -DPython_EXECUTABLE="$CARLA_VENV/bin/python" -DPython3_EXECUTABLE="$CARLA_VENV/bin/python" \
+  -DCARLA_UNREAL_ENGINE_PATH="$CARLA_UNREAL_ENGINE_PATH"
+status 'Compiling native dependencies and Python API'
+cmake --build Build --parallel "$BUILD_JOBS"
+cmake --build Build --target carla-python-api-install --parallel "$BUILD_JOBS"
+cmake --build Build --target carla-unreal-configure --parallel "$BUILD_JOBS"
+status 'Compiling the CARLA Unreal application module'
+"$CARLA_UNREAL_ENGINE_PATH/Engine/Build/BatchFiles/Linux/Build.sh" \
+  CarlaUnrealEditor Linux Development \
+  -project="$CARLA_ROOT/Unreal/CarlaUnreal/CarlaUnreal.uproject" \
+  -buildscw -MaxParallelActions="$BUILD_JOBS"
 python -c 'import carla; print("CARLA_PYTHON_API_OK", carla.__file__); print(carla.Transform())'
-status 'Build complete; verifying CARLA RPC, simulation ticks, and RGB camera'
-python "$SIMULATIONS_ROOT/scripts/verify-carla.py"
-status 'COMPLETE: Unreal and CARLA compiled; RPC, ticks, and RGB camera verified'
-
+status 'Build complete'
+if [[ "$verify_runtime" == 1 ]]; then
+  python "$SIMULATIONS_ROOT/scripts/verify-carla.py" --skip-build
+  status 'Build and isolated runtime verification complete'
+fi

@@ -1,13 +1,10 @@
 # Network simulation interface
 
-Open [CARLA Control Center](http://128.175.213.232:8095) from this host or another
-computer with network access. The second interface is [10.100.100.7:8095](http://10.100.100.7:8095).
+Install [CARLA_MCP](https://github.com/Croquembouche/CARLA_MCP) at `/mnt/simulations/control-center` using its [setup guide](https://github.com/Croquembouche/CARLA_MCP/blob/main/docs/SETUP.md). Open `http://SERVER_IP:8095/` using the address of the machine on which you installed it.
 
-- [Full usage, recording, ROS 2 and planner documentation](linux/control-center/README.md)
-- [Design prepared before implementation](linux/control-center/design/DESIGN.md)
-- [Source and application files](linux/control-center/)
-- [Verification reports](linux/control-center/data/)
+- [Usage, recording, ROS 2 and planner documentation](https://github.com/Croquembouche/CARLA_MCP/blob/main/docs/OPERATIONS.md)
+- [MCP connection and capability guide](https://github.com/Croquembouche/CARLA_MCP/blob/main/docs/mcp.md)
+- [Application source](https://github.com/Croquembouche/CARLA_MCP)
+- [Published verification reports](https://github.com/Croquembouche/CARLA_MCP/tree/main/data)
 
-The separate service is `carla-control-center.service`. It starts the web
-interface automatically; start the GPU simulator from the interface when needed.
-Recordings remain on this Simulations drive under `linux/control-center/data/recordings`.
+The optional user service is `carla-control-center.service`. It starts the web interface; GPU simulator workers start when requested through that interface. New recordings are stored in `/mnt/simulations/control-center/data/recordings`.

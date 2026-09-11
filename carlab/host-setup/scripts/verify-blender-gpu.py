@@ -15,7 +15,7 @@ scene.cycles.samples=8
 scene.render.resolution_x=256
 scene.render.resolution_y=256
 scene.render.resolution_percentage=100
-scene.render.filepath='/mnt/simulations/carla/carlab/host-setup/linux/verification/blender-optix.png'
+scene.render.filepath='/mnt/simulations/verification/blender-optix.png'
 bpy.ops.render.render(write_still=True)
 assert Path(scene.render.filepath).stat().st_size>1000
 print('BLENDER_OPTIX_RENDER_VERIFIED')

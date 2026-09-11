@@ -1,7 +1,7 @@
 from pathlib import Path
-import bpy, addon_utils
-out = Path('/mnt/simulations/carla/carlab/host-setup/linux/verification')
-out.mkdir(exist_ok=True)
+import bpy, addon_utils, os
+out = Path(os.environ.get('CARLAB_VERIFICATION_DIR', '/mnt/simulations/verification'))
+out.mkdir(parents=True, exist_ok=True)
 for module in ('rigify', 'send2ue', 'ue2rigify'):
     if not addon_utils.check(module)[1]:
         addon_utils.enable(module, default_set=True, persistent=True)

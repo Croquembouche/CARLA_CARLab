@@ -1,5 +1,7 @@
 # GPU sensor work
 
+These are historical measurements from the publication workstation. For first installation, follow [the current stack setup](https://github.com/Croquembouche/CARLA_CARLab/blob/main/carlab/SETUP.md). Benchmark commands below start workloads and require available GPUs/ports.
+
 Status: **compiled and live validated on all four RTX 2080 Ti GPUs** on
 2026-09-07. The hardware ray shader passes controlled geometry checks in both
 Entry and Town10HD. All six camera stream types pass live checks. Four workers
@@ -35,9 +37,9 @@ threads of the supplied server processes and excludes the Python client and
 shader compiler child processes; those compiler children were idle when timing
 started. GPU utilization and VRAM are sampled, not continuous measurements.
 
-Results: [combined report](linux/verification/gpu-stack-verification.json),
-[four-GPU samples](linux/verification/sensors-four-gpu.json),
-[example camera image](linux/verification/sensors-four-gpu.png).
+Results: [combined report](verification/gpu-stack-verification.json),
+[four-GPU samples](verification/sensors-four-gpu.json),
+[example camera image](verification/sensors-four-gpu.png).
 The test processes were stopped after validation.
 
 The backend remains **experimental and opt-in** because render and collision
@@ -131,7 +133,7 @@ included in performance comparisons.
 ## Launch commands
 
 ```bash
-source /media/william/mist1/Simulations/env.sh
+source /mnt/simulations/carla/carlab/host-setup/env.sh
 
 # Inspect the exact primary and GPU worker commands without launching anything.
 carla-multigpu --dry-run
@@ -145,7 +147,7 @@ carla-multigpu --gpus 0,1,2,3 --port 2000 --backend cpu
 # Wait for READY before connecting. In another terminal, run four cameras,
 # four LiDARs and four radars.
 # Supply the primary/worker PIDs from the launch log for CPU accounting.
-carla-python /media/william/mist1/Simulations/scripts/benchmark-sensors.py \
+carla-python /mnt/simulations/carla/carlab/host-setup/scripts/benchmark-sensors.py \
   --port 2000 --pids PRIMARY_PID,WORKER_PID_0,WORKER_PID_1,WORKER_PID_2,WORKER_PID_3 \
   --output /mnt/simulations/verification/sensors-four-gpu.json
 ```

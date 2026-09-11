@@ -18,6 +18,8 @@ The mannequin and seat markers remain available; Quest work is deferred.
 - `final-unreal-import.json`: saved Unreal assets, bone compatibility and constructed Blueprint checks.
 - `runtime-report.json`: runtime capture status; acceptance requires manual image review.
 
+Before running the authoring commands, complete [the optional Blender setup](../SETUP.md#optional-blender-and-custom-interior-authoring), including the `/mnt/simulations/vehicle-interiors` symlink. The final native assets are already installed by the content overlay.
+
 ## CARLA integration
 
 The custom Blueprint is `/Game/VehicleInteriors/Lincoln/BP_LincolnMKZ_Interior`.

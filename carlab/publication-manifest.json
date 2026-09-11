@@ -13,8 +13,8 @@
     },
     {
       "path": "carlab/GPU-SENSORS.md",
-      "bytes": 10709,
-      "sha256": "e4b1a1ba0d27bd181b178bb1b45cafb9cf3681f8f46b1fa6ba2d2c34092ec771"
+      "bytes": 10982,
+      "sha256": "963f832de2c525c190ffd8c96152e528921967b1cedcd859310a071767aa6a14"
     },
     {
       "path": "carlab/RESTRICTED-ENGINE-FILES.md",
@@ -23,13 +23,13 @@
     },
     {
       "path": "carlab/SETUP.md",
-      "bytes": 4252,
-      "sha256": "98eb4de5baed17422801231ccd9e80df3b913fcf3b35f574a4307b9611a238bc"
+      "bytes": 11234,
+      "sha256": "b56c33e41ae9fc16b7313703a87c04fb2e665b50935dddae07e60342d136674a"
     },
     {
       "path": "carlab/UPSTREAM-README.md",
-      "bytes": 10334,
-      "sha256": "5ef2343f8c83a4089be60064a2a5abb2e8b292f9852dd66b6971a2b9dd1212c7"
+      "bytes": 10691,
+      "sha256": "29a136bd2e256755fa7c532b486b963dd8f9c48707cfd452b83692cca87835c4"
     },
     {
       "path": "carlab/content-overrides/Carla/Blueprints/Vehicles/SceneControllable/BP_HarleyBackground.uasset",
@@ -253,18 +253,18 @@
     },
     {
       "path": "carlab/host-setup/CONTROL-CENTER.md",
-      "bytes": 744,
-      "sha256": "29459278f1284170da057b7126fdfebbeacf9255f9801dc432c75e31f61f90c1"
+      "bytes": 949,
+      "sha256": "4dd68f30c1967d8c5445534631504562c9bc88a5a429517eb5cec79142dc047d"
     },
     {
       "path": "carlab/host-setup/GPU-SENSORS.md",
-      "bytes": 10709,
-      "sha256": "e4b1a1ba0d27bd181b178bb1b45cafb9cf3681f8f46b1fa6ba2d2c34092ec771"
+      "bytes": 10991,
+      "sha256": "27a13e179ab93c12119603a794ad691a1c1e21c8bf0f0c74d678d46ccc667482"
     },
     {
       "path": "carlab/host-setup/README.md",
-      "bytes": 6450,
-      "sha256": "b679c8019fff54e8fc4b330782306a0690e087ac00024d8df4c61839edbd1ec9"
+      "bytes": 2322,
+      "sha256": "b4fc7b3ee87949a67d9ffb6c61ea2106a0785810bf72ffc1b229f86e27313371"
     },
     {
       "path": "carlab/host-setup/bin/blender",
@@ -343,8 +343,8 @@
     },
     {
       "path": "carlab/host-setup/scripts/build-stack.sh",
-      "bytes": 3056,
-      "sha256": "9fbb29e1a82bb9c2e0809419d4d612956b8072c0f169c4f4390f9bb3f63ef0c9"
+      "bytes": 2974,
+      "sha256": "98018069166746cbda6f3cc63be05dff509d25df9a52b57263d8f1668eb31220"
     },
     {
       "path": "carlab/host-setup/scripts/carla-local-changes.patch",
@@ -378,13 +378,13 @@
     },
     {
       "path": "carlab/host-setup/scripts/verify-blender-gpu.py",
-      "bytes": 734,
-      "sha256": "1bbcaf766b7be23268bdea2f5a207d667e3626a38bb798d578d7b4c66b699698"
+      "bytes": 704,
+      "sha256": "5b5400d7face583107ccf2e3d432406d148398bcbbea8b9cb3439318fecb4688"
     },
     {
       "path": "carlab/host-setup/scripts/verify-blender.py",
-      "bytes": 1125,
-      "sha256": "fbd5471b42e3735e6858ee4d5c34897b4bc73f3bacb8623432868ad1b2a271c4"
+      "bytes": 1156,
+      "sha256": "627e0f6e41137d0af2928c9e92ea5cfc2ac328a0d081480928008704287de59b"
     },
     {
       "path": "carlab/host-setup/scripts/verify-camera-streams.py",
@@ -393,8 +393,8 @@
     },
     {
       "path": "carlab/host-setup/scripts/verify-carla.py",
-      "bytes": 6078,
-      "sha256": "f193988070d6cb151a07059b5c160969b8bbf5cf5c0b7a32584f25a38008eb2a"
+      "bytes": 4988,
+      "sha256": "8b8688053a9668fbbc55e7ec371a269c4a519683938acfe3d068a09dfff86208"
     },
     {
       "path": "carlab/host-setup/scripts/verify-gpu-preflight.py",
@@ -473,13 +473,18 @@
     },
     {
       "path": "carlab/setup_content.py",
-      "bytes": 1392,
-      "sha256": "3550aad7ef03014288a8aa33e3c6e2aeb56d39916012194258bb85025117f71b"
+      "bytes": 2820,
+      "sha256": "b2b0a6c00c94ea2b30eee5e65a264b231822e99d6cc1920e3a68bc4c11abb51e"
     },
     {
       "path": "carlab/source-changes.json",
       "bytes": 5214,
       "sha256": "72766e806662fac548824877164cc7d9708c28b881d0159e2ade348c0cebeb00"
+    },
+    {
+      "path": "carlab/tests/test_setup_content.py",
+      "bytes": 3349,
+      "sha256": "790214c62e2c326a1a330b4dcfb7f2256e850a3ab49969ec76985b5662a8deb3"
     },
     {
       "path": "carlab/upstream-lock.json",
@@ -523,8 +528,8 @@
     },
     {
       "path": "carlab/vehicle-interiors/README.md",
-      "bytes": 12366,
-      "sha256": "188080ef2c58bd2ac09b513f3a2b0d552e28ad130521923b766f00214fd45a9f"
+      "bytes": 12635,
+      "sha256": "f25b593eb002b753e5b7cb4f0c78da4cd8a29b858f4fdc7285d48ff4de54cdc7"
     },
     {
       "path": "carlab/vehicle-interiors/actual-runtime-materials-error.txt",
