@@ -45,3 +45,9 @@ The captured modifications were built and live-tested on the workstation. Tests 
 ## Licensing
 
 Keep the upstream CARLA licenses and asset notices. Third-party Unreal/Blender/CARLA content retains its respective license. This repository is public. Engine-only patches and diagnostic engine backups are maintained in the restricted UE5_CARLab_Source companion. No new license is imposed on upstream material.
+
+## Physical LiDAR and live weather
+
+The native ordinary LiDAR supports an uncalibrated pulsed time-of-flight model, infrared material response, motion-aware ray queries, and extended per-return data in Python and ROS 2. Scene rain and fog update existing sensors each scan. Very dense fog can suppress surface echoes while atmospheric returns remain; the camera uses the same base fog extinction.
+
+See [physical model and point schema](carlab/docs/lidar-physical.md), [live weather](carlab/docs/lidar-weather.md), and [verified runtime results](carlab/verification/lidar-live-weather-20260913/REPORT.md). The content overlays install the required generic profile and material configuration under `Content/Carla/Config/Lidar`. Rebuild the native plugin and Python wheel together before using the extended data format. Use the updated private engine companion for the supporting ray-tracing changes.

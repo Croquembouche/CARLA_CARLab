@@ -10,6 +10,8 @@
 #include "carla/geom/Vector3D.h"
 #include "carla/sensor/data/DVSEvent.h"
 #include "carla/sensor/data/LidarData.h"
+#include "carla/sensor/data/PhysicalLidarData.h"
+#include <cmath>
 #include "carla/sensor/data/SemanticLidarData.h"
 #include "carla/sensor/data/RadarData.h"
 #include "carla/sensor/data/Image.h"
@@ -600,26 +602,51 @@ void ROS2::ProcessDataFromLidar(
     carla::streaming::detail::stream_id_type stream_id,
     const carla::geom::Transform sensor_transform,
     carla::sensor::data::LidarData &data,
-    void *actor) {
+    void *actor, double capture_time) {
+  const auto seconds = capture_time < 0 ? _seconds : static_cast<int32_t>(std::floor(capture_time));
+  const auto nanoseconds = capture_time < 0 ? _nanoseconds : static_cast<uint32_t>((capture_time-seconds)*1.e9);
   if (auto base = GetOrCreateSensor(ESensors::RayCastLidar, stream_id, actor)) {
     auto publisher = std::dynamic_pointer_cast<CarlaLidarPublisher>(base);
+    publisher->SetExtended(false);
     // The lidar returns a flat list of floats rather than structured detection
     // points. Each detection is 4 floats: x, y, z, intensity. Divide the total
     // float count by 4 to recover the number of detections.
     const auto width = static_cast<std::uint32_t>(data._points.size() / 4u);
     publisher->WritePointCloud(
-        _seconds, _nanoseconds, 1u, width,
+        seconds, nanoseconds, 1u, width,
         reinterpret_cast<const std::uint8_t *>(data._points.data()));
     publisher->Publish();
   }
   if (auto transform_publisher = GetOrCreateTransformPublisher(actor)) {
     transform_publisher->Write(
-        _seconds, _nanoseconds,
+        seconds, nanoseconds,
         ParentFrameOrMap(BuildParentChain(actor)),
         LookupFrameId(actor),
         sensor_transform.location.x, sensor_transform.location.y, sensor_transform.location.z,
         sensor_transform.rotation.pitch, sensor_transform.rotation.yaw, sensor_transform.rotation.roll);
     transform_publisher->Publish();
+  }
+}
+
+void ROS2::ProcessDataFromPhysicalLidar(
+    carla::streaming::detail::stream_id_type stream_id,
+    const carla::geom::Transform sensor_transform,
+    const carla::sensor::data::PhysicalLidarData &data,
+    double capture_time, void *actor) {
+  const auto seconds = static_cast<int32_t>(std::floor(capture_time));
+  const auto nanoseconds = static_cast<uint32_t>((capture_time-seconds)*1.e9);
+  if (auto base = GetOrCreateSensor(ESensors::RayCastLidar, stream_id, actor)) {
+    auto publisher = std::dynamic_pointer_cast<CarlaLidarPublisher>(base);
+    publisher->SetExtended(true);
+    publisher->WritePointCloud(seconds, nanoseconds, 1u, static_cast<uint32_t>(data.points.size()),
+        reinterpret_cast<const uint8_t*>(data.points.data()));
+    publisher->Publish();
+  }
+  if (auto publisher = GetOrCreateTransformPublisher(actor)) {
+    publisher->Write(seconds, nanoseconds, ParentFrameOrMap(BuildParentChain(actor)), LookupFrameId(actor),
+        sensor_transform.location.x, sensor_transform.location.y, sensor_transform.location.z,
+        sensor_transform.rotation.pitch, sensor_transform.rotation.yaw, sensor_transform.rotation.roll);
+    publisher->Publish();
   }
 }
 

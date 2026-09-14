@@ -1176,6 +1176,24 @@ void UActorBlueprintFunctionLibrary::MakeLidarDefinition(
 
   if (Id == "ray_cast")
   {
+    FActorVariation MaterialModel;
+    MaterialModel.Id=TEXT("material_model");
+    MaterialModel.Type=EActorAttributeType::Bool;
+    MaterialModel.RecommendedValues={TEXT("true")};
+    MaterialModel.bRestrictToRecommended=false;
+    Definition.Variations.Emplace(MaterialModel);
+    FActorVariation PhysicalModel;
+    PhysicalModel.Id=TEXT("physical_model");PhysicalModel.Type=EActorAttributeType::Bool;
+    PhysicalModel.RecommendedValues={TEXT("false")};PhysicalModel.bRestrictToRecommended=false;
+    Definition.Variations.Emplace(PhysicalModel);
+    FActorVariation PhysicalProfile;
+    PhysicalProfile.Id=TEXT("physical_profile");PhysicalProfile.Type=EActorAttributeType::String;
+    PhysicalProfile.RecommendedValues={TEXT("generic")};PhysicalProfile.bRestrictToRecommended=false;
+    Definition.Variations.Emplace(PhysicalProfile);
+    FActorVariation OutputFormat;
+    OutputFormat.Id=TEXT("output_format");OutputFormat.Type=EActorAttributeType::String;
+    OutputFormat.RecommendedValues={TEXT("xyzi"),TEXT("extended")};OutputFormat.bRestrictToRecommended=true;
+    Definition.Variations.Emplace(OutputFormat);
     Definition.Variations.Append({Channels,
                                   Range,
                                   PointsPerSecond,
@@ -2055,6 +2073,10 @@ void UActorBlueprintFunctionLibrary::SetLidar(
       RetrieveActorAttributeToFloat("dropoff_zero_intensity", Description.Variations, Lidar.DropOffAtZeroIntensity);
   Lidar.NoiseStdDev =
       RetrieveActorAttributeToFloat("noise_stddev", Description.Variations, Lidar.NoiseStdDev);
+  Lidar.MaterialModel = RetrieveActorAttributeToBool("material_model", Description.Variations, true);
+  Lidar.PhysicalModel = RetrieveActorAttributeToBool("physical_model", Description.Variations, false);
+  Lidar.PhysicalProfile = RetrieveActorAttributeToString("physical_profile", Description.Variations, TEXT("generic"));
+  Lidar.OutputFormat = RetrieveActorAttributeToString("output_format", Description.Variations, TEXT("xyzi"));
   Lidar.HorizontalResolution =
       RetrieveActorAttributeToFloat("horizontal_resolution", Description.Variations, Lidar.HorizontalResolution);
 }

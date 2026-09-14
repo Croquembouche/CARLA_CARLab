@@ -17,6 +17,7 @@
 #include <carla/sensor/data/SemanticLidarData.h>
 #include <util/enable-ue4-macros.h>
 
+#include "Carla/Sensor/LidarOptics.h"
 #include "RayCastSemanticLidar.generated.h"
 
 /// A ray-cast based Lidar sensor.
@@ -41,6 +42,8 @@ public:
 protected:
   virtual void PostPhysTick(UWorld *World, ELevelTick TickType, float DeltaTime) override;
 
+  virtual bool UsesMaterialModel() const { return false; }
+
   /// Creates a Laser for each channel.
   void CreateLasers();
 
@@ -50,7 +53,7 @@ protected:
   void SimulateLidarGpu(float DeltaTime, TUniqueFunction<void()>&& Complete);
 
   /// Shoot a laser ray-trace, return whether the laser hit something.
-  bool ShootLaser(const float VerticalAngle, float HorizontalAngle, FHitResult &HitResult, FCollisionQueryParams& TraceParams) const;
+  bool ShootLaser(const float VerticalAngle, float HorizontalAngle, FCarlaLidarHit &HitResult, FCollisionQueryParams& TraceParams) const;
 
   /// Method that allow to preprocess if the rays will be traced.
   virtual void PreprocessRays(uint32_t Channels, uint32_t MaxPointsPerChannel);
@@ -59,7 +62,9 @@ protected:
   void ComputeRawDetection(const FHitResult &HitInfo, const FTransform &SensorTransf, FSemanticDetection &Detection) const;
 
   /// Saving the hits the raycast returns per channel
-  void WritePointAsync(uint32_t Channel, FHitResult &Detection);
+  void WritePointAsync(uint32_t Channel, FCarlaLidarHit &Detection);
+
+  void WritePointAsync(uint32_t Channel, FHitResult &Detection) { FCarlaLidarHit H{Detection,1.f}; WritePointAsync(Channel,H); }
 
   /// Clear the recorded data structure
   void ResetRecordedHits(uint32_t Channels, uint32_t MaxPointsPerChannel);
@@ -73,7 +78,7 @@ protected:
 
   TArray<float> LaserAngles;
 
-  std::vector<std::vector<FHitResult>> RecordedHits;
+  std::vector<std::vector<FCarlaLidarHit>> RecordedHits;
   std::vector<std::vector<bool>> RayPreprocessCondition;
   std::vector<uint32_t> PointsPerChannel;
 

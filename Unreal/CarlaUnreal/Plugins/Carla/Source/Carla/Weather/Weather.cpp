@@ -5,6 +5,7 @@
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
 #include "Carla/Weather/Weather.h"
+#include "Carla/Sensor/LidarSceneWeather.h"
 #include "Carla/Weather/Sky.h"
 #include "Carla.h"
 #include "Carla/Game/CarlaStatics.h"
@@ -116,7 +117,16 @@ void ApplyLoadedSkyWeather(AWeather* WeatherActor, const FWeatherParameters& Par
             Light->SetIntensity(SkyIntensity);
         if (UExponentialHeightFogComponent* Fog = Sky->FindComponentByClass<UExponentialHeightFogComponent>())
         {
-            Fog->SetFogDensity(Parameters.FogDensity * .001f);
+            // Use the same base extinction as LiDAR. UE height fog converts
+            // density to /cm with /1000 and integrates using exp2; LiDAR uses
+            // exp in metres. The old percentage*.001 mapping was much weaker.
+            Fog->SetFogDensity(CarlaLidarSceneWeather::unreal_fog_density(Parameters.FogDensity));
+            // This map's authored black fog supplies no visible in-scattering.
+            // Provide daylight-dependent atmospheric light; clear weather still
+            // has zero extinction, so this does not tint clear camera captures.
+            const float Ambient = .02f + .98f * FMath::Max(0.f,
+                FMath::Sin(FMath::DegreesToRadians(Parameters.SunAltitudeAngle)));
+            Fog->SetFogInscatteringColor(FLinearColor(.6f, .65f, .7f) * Ambient);
             Fog->SetFogHeightFalloff(Parameters.FogFalloff);
             Fog->SetStartDistance(Parameters.FogDistance * 100.f); // API metres -> UE centimetres.
         }

@@ -1,0 +1,32 @@
+[
+  {
+    "pid": 1363240,
+    "role": "primary",
+    "libraries": {
+      "/mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Binaries/Linux/libUnrealEditor-Carla.so": {
+        "inode": 16920148,
+        "sha256": "579b04a2e9dfdfbfe9b7271b3643917210d806accfed871f65c687fa98a94dc6"
+      }
+    }
+  },
+  {
+    "pid": 1365885,
+    "role": "gpu-3",
+    "libraries": {
+      "/mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Binaries/Linux/libUnrealEditor-Carla.so": {
+        "inode": 16920148,
+        "sha256": "579b04a2e9dfdfbfe9b7271b3643917210d806accfed871f65c687fa98a94dc6"
+      }
+    }
+  },
+  {
+    "pid": 1365886,
+    "role": "gpu-2",
+    "libraries": {
+      "/mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Binaries/Linux/libUnrealEditor-Carla.so": {
+        "inode": 16920148,
+        "sha256": "579b04a2e9dfdfbfe9b7271b3643917210d806accfed871f65c687fa98a94dc6"
+      }
+    }
+  }
+]

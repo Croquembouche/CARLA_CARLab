@@ -47,6 +47,28 @@ inline constexpr std::array<PointFieldDescriptor, 4> kLidarFields = {{
     {"intensity", 12u, PointFieldDataType::Float32, 1u},
 }};
 
+// Physical lidar v1: pulse ID is split without precision loss for ROS PointField.
+inline constexpr std::array<PointFieldDescriptor, 18> kPhysicalLidarFields = {{
+    {"x", 0u, PointFieldDataType::Float32, 1u},
+    {"y", 4u, PointFieldDataType::Float32, 1u},
+    {"z", 8u, PointFieldDataType::Float32, 1u},
+    {"intensity", 12u, PointFieldDataType::Float32, 1u},
+    {"range", 16u, PointFieldDataType::Float32, 1u},
+    {"signal", 20u, PointFieldDataType::Float32, 1u},
+    {"ambient", 24u, PointFieldDataType::Float32, 1u},
+    {"pulse_width", 28u, PointFieldDataType::Float32, 1u},
+    {"azimuth", 32u, PointFieldDataType::Float32, 1u},
+    {"elevation", 36u, PointFieldDataType::Float32, 1u},
+    {"time_offset", 40u, PointFieldDataType::Float32, 1u},
+    {"confidence", 44u, PointFieldDataType::Float32, 1u},
+    {"pulse_id_low", 48u, PointFieldDataType::UInt32, 1u},
+    {"pulse_id_high", 52u, PointFieldDataType::UInt32, 1u},
+    {"channel", 56u, PointFieldDataType::UInt16, 1u},
+    {"return_id", 58u, PointFieldDataType::UInt8, 1u},
+    {"return_count", 59u, PointFieldDataType::UInt8, 1u},
+    {"flags", 60u, PointFieldDataType::UInt32, 1u},
+}};
+
 // Semantic lidar: 6 fields. 4 FLOAT32 + 2 UINT32. Point stride = 24 B =
 // sizeof(sensor::data::SemanticLidarDetection).
 inline constexpr std::array<PointFieldDescriptor, 6> kSemanticLidarFields = {{

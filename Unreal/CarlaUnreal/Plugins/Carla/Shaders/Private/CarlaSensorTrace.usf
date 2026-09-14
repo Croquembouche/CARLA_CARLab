@@ -5,19 +5,23 @@
 
 RaytracingAccelerationStructure TLAS;
 StructuredBuffer<float4> Rays;
-StructuredBuffer<uint2> CollisionTable;
+StructuredBuffer<uint4> CollisionTable;
+StructuredBuffer<float4> OpticalMaterials;
 RWStructuredBuffer<float4> Hits;
 uint RayCount;
 uint TableMask;
 uint IgnoredActor;
+uint HitStride;
+#include "CarlaLidarMotion.ush"
+#include "CarlaLidarInfrared.ush"
 
-uint LookupActor(uint Component)
+uint4 Lookup(uint Component)
 {
     uint Slot = (Component * 2654435761u) & TableMask;
     for (uint Probe = 0; Probe <= TableMask; ++Probe)
     {
-        uint2 Entry = CollisionTable[Slot];
-        if (Entry.x == Component) return Entry.y;
+        uint4 Entry = CollisionTable[Slot];
+        if (Entry.x == Component) return Entry;
         if (Entry.x == 0) return 0;
         Slot = (Slot + 1) & TableMask;
     }
@@ -28,36 +32,140 @@ uint LookupActor(uint Component)
 // FORCE_NON_OPAQUE ensures even opaque geometry passes the collision predicate.
 struct FCarlaCollisionCallback
 {
+    bool Optical;
+    bool Motion;
     bool OnAnyHit(float3 Origin, float3 Direction, FTraceRayInlineResult Candidate)
     {
         FInstanceSceneData Instance = GetInstanceSceneData(Candidate.InstanceID, Scene.GPUScene.InstanceDataSOAStride);
         uint Component = GetPrimitiveData(Instance.PrimitiveId).PrimitiveComponentId;
-        uint Actor = LookupActor(Component);
-        return Actor != 0 && Actor != IgnoredActor;
+        uint4 Entry=Lookup(Component);
+        uint Actor=Entry.y;
+        if (Motion && MovingPrimitive(Component)!=0) return false;
+        return Actor != 0 && Actor != IgnoredActor && (Optical || (Entry.w & 0x80000000u)==0);
     }
 };
 
+
+float Fresnel(float C,float N1,float N2) {
+    float Eta=N1/N2, S2=Eta*Eta*(1-C*C);
+    if (S2>=1) return 1;
+    float T=sqrt(1-S2);
+    float Rs=(N1*C-N2*T)/max(1.e-8,N1*C+N2*T);
+    float Rp=(N2*C-N1*T)/max(1.e-8,N2*C+N1*T);
+    return saturate(.5*(Rs*Rs+Rp*Rp));
+}
+struct FOpticalPath {
+    float3 Origin, Direction;
+    float Length, Weight, IOR;
+    uint Depth;
+};
 [numthreads(32, 1, 1)]
 void MainCS(uint3 DispatchId : SV_DispatchThreadID)
 {
     uint Index = DispatchId.x;
     if (Index >= RayCount) return;
-    float4 OriginRange = Rays[Index * 2];
-    RayDesc Ray;
-    // The dispatcher applies the view translation before converting to float.
-    Ray.Origin = OriginRange.xyz;
-    Ray.Direction = Rays[Index * 2 + 1].xyz;
-    Ray.TMin = 0;
-    Ray.TMax = OriginRange.w;
-    Hits[Index * 2] = float4(-1, 0, 0, 0);
-    Hits[Index * 2 + 1] = 0;
-
-    FCarlaCollisionCallback Filter;
-    FTraceRayInlineResult Hit = TraceRayInlineWithCallback(TLAS, RAY_FLAG_FORCE_NON_OPAQUE,
-        0xff, Ray, CreateTraceRayInlineContext(), Filter);
-    if (!Hit.IsHit()) return;
-    FInstanceSceneData Instance = GetInstanceSceneData(Hit.InstanceID, Scene.GPUScene.InstanceDataSOAStride);
-    uint Component = GetPrimitiveData(Instance.PrimitiveId).PrimitiveComponentId;
-    Hits[Index * 2] = float4(Hit.HitT, asfloat(Component), 0, 0);
-    Hits[Index * 2 + 1] = float4(Hit.WorldGeometryNormal, 0);
+    float4 OriginRange = Rays[Index * 4];
+    float4 DirectionMode = Rays[Index * 4 + 1];
+    Hits[Index * HitStride] = float4(-1, 0, 0, 0);
+    Hits[Index * HitStride + 1] = 0;
+    float4 Physical=Rays[Index*4+2];
+    uint EchoCount=0;bool Clipped=false;
+    float StopRange=OriginRange.w;
+    bool Optical=DirectionMode.w>0;
+    if (Physical.x>0) { [unroll] for (uint E=0;E<8;++E) Hits[Index*HitStride+2+E]=float4(-1,0,0,0); }
+    float Attenuation=max(0,DirectionMode.w-1);
+    FOpticalPath Stack[8];
+    uint Count=1;
+    Stack[0].Origin=OriginRange.xyz; Stack[0].Direction=DirectionMode.xyz;
+    Stack[0].Length=0; Stack[0].Weight=1; Stack[0].IOR=1; Stack[0].Depth=0;
+    float BestScore=1.e-6;
+    [loop] while (Count>0) {
+        FOpticalPath Path=Stack[--Count];
+        if (Path.Length>=OriginRange.w) continue;
+        RayDesc Ray;
+        Ray.Origin=Path.Origin; Ray.Direction=Path.Direction;
+        Ray.TMin=0; Ray.TMax=(OriginRange.w-Path.Length)/Path.IOR;
+        FCarlaCollisionCallback Filter; Filter.Optical=Optical; Filter.Motion=Physical.x>0 && Physical.z>0;
+        FTraceRayInlineResult Hit=TraceRayInlineWithCallback(TLAS,RAY_FLAG_FORCE_NON_OPAQUE,
+            0xff,Ray,CreateTraceRayInlineContext(),Filter);
+        uint Component=0;float2 HitUV=0;bool IsMotionHit=false;
+        if (Hit.IsHit()) {
+            FInstanceSceneData Instance=GetInstanceSceneData(Hit.InstanceID,Scene.GPUScene.InstanceDataSOAStride);
+            Component=GetPrimitiveData(Instance.PrimitiveId).PrimitiveComponentId;
+        }
+        if (Filter.Motion) {
+            FCarlaMotionHit Moving=TraceMotion(Path.Origin,Path.Direction,Hit.IsHit()?Hit.HitT:Ray.TMax,saturate(Physical.y),Rays[Index*4+3].z);
+            if (Moving.Component!=0) {
+                Hit.HitT=Moving.Distance;Hit.GeometryIndex=Moving.Section;Hit.WorldGeometryNormal=Moving.Normal;
+                Component=Moving.Component;HitUV=Moving.UV;IsMotionHit=true;
+            }
+        }
+        if (Component==0) continue;
+        float Length=Path.Length+Hit.HitT*Path.IOR;
+        uint4 Meta=Lookup(Component);
+        uint Mat=Meta.z+min(Hit.GeometryIndex,(Meta.w & 0x7fffffffu)-1);
+        float4 M=OpticalMaterials[Mat*2], P=OpticalMaterials[Mat*2+1];
+        if(Physical.x>0)M=InfraredMaterial(Mat,M,Hit.PrimitiveIndex,Hit.Barycentrics,HitUV,IsMotionHit,Rays[Index*4+3].xy);
+        float3 N=normalize(Hit.WorldGeometryNormal);
+        bool Front=dot(Path.Direction,N)<0;
+        if (!Front) N=-N;
+        float C=saturate(-dot(Path.Direction,N));
+        bool Thin=M.w>0 && P.z>=.5;
+        float NextIOR=(Thin || Front)?P.x:1;
+        float F=Fresnel(C,Path.IOR,NextIOR);
+        float Width=max(.001,P.y);
+        float Lobe=exp(-2*(1-C*C)/(Width*Width));
+        float Strength=Optical ? Path.Weight*saturate(M.x*C+M.y*sqrt(C)+(M.w>0?F:M.z)*Lobe) : 1;
+        float Score=Strength*exp(-Attenuation*Length*.01);
+        if (Physical.x>0) {
+            // Retain optical candidates for footprint integration and receiver processing.
+            if (Strength>1.e-10) {
+                uint Slot=EchoCount;
+                if (EchoCount<8) ++EchoCount;
+                else {
+                    Clipped=true;float Smallest=1.e30;Slot=0;
+                    [unroll] for (uint E=0;E<8;++E) {
+                        float4 Old=Hits[Index*HitStride+2+E];
+                        float Energy=Old.z/max(1,Old.x*Old.x);
+                        if (Energy<Smallest) { Smallest=Energy;Slot=E; }
+                    }
+                    if (Strength/max(1,Length*Length)<=Smallest) Slot=8;
+                }
+                if (Slot<8) Hits[Index*HitStride+2+Slot]=float4(Length,asfloat(Component),Strength,asfloat(Path.Depth>0?9u:1u));
+            }
+            if (M.w<=0 && dot(Path.Direction,DirectionMode.xyz)>.99999)
+                StopRange=min(StopRange,Length);
+        }
+        if (Score>BestScore) {
+            BestScore=Score;
+            Hits[Index*HitStride]=float4(Length,asfloat(Component),Strength,0);
+            Hits[Index*HitStride+1]=float4(Hit.WorldGeometryNormal,0);
+        }
+        if (!Optical || Path.Depth>=3 || Length>=OriginRange.w) continue;
+        float3 Position=Path.Origin+Path.Direction*Hit.HitT;
+        float R=M.w>0?F:M.z;
+        float Weight=Path.Weight*R*R;
+        if (Weight>1.e-6 && Count<8) {
+            FOpticalPath B;
+            B.Direction=reflect(Path.Direction,N); B.Origin=Position+B.Direction*.05;
+            B.Length=Length+.05*Path.IOR; B.Weight=Weight; B.IOR=Path.IOR; B.Depth=Path.Depth+1;
+            Stack[Count++]=B;
+        }
+        float Eta=Path.IOR/NextIOR, K=1-Eta*Eta*(1-C*C);
+        Weight=Path.Weight*pow(M.w*(1-F),Thin?4:2);
+        if (M.w>0 && F<1 && (Thin || K>=0) && Weight>1.e-6 && Count<8) {
+            FOpticalPath B;
+            B.Direction=Thin?Path.Direction:normalize(Eta*Path.Direction+(Eta*C-sqrt(max(0,K)))*N); B.Origin=Position+B.Direction*.05;
+            B.IOR=Thin?Path.IOR:NextIOR;
+            B.Length=Length+.05*B.IOR; B.Weight=Weight; B.Depth=Path.Depth+1;
+            Stack[Count++]=B;
+        }
+    }
+    if (Physical.x>0) {
+        Hits[Index*HitStride].w=EchoCount;
+        Hits[Index*HitStride+1].w=StopRange;
+        if (Clipped) [unroll] for (uint E=0;E<8;++E) {
+            float4 V=Hits[Index*HitStride+2+E];V.w=asfloat(asuint(V.w)|128u);Hits[Index*HitStride+2+E]=V;
+        }
+    }
 }

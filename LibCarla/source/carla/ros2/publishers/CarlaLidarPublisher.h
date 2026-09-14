@@ -16,7 +16,10 @@ public:
   CarlaLidarPublisher(std::string base_topic_name, std::string frame_id)
     : CarlaPointCloudPublisher(std::move(base_topic_name), std::move(frame_id)) {}
 
+  void SetExtended(bool extended) { _extended = extended; }
+
 private:
+  bool _extended = false;
   [[nodiscard]] std::size_t GetPointSize() const override;
   [[nodiscard]] const PointFieldDescriptor *GetFieldDescriptors() const override;
   [[nodiscard]] std::size_t GetFieldDescriptorCount() const override;

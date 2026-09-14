@@ -1,0 +1,102 @@
+{
+  "passed": true,
+  "session": "20260913-211822-9f66aa",
+  "recorded_frames": 39,
+  "ros_frames_match_raw": 39,
+  "weather_transitions": [
+    {
+      "frame": 257,
+      "weather": [
+        100.0,
+        100.0,
+        70.0
+      ],
+      "surface_points": 5883
+    },
+    {
+      "frame": 258,
+      "weather": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "surface_points": 10237
+    },
+    {
+      "frame": 264,
+      "weather": [
+        50.0,
+        0.0,
+        0.0
+      ],
+      "surface_points": 7145
+    },
+    {
+      "frame": 270,
+      "weather": [
+        100.0,
+        0.0,
+        0.0
+      ],
+      "surface_points": 0
+    },
+    {
+      "frame": 276,
+      "weather": [
+        100.0,
+        100.0,
+        0.0
+      ],
+      "surface_points": 10242
+    },
+    {
+      "frame": 282,
+      "weather": [
+        0.0,
+        0.0,
+        100.0
+      ],
+      "surface_points": 5042
+    },
+    {
+      "frame": 288,
+      "weather": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "surface_points": 10257
+    },
+    {
+      "frame": 294,
+      "weather": [
+        100.0,
+        100.0,
+        70.0
+      ],
+      "surface_points": 6002
+    }
+  ],
+  "verifier": {
+    "id": "20260913-211822-9f66aa",
+    "checked_at": 1789348829.2978637,
+    "status": "verified",
+    "frames": 39,
+    "sensor_samples": 78,
+    "rosbag_topic_counts": {
+      "/clock": 39,
+      "/carla/ego_51/odometry": 39,
+      "/carla/ego_51/front_rgb/image": 39,
+      "/carla/ego_51/front_rgb/metadata": 39,
+      "/carla/ego_51/front_rgb/camera_info": 39,
+      "/carla/ego_51/roof_lidar/points": 39,
+      "/carla/ego_51/roof_lidar/metadata": 39,
+      "/tf": 39,
+      "/carla/traffic_signals": 39
+    },
+    "files_checked": 88,
+    "errors": [],
+    "warnings": [],
+    "scope": "Stored bytes, frame index, sensor coverage and simulation timestamps; not proof of identical re-simulation"
+  }
+}

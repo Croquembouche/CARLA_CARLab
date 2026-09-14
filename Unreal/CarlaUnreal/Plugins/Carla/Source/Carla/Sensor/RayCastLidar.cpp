@@ -22,6 +22,9 @@
 #include <util/ue-header-guard-end.h>
 
 #include <cmath>
+#include "Carla/Sensor/LidarWeatherModel.h"
+#include "Carla/Sensor/LidarSceneWeather.h"
+#include "Carla/Weather/Weather.h"
 
 FActorDefinition ARayCastLidar::GetSensorDefinition()
 {
@@ -47,6 +50,14 @@ void ARayCastLidar::Set(const FActorDescription &ActorDescription)
 void ARayCastLidar::Set(const FLidarDescription &LidarDescription)
 {
   Description = LidarDescription;
+  FString PhysicalError;
+  bConfigured = Description.PhysicalModel ? PhysicalState.Initialize(Description, PhysicalError)
+      : Description.OutputFormat == TEXT("xyzi");
+  if (!bConfigured) {
+    UE_LOG(LogCarla, Error, TEXT("LiDAR configuration rejected: %s"),
+        PhysicalError.IsEmpty() ? TEXT("extended output requires physical_model=true") : *PhysicalError);
+    return;
+  }
   LidarData = FLidarData(Description.Channels);
   CreateLasers();
   PointsPerChannel.resize(Description.Channels);
@@ -64,12 +75,65 @@ void ARayCastLidar::PostPhysTick(UWorld *World, ELevelTick TickType, float Delta
   // should spend time tracing. Retain recording and ROS consumers.
   // AreClientsListening also includes enabled ROS streams and forced activity.
   const bool Needed = AreClientsListening() || bSavingDataToDisk;
-  if (!Needed) return;
+  if (!bConfigured) return;
+  if (!Needed) { if (Description.PhysicalModel) PhysicalState.Observe(*this); return; }
+  // Snapshot on the game thread before any parallel hit processing.
+  if (const auto* Weather = GetEpisode().GetWeather()) {
+    const auto& Current = Weather->GetCurrentWeather();
+    SceneRain=Current.Precipitation; SceneFog=Current.FogDensity;
+    SceneFogStart=FMath::Max(0.f,Current.FogDistance); SceneDust=Current.DustStorm;
+  }
   CarlaGpuSensors::BeginSensorTick(*this);
   const AActor* ParentAtCapture = GetAttachParentActor();
   const FTransform RelativeAtCapture = ParentAtCapture
       ? GetActorTransform().GetRelativeTransform(ParentAtCapture->GetActorTransform()) : GetActorTransform();
   auto DataStream = GetDataStream(*this);
+  if (Description.PhysicalModel) {
+    const TWeakObjectPtr<ARayCastLidar> Owner(this);
+    const bool Extended = Description.OutputFormat == TEXT("extended");
+    const double CaptureTime = GetEpisode().GetElapsedGameTime();
+    PhysicalState.Simulate(*this, Description, DeltaTime,
+        [Owner, Extended, CaptureTime, RelativeAtCapture, DataStream = MoveTemp(DataStream)](FPhysicalLidarFrame&& Frame) mutable {
+      const double DelaySeconds = Frame.DeliveryDelayMs * .001;
+      auto Deliver = MakeShared<TUniqueFunction<void()>>(
+          [Owner, Extended, CaptureTime, RelativeAtCapture, DataStream = MoveTemp(DataStream), Data = MoveTemp(Frame.Data)]() mutable {
+        if (!Owner.IsValid()) return;
+        auto& Sensor = *Owner.Get();
+        FLidarData Projection(Data.header.channels);
+        std::vector<uint32_t> Counts(Data.header.channels, 0);
+        for (const auto& P : Data.points) ++Counts[P.channel];
+        Projection.ResetMemory(Counts);
+        Projection.SetHorizontalAngle(Data.header.horizontal_angle);
+        for (const auto& P : Data.points) {
+          FDetection Point;Point.point = carla::geom::Location(P.x, P.y, P.z);Point.intensity = P.intensity;
+          Projection.WritePointSync(Point);
+        }
+        Projection.WriteChannelCount(Counts);
+        if (Extended) DataStream.SerializeAndSend(Sensor, Data, DataStream.PopBufferFromPool());
+        else DataStream.SerializeAndSend(Sensor, Projection, DataStream.PopBufferFromPool());
+#if defined(WITH_ROS2)
+        auto ROS2 = carla::ros2::ROS2::GetInstance();
+        if (ROS2->IsEnabled()) {
+          const auto StreamId = carla::streaming::detail::token_type(Sensor.GetToken()).get_stream_id();
+          if (Extended) ROS2->ProcessDataFromPhysicalLidar(StreamId, RelativeAtCapture, Data, CaptureTime, &Sensor);
+          else ROS2->ProcessDataFromLidar(DataStream.GetSensorType(), StreamId, RelativeAtCapture, Projection, &Sensor, CaptureTime);
+        }
+#endif
+#if WITH_EDITOR
+        if (Sensor.bSavingDataToDisk) {
+          Sensor.PointCloudLidarData.Empty(Data.points.size()*4);
+          for (const auto& P : Data.points) {
+            FDetection Point;Point.point = carla::geom::Location(P.x,P.y,P.z);Point.intensity=P.intensity;
+            Sensor.PointCloudWritePointSync(Point);
+          }
+        }
+#endif
+      });
+      if (Owner.IsValid()) CarlaGpuSensors::ScheduleDelivery(*Owner.Get(),DelaySeconds,
+          [Deliver]() { (*Deliver)(); });
+    });
+    return;
+  }
   auto Send = [this, RelativeAtCapture, DataStream = MoveTemp(DataStream)]() mutable
   {
   auto SensorTransform = DataStream.GetSensorTransform();
@@ -159,6 +223,25 @@ ARayCastLidar::FDetection ARayCastLidar::ComputeDetection(const FHitResult& HitI
       Detection.point += Noise;
     }
 
+    const float OriginalRange = Detection.point.Length();
+    float WeatherRange = OriginalRange;
+    // The legacy receiver is an approximation, but shares scene controls and
+    // the physical model's extinction. Fog only occupies the path after its start.
+    const float FogExtinction = CarlaLidarSceneWeather::fog_extinction(SceneFog);
+    if (FogExtinction>0 && WeatherRange>SceneFogStart) {
+      float FogRange=WeatherRange-SceneFogStart;
+      const CarlaLidarWeather::Medium Fog{FogExtinction,.15f,0};
+      if (!CarlaLidarWeather::apply(Fog,FogRange,Detection.intensity,
+          [this]() { return RandomEngine->GetUniformFloat(); })) return false;
+      WeatherRange=FogRange+SceneFogStart;
+    }
+    const float Extinction=CarlaLidarSceneWeather::rain_extinction(
+        CarlaLidarSceneWeather::rain_mm_h(SceneRain))+CarlaLidarSceneWeather::dust_extinction(SceneDust);
+    const CarlaLidarWeather::Medium Medium{Extinction,.15f,0};
+    if (!CarlaLidarWeather::apply(Medium,WeatherRange,Detection.intensity,
+        [this]() { return RandomEngine->GetUniformFloat(); })) return false;
+    if (OriginalRange>0) Detection.point*=WeatherRange/OriginalRange;
+
     const float Intensity = Detection.intensity;
     if(Intensity > Description.DropOffIntensityLimit)
       return true;
@@ -180,7 +263,8 @@ ARayCastLidar::FDetection ARayCastLidar::ComputeDetection(const FHitResult& HitI
 
     for (auto idxChannel = 0u; idxChannel < Description.Channels; ++idxChannel) {
       for (auto& hit : RecordedHits[idxChannel]) {
-        FDetection Detection = ComputeDetection(hit, SensorTransform);
+        FDetection Detection = ComputeDetection(hit.Hit, SensorTransform);
+        Detection.intensity *= hit.SurfaceReturn;
         if (PostprocessDetection(Detection))
         {
           LidarData.WritePointSync(Detection);

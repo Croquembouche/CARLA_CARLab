@@ -9,6 +9,7 @@
 
 #include "Carla/Actor/ActorDefinition.h"
 #include "Carla/Sensor/LidarDescription.h"
+#include "Carla/Sensor/PhysicalLidar.h"
 #include "Carla/Sensor/Sensor.h"
 #include "Carla/Sensor/RayCastSemanticLidar.h"
 #include "Carla/Actor/ActorBlueprintFunctionLibrary.h"
@@ -37,9 +38,12 @@ public:
 
   virtual void PostPhysTick(UWorld *World, ELevelTick TickType, float DeltaTime);
 
+  bool IsConfigured() const { return bConfigured; }
+
   const TArray<float>& GetTestPointCloud() const { return PointCloudLidarData; };
 
 private:
+  bool UsesMaterialModel() const override { return Description.MaterialModel; }
   /// Compute the received intensity of the point
   float ComputeIntensity(const FSemanticDetection& RawDetection) const;
   FDetection ComputeDetection(const FHitResult& HitInfo, const FTransform& SensorTransf) const;
@@ -49,6 +53,9 @@ private:
 
   void ComputeAndSaveDetections(const FTransform& SensorTransform) override;
 
+  FPhysicalLidarState PhysicalState;
+  bool bConfigured = true;
+  float SceneRain=0, SceneFog=0, SceneFogStart=0, SceneDust=0;
   FLidarData LidarData;
 
   /// Enable/Disable general dropoff of lidar points

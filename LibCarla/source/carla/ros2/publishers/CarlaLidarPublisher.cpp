@@ -34,32 +34,36 @@ static_assert(
 }  // namespace
 
 std::size_t CarlaLidarPublisher::GetPointSize() const {
-  return sizeof(LidarPoint);
+  return _extended ? 64u : sizeof(LidarPoint);
 }
 
 const PointFieldDescriptor *CarlaLidarPublisher::GetFieldDescriptors() const {
-  return kLidarFields.data();
+  return _extended ? kPhysicalLidarFields.data() : kLidarFields.data();
 }
 
 std::size_t CarlaLidarPublisher::GetFieldDescriptorCount() const {
-  return kLidarFields.size();
+  return _extended ? kPhysicalLidarFields.size() : kLidarFields.size();
 }
 
 std::vector<std::uint8_t> CarlaLidarPublisher::ComputePointCloud(
     std::uint32_t height, std::uint32_t width, const std::uint8_t *data) const {
   const std::size_t total_points =
       static_cast<std::size_t>(height) * static_cast<std::size_t>(width);
-  const std::size_t total_bytes = total_points * sizeof(LidarPoint);
+  const std::size_t total_bytes = total_points * GetPointSize();
 
   std::vector<std::uint8_t> bytes(total_bytes);
-  std::memcpy(bytes.data(), data, total_bytes);
+  if (total_bytes) std::memcpy(bytes.data(), data, total_bytes);
 
-  // Mirror the Y axis to land in the ROS right-handed frame. The buffer is
-  // a contiguous array of LidarPoint PODs by contract; aliasing into the
-  // copy is safe.
-  auto *points = reinterpret_cast<LidarPoint *>(bytes.data());
+  // Byte copies avoid alignment and aliasing assumptions about vector<uint8_t>.
   for (std::size_t i = 0; i < total_points; ++i) {
-    points[i].y *= -1.0f;
+    const auto base = i * GetPointSize();
+    float value;
+    std::memcpy(&value, bytes.data()+base+4, sizeof(value));value = -value;
+    std::memcpy(bytes.data()+base+4, &value, sizeof(value));
+    if (_extended) {
+      std::memcpy(&value, bytes.data()+base+32, sizeof(value));value = -value;
+      std::memcpy(bytes.data()+base+32, &value, sizeof(value));
+    }
   }
   return bytes;
 }

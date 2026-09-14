@@ -1,0 +1,68 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "name": "clear",
+      "mean_surface_beyond_20m": 3511.5,
+      "mean_surface_points": 10220.5,
+      "mean_atmosphere_points": 0.0
+    },
+    {
+      "name": "moderate_fog",
+      "mean_surface_beyond_20m": 1127.75,
+      "mean_surface_points": 7115.5,
+      "mean_atmosphere_points": 4423.75
+    },
+    {
+      "name": "dense_fog",
+      "mean_surface_beyond_20m": 0.0,
+      "mean_surface_points": 0.0,
+      "mean_atmosphere_points": 11867.25
+    },
+    {
+      "name": "fog_beyond_range",
+      "mean_surface_beyond_20m": 3522.0,
+      "mean_surface_points": 10240.0,
+      "mean_atmosphere_points": 0.0
+    },
+    {
+      "name": "heavy_rain",
+      "mean_surface_beyond_20m": 22.5,
+      "mean_surface_points": 5078.25,
+      "mean_atmosphere_points": 6275.25
+    },
+    {
+      "name": "clear_again",
+      "mean_surface_beyond_20m": 3402.25,
+      "mean_surface_points": 10276.75,
+      "mean_atmosphere_points": 0.0
+    }
+  ],
+  "sensor_ids": [
+    52,
+    53
+  ],
+  "recording": "20260913-211822-9f66aa",
+  "verified_recording_frames": 39,
+  "final": {
+    "running": false,
+    "error": null,
+    "weather": {
+      "cloudiness": 95.0,
+      "precipitation": 70.0,
+      "precipitation_deposits": 60.0,
+      "wind_intensity": 10.0,
+      "sun_azimuth_angle": 0.0,
+      "sun_altitude_angle": 35.0,
+      "fog_density": 100.0,
+      "fog_distance": 0.0,
+      "wetness": 80.0,
+      "dust_storm": 0.0,
+      "fog_falloff": 0.20000000298023224,
+      "scattering_intensity": 0.0,
+      "mie_scattering_scale": 0.0,
+      "rayleigh_scattering_scale": 0.03310000151395798
+    }
+  },
+  "calibration": "Generic scene percentage mapping; not calibrated to a measured instrument or visibility range."
+}

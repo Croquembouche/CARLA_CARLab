@@ -1,0 +1,42 @@
+Setting up bundled DotNet SDK
+Building ShaderCompileWorker...
+Log file: /mnt/simulations/UnrealEngine5_carla/Engine/Programs/UnrealBuildTool/Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (/mnt/simulations/UnrealEngine5_carla).
+Target is up to date
+Total execution time: 1.82 seconds
+Running command : dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll CarlaUnrealEditor Linux Development -project=/mnt/simulations/carla/Unreal/CarlaUnreal/CarlaUnreal.uproject -buildscw -WaitMutex -MaxParallelActions=12 -NoUBA -NoUBALocal
+Log file: /mnt/simulations/UnrealEngine5_carla/Engine/Programs/UnrealBuildTool/Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (/mnt/simulations/UnrealEngine5_carla).
+Parsing headers for CarlaUnrealEditor
+  Running Internal UnrealHeaderTool /mnt/simulations/carla/Unreal/CarlaUnreal/CarlaUnreal.uproject /mnt/simulations/carla/Unreal/CarlaUnreal/Intermediate/Build/Linux/CarlaUnrealEditor/Development/CarlaUnrealEditor.uhtmanifest -WarningsAsErrors
+Total of 5 written
+Reflection code generated for CarlaUnrealEditor in 3.9169854 seconds
+Building CarlaUnrealEditor...
+[Adaptive Build] Excluded from Renderer unity file: DeferredShadingRenderer.cpp, SceneRendering.cpp, LumenHardwareRayTracingCommon.cpp, RayTracingInstanceCulling.cpp, RayTracing.cpp
+[Adaptive Build] Excluded from VulkanRHI unity file: VulkanMemory.cpp
+[Adaptive Build] Excluded from Engine unity file: RayTracingGeometryManager.cpp
+Executing up to 12 actions based on MaxProcessorCount override
+Using Parallel executor to run 9 action(s)
+------ Building 9 action(s) started ------
+[1/9] WriteMetadata UnrealEditor.version (CarlaUnrealEditor)
+[2/9] Compile Module.Carla.4.cpp
+[3/9] Compile Module.Carla.6.cpp
+[4/9] Compile Module.Carla.2.cpp
+[5/9] Compile Module.Carla.10.cpp
+In file included from /mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Intermediate/Build/Linux/x64/UnrealEditor/Development/Carla/Module.Carla.10.cpp:26:
+/mnt/simulations/carla/Unreal/CarlaUnreal/Plugins/Carla/Source/Carla/CityMapGenerator.cpp:69:28: warning: 'OnObjectSaved' is deprecated: Use OnObjectPreSave instead. Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile. [-Wdeprecated-declarations]
+   69 |     FCoreUObjectDelegates::OnObjectSaved.Broadcast(this);
+      |                            ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/CoreUObject/Public/UObject/UObjectGlobals.h:3142:2: note: 'OnObjectSaved' has been explicitly marked deprecated here
+ 3142 |         UE_DEPRECATED(5.0, "Use OnObjectPreSave instead.")
+      |         ^
+/mnt/simulations/UnrealEngine5_carla/Engine/Source/Runtime/Core/Public/Misc/CoreMiscDefines.h:276:43: note: expanded from macro 'UE_DEPRECATED'
+  276 | #define UE_DEPRECATED(Version, Message) [[deprecated(Message " Please update your code to the new API before upgrading to the next release, otherwise your project will no longer compile.")]]
+      |                                           ^
+1 warning generated.
+[6/9] Compile Module.Carla.12.cpp
+[7/9] Compile Module.Carla.14.cpp
+[8/9] Link (lld) libUnrealEditor-Carla.so
+[9/9] WriteMetadata CarlaUnrealEditor.target
+Total time in Parallel executor: 97.27 seconds
+Total execution time: 111.71 seconds

@@ -1,0 +1,59 @@
+// Copyright (c) 2026. Licensed under the MIT license.
+StructuredBuffer<float4> MotionInfo;
+StructuredBuffer<float4> MotionNodes;
+StructuredBuffer<float4> MotionTriangles;
+StructuredBuffer<uint4> MotionLookup;
+uint MotionCount;
+uint MotionMask;
+
+uint MovingPrimitive(uint Component) {
+    uint Slot=(Component*2654435761u)&MotionMask;
+    for(uint P=0;P<=MotionMask;++P) {
+        uint4 V=MotionLookup[Slot];if(V.x==Component)return V.y;if(V.x==0)return 0;Slot=(Slot+1)&MotionMask;
+    }return 0;
+}
+float3 RotateQuat(float4 Q,float3 V) { return V+2*cross(Q.xyz,cross(Q.xyz,V)+Q.w*V); }
+bool MotionBox(float3 O,float3 D,float3 Lo,float3 Hi,float Limit) {
+    float Near=0,Far=Limit;
+    [unroll] for(uint A=0;A<3;++A) {
+        if(abs(D[A])<1.e-12) { if(O[A]<Lo[A] || O[A]>Hi[A])return false; }
+        else { float X=(Lo[A]-O[A])/D[A],Y=(Hi[A]-O[A])/D[A];Near=max(Near,min(X,Y));Far=min(Far,max(X,Y));if(Far<Near)return false; }
+    }return true;
+}
+struct FCarlaMotionHit {
+    float Distance;uint Component,Section;float3 Normal;float2 UV;
+};
+FCarlaMotionHit TraceMotion(float3 Origin,float3 Direction,float Limit,float FallbackAlpha,float SceneTime) {
+    FCarlaMotionHit Result=(FCarlaMotionHit)0;Result.Distance=Limit;
+    [loop] for(uint Mesh=0;Mesh<MotionCount;++Mesh) {
+        uint Base=Mesh*8;float4 Times=MotionInfo[Base+7];
+        float Alpha=SceneTime<1.e20?saturate((SceneTime-Times.y)/max(1.e-9,Times.z-Times.y)):FallbackAlpha;
+        float4 Sphere=MotionInfo[Base+6];float3 Rel=Sphere.xyz-Origin;
+        float Along=dot(Rel,Direction);if(Along+Sphere.w<0 || Along-Sphere.w>Result.Distance || dot(Rel,Rel)-Along*Along>Sphere.w*Sphere.w)continue;
+        float4 T0=MotionInfo[Base],T1=MotionInfo[Base+1],S0=MotionInfo[Base+4],S1=MotionInfo[Base+5];
+        float4 Q=normalize(lerp(MotionInfo[Base+2],MotionInfo[Base+3],Alpha));float4 InverseQ=float4(-Q.xyz,Q.w);
+        float3 Translation=lerp(T0.xyz,T1.xyz,Alpha),Scale=lerp(S0.xyz,S1.xyz,Alpha);
+        if(any(abs(Scale)<1.e-8))continue;
+        float3 O=RotateQuat(InverseQ,Origin-Translation)/Scale,D=RotateQuat(InverseQ,Direction)/Scale;
+        uint NodeBase=asuint(T0.w),TriBase=asuint(S0.w);uint Stack[64];uint Count=1;Stack[0]=0;
+        [loop] while(Count) {
+            uint Index=NodeBase+Stack[--Count];float4 Lo=MotionNodes[Index*2],Hi=MotionNodes[Index*2+1];
+            if(!MotionBox(O,D,Lo.xyz,Hi.xyz,Result.Distance))continue;
+            uint Left=asuint(Lo.w),Right=asuint(Hi.w);
+            if((Left&0x80000000u)==0) { Stack[Count++]=Left;Stack[Count++]=Right;continue; }
+            [loop] for(uint I=0;I<Right;++I) {
+                uint T=(TriBase+(Left&0x7fffffffu)+I)*7;
+                float4 A0=MotionTriangles[T],B0=MotionTriangles[T+1],C0=MotionTriangles[T+2];
+                float4 A1=MotionTriangles[T+3],B1=MotionTriangles[T+4],C1=MotionTriangles[T+5],Meta=MotionTriangles[T+6];
+                float3 A=lerp(A0.xyz,A1.xyz,Alpha),B=lerp(B0.xyz,B1.xyz,Alpha),C=lerp(C0.xyz,C1.xyz,Alpha);
+                float3 E1=B-A,E2=C-A,P=cross(D,E2);float Det=dot(E1,P);if(abs(Det)<1.e-12)continue;
+                float3 X=O-A;float U=dot(X,P)/Det;if(U<0 || U>1)continue;
+                float3 R=cross(X,E1);float V=dot(D,R)/Det;if(V<0 || U+V>1)continue;
+                float Distance=dot(E2,R)/Det;if(Distance<.001 || Distance>=Result.Distance)continue;
+                Result.Distance=Distance;Result.Component=asuint(MotionInfo[Base+7].x);Result.Section=asuint(Meta.x);
+                Result.Normal=normalize(cross(RotateQuat(Q,E1*Scale),RotateQuat(Q,E2*Scale)))*Meta.z;
+                Result.UV=float2(A0.w,B0.w)*(1-U-V)+float2(C0.w,A1.w)*U+float2(B1.w,C1.w)*V;
+            }
+        }
+    }return Result;
+}

@@ -5,6 +5,7 @@
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
 #include <PythonAPI.h>
+#include <carla/sensor/data/PhysicalLidarMeasurement.h>
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
 
 namespace carla {
@@ -419,6 +420,41 @@ void export_sensor_data() {
       self.at(pos) = color;
     })
     .def(self_ns::str(self_ns::self))
+  ;
+
+  class_<csd::PhysicalLidarDetection>("PhysicalLidarDetection")
+    .def_readwrite("x", &csd::PhysicalLidarDetection::x)
+    .def_readwrite("y", &csd::PhysicalLidarDetection::y)
+    .def_readwrite("z", &csd::PhysicalLidarDetection::z)
+    .def_readwrite("intensity", &csd::PhysicalLidarDetection::intensity)
+    .def_readwrite("range", &csd::PhysicalLidarDetection::range)
+    .def_readwrite("signal", &csd::PhysicalLidarDetection::signal)
+    .def_readwrite("ambient", &csd::PhysicalLidarDetection::ambient)
+    .def_readwrite("pulse_width", &csd::PhysicalLidarDetection::pulse_width)
+    .def_readwrite("azimuth", &csd::PhysicalLidarDetection::azimuth)
+    .def_readwrite("elevation", &csd::PhysicalLidarDetection::elevation)
+    .def_readwrite("time_offset", &csd::PhysicalLidarDetection::time_offset)
+    .def_readwrite("confidence", &csd::PhysicalLidarDetection::confidence)
+    .def_readwrite("pulse_id", &csd::PhysicalLidarDetection::pulse_id)
+    .def_readwrite("channel", &csd::PhysicalLidarDetection::channel)
+    .def_readwrite("return_id", &csd::PhysicalLidarDetection::return_id)
+    .def_readwrite("return_count", &csd::PhysicalLidarDetection::return_count)
+    .def_readwrite("flags", &csd::PhysicalLidarDetection::flags)
+  ;
+  class_<csd::PhysicalLidarMeasurement, bases<cs::SensorData>, boost::noncopyable, std::shared_ptr<csd::PhysicalLidarMeasurement>>("PhysicalLidarMeasurement", no_init)
+    .add_property("scan_start", &csd::PhysicalLidarMeasurement::GetScanStart)
+    .add_property("scan_end", &csd::PhysicalLidarMeasurement::GetScanEnd)
+    .add_property("channels", &csd::PhysicalLidarMeasurement::GetChannelCount)
+    .add_property("pulse_count", &csd::PhysicalLidarMeasurement::GetPulseCount)
+    .add_property("flags", &csd::PhysicalLidarMeasurement::GetFlags)
+    .add_property("profile_crc", &csd::PhysicalLidarMeasurement::GetProfileCrc)
+    .add_property("sequence", &csd::PhysicalLidarMeasurement::GetSequence)
+    .add_property("horizontal_angle", &csd::PhysicalLidarMeasurement::GetHorizontalAngle)
+    .add_property("wavelength_nm", &csd::PhysicalLidarMeasurement::GetWavelength)
+    .add_property("raw_data", &GetRawDataAsBuffer<csd::PhysicalLidarMeasurement>)
+    .def("__len__", &csd::PhysicalLidarMeasurement::size)
+    .def("__iter__", iterator<csd::PhysicalLidarMeasurement>())
+    .def("__getitem__", +[](const csd::PhysicalLidarMeasurement &self, size_t pos) -> csd::PhysicalLidarDetection { return self.at(pos); })
   ;
 
   class_<csd::LidarMeasurement, bases<cs::SensorData>, boost::noncopyable, std::shared_ptr<csd::LidarMeasurement>>("LidarMeasurement", no_init)

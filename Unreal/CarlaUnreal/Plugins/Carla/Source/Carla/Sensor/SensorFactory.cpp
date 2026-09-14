@@ -5,6 +5,7 @@
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
 #include "Carla/Sensor/SensorFactory.h"
+#include "Carla/Sensor/RayCastLidar.h"
 #include "Carla.h"
 #include "Carla/Game/CarlaGameInstance.h"
 #include "Carla/Game/CarlaStatics.h"
@@ -135,6 +136,10 @@ FActorSpawnResult ASensorFactory::SpawnActor(
 
     Sensor->SetEpisode(*Episode);
     Sensor->Set(Description);
+    if (const auto* Lidar = Cast<ARayCastLidar>(Sensor); Lidar && !Lidar->IsConfigured()) {
+      Sensor->Destroy();
+      return FActorSpawnResult{};
+    }
     Sensor->SetDataStream(GameInstance->GetServer().OpenStream());
     // ASceneCaptureSensor * SceneCaptureSensor = Cast<ASceneCaptureSensor>(Sensor);
     // if(SceneCaptureSensor)

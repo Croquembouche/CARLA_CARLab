@@ -163,7 +163,7 @@ void AHSSLidar::ComputeAndSaveDetections(const FTransform& SensorTransform) {
 
   for (auto idxChannel = 0u; idxChannel < Description.Channels; ++idxChannel) {
     for (auto& hit : RecordedHits[idxChannel]) {
-      FDetection Detection = ComputeDetection(hit, SensorTransform);
+      FDetection Detection = ComputeDetection(hit.Hit, SensorTransform);
       if (PostprocessDetection(Detection))
       {
         LidarData.WritePointSync(Detection);
@@ -251,7 +251,7 @@ void AHSSLidar::SimulateLidar(const float DeltaTime)
 
       const float VertAngle = LaserAngles[idxChannel];
       for (auto idxPtsOneLaser = 0u; idxPtsOneLaser < PointsToScanWithOneLaser; idxPtsOneLaser++) {
-        FHitResult HitResult;
+        FCarlaLidarHit HitResult;
         const float HorizAngle =
             -HorizontalFov / 2.0f + static_cast<float>(idxPtsOneLaser) * HorizontalResolution;
         const bool PreprocessResult = RayPreprocessCondition[idxChannel][idxPtsOneLaser];

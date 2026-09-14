@@ -1,0 +1,6 @@
+0 sigma=0 fraction=0.3 surface_returns=1
+25 sigma=0.00924964 fraction=0.207223 surface_returns=1
+50 sigma=0.0612772 fraction=0.02586 surface_returns=1
+75 sigma=0.353923 fraction=2.13234e-07 surface_returns=0
+100 sigma=2 fraction=5.41455e-36 surface_returns=0
+PASS clear/dense/monotonic/fog-start/backscatter/rain/bounds; fog returns 330

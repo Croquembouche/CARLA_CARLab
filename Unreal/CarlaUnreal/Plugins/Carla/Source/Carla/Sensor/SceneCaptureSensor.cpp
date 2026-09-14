@@ -1256,7 +1256,7 @@ namespace SceneCaptureSensor_local_ns
     PostProcessSettings.bOverride_LumenReflectionQuality = true;
     PostProcessSettings.LumenReflectionQuality = 1.0f;
     PostProcessSettings.bOverride_LumenRayLightingMode = true;
-    PostProcessSettings.LumenRayLightingMode = ELumenRayLightingModeOverride::Default;
+    PostProcessSettings.LumenRayLightingMode = ELumenRayLightingModeOverride::HitLightingForReflections;
     PostProcessSettings.bOverride_LumenFrontLayerTranslucencyReflections = true;
     PostProcessSettings.LumenFrontLayerTranslucencyReflections = true;
     PostProcessSettings.bOverride_LumenMaxReflectionBounces = true;

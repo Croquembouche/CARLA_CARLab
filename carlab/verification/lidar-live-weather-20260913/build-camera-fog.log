@@ -1,0 +1,23 @@
+Setting up bundled DotNet SDK
+Building ShaderCompileWorker...
+Log file: /mnt/simulations/UnrealEngine5_carla/Engine/Programs/UnrealBuildTool/Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (/mnt/simulations/UnrealEngine5_carla).
+Target is up to date
+Total execution time: 2.01 seconds
+Running command : dotnet Engine/Binaries/DotNET/UnrealBuildTool/UnrealBuildTool.dll CarlaUnrealEditor Linux Development -project=/mnt/simulations/carla/Unreal/CarlaUnreal/CarlaUnreal.uproject -buildscw -WaitMutex -MaxParallelActions=12 -NoUBA -NoUBALocal
+Log file: /mnt/simulations/UnrealEngine5_carla/Engine/Programs/UnrealBuildTool/Log.txt
+Using 'git status' to determine working set for adaptive non-unity build (/mnt/simulations/UnrealEngine5_carla).
+Building CarlaUnrealEditor...
+[Adaptive Build] Excluded from Renderer unity file: DeferredShadingRenderer.cpp, SceneRendering.cpp, LumenHardwareRayTracingCommon.cpp, RayTracingInstanceCulling.cpp, RayTracing.cpp
+[Adaptive Build] Excluded from VulkanRHI unity file: VulkanMemory.cpp
+[Adaptive Build] Excluded from Engine unity file: RayTracingGeometryManager.cpp
+Executing up to 12 actions based on MaxProcessorCount override
+Using Parallel executor to run 5 action(s)
+------ Building 5 action(s) started ------
+[1/5] WriteMetadata UnrealEditor.version (CarlaUnrealEditor)
+[2/5] Compile Module.Carla.12.cpp
+[3/5] Compile Module.Carla.14.cpp
+[4/5] Link (lld) libUnrealEditor-Carla.so
+[5/5] WriteMetadata CarlaUnrealEditor.target
+Total time in Parallel executor: 99.01 seconds
+Total execution time: 103.35 seconds

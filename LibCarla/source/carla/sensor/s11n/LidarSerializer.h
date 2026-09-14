@@ -10,6 +10,7 @@
 #include "carla/Memory.h"
 #include "carla/sensor/RawData.h"
 #include "carla/sensor/data/LidarData.h"
+#include "carla/sensor/data/PhysicalLidarData.h"
 
 namespace carla {
 namespace sensor {
@@ -74,6 +75,15 @@ namespace s11n {
         Buffer &&output);
 
     static SharedPtr<SensorData> Deserialize(RawData &&data);
+
+    template <typename Sensor>
+    static Buffer Serialize(const Sensor &, const data::PhysicalLidarData &data, Buffer &&output) {
+      std::array<boost::asio::const_buffer, 2u> seq = {
+          boost::asio::buffer(&data.header, sizeof(data.header)),
+          boost::asio::buffer(data.points)};
+      output.copy_from(seq);
+      return std::move(output);
+    }
   };
 
   // ===========================================================================

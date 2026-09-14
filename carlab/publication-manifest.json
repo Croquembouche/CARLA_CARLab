@@ -1,5 +1,5 @@
 {
-  "snapshot": "2026-09-11",
+  "snapshot": "2026-09-14",
   "files": [
     {
       "path": "carlab/ASSET-NOTICES.md",
@@ -90,6 +90,66 @@
       "path": "carlab/content-overrides/Carla/Blueprints/Vehicles/SceneControllable/BP_Yamaha_RW.uasset",
       "bytes": 5725,
       "sha256": "731d83270b8b72b3648fa2428322ad71558573843834bca8dc6e1d279202b23f"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Config/Lidar/clock-test.json",
+      "bytes": 802,
+      "sha256": "e66ea21991885295f23bb0355eeb8c40f89f200754aeabcb0a786b1980ffde8c"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Config/Lidar/cover-block-test.json",
+      "bytes": 810,
+      "sha256": "ffad90cf3c17e2fde9d21b5b41a5b5e08e0656b1e3a7ca04afc0cbf6f686fe90"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Config/Lidar/cover-return-test.json",
+      "bytes": 814,
+      "sha256": "e76c23f0b681189c72115551c4e330d52cf3a113a7cf34dc33d7e6d4eec73ebd"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Config/Lidar/deterministic-test.json",
+      "bytes": 751,
+      "sha256": "18004e4a17158696baaf60a8e147375177d15f26f5c7d4eb3de97a10f2bfcd6a"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Config/Lidar/fog-test.json",
+      "bytes": 777,
+      "sha256": "3e9253f6c19f99d69efd6352d554ce4cabea0066344365e743bda2811f4bf032"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Config/Lidar/generic.json",
+      "bytes": 560,
+      "sha256": "15dbd8f2431b96bb2a190608d44dc213e4f6920d96493c63fcf44aa06db40097"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Config/Lidar/latency-test.json",
+      "bytes": 773,
+      "sha256": "76caf7eb107e6d07a949341eb976529d06f476d2533af790a8ea6227c9d24c30"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Config/Lidar/loss-test.json",
+      "bytes": 785,
+      "sha256": "034a4e62018a70bf7799c35c087237b72900fcccac076fad281b75fb1757aa18"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Config/Lidar/materials.json",
+      "bytes": 876,
+      "sha256": "5161b703800af33270aed2b88bcd9e893eaf16aed6126a270f77a280444a42d3"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Config/Lidar/partition-test.json",
+      "bytes": 754,
+      "sha256": "3faf3ed5ab6bc33462b62fcbc0d6164a5bfe6b23ae896ec44463579ecd513306"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Config/Lidar/saturation-test.json",
+      "bytes": 782,
+      "sha256": "606c8c357ae196ba3bbc7bd47a0d77254696aaf8128cfb3a1b85d8cb26d19719"
+    },
+    {
+      "path": "carlab/content-overrides/Carla/Config/Lidar/volume-test.json",
+      "bytes": 956,
+      "sha256": "55be2302b16398a3a57c6b117a2170b2394d0a7d1a20264c256ef94b20827625"
     },
     {
       "path": "carlab/content-overrides/Carla/Config/PostProcess/AmbulanceCabinObservation.json",
@@ -250,6 +310,21 @@
       "path": "carlab/content-overrides/VehicleInteriors/Lincoln/T_MKZ_Ebony_ORM.uasset",
       "bytes": 13836044,
       "sha256": "c751578dfec24efebf0693b057c9862c36e66925d135b4ebe91e5d2972be40a4"
+    },
+    {
+      "path": "carlab/docs/lidar-optics.md",
+      "bytes": 7231,
+      "sha256": "49153e4a091cc09df0a820529908a519a717abaa36a145ccd622bf4fc258f9a4"
+    },
+    {
+      "path": "carlab/docs/lidar-physical.md",
+      "bytes": 10811,
+      "sha256": "5cde8619d35726a1df917339502a8f6c1af3d8e9c82a7c53da7584caf2712006"
+    },
+    {
+      "path": "carlab/docs/lidar-weather.md",
+      "bytes": 2995,
+      "sha256": "547d248caa713abaefa0ab6621353f258b84e8bdc5bd461cd4b7c01090a589ee"
     },
     {
       "path": "carlab/host-setup/CONTROL-CENTER.md",
@@ -478,8 +553,8 @@
     },
     {
       "path": "carlab/source-changes.json",
-      "bytes": 5214,
-      "sha256": "72766e806662fac548824877164cc7d9708c28b881d0159e2ade348c0cebeb00"
+      "bytes": 7550,
+      "sha256": "64bde685238e74f2dd04b494efdc62e3c5f87e50e1075100d46a9b9971c7ba7b"
     },
     {
       "path": "carlab/tests/test_setup_content.py",
@@ -1622,6 +1697,41 @@
       "sha256": "a1648518f1fab122993d2bf963023775481d426f126bfae98983c9dd827dbb2c"
     },
     {
+      "path": "carlab/verification/lidar-live-weather-20260913/REPORT.md",
+      "bytes": 2349,
+      "sha256": "0b0ab2fb9f00138cb42d06f35380edb90f450ff96e1202a525a203421c1efae2"
+    },
+    {
+      "path": "carlab/verification/lidar-live-weather-20260913/clear-camera.jpg",
+      "bytes": 44979,
+      "sha256": "451ef932a2aa9a708a9b54e8a089eba887dcd0c06584960ff0b853bbde3d8ace"
+    },
+    {
+      "path": "carlab/verification/lidar-live-weather-20260913/dense_fog-camera.jpg",
+      "bytes": 8156,
+      "sha256": "947f84b6c15cdafefaee4cbb6c5b793c694d0caac319b397577307cb903be483"
+    },
+    {
+      "path": "carlab/verification/lidar-live-weather-20260913/live-binaries.json",
+      "bytes": 910,
+      "sha256": "d5681fe0076dd8faf8fc29036cf7744b1aff6ce2eb6b0c72ab0cb896b2f19349"
+    },
+    {
+      "path": "carlab/verification/lidar-live-weather-20260913/recording-verification.json",
+      "bytes": 1912,
+      "sha256": "6c8cd5288d98d09c50292aa25a503785733aee7fedee15d73236b3792f078c1e"
+    },
+    {
+      "path": "carlab/verification/lidar-live-weather-20260913/report.json",
+      "bytes": 1752,
+      "sha256": "e42cfa3d96dd92865b965086c8c00858b6522f81809ad89bd2920c3b3e34041d"
+    },
+    {
+      "path": "carlab/verification/lidar-live-weather-20260913/test_scene_medium.cpp",
+      "bytes": 1963,
+      "sha256": "c96288c08a75a1aeac4c48a177174ab3146acea41a934220ae9be615850a15e7"
+    },
+    {
       "path": "carlab/verification/multigpu-launch-plan.json",
       "bytes": 2302,
       "sha256": "7ce95717c346430a7b0c980b2002ab0c02930f1878f5c7ee92ab7ce243d4cadc"
@@ -1772,5 +1882,5 @@
       "sha256": "434beda6bd1fc72f8b4fe9179b508537e59256482ea7e012825c6ad7d913d1f5"
     }
   ],
-  "note": "Custom files present before the manifest itself was written; generated dependencies and transient process files are excluded."
+  "note": "Published custom files; manifest and runtime dependencies excluded. Existing unchanged entries preserved; modified entries refreshed."
 }

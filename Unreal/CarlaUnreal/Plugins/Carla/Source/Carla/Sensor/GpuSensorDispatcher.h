@@ -4,6 +4,7 @@
 #include "CoreMinimal.h"
 #include "Engine/HitResult.h"
 #include "Templates/Function.h"
+#include "Containers/StaticArray.h"
 
 class FRHICommandListImmediate;
 class AActor;
@@ -15,12 +16,29 @@ struct FCarlaGpuRay
   FVector Origin;
   FVector Direction;
   float Range;
+  bool MaterialModel = false;
+  float AtmosphericAttenuation = 0.004f;
+  bool PhysicalModel = false;
+  float TimeFraction = 1.f;
+  bool TargetMotion = false;
+  float WavelengthNm=905.f, Wetness=0.f;
+  double SceneTime=-1;
+};
+
+struct FCarlaGpuEcho {
+  float Distance = 0, SurfaceReturn = 0;
+  uint32 Component = 0, Flags = 0;
 };
 
 struct FCarlaGpuHit
 {
   FHitResult Hit;
+  float SurfaceReturn = 1.f;
   FVector TargetVelocity = FVector::ZeroVector;
+  TStaticArray<FCarlaGpuEcho,8> Echoes;
+  uint32 EchoCount = 0;
+  float UnoccludedRange = 0;
+  bool MotionIncomplete = false;
 };
 
 namespace CarlaGpuSensors
@@ -33,6 +51,7 @@ namespace CarlaGpuSensors
   // Completion is pumped on the game thread even when the client awaits a
   // sensor frame before requesting its next simulation tick.
   void Pump();
+  void ScheduleDelivery(AActor& Owner,double DelaySeconds,TUniqueFunction<void()>&& Deliver);
   // Game-thread replica backpressure, before applying the next primary frame.
   bool HasPendingFrames();
   void BeginSensorTick(AActor& Owner);

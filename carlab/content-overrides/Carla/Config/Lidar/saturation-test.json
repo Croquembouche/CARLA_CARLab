@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "model": "generic-pulsed-tof",
+  "calibration": {
+    "status": "uncalibrated"
+  },
+  "beam_samples": 7,
+  "beam_diameter_m": 0.008,
+  "beam_divergence_deg": 0.12,
+  "motion_distortion": true,
+  "target_motion": true,
+  "receiver": {
+    "max_returns": 2,
+    "return_order": "strongest",
+    "wavelength_nm": 905,
+    "pulse_energy_nj": 40,
+    "aperture_diameter_m": 0.015,
+    "efficiency": 0.1,
+    "pulse_fwhm_ns": 3,
+    "echo_separation_m": 0.3,
+    "shot_noise": false,
+    "false_alarms": false,
+    "range_quantization_m": 0,
+    "range_noise_floor_m": 0,
+    "saturation_photons": 100
+  },
+  "volumes": [],
+  "cover": [],
+  "angular_noise_deg": 0,
+  "encoder_noise_deg": 0,
+  "ambient_from_weather": false,
+  "ambient_lux": 0,
+  "road_spray": false
+}

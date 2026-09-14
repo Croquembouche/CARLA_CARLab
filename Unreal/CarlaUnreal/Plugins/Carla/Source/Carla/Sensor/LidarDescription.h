@@ -70,6 +70,18 @@ struct CARLA_API FLidarDescription
   UPROPERTY(EditAnywhere)
   float NoiseStdDev = 0.0f;
 
+  /// Material-aware strongest return; semantic LiDAR remains geometric.
+  UPROPERTY(EditAnywhere)
+  bool MaterialModel = true;
+
+  /// Opt-in pulsed receiver, finite beam footprint, and firing-time model.
+  UPROPERTY(EditAnywhere)
+  bool PhysicalModel = false;
+  UPROPERTY(EditAnywhere)
+  FString PhysicalProfile = TEXT("generic");
+  UPROPERTY(EditAnywhere)
+  FString OutputFormat = TEXT("xyzi");
+
   /// Horizontal resolution of the lidar, in degrees.
   UPROPERTY(EditAnywhere)
   float HorizontalResolution = 0.1f;

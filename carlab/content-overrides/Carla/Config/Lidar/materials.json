@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "calibration": {
+    "status": "uncalibrated",
+    "description": "Synthetic acceptance fixture only; add measured scene-specific profiles with provenance before sensor validation."
+  },
+  "materials": [
+    {
+      "name": "physical-test-checker",
+      "wavelengths_nm": [
+        905,
+        1550
+      ],
+      "dry_low": [
+        0.8,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.2,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.5,
+        1,
+        1,
+        1
+      ],
+      "mask": {
+        "width": 2,
+        "height": 2,
+        "rgba": [
+          0.25,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0.25,
+          1,
+          1,
+          1
+        ]
+      }
+    }
+  ]
+}

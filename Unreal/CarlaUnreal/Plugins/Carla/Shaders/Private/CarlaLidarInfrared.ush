@@ -1,0 +1,21 @@
+// Explicit linear infrared masks. No visible-light texture is sampled.
+StructuredBuffer<float4> InfraredInfo;
+StructuredBuffer<float4> InfraredUVs;
+StructuredBuffer<float4> InfraredPixels;
+float4 InfraredMaterial(uint Mat,float4 Base,uint Triangle,float2 Bary,float2 MotionUV,bool Moving,float2 Sensor) {
+    uint I=Mat*6;float4 Flags=InfraredInfo[I+5];if(Flags.w<.5)return Base;
+    float4 Spectrum=InfraredInfo[I+3];
+    float T=saturate((Sensor.x-Spectrum.x)/(Spectrum.y-Spectrum.x));
+    float4 Value=saturate(lerp(InfraredInfo[I],InfraredInfo[I+1],T)*lerp(1,InfraredInfo[I+2],saturate(Sensor.y)));
+    float4 Map=InfraredInfo[I+4];uint Width=asuint(Map.w),Height=asuint(Flags.x),Count=asuint(Flags.z);
+    if(Width>0 && (Moving || Triangle<Count)) {
+        float2 UV=MotionUV;
+        if(!Moving) {
+            uint Offset=asuint(Flags.y)+Triangle*3;
+            UV=InfraredUVs[Offset].xy*(1-Bary.x-Bary.y)+InfraredUVs[Offset+1].xy*Bary.x+InfraredUVs[Offset+2].xy*Bary.y;
+        }
+        UV=frac(UV*Spectrum.zw+Map.xy);
+        uint2 Pixel=min(uint2(Width-1,Height-1),uint2(UV*float2(Width,Height)));
+        Value*=InfraredPixels[asuint(Map.z)+Pixel.y*Width+Pixel.x];
+    }return Value;
+}
