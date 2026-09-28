@@ -21,12 +21,24 @@ def commands(gpus, port, backend):
     result = [('primary', common + [f'-carla-rpc-port={port}', '-nullrhi'])]
     settings = ['r.Streaming.PoolSize 2000', 'r.RayTracing.UseReferenceBasedResidency 1',
                 'r.RayTracing.NumAlwaysResidentLODs 0,r.RayTracing.ResidentGeometryMemoryPoolSizeInMB 2048', 'carla.Sensors.GpuRayTracing ' + ('1' if backend == 'gpu' else '0')]
+    if os.environ.get('CARLA_PRECACHE_LIGHT_FUNCTIONS') == '1':
+        settings.append('r.RayTracing.PrecacheLightFunctionShaders 1')
+    if os.environ.get('CARLA_SCOPED_MISS_SHADERS') == '1':
+        settings.append('r.RayTracing.ScopedMissShaders 1')
+    if os.environ.get('CARLA_REUSE_COMPLETE_PIPELINE') == '1':
+        settings.append('r.RayTracing.ReuseCompletePipeline 1')
+    if os.environ.get('CARLA_PIPELINE_COVERAGE_AUDIT') == '1':
+        settings.append('r.RayTracing.PipelineCoverageAudit 1')
     if backend == 'gpu':
         settings += ['r.RayTracing.ExternalQueries 1', 'r.RayTracing.ExternalQueryBounds 1',
                      'r.RayTracing.ForceAllRayTracingEffects 0', 'r.RayTracing.Culling 0',
                      'r.RayTracing.Geometry.InstancedStaticMeshes.Culling 0']
     for worker, gpu in enumerate(gpus):
-        result.append((f'gpu-{gpu}', common + [
+        shader_options = []
+        if os.environ.get('CARLA_PRECACHE_LIGHT_FUNCTIONS') == '1':
+            # Secondary actors register before ExecCmds are processed.
+            shader_options.append('-ini:Engine:[SystemSettings]:r.RayTracing.PrecacheLightFunctionShaders=1')
+        result.append((f'gpu-{gpu}', common + shader_options + [
             f'-carla-rpc-port={port + 10 * (worker + 1)}',
             '-carla-primary-host=127.0.0.1', f'-carla-primary-port={port + 2}',
             f'-graphicsadapter={gpu}', '-RenderOffScreen', '-ResX=160', '-ResY=90',
