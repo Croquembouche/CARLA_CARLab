@@ -27,6 +27,7 @@
 #include "Components/SceneComponent.h"
 #include "Components/SkinnedMeshComponent.h"
 #include "Engine/Engine.h"
+#include "HAL/IConsoleManager.h"
 
 #include <util/disable-ue4-macros.h>
 #include <carla/Functional.h>
@@ -75,6 +76,7 @@
 #include "EngineUtils.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Misc/FileHelper.h"
+#include "Carla/Sensor/PhysicalLidarProfile.h"
 #include "Animation/PoseSnapshot.h"
 #include <util/ue-header-guard-end.h>
 
@@ -82,6 +84,13 @@
 #include <atomic>
 #include <map>
 #include <tuple>
+
+// Routing weight only: physical ray counts and sensor output remain unchanged.
+// Keep compatibility by default; deployments can calibrate against frame latency.
+static TAutoConsoleVariable<float> CVarPhysicalLidarSchedulingScale(
+    TEXT("carla.Sensors.PhysicalLidarSchedulingScale"), 1.0f,
+    TEXT("Relative routing weight for physical LiDAR ray work; does not change fidelity."),
+    ECVF_Default);
 
 template <typename T>
 using R = carla::rpc::Response<T>;
@@ -940,7 +949,23 @@ void FCarlaServer::FPimpl::BindActions()
         if (Desc.StartsWith(TEXT("sensor.camera.")))
           Cost = 4. * Attribute("image_size_x", 800.) * Attribute("image_size_y", 600.) / (640. * 360.);
         else if (Desc.StartsWith(TEXT("sensor.lidar.")))
+        {
           Cost = 2. * Attribute("points_per_second", 56000.) / 200000.;
+          const auto Physical = Sensor->GetAttribute(TEXT("physical_model"));
+          if (Desc == TEXT("sensor.lidar.ray_cast"))
+          {
+            if (Physical.has_value() && Physical->Value.Equals(TEXT("true"), ESearchCase::IgnoreCase))
+            {
+              const auto Name = Sensor->GetAttribute(TEXT("physical_profile"));
+              FPhysicalLidarProfile Profile;
+              FString Error;
+              if (FPhysicalLidarProfile::Load(Name.has_value() ? Name->Value : TEXT("generic"),
+                  uint32(Attribute("channels",32.)), float(Attribute("range",10.)*100.), Profile, Error))
+                Cost *= Profile.BeamSamples * FMath::Clamp(
+                    CVarPhysicalLidarSchedulingScale.GetValueOnAnyThread(), .01f, 100.f);
+            }
+          }
+        }
         else if (Desc == TEXT("sensor.other.radar"))
           Cost = .5 * Attribute("points_per_second", 1500.) / 10000.;
         // Each capture/query carries a scene-view and residency overhead even

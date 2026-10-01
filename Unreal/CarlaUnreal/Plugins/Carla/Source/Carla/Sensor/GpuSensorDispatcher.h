@@ -30,19 +30,52 @@ struct FCarlaGpuEcho {
   uint32 Component = 0, Flags = 0;
 };
 
-struct FCarlaGpuHit
+// Physical receivers consume optical echoes, without an Unreal collision hit.
+struct FCarlaPhysicalGpuHit
 {
-  FHitResult Hit;
-  float SurfaceReturn = 1.f;
-  FVector TargetVelocity = FVector::ZeroVector;
   TStaticArray<FCarlaGpuEcho,8> Echoes;
   uint32 EchoCount = 0;
   float UnoccludedRange = 0;
   bool MotionIncomplete = false;
 };
 
+struct FCarlaGpuHit : FCarlaPhysicalGpuHit
+{
+  FHitResult Hit;
+  float SurfaceReturn = 1.f;
+  FVector TargetVelocity = FVector::ZeroVector;
+};
+
 namespace CarlaGpuSensors
 {
+  // Borrowed for the synchronous callback only. Decode optical echoes lazily
+  // inside the parallel receiver, without a second full-size hit allocation.
+  class FPhysicalHitView {
+    TConstArrayView<FVector4f> Output;
+    TConstArrayView<FCarlaGpuRay> Rays;
+    TConstArrayView<FCarlaPhysicalGpuHit> Decoded;
+    uint32 Stride=10;
+    bool HasMotion=false,MissingGeometry=false;
+    double OldestCoveredTime=0;
+    bool MotionIncompleteAt(int32 Index) const;
+  public:
+    FPhysicalHitView()=default;
+    explicit FPhysicalHitView(TConstArrayView<FCarlaPhysicalGpuHit> InDecoded):Decoded(InDecoded) {}
+    FPhysicalHitView(TConstArrayView<FVector4f> InOutput,TConstArrayView<FCarlaGpuRay> InRays,
+        uint32 InStride,bool InHasMotion,bool InMissingGeometry,double InOldestCoveredTime)
+        :Output(InOutput),Rays(InRays),Stride(InStride),HasMotion(InHasMotion),
+         MissingGeometry(InMissingGeometry),OldestCoveredTime(InOldestCoveredTime) {
+      check(Stride>=10 && Output.Num()==Rays.Num()*int32(Stride));
+    }
+    int32 Num() const { return Output.IsEmpty()?Decoded.Num():Rays.Num(); }
+    bool IsValidIndex(int32 Index) const { return Index>=0 && Index<Num(); }
+    bool HasIncompleteMotion() const;
+    FCarlaPhysicalGpuHit operator[](int32 Index) const;
+  };
+
+  // Pure packing; each worker writes four disjoint entries and joins before return.
+  void PackRayInputs(TConstArrayView<FCarlaGpuRay> Rays,const FVector& PreViewTranslation,
+      bool HasMotion,double MotionTime,TArray<FVector4f>& Input);
   void ProfileSample(const FString& Name, double Milliseconds);
   void Startup();
   void Shutdown();
@@ -56,7 +89,13 @@ namespace CarlaGpuSensors
   bool HasPendingFrames();
   void BeginSensorTick(AActor& Owner);
   void Submit(AActor& Owner, TArray<FCarlaGpuRay>&& Rays,
-      TUniqueFunction<void(TArray<FCarlaGpuHit>&&)>&& Complete);
+      TUniqueFunction<void(TArray<FCarlaGpuHit>&&)>&& Complete,bool BuildHitResults=true);
+  // Shared immutable rays outlive asynchronous readback and the receiver.
+  void SubmitPhysical(AActor& Owner,
+      TSharedRef<TArray<FCarlaGpuRay>,ESPMode::ThreadSafe> Rays,
+      TUniqueFunction<void(const FPhysicalHitView&)>&& Complete);
+  void DecodePhysicalEchoes(FCarlaPhysicalGpuHit& Hit,const FVector4f* Output);
+
 
   // Render-thread only. A single shared polling queue replaces per-image
   // blocking queries and sleeping task-graph workers. Return true to retire.

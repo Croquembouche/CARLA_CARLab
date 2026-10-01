@@ -9,7 +9,12 @@
 #include "Carla/Vehicle/CarlaWheeledVehicle.h"
 #include "EngineUtils.h"
 #include "Components/PrimitiveComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "Materials/Material.h"
+#include "MaterialDomain.h"
+#include "Materials/MaterialInstanceDynamic.h"
 #include "Async/ParallelFor.h"
+#include "ProfilingDebugging/CpuProfilerTrace.h"
 #include "Carla.h"
 
 using namespace CarlaPhysicalLidar;
@@ -30,6 +35,47 @@ bool VolumeInterval(const FPhysicalLidarVolume& V,const FVector& Origin,const FV
   }return true;
 }
 double Value(const TArray<double>& A,uint32 Channel,double Default) { return A.IsValidIndex(Channel)?A[Channel]:Default; }
+template<typename SampleArray>
+void PrepareRays(TArray<Firing>& Pulses,TArray<FCarlaGpuRay>& Rays,
+    const FPhysicalLidarProfile& Profile,const FLidarDescription& D,const SampleArray& Samples,
+    const FTransform& Before,const FTransform& Current,const FWeatherParameters& Weather,
+    double Epoch,double Start,double End,double SceneTime,bool WarmStart,bool Parallel) {
+  TRACE_CPUPROFILER_EVENT_SCOPE(CarlaPhysicalPrepareRays);
+  Rays.SetNum(Pulses.Num()*Samples.size());
+  ParallelFor(Pulses.Num(),[&](int32 I) {
+      auto& F=Pulses[I];const uint32 C=F.Channel;const double Time=F.Time;
+      F.FirstRay=I*Samples.size();
+      F.Azimuth=std::fmod((Time-Epoch)*D.RotationFrequency*D.HorizontalFov,D.HorizontalFov)-D.HorizontalFov*.5+
+          Value(Profile.AzimuthOffsetDeg,C,0)+Profile.EncoderBiasDeg;
+      F.Elevation=Value(Profile.ElevationDeg,C,D.Channels==1?D.UpperFovLimit:D.UpperFovLimit-double(C)*(D.UpperFovLimit-D.LowerFovLimit)/(D.Channels-1));
+      Random Randomness(uint64(D.RandomSeed)^F.Id^UINT64_C(0x75b849381d263acf));
+      const double TrueAz=F.Azimuth+Profile.EncoderNoiseDeg*Randomness.normal()+Profile.AngularNoiseDeg*Randomness.normal();
+      const double TrueEl=F.Elevation+Profile.AngularNoiseDeg*Randomness.normal();
+      const double Alpha=Profile.MotionDistortion?FMath::Clamp((Time-Start)/FMath::Max(1.e-9,End-Start),0.0,1.0):1;
+      FTransform Pose;Pose.Blend(Before,Current,Alpha);
+      F.LocalOrigin=Profile.BeamOriginsM.IsValidIndex(C)?Profile.BeamOriginsM[C]*100:FVector::ZeroVector;
+      F.LocalDirection=FRotator(F.Elevation,F.Azimuth,0).Vector();
+      const FQuat Rotation=Pose.GetRotation()*FRotator(TrueEl,TrueAz,0).Quaternion();
+      F.Direction=Rotation.GetForwardVector();F.Origin=Pose.TransformPosition(F.LocalOrigin);
+      const double Az=FMath::UnwindDegrees(F.Azimuth);
+      for(const auto& Cover:Profile.Cover) {
+        const bool WithinAz=Cover.AzimuthMin<=Cover.AzimuthMax?(Az>=Cover.AzimuthMin && Az<=Cover.AzimuthMax):(Az>=Cover.AzimuthMin || Az<=Cover.AzimuthMax);
+        if(WithinAz && F.Elevation>=Cover.ElevationMin && F.Elevation<=Cover.ElevationMax) {
+          F.Scatter+=F.Transmission*Cover.Scatter;F.Transmission*=Cover.Transmission;
+        }
+      }
+      int32 SubIndex=0;
+      for(const auto& Sample:Samples) {
+        const double AngularSigma=FMath::DegreesToRadians(Profile.BeamDivergenceDeg)/2.354820045;
+        const FVector Local(1,Sample.x*AngularSigma,Sample.y*AngularSigma);
+        const FVector Offset=Rotation.RotateVector(FVector(0,Sample.x,Sample.y))*Profile.BeamDiameterM*100/2.354820045;
+        FCarlaGpuRay Ray{F.Origin+Offset,Rotation.RotateVector(Local.GetSafeNormal()),D.Range,true,0};
+        Ray.PhysicalModel=true;Ray.TimeFraction=Alpha;Ray.TargetMotion=Profile.TargetMotion && !WarmStart;
+        Ray.WavelengthNm=Profile.Receiver.wavelength_nm;Ray.Wetness=Weather.Wetness*.01f;Ray.SceneTime=SceneTime-(End-Time);
+        Rays[F.FirstRay+SubIndex++]=Ray;
+      }
+  },Parallel?EParallelForFlags::None:EParallelForFlags::ForceSingleThread);
+}
 }
 bool FPhysicalLidarState::Initialize(const FLidarDescription& D,FString& Error) {
   if(D.OutputFormat!=TEXT("xyzi") && D.OutputFormat!=TEXT("extended")) { Error=TEXT("output_format must be xyzi or extended");return false; }
@@ -53,6 +99,8 @@ void FPhysicalLidarState::Observe(const ASensor& Sensor) {
 }
 void FPhysicalLidarState::Simulate(ASensor& Sensor,const FLidarDescription& D,float DeltaTime,
     TUniqueFunction<void(FPhysicalLidarFrame&&)>&& Complete) {
+  TRACE_CPUPROFILER_EVENT_SCOPE(CarlaPhysicalSimulate);
+  const double PrepareStarted=FPlatformTime::Seconds();
   const double End=Sensor.GetEpisode().GetElapsedGameTime();
   const bool WarmStart=PreviousTime<0 || PreviousTime>=End;
   const double Start=WarmStart?End-DeltaTime:PreviousTime;
@@ -83,38 +131,14 @@ void FPhysicalLidarState::Simulate(ASensor& Sensor,const FLidarDescription& D,fl
       const double Time=NextFiring[C];NextFiring[C]+=Period;if(Time<Start-1.e-8)continue;
       const double Offset=Value(Profile.FiringOffsetUs,C,double(C)*1.e6/D.PointsPerSecond)*1.e-6;
       const uint64 Column=uint64(FMath::Max(0.0,std::round((Time-Epoch-Offset)/Period)));
-      Firing F;F.Id=Column*D.Channels+C;F.Channel=C;F.Time=Time;F.FirstRay=Rays.Num();
-      F.Azimuth=std::fmod((Time-Epoch)*D.RotationFrequency*D.HorizontalFov,D.HorizontalFov)-D.HorizontalFov*.5+
-          Value(Profile.AzimuthOffsetDeg,C,0)+Profile.EncoderBiasDeg;
-      F.Elevation=Value(Profile.ElevationDeg,C,D.Channels==1?D.UpperFovLimit:D.UpperFovLimit-double(C)*(D.UpperFovLimit-D.LowerFovLimit)/(D.Channels-1));
-      Random Randomness(uint64(D.RandomSeed)^F.Id^UINT64_C(0x75b849381d263acf));
-      const double TrueAz=F.Azimuth+Profile.EncoderNoiseDeg*Randomness.normal()+Profile.AngularNoiseDeg*Randomness.normal();
-      const double TrueEl=F.Elevation+Profile.AngularNoiseDeg*Randomness.normal();
-      const double Alpha=Profile.MotionDistortion?FMath::Clamp((Time-Start)/FMath::Max(1.e-9,End-Start),0.0,1.0):1;
-      FTransform Pose;Pose.Blend(Before,Current,Alpha);
-      F.LocalOrigin=Profile.BeamOriginsM.IsValidIndex(C)?Profile.BeamOriginsM[C]*100:FVector::ZeroVector;
-      F.LocalDirection=FRotator(F.Elevation,F.Azimuth,0).Vector();
-      const FQuat Rotation=Pose.GetRotation()*FRotator(TrueEl,TrueAz,0).Quaternion();
-      F.Direction=Rotation.GetForwardVector();F.Origin=Pose.TransformPosition(F.LocalOrigin);
-      const double Az=FMath::UnwindDegrees(F.Azimuth);
-      for(const auto& Cover:Profile.Cover) {
-        const bool WithinAz=Cover.AzimuthMin<=Cover.AzimuthMax?(Az>=Cover.AzimuthMin && Az<=Cover.AzimuthMax):(Az>=Cover.AzimuthMin || Az<=Cover.AzimuthMax);
-        if(WithinAz && F.Elevation>=Cover.ElevationMin && F.Elevation<=Cover.ElevationMax) {
-          F.Scatter+=F.Transmission*Cover.Scatter;F.Transmission*=Cover.Transmission;
-        }
-      }
-      for(const auto& Sample:Samples) {
-        const double AngularSigma=FMath::DegreesToRadians(Profile.BeamDivergenceDeg)/2.354820045;
-        const FVector Local(1,Sample.x*AngularSigma,Sample.y*AngularSigma);
-        const FVector Offset=Rotation.RotateVector(FVector(0,Sample.x,Sample.y))*Profile.BeamDiameterM*100/2.354820045;
-        FCarlaGpuRay Ray{F.Origin+Offset,Rotation.RotateVector(Local.GetSafeNormal()),D.Range,true,0};
-        Ray.PhysicalModel=true;Ray.TimeFraction=Alpha;Ray.TargetMotion=Profile.TargetMotion && !WarmStart;
-        Ray.WavelengthNm=Profile.Receiver.wavelength_nm;Ray.Wetness=Weather.Wetness*.01f;Ray.SceneTime=Sensor.GetWorld()->GetTimeSeconds()-(End-Time);
-        Rays.Add(Ray);
-      }
+      Firing F;F.Id=Column*D.Channels+C;F.Channel=C;F.Time=Time;F.FirstRay=0;
       Pulses.Add(F);
     }
   }
+  // The scheduler above remains serial and defines pulse order. Preparation
+  // writes disjoint preallocated pulse/ray slots and never accesses UObjects.
+  PrepareRays(Pulses,Rays,Profile,D,Samples,Before,Current,Weather,Epoch,Start,End,
+      Sensor.GetWorld()->GetTimeSeconds(),WarmStart,true);
   PreviousPose=Current;PreviousTime=End;
   TArray<FPhysicalLidarVolume> Volumes=Profile.Volumes;
   if(Profile.RoadSpray && Weather.Wetness>0) {
@@ -128,14 +152,16 @@ void FPhysicalLidarState::Simulate(ASensor& Sensor,const FLidarDescription& D,fl
   const auto ProfileCopy=Profile;
   const uint64 PacketSequence=Sequence++;
   // Preserve per-ray directions for spatial medium integration after readback.
-  auto RayCopy=MakeShared<TArray<FCarlaGpuRay>,ESPMode::ThreadSafe>(Rays);
-  auto Receive=[Pulses=MoveTemp(Pulses),RayCopy,Samples,ProfileCopy,D,Volumes=MoveTemp(Volumes),Weather,Start,End,WarmStart,PacketSequence,Complete=MoveTemp(Complete)](TArray<FCarlaGpuHit>&& Hits) mutable {
+  auto RayCopy=MakeShared<TArray<FCarlaGpuRay>,ESPMode::ThreadSafe>(MoveTemp(Rays));
+  auto Receive=[Pulses=MoveTemp(Pulses),RayCopy,Samples,ProfileCopy,D,Volumes=MoveTemp(Volumes),Weather,Start,End,WarmStart,PacketSequence,Complete=MoveTemp(Complete)](const CarlaGpuSensors::FPhysicalHitView& Hits) mutable {
+    TRACE_CPUPROFILER_EVENT_SCOPE(CarlaPhysicalReceiver);
+    const double ReceiveStarted=FPlatformTime::Seconds();
     FPhysicalLidarFrame Frame;Random PacketRandom(uint64(D.RandomSeed)^PacketSequence^UINT64_C(0x215d92410c45af23));
     const double ClockScale=1+ProfileCopy.ClockDriftPpm*1.e-6;
     const double ClockOffset=ProfileCopy.ClockOffsetS+ProfileCopy.ClockJitterNs*1.e-9*PacketRandom.normal();
     Frame.Data.Reset(D.Channels,Start*ClockScale+ClockOffset,End*ClockScale+ClockOffset,PacketSequence);
     Frame.Data.header.flags=(ProfileCopy.CalibrationStatus==TEXT("validated")?1u:0u)|(WarmStart?2u:0u);
-    if(Hits.ContainsByPredicate([](const FCarlaGpuHit& H) { return H.MotionIncomplete; }))Frame.Data.header.flags|=8u;
+    if(Hits.HasIncompleteMotion())Frame.Data.header.flags|=8u;
     Frame.Data.header.pulse_count=Pulses.Num();Frame.Data.header.profile_crc=ProfileCopy.Crc;
     Frame.Data.header.wavelength_nm=ProfileCopy.Receiver.wavelength_nm;
     Frame.DeliveryDelayMs=FMath::Max(0.0,ProfileCopy.Receiver.latency_ms+ProfileCopy.Receiver.latency_jitter_ms*PacketRandom.normal());
@@ -192,13 +218,16 @@ void FPhysicalLidarState::Simulate(ASensor& Sensor,const FLidarDescription& D,fl
     for(auto& Points:Results)Frame.Data.points.insert(Frame.Data.points.end(),Points.begin(),Points.end());
     Frame.Data.header.point_count=Frame.Data.points.size();
     if(!Pulses.IsEmpty())Frame.Data.header.horizontal_angle=FMath::DegreesToRadians(Pulses.Last().Azimuth);
+    CarlaGpuSensors::ProfileSample(TEXT("physical_receiver_ms"),(FPlatformTime::Seconds()-ReceiveStarted)*1000);
     Complete(MoveTemp(Frame));
   };
-  if(CarlaGpuSensors::IsEnabled())CarlaGpuSensors::Submit(Sensor,MoveTemp(Rays),MoveTemp(Receive));
+  CarlaGpuSensors::ProfileSample(TEXT("physical_generate_rays_ms"),(FPlatformTime::Seconds()-PrepareStarted)*1000);
+  if(CarlaGpuSensors::IsEnabled())CarlaGpuSensors::SubmitPhysical(Sensor,RayCopy,MoveTemp(Receive));
   else {
     // CPU compatibility uses the existing collision/static-render optics path.
     // The GPU path additionally interpolates deforming render meshes.
-    CarlaLidarOptics::Prepare(Sensor.GetWorld());TArray<FCarlaGpuHit> Hits;Hits.SetNum(Rays.Num());
+    const auto& Rays=*RayCopy;
+    CarlaLidarOptics::Prepare(Sensor.GetWorld());TArray<FCarlaPhysicalGpuHit> Hits;Hits.SetNum(Rays.Num());
     TArray<UPrimitiveComponent*> Components;
     for(TActorIterator<AActor> A(Sensor.GetWorld());A;++A) {
       if(!A->GetActorEnableCollision() || A->IsHidden())continue;
@@ -225,6 +254,158 @@ void FPhysicalLidarState::Simulate(ASensor& Sensor,const FLidarDescription& D,fl
       FCarlaLidarTrace Result;CarlaLidarOptics::Trace(Sensor,R.Origin,R.Direction,R.Range,0,R.TargetMotion?MotionParams:Params,&Result,R.TargetMotion?Motion.Get():nullptr,R.TimeFraction,R.WavelengthNm,R.Wetness,R.SceneTime);
       auto& H=Hits[I];H.MotionIncomplete=R.TargetMotion && (Motion->MissingGeometry>0 || R.SceneTime<Motion->OldestCoveredTime-1.e-7);H.UnoccludedRange=Result.UnoccludedRange;
       for(const auto& E:Result.Echoes) { if(H.EchoCount==8)break;auto& V=H.Echoes[H.EchoCount++];V.Distance=E.Hit.Distance;V.SurfaceReturn=E.SurfaceReturn;V.Component=E.Hit.GetComponent()?E.Hit.GetComponent()->GetUniqueID():0;V.Flags=E.OpticalDepth?Surface|Multipath:Surface; }
-    });Receive(MoveTemp(Hits));
+    });Receive(CarlaGpuSensors::FPhysicalHitView(Hits));
   }
 }
+
+#if WITH_DEV_AUTOMATION_TESTS
+#include "Misc/AutomationTest.h"
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCarlaPhysicalRayPreparationTest,"Carla.Sensors.PhysicalRayPreparation",
+    EAutomationTestFlags_ApplicationContextMask | EAutomationTestFlags::EngineFilter)
+bool FCarlaPhysicalRayPreparationTest::RunTest(const FString&) {
+  {
+    TArray<FCarlaGpuRay> Rays;Rays.SetNum(32769);
+    const FVector Translation(-1000000000.0,2000000000.0,-3000000000.0);
+    for(int32 I=0;I<Rays.Num();++I) {
+      auto& R=Rays[I];R.Origin=-Translation+FVector(.125*I,.03125*I,-.0625*I);
+      R.Direction=FVector(.125,-.25,.5);R.Range=15000.f-I*.01f;
+      R.MaterialModel=I%2;R.PhysicalModel=I%3;R.TargetMotion=I%5;
+      R.AtmosphericAttenuation=.004f;R.TimeFraction=I/32768.f;
+      R.WavelengthNm=905.f+I%7;R.Wetness=(I%4)*.125f;
+      R.SceneTime=I%2?12345678.125+I*.000001:-1;
+    }
+    for(bool HasMotion:{false,true}) {
+      TArray<FVector4f> Packed,Reference;
+      CarlaGpuSensors::PackRayInputs(Rays,Translation,HasMotion,12345678.0,Packed);
+      for(const auto& R:Rays) {
+        const FVector Origin=R.Origin+Translation;
+        Reference.Add(FVector4f(FVector3f(Origin),R.Range));
+        Reference.Add(FVector4f(FVector3f(R.Direction),R.MaterialModel?R.AtmosphericAttenuation+1.f:0.f));
+        Reference.Add(FVector4f(R.PhysicalModel?1.f:0.f,R.TimeFraction,R.TargetMotion?1.f:0.f,0));
+        Reference.Add(FVector4f(R.WavelengthNm,R.Wetness,R.SceneTime>=0 && HasMotion?float(R.SceneTime-12345678.0):FLT_MAX,0));
+      }
+      TestEqual(TEXT("packed input count"),Packed.Num(),Reference.Num());
+      TestTrue(TEXT("parallel GPU input bit-identical to serial encoding"),
+          FMemory::Memcmp(Packed.GetData(),Reference.GetData(),Reference.Num()*sizeof(FVector4f))==0);
+      TestEqual(TEXT("large-world sub-centimetre origin retained"),Packed[4].X,.125f);
+      CarlaGpuSensors::PackRayInputs(TConstArrayView<FCarlaGpuRay>(),Translation,HasMotion,0,Packed);
+      TestEqual(TEXT("empty input clears reused output"),Packed.Num(),0);
+    }
+  }
+
+  {
+    auto* M=UMaterialInstanceDynamic::Create(UMaterial::GetDefaultMaterial(MD_Surface),GetTransientPackage());
+    FScalarParameterValue Scalar;Scalar.ParameterInfo=FMaterialParameterInfo(TEXT("LidarDiffuse"));Scalar.ParameterValue=.73f;
+    M->ScalarParameterValues.Add(Scalar);
+    auto* C=NewObject<UStaticMeshComponent>();
+    C->ComponentTags.Add(TEXT("LidarMaterial=glass"));
+    CarlaLidarOptics::SnapshotMaterialCache Cache;
+    auto A=CarlaLidarOptics::Resolve(C,M,&Cache);
+    auto B=CarlaLidarOptics::Resolve(C,M);
+    TestEqual(TEXT("cached material scalar matches uncached"),A.diffuse,B.diffuse);
+    TestEqual(TEXT("authored material scalar is retained"),A.diffuse,.73f);
+    TestEqual(TEXT("component glass preset remains active"),A.transmission,.96f);
+    C->ComponentTags.Reset();C->ComponentTags.Add(TEXT("LidarMaterial=mirror"));
+    B=CarlaLidarOptics::Resolve(C,M,&Cache);
+    TestEqual(TEXT("component presets are not cached across components"),B.specular,.95f);
+    TestEqual(TEXT("shared material read only once per snapshot"),Cache.Num(),1);
+    M->ScalarParameterValues[0].ParameterValue=.31f;
+    CarlaLidarOptics::SnapshotMaterialCache NextSnapshot;
+    B=CarlaLidarOptics::Resolve(C,M,&NextSnapshot);
+    TestEqual(TEXT("next snapshot observes runtime scalar edits"),B.diffuse,.31f);
+  }
+  TestTrue(TEXT("physical readback avoids the generic collision hit storage"),sizeof(FCarlaPhysicalGpuHit)<sizeof(FCarlaGpuHit));
+  FVector4f Output[10];
+  for(uint32 E=0;E<8;++E) {
+    uint32 Component=0xff800001u+E,Flags=0x80000001u+E;
+    float ComponentBits,FlagBits;
+    FMemory::Memcpy(&ComponentBits,&Component,sizeof(Component));
+    FMemory::Memcpy(&FlagBits,&Flags,sizeof(Flags));
+    Output[E+2]=FVector4f(100.25f+E,ComponentBits,.125f*E,FlagBits);
+  }
+  for(int32 Count:{-1,0,1,8,12}) {
+    Output[0]=FVector4f(0,0,0,Count);
+    FCarlaPhysicalGpuHit Physical;FCarlaGpuHit General;
+    Physical.UnoccludedRange=1234.5f;Physical.MotionIncomplete=true;
+    CarlaGpuSensors::DecodePhysicalEchoes(Physical,Output);
+    CarlaGpuSensors::DecodePhysicalEchoes(General,Output);
+    TestEqual(TEXT("echo count is bounded by the eight GPU slots"),Physical.EchoCount,uint32(FMath::Clamp(Count,0,8)));
+    TestEqual(TEXT("unoccluded range remains independent"),Physical.UnoccludedRange,1234.5f);
+    TestTrue(TEXT("motion coverage flag remains independent"),Physical.MotionIncomplete);
+    for(uint32 E=0;E<Physical.EchoCount;++E) {
+      const auto& V=Physical.Echoes[E];
+      TestEqual(TEXT("echo distance exact"),V.Distance,100.25f+E);
+      TestEqual(TEXT("echo return exact"),V.SurfaceReturn,.125f*E);
+      TestEqual(TEXT("component bits preserved including float NaN patterns"),V.Component,0xff800001u+E);
+      TestEqual(TEXT("optical flags preserved"),V.Flags,0x80000001u+E);
+      TestTrue(TEXT("physical and generic decode agree"),FMemory::Memcmp(&V,&General.Echoes[E],sizeof(V))==0);
+    }
+  }
+  {
+    TArray<FVector4f> Encoded;Encoded.SetNumZeroed(30);
+    TArray<FCarlaGpuRay> TestRays;TestRays.SetNum(3);
+    TArray<FCarlaPhysicalGpuHit> Decoded;Decoded.SetNum(3);
+    for(int32 I=0;I<3;++I) {
+      TestRays[I].TargetMotion=I!=0;TestRays[I].SceneTime=I==2?1.0:3.0;
+      Encoded[I*10]=FVector4f(100,0,0,I==0?0:8);
+      Encoded[I*10+1]=FVector4f(0,0,0,15000-I);
+      for(int32 E=0;E<8;++E)Encoded[I*10+2+E]=Output[2+E];
+      Decoded[I].UnoccludedRange=15000-I;Decoded[I].MotionIncomplete=I==2;
+      CarlaGpuSensors::DecodePhysicalEchoes(Decoded[I],&Encoded[I*10]);
+    }
+    CarlaGpuSensors::FPhysicalHitView View(Encoded,TestRays,10,true,false,2.0);
+    CarlaGpuSensors::FPhysicalHitView CpuView(Decoded);
+    TestTrue(TEXT("GPU view preserves incomplete motion coverage"),View.HasIncompleteMotion());
+    TestTrue(TEXT("CPU view preserves incomplete motion coverage"),CpuView.HasIncompleteMotion());
+    TestFalse(TEXT("view rejects negative index"),View.IsValidIndex(-1));
+    TestFalse(TEXT("view rejects past-end index"),View.IsValidIndex(3));
+    for(int32 I=0;I<3;++I) {
+      const auto H=View[I],C=CpuView[I];
+      TestEqual(TEXT("borrowed echo count exact"),H.EchoCount,C.EchoCount);
+      TestEqual(TEXT("borrowed unoccluded range exact"),H.UnoccludedRange,C.UnoccludedRange);
+      TestEqual(TEXT("borrowed per-ray motion flag exact"),H.MotionIncomplete,C.MotionIncomplete);
+      for(uint32 E=0;E<H.EchoCount;++E)
+        TestTrue(TEXT("borrowed echo fields bit-identical"),FMemory::Memcmp(&H.Echoes[E],&C.Echoes[E],sizeof(FCarlaGpuEcho))==0);
+    }
+    CarlaGpuSensors::FPhysicalHitView NoMotion(Encoded,TestRays,10,false,true,2.0);
+    TestFalse(TEXT("no motion snapshot does not mark coverage incomplete"),NoMotion.HasIncompleteMotion());
+    TestRays[2].SceneTime=-1;
+    TestFalse(TEXT("unknown scene time preserves prior coverage semantics"),View.HasIncompleteMotion());
+    CarlaGpuSensors::FPhysicalHitView Missing(Encoded,TestRays,10,true,true,2.0);
+    TestTrue(TEXT("missing geometry still marks moving rays incomplete"),Missing.HasIncompleteMotion());
+    TestFalse(TEXT("empty view is valid and complete"),CarlaGpuSensors::FPhysicalHitView().HasIncompleteMotion());
+  }
+  FLidarDescription D;D.Channels=64;D.Range=15000;D.PointsPerSecond=400000;
+  D.RotationFrequency=10;D.HorizontalFov=360;D.RandomSeed=42;
+  FPhysicalLidarProfile Profile;FString Error;
+  if(!TestTrue(TEXT("generic physical profile loads"),FPhysicalLidarProfile::Load(TEXT("generic"),D.Channels,D.Range,Profile,Error)))return false;
+  Profile.EncoderNoiseDeg=.01;Profile.AngularNoiseDeg=.02;
+  const auto Samples=beam_samples(Profile.BeamSamples);
+  FWeatherParameters Weather;Weather.Wetness=37;
+  const FTransform Before(FRotator(3,179,-2),FVector(100000,-23000,170));
+  const FTransform After(FRotator(-1,-175,4),FVector(100140,-22970,172));
+  TArray<Firing> Scheduled;
+  for(int32 I=0;I<4096;++I) { Firing F;F.Id=10000+I;F.Channel=I%64;F.Time=1+I*.1/4096;Scheduled.Add(F); }
+  for(bool WarmStart:{false,true}) {
+    auto Serial=Scheduled,Parallel=Scheduled;TArray<FCarlaGpuRay> SerialRays,ParallelRays;
+    PrepareRays(Serial,SerialRays,Profile,D,Samples,Before,After,Weather,0,1,1.1,12.1,WarmStart,false);
+    PrepareRays(Parallel,ParallelRays,Profile,D,Samples,Before,After,Weather,0,1,1.1,12.1,WarmStart,true);
+    bool PulsesMatch=Serial.Num()==Parallel.Num(),RaysMatch=SerialRays.Num()==ParallelRays.Num();
+    for(int32 I=0;PulsesMatch && I<Serial.Num();++I) {
+      const auto& A=Serial[I];const auto& B=Parallel[I];
+      PulsesMatch=A.Id==B.Id && A.Channel==B.Channel && A.Time==B.Time && A.FirstRay==B.FirstRay &&
+          A.Origin==B.Origin && A.Direction==B.Direction && A.LocalOrigin==B.LocalOrigin && A.LocalDirection==B.LocalDirection &&
+          A.Azimuth==B.Azimuth && A.Elevation==B.Elevation && A.Transmission==B.Transmission && A.Scatter==B.Scatter;
+    }
+    for(int32 I=0;RaysMatch && I<SerialRays.Num();++I) {
+      const auto& A=SerialRays[I];const auto& B=ParallelRays[I];
+      RaysMatch=A.Origin==B.Origin && A.Direction==B.Direction && A.Range==B.Range && A.MaterialModel==B.MaterialModel &&
+          A.AtmosphericAttenuation==B.AtmosphericAttenuation && A.PhysicalModel==B.PhysicalModel && A.TimeFraction==B.TimeFraction &&
+          A.TargetMotion==B.TargetMotion && A.WavelengthNm==B.WavelengthNm && A.Wetness==B.Wetness && A.SceneTime==B.SceneTime;
+    }
+    TestTrue(TEXT("parallel preparation preserves ordered pulse data exactly"),PulsesMatch);
+    TestTrue(TEXT("parallel preparation preserves all sub-beam values exactly"),RaysMatch);
+  }
+  return true;
+}
+#endif

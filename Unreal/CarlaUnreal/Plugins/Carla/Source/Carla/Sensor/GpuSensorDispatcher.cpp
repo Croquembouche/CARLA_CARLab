@@ -6,6 +6,8 @@
 #include "Carla/Sensor/LidarMotion.h"
 #include "Carla/Sensor/LidarInfrared.h"
 #include "Async/TaskGraphInterfaces.h"
+#include "Async/ParallelFor.h"
+#include "ProfilingDebugging/CpuProfilerTrace.h"
 #include "Components/PrimitiveComponent.h"
 #include "Components/SkinnedMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -114,11 +116,32 @@ struct FBatch
   double Submitted = 0;
   FRenderQueryRHIRef QueryStart, QueryEnd;
   double GpuMs=-1, Dispatched=0, Ready=0;
-  TArray<FCarlaGpuRay> Rays;
+  TSharedRef<TArray<FCarlaGpuRay>,ESPMode::ThreadSafe> RayStorage;
+  TArray<FCarlaGpuRay>& Rays;
+  explicit FBatch(TSharedRef<TArray<FCarlaGpuRay>,ESPMode::ThreadSafe> InRays)
+      : RayStorage(MoveTemp(InRays)), Rays(*RayStorage) {}
+
   TSharedPtr<FCollisionSnapshot, ESPMode::ThreadSafe> Collision;
   TArray<FVector4f> Output;
   TUniqueFunction<void(TArray<FCarlaGpuHit>&&)> Complete;
+  TUniqueFunction<void(const CarlaGpuSensors::FPhysicalHitView&)> PhysicalComplete;
+  bool BuildHitResults=true;
   TUniquePtr<FRHIGPUBufferReadback> Readback;
+  const FVector4f* MappedOutput=nullptr;
+  ~FBatch() {
+    if(!MappedOutput)return;
+    // Physical echo views borrow this mapping until their synchronous receiver
+    // has joined all tasks. Owner destruction and shutdown use the same path.
+    check(Readback);
+    if(IsInRenderingThread())Readback->Unlock();
+    else {
+      ENQUEUE_RENDER_COMMAND(CarlaUnmapRayReadback)(
+        [MappedReadback=MoveTemp(Readback)](FRHICommandListImmediate&) {
+          MappedReadback->Unlock();
+        });
+    }
+  }
+
   uint32 HitStride = 2;
   TSharedPtr<const CarlaLidarMotion::Snapshot,ESPMode::ThreadSafe> Motion;
 };
@@ -149,7 +172,9 @@ double LastPoll = 0;
 TSharedPtr<FCollisionSnapshot, ESPMode::ThreadSafe> Snapshot(UWorld* World)
 {
   if (CachedWorld == World && CachedFrame == GFrameCounter) return CachedCollision;
+  TRACE_CPUPROFILER_EVENT_SCOPE(CarlaRayCollisionSnapshot);
   auto Result = MakeShared<FCollisionSnapshot, ESPMode::ThreadSafe>();
+  CarlaLidarOptics::SnapshotMaterialCache MaterialCache;
   // Once per world/frame, not once per ray. Capture velocity alongside IDs so
   // delayed radar readback never samples velocity from a later physics tick.
   for (TActorIterator<AActor> Actor(World); Actor; ++Actor)
@@ -208,7 +233,7 @@ TSharedPtr<FCollisionSnapshot, ESPMode::ThreadSafe> Snapshot(UWorld* World)
       const bool CollisionEligible=CollisionComponent && CollisionComponent->IsRegistered() &&
           CollisionComponent->IsQueryCollisionEnabled() &&
           CollisionComponent->GetCollisionResponseToChannel(ECC_GameTraceChannel2)==ECR_Block;
-      const auto Materials=CarlaLidarOptics::Sections(C);
+      const auto Materials=CarlaLidarOptics::Sections(C,&MaterialCache);
       // Visible optical surfaces can be non-solid (windows and painted road
       // meshes). Include them only for material-aware LiDAR, preserving the
       // existing collision predicate for radar and semantic/legacy LiDAR.
@@ -250,6 +275,14 @@ TSharedPtr<FCollisionSnapshot, ESPMode::ThreadSafe> Snapshot(UWorld* World)
   return Result;
 }
 
+// Render-thread-owned, bounded to the last uploaded geometry layout. Strong
+// identities prevent address reuse; new/deforming geometry invalidates it.
+TArray<TSharedPtr<const CarlaLidarMotion::MeshGeometry,ESPMode::ThreadSafe>> MotionGeometryLayout;
+TArray<FIntPoint> MotionGeometryOffsets;
+TRefCountPtr<FRDGPooledBuffer> MotionNodeBuffer,MotionTriangleBuffer;
+TAutoConsoleVariable<int32> CacheMotionGeometry(TEXT("carla.Sensors.CacheMotionGeometry"),1,
+    TEXT("Reuse unchanged physical LiDAR motion geometry GPU buffers; transforms and sample times always refresh."));
+
 void Render(FPostOpaqueRenderParameters& P)
 {
 #if RHI_RAYTRACING
@@ -257,24 +290,21 @@ void Render(FPostOpaqueRenderParameters& P)
   if (!View || !View->Family || View->bIsSceneCapture || View->bIsReflectionCapture || !P.GraphBuilder || Pending.IsEmpty()) return;
   const auto* Scene = View->Family->Scene;
   if (!UE::FXRenderingUtils::RayTracing::HasRayTracingScene(Scene)) return;
+  TRACE_CPUPROFILER_EVENT_SCOPE(CarlaGpuRayRender);
   FRDGBuilder& Graph = *P.GraphBuilder;
   for (int32 Index = 0; Index < Pending.Num();)
   {
     FBatchPtr Batch = Pending[Index];
     if (Batch->Scene != Scene) { ++Index; continue; }
     Pending.RemoveAt(Index);
+    const double RenderSetupStarted=FPlatformTime::Seconds();
     TArray<FVector4f> Input;
-    Input.Reserve(Batch->Rays.Num() * 4);
-    for (const auto& Ray : Batch->Rays)
     {
-      // Translate while still in double precision. Converting absolute world
-      // positions to float first loses small distance differences on large maps.
-      const FVector TranslatedOrigin = Ray.Origin + View->ViewMatrices.GetPreViewTranslation();
-      Input.Add(FVector4f(FVector3f(TranslatedOrigin), Ray.Range));
-      Input.Add(FVector4f(FVector3f(Ray.Direction), Ray.MaterialModel ? Ray.AtmosphericAttenuation+1.f : 0.f));
-      Input.Add(FVector4f(Ray.PhysicalModel?1.f:0.f,Ray.TimeFraction,Ray.TargetMotion?1.f:0.f,0));
-      Input.Add(FVector4f(Ray.WavelengthNm,Ray.Wetness,Ray.SceneTime>=0 && Batch->Motion?float(Ray.SceneTime-Batch->Motion->Time):FLT_MAX,0));
+    TRACE_CPUPROFILER_EVENT_SCOPE(CarlaRayInputPack);
+    CarlaGpuSensors::PackRayInputs(Batch->Rays,View->ViewMatrices.GetPreViewTranslation(),
+        Batch->Motion.IsValid(),Batch->Motion?Batch->Motion->Time:0,Input);
     }
+    CarlaGpuSensors::ProfileSample(TEXT("ray_input_pack_ms"),(FPlatformTime::Seconds()-RenderSetupStarted)*1000);
     auto* Params = Graph.AllocParameters<FCarlaSensorTraceCS::FParameters>();
     Params->View = View->ViewUniformBuffer;
     Params->Scene = GetSceneUniformBufferRef(Graph, *View);
@@ -284,16 +314,47 @@ void Render(FPostOpaqueRenderParameters& P)
     Params->IgnoredActor = Batch->Actor;
     Params->HitStride = Batch->HitStride;
     TArray<FVector4f> MotionInfo,MotionNodes,MotionTriangles;TArray<FUintVector4> MotionLookup;
-    if (Batch->Motion) Batch->Motion->GpuBuffers(View->ViewMatrices.GetPreViewTranslation(),MotionInfo,MotionNodes,MotionTriangles,MotionLookup);
+    const double MotionPackStarted=FPlatformTime::Seconds();
+    const int32 MeshCount=Batch->Motion?Batch->Motion->Meshes.Num():0;
+    bool ReuseGeometry=CacheMotionGeometry.GetValueOnRenderThread()!=0 && MotionNodeBuffer.IsValid() && MotionTriangleBuffer.IsValid();
+    TArray<FIntPoint> ExistingOffsets;ExistingOffsets.Reserve(MeshCount);
+    for(int32 I=0;ReuseGeometry && I<MeshCount;++I) {
+      const int32 CachedIndex=MotionGeometryLayout.IndexOfByKey(Batch->Motion->Meshes[I].Geometry);
+      ReuseGeometry=CachedIndex!=INDEX_NONE;
+      if(ReuseGeometry)ExistingOffsets.Add(MotionGeometryOffsets[CachedIndex]);
+    }
+    // Stopping or reordering an actor changes the active mesh set, not its
+    // immutable geometry. Keep the last atlas when it contains this subset.
+    if (Batch->Motion) Batch->Motion->GpuBuffers(View->ViewMatrices.GetPreViewTranslation(),MotionInfo,MotionNodes,MotionTriangles,MotionLookup,!ReuseGeometry,ReuseGeometry?&ExistingOffsets:nullptr);
     else { MotionInfo.SetNumZeroed(8);MotionNodes.SetNumZeroed(2);MotionTriangles.SetNumZeroed(7);MotionLookup.SetNumZeroed(2); }
-    Params->MotionCount=Batch->Motion?Batch->Motion->Meshes.Num():0;
+    CarlaGpuSensors::ProfileSample(TEXT("motion_gpu_pack_ms"),(FPlatformTime::Seconds()-MotionPackStarted)*1000);
+    CarlaGpuSensors::ProfileSample(TEXT("motion_geometry_upload_mb"),ReuseGeometry?0:(MotionNodes.Num()+double(MotionTriangles.Num()))*sizeof(FVector4f)/(1024*1024));
+    Params->MotionCount=MeshCount;
     Params->MotionMask=MotionLookup.Num()-1;
     Params->MotionInfo=Graph.CreateSRV(CreateStructuredBuffer(Graph,TEXT("Carla.MotionInfo"),sizeof(FVector4f),MotionInfo.Num(),MotionInfo.GetData(),MotionInfo.Num()*sizeof(FVector4f)));
-    Params->MotionNodes=Graph.CreateSRV(CreateStructuredBuffer(Graph,TEXT("Carla.MotionNodes"),sizeof(FVector4f),MotionNodes.Num(),MotionNodes.GetData(),MotionNodes.Num()*sizeof(FVector4f)));
-    Params->MotionTriangles=Graph.CreateSRV(CreateStructuredBuffer(Graph,TEXT("Carla.MotionTriangles"),sizeof(FVector4f),MotionTriangles.Num(),MotionTriangles.GetData(),MotionTriangles.Num()*sizeof(FVector4f)));
+    FRDGBufferRef NodesBuffer,TrianglesBuffer;
+    if(ReuseGeometry) {
+      NodesBuffer=Graph.RegisterExternalBuffer(MotionNodeBuffer);
+      TrianglesBuffer=Graph.RegisterExternalBuffer(MotionTriangleBuffer);
+    } else {
+      NodesBuffer=CreateStructuredBuffer(Graph,TEXT("Carla.MotionNodes"),MoveTemp(MotionNodes));
+      TrianglesBuffer=CreateStructuredBuffer(Graph,TEXT("Carla.MotionTriangles"),MoveTemp(MotionTriangles));
+      MotionNodeBuffer=Graph.ConvertToExternalBuffer(NodesBuffer);
+      MotionTriangleBuffer=Graph.ConvertToExternalBuffer(TrianglesBuffer);
+      MotionGeometryLayout.Reset(MeshCount);MotionGeometryOffsets.Reset(MeshCount);
+      FIntPoint Offset(0,0);
+      if(Batch->Motion) for(const auto& Mesh:Batch->Motion->Meshes) {
+        if(MotionGeometryLayout.Contains(Mesh.Geometry))continue;
+        MotionGeometryLayout.Add(Mesh.Geometry);MotionGeometryOffsets.Add(Offset);
+        Offset.X+=Mesh.Geometry->PackedNodes.Num()/2;Offset.Y+=Mesh.Geometry->PackedTriangles.Num()/7;
+      }
+    }
+    Params->MotionNodes=Graph.CreateSRV(NodesBuffer);
+    Params->MotionTriangles=Graph.CreateSRV(TrianglesBuffer);
     Params->MotionLookup=Graph.CreateSRV(CreateStructuredBuffer(Graph,TEXT("Carla.MotionLookup"),sizeof(FUintVector4),MotionLookup.Num(),MotionLookup.GetData(),MotionLookup.Num()*sizeof(FUintVector4)));
-    Params->Rays = Graph.CreateSRV(CreateStructuredBuffer(Graph, TEXT("Carla.SensorRays"),
-        sizeof(FVector4f), Input.Num(), Input.GetData(), Input.Num() * sizeof(FVector4f)));
+    // Transfer ownership to RDG; its TArray overload retains the upload data
+    // until execution and avoids another full copy of the packed ray array.
+    Params->Rays = Graph.CreateSRV(CreateStructuredBuffer(Graph, TEXT("Carla.SensorRays"),MoveTemp(Input)));
     Params->CollisionTable = Graph.CreateSRV(CreateStructuredBuffer(Graph, TEXT("Carla.CollisionFilter"),
         sizeof(FUintVector4), Batch->Collision->Table.Num(), Batch->Collision->Table.GetData(),
         Batch->Collision->Table.Num() * sizeof(FUintVector4)));
@@ -321,6 +382,7 @@ void Render(FPostOpaqueRenderParameters& P)
     Batch->Readback = MakeUnique<FRHIGPUBufferReadback>(TEXT("Carla.SensorReadback"));
     const uint32 Bytes = Batch->Rays.Num()*Batch->HitStride*sizeof(FVector4f);
     AddEnqueueCopyPass(Graph, Batch->Readback.Get(), Output, Bytes);
+    CarlaGpuSensors::ProfileSample(TEXT("ray_render_setup_ms"),(FPlatformTime::Seconds()-RenderSetupStarted)*1000);
     CarlaGpuSensors::PollReadback([Batch, Bytes]()
     {
       if (!Batch->Readback->IsReady()) return false;
@@ -328,12 +390,23 @@ void Render(FPostOpaqueRenderParameters& P)
       uint64 Start=0,End=0;
       if (Batch->QueryStart && RHIGetRenderQueryResult(Batch->QueryStart,Start,false) && RHIGetRenderQueryResult(Batch->QueryEnd,End,false) && End>=Start)
         Batch->GpuMs=double(End-Start)/1000.;
+      TRACE_CPUPROFILER_EVENT_SCOPE(CarlaRayReadbackCopy);
+      const double ReadbackCopyStarted=FPlatformTime::Seconds();
       const void* Data = Batch->Readback->Lock(Bytes);
       if (!Data) UE_LOG(LogCarla, Fatal, TEXT("GPU sensor readback mapping failed"));
-      Batch->Output.SetNumUninitialized(Bytes / sizeof(FVector4f));
-      FMemory::Memcpy(Batch->Output.GetData(), Data, Bytes);
-      Batch->Readback->Unlock();
-      Batch->Readback.Reset();
+      if(Batch->PhysicalComplete) {
+        // Vulkan readback memory is host cached. Keep it mapped while the
+        // game-thread callback and its parallel receiver consume the echoes.
+        // FBatch releases the mapping on the render thread after consumption.
+        Batch->MappedOutput=static_cast<const FVector4f*>(Data);
+      } else {
+        Batch->Output.SetNumUninitialized(Bytes / sizeof(FVector4f));
+        FMemory::Memcpy(Batch->Output.GetData(), Data, Bytes);
+        Batch->Readback->Unlock();
+        Batch->Readback.Reset();
+      }
+      CarlaGpuSensors::ProfileSample(TEXT("ray_readback_copied_mb"),Batch->PhysicalComplete?0:Bytes/(1024.*1024.));
+      CarlaGpuSensors::ProfileSample(TEXT("ray_readback_copy_ms"),(FPlatformTime::Seconds()-ReadbackCopyStarted)*1000);
       Completed.Enqueue(Batch);
       return true;
     });
@@ -345,6 +418,22 @@ void Render(FPostOpaqueRenderParameters& P)
 namespace CarlaGpuSensors
 {
 using namespace CarlaGpuSensorPrivate;
+
+void PackRayInputs(TConstArrayView<FCarlaGpuRay> Rays,const FVector& PreViewTranslation,
+    bool HasMotion,double MotionTime,TArray<FVector4f>& Input)
+{
+  Input.SetNumUninitialized(Rays.Num()*4);
+  ParallelFor(TEXT("CarlaPackRayInputs"),Rays.Num(),1024,[&](int32 I) {
+    const auto& Ray=Rays[I];
+    // Translate in double precision before converting to GPU floats, including
+    // on large maps. Preserve the prior arithmetic and all sentinel values.
+    const FVector TranslatedOrigin=Ray.Origin+PreViewTranslation;
+    Input[I*4]=FVector4f(FVector3f(TranslatedOrigin),Ray.Range);
+    Input[I*4+1]=FVector4f(FVector3f(Ray.Direction),Ray.MaterialModel?Ray.AtmosphericAttenuation+1.f:0.f);
+    Input[I*4+2]=FVector4f(Ray.PhysicalModel?1.f:0.f,Ray.TimeFraction,Ray.TargetMotion?1.f:0.f,0);
+    Input[I*4+3]=FVector4f(Ray.WavelengthNm,Ray.Wetness,Ray.SceneTime>=0 && HasMotion?float(Ray.SceneTime-MotionTime):FLT_MAX,0);
+  });
+}
 
 void ProfileSample(const FString& Name, double Milliseconds)
 {
@@ -362,7 +451,7 @@ void ProfileSample(const FString& Name, double Milliseconds)
   for (const auto& Pair : Samples) {
     auto Sorted=Pair.Value;Sorted.Sort();double Sum=0;for (double V : Sorted) Sum+=V;
     if (!First) Json+=TEXT(",");First=false;
-    Json+=FString::Printf(TEXT("\"%s\":{\"mean\":%.4f,\"p95\":%.4f,\"samples\":%d}"),*Pair.Key,Sum/Sorted.Num(),Sorted[FMath::CeilToInt(.95*Sorted.Num())-1],Sorted.Num());
+    Json+=FString::Printf(TEXT("\"%s\":{\"mean\":%.4f,\"p95\":%.4f,\"max\":%.4f,\"samples\":%d}"),*Pair.Key,Sum/Sorted.Num(),Sorted[FMath::CeilToInt(.95*Sorted.Num())-1],Sorted.Last(),Sorted.Num());
   }
   Json+=TEXT("}}");
   // Timing diagnostics must not perform filesystem I/O on a render thread
@@ -426,6 +515,43 @@ void Startup()
   { Pump(); return true; }));
 }
 
+void DecodePhysicalEchoes(FCarlaPhysicalGpuHit& Hit,const FVector4f* Output)
+{
+  Hit.EchoCount=FMath::Clamp(int32(Output[0].W),0,8);
+  for(uint32 E=0;E<Hit.EchoCount;++E) {
+    const auto& V=Output[2+E];auto& Echo=Hit.Echoes[E];
+    Echo.Distance=V.X;Echo.SurfaceReturn=V.Z;
+    FMemory::Memcpy(&Echo.Component,&V.Y,sizeof(uint32));
+    FMemory::Memcpy(&Echo.Flags,&V.W,sizeof(uint32));
+  }
+}
+
+bool FPhysicalHitView::MotionIncompleteAt(int32 Index) const
+{
+  if(Output.IsEmpty())return Decoded[Index].MotionIncomplete;
+  const auto& Ray=Rays[Index];
+  return HasMotion && Ray.TargetMotion && (MissingGeometry ||
+      (Ray.SceneTime>=0 && Ray.SceneTime<OldestCoveredTime-1.e-7));
+}
+
+bool FPhysicalHitView::HasIncompleteMotion() const
+{
+  for(int32 I=0;I<Num();++I)if(MotionIncompleteAt(I))return true;
+  return false;
+}
+
+FCarlaPhysicalGpuHit FPhysicalHitView::operator[](int32 Index) const
+{
+  check(IsValidIndex(Index));
+  if(Output.IsEmpty())return Decoded[Index];
+  FCarlaPhysicalGpuHit Hit;
+  const auto* Data=&Output[Index*Stride];
+  Hit.UnoccludedRange=Data[1].W;
+  Hit.MotionIncomplete=MotionIncompleteAt(Index);
+  DecodePhysicalEchoes(Hit,Data);
+  return Hit;
+}
+
 void Pump()
 {
   check(IsInGameThread());
@@ -446,8 +572,28 @@ void Pump()
     ProfileSample(TEXT("ray_dispatch_to_readback_ms"),(Batch->Ready-Batch->Dispatched)*1000);
     InFlight.Remove(Batch->Owner);
     if (!Batch->Owner.IsValid()) continue;
+    const double DecodeStarted=FPlatformTime::Seconds();
+    ProfileSample(TEXT("ray_ready_to_game_ms"),(DecodeStarted-Batch->Ready)*1000);
+    if(Batch->PhysicalComplete) {
+      check(Batch->MappedOutput);
+      TConstArrayView<FVector4f> Encoded(Batch->MappedOutput,Batch->Rays.Num()*Batch->HitStride);
+      // Validate every ray even if the receiver subsequently models packet loss.
+      for(int32 I=0;I<Batch->Rays.Num();++I)
+        if(Encoded[I*Batch->HitStride].X==-2)
+          UE_LOG(LogCarla,Fatal,TEXT("GPU ray exceeded 256 collision-filter retraces; refusing incomplete sensor data"));
+      FPhysicalHitView Hits(Encoded,Batch->Rays,Batch->HitStride,
+          Batch->Motion.IsValid(),Batch->Motion && Batch->Motion->MissingGeometry>0,
+          Batch->Motion?Batch->Motion->OldestCoveredTime:0);
+      ProfileSample(TEXT("ray_allocate_hits_ms"),0);
+      ProfileSample(TEXT("ray_decode_ms"),(FPlatformTime::Seconds()-DecodeStarted)*1000);
+      // Batch owns the mapping and rays until the callback (including its ParallelFor)
+      // returns. The generic radar/semantic hit path retains owned hit arrays.
+      Batch->PhysicalComplete(Hits);
+      continue;
+    }
     TArray<FCarlaGpuHit> Hits;
     Hits.SetNum(Batch->Rays.Num());
+    ProfileSample(TEXT("ray_allocate_hits_ms"),(FPlatformTime::Seconds()-DecodeStarted)*1000);
     for (int32 I = 0; I < Hits.Num(); ++I)
     {
       const FVector4f& Raw = Batch->Output[I * Batch->HitStride];
@@ -455,15 +601,10 @@ void Pump()
       Hits[I].MotionIncomplete = Batch->Motion && Batch->Rays[I].TargetMotion && (Batch->Motion->MissingGeometry>0 || (Batch->Rays[I].SceneTime>=0 && Batch->Rays[I].SceneTime<Batch->Motion->OldestCoveredTime-1.e-7));
       Hits[I].UnoccludedRange = Batch->Rays[I].PhysicalModel ? Normal.W : Batch->Rays[I].Range;
       if (Batch->Rays[I].PhysicalModel) {
-        Hits[I].EchoCount=FMath::Clamp(int32(Raw.W),0,8);
-        for (uint32 E=0;E<Hits[I].EchoCount;++E) {
-          const auto& V=Batch->Output[I*Batch->HitStride+2+E];auto& Echo=Hits[I].Echoes[E];
-          Echo.Distance=V.X;Echo.SurfaceReturn=V.Z;
-          FMemory::Memcpy(&Echo.Component,&V.Y,sizeof(uint32));FMemory::Memcpy(&Echo.Flags,&V.W,sizeof(uint32));
-        }
+        DecodePhysicalEchoes(Hits[I],&Batch->Output[I*Batch->HitStride]);
       }
       if (Raw.X == -2) UE_LOG(LogCarla, Fatal, TEXT("GPU ray exceeded 256 collision-filter retraces; refusing incomplete sensor data"));
-      if (Raw.X < 0) continue;
+      if (Raw.X < 0 || !Batch->BuildHitResults) continue;
       uint32 ComponentId;
       FMemory::Memcpy(&ComponentId, &Raw.Y, sizeof(ComponentId));
       const auto* Meta = Batch->Collision->Components.Find(ComponentId);
@@ -478,6 +619,7 @@ void Pump()
       Hits[I].TargetVelocity = Meta->Velocity;
       Hits[I].SurfaceReturn = Raw.Z;
     }
+    ProfileSample(TEXT("ray_decode_ms"),(FPlatformTime::Seconds()-DecodeStarted)*1000);
     Batch->Complete(MoveTemp(Hits));
   }
   const double Now = FPlatformTime::Seconds();
@@ -503,15 +645,22 @@ void Pump()
   });
 }
 
-void Submit(AActor& Owner, TArray<FCarlaGpuRay>&& Rays,
-    TUniqueFunction<void(TArray<FCarlaGpuHit>&&)>&& Complete)
+static void SubmitImpl(AActor& Owner,
+    TSharedRef<TArray<FCarlaGpuRay>,ESPMode::ThreadSafe> RayStorage,
+    TUniqueFunction<void(TArray<FCarlaGpuHit>&&)>&& Complete,bool BuildHitResults,
+    TUniqueFunction<void(const CarlaGpuSensors::FPhysicalHitView&)>&& PhysicalComplete)
 {
   check(IsInGameThread());
   if (!GRHISupportsInlineRayTracing)
     UE_LOG(LogCarla, Fatal, TEXT("GPU sensors explicitly requested but this RHI has no inline ray tracing"));
   if (InFlight.Contains(&Owner))
     UE_LOG(LogCarla, Fatal, TEXT("GPU sensor %s still has an outstanding frame. Use synchronous mode and consume sensor frames before world.tick()."), *Owner.GetName());
-  if (Rays.IsEmpty()) { Complete(TArray<FCarlaGpuHit>()); return; }
+  auto& Rays=*RayStorage;
+  if(Rays.IsEmpty()) {
+    if(PhysicalComplete)PhysicalComplete(FPhysicalHitView());
+    else Complete(TArray<FCarlaGpuHit>());
+    return;
+  }
   if (Rays.Num() > 2097120)
     UE_LOG(LogCarla, Fatal, TEXT("GPU sensor batch exceeds dispatch limit; reduce points per tick"));
   // A subscription can arrive after the frame's initial demand scan. Ensure
@@ -526,12 +675,13 @@ void Submit(AActor& Owner, TArray<FCarlaGpuRay>&& Rays,
     }
   }
   if (GEngine && GEngine->GameViewport) GEngine->GameViewport->bDisableWorldRendering = false;
-  auto Batch = MakeShared<FBatch, ESPMode::ThreadSafe>();
+  auto Batch = MakeShared<FBatch, ESPMode::ThreadSafe>(MoveTemp(RayStorage));
   Batch->Owner = &Owner;
+  Batch->BuildHitResults=BuildHitResults;
+  check(BuildHitResults || !Rays.ContainsByPredicate([](const FCarlaGpuRay& Ray) { return !Ray.PhysicalModel; }));
   Batch->Scene = Owner.GetWorld()->Scene;
   Batch->Actor = Owner.GetUniqueID();
   Batch->Submitted = FPlatformTime::Seconds();
-  Batch->Rays = MoveTemp(Rays);
   if (Batch->Rays.ContainsByPredicate([](const FCarlaGpuRay& Ray) { return Ray.PhysicalModel; })) Batch->HitStride=10;
   if (QueryBoundsFrame != GFrameCounter)
   {
@@ -550,13 +700,16 @@ void Submit(AActor& Owner, TArray<FCarlaGpuRay>&& Rays,
   // renderer's float conversion. No angular, camera-facing or min-distance cull.
   const FVector QueryCenter = Sphere->Center;
   const float QueryRadius = float(FMath::CeilToDouble(Sphere->W + 1.0));
+  const double CollisionSnapshotStarted=FPlatformTime::Seconds();
   Batch->Collision = Snapshot(Owner.GetWorld());
+  ProfileSample(TEXT("collision_snapshot_ms"),(FPlatformTime::Seconds()-CollisionSnapshotStarted)*1000);
   if (Batch->HitStride>2) {
     TArray<UPrimitiveComponent*> RenderComponents;
     for (const auto& C:Batch->Collision->RenderComponents) if(C.IsValid()) RenderComponents.Add(C.Get());
     Batch->Motion=CarlaLidarMotion::Prepare(Owner.GetWorld(),RenderComponents);
   }
   Batch->Complete = MoveTemp(Complete);
+  Batch->PhysicalComplete = MoveTemp(PhysicalComplete);
   InFlight.Add(&Owner, Batch->Submitted);
   ENQUEUE_RENDER_COMMAND(CarlaQueueSensorRays)([Batch, QueryCenter, QueryRadius](FRHICommandListImmediate&)
   {
@@ -564,6 +717,19 @@ void Submit(AActor& Owner, TArray<FCarlaGpuRay>&& Rays,
     QueryScenes.Add(Batch->Scene);
     Pending.Add(Batch);
   });
+}
+
+void Submit(AActor& Owner,TArray<FCarlaGpuRay>&& Rays,
+    TUniqueFunction<void(TArray<FCarlaGpuHit>&&)>&& Complete,bool BuildHitResults)
+{
+  SubmitImpl(Owner,MakeShared<TArray<FCarlaGpuRay>,ESPMode::ThreadSafe>(MoveTemp(Rays)),
+      MoveTemp(Complete),BuildHitResults,{});
+}
+
+void SubmitPhysical(AActor& Owner,TSharedRef<TArray<FCarlaGpuRay>,ESPMode::ThreadSafe> Rays,
+    TUniqueFunction<void(const CarlaGpuSensors::FPhysicalHitView&)>&& Complete)
+{
+  SubmitImpl(Owner,MoveTemp(Rays),{},false,MoveTemp(Complete));
 }
 
 bool HasPendingFrames()
@@ -595,6 +761,7 @@ void Shutdown()
     Readbacks.Empty();
     ReadbackCount.Store(0);
     Pending.Empty();
+    MotionGeometryLayout.Empty();MotionGeometryOffsets.Empty();MotionNodeBuffer.SafeRelease();MotionTriangleBuffer.SafeRelease();
     for (const FSceneInterface* Scene : QueryScenes)
       SetExternalRayTracingQueryBounds(Scene, FVector::ZeroVector, -1);
     QueryScenes.Empty();
@@ -612,6 +779,9 @@ void Shutdown()
   while (GameCallbacks.Dequeue(UnusedCallback)) {}
   FBatchPtr Unused;
   while (Completed.Dequeue(Unused)) {}
+  Unused.Reset();
+  // Dropped completed physical batches can enqueue their final unmaps above.
+  FlushRenderingCommands();
   InFlight.Empty();
   CachedCollision.Reset();
   CachedWorld.Reset();

@@ -6,6 +6,8 @@
 
 #include <Carla/Sensor/ImageUtil.h>
 #include "Carla/Sensor/GpuSensorDispatcher.h"
+#include "HAL/IConsoleManager.h"
+#include "ProfilingDebugging/CpuProfilerTrace.h"
 #include <Carla/Sensor/ShaderBasedSensor.h>
 #include <Carla/Carla.h>
 
@@ -34,6 +36,8 @@ public:
 
 namespace ImageUtil
 {
+  static TAutoConsoleVariable<int32> EarlyCameraSubmit(TEXT("carla.Sensors.EarlyCameraSubmit"),0,
+      TEXT("Submit camera copy commands without blocking, before preparing later views."));
   bool DecodePixelsByFormat(
     const void* PixelData,
     int32 SourcePitch,
@@ -250,8 +254,15 @@ namespace ImageUtil
     if (Self.CopyEnd) CmdList.EndRenderQuery(Self.CopyEnd);
     CmdList.Transition(FRHITransitionInfo(Texture, ERHIAccess::CopySrc, ERHIAccess::SRVMask));
 
-    // The copy's GPU fence is polled by the shared readback queue. No
-    // per-camera RHI flush or blocking timestamp query is necessary.
+    // Submit this capture/copy while the CPU prepares later cameras and the
+    // maintenance view. Keep completion asynchronous: this does not wait for
+    // the RHI thread or GPU, and the existing pool/fence owns the readback.
+    if(EarlyCameraSubmit.GetValueOnRenderThread()!=0) {
+      TRACE_CPUPROFILER_EVENT_SCOPE(CarlaCameraEarlySubmit);
+      const double Started=FPlatformTime::Seconds();
+      CmdList.ImmediateFlush(EImmediateFlushType::DispatchToRHIThread);
+      CarlaGpuSensors::ProfileSample(TEXT("camera_submit_ms"),(FPlatformTime::Seconds()-Started)*1000);
+    }
 
   }
 

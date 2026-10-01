@@ -23,6 +23,7 @@
   "LibCarla/source/carla/ros2/publishers/CarlaLidarPublisher.cpp",
   "LibCarla/source/carla/ros2/publishers/CarlaLidarPublisher.h",
   "LibCarla/source/carla/ros2/publishers/PointCloudFieldsLayout.h",
+  "LibCarla/source/carla/rpc/Server.h",
   "LibCarla/source/carla/sensor/data/ActorDynamicState.h",
   "LibCarla/source/carla/sensor/data/PhysicalLidarData.h",
   "LibCarla/source/carla/sensor/data/PhysicalLidarMeasurement.h",

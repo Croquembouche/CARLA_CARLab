@@ -12,6 +12,7 @@
 #include "carla/rpc/Response.h"
 
 #include <boost/asio/io_context.hpp>
+#include <boost/asio/executor_work_guard.hpp>
 #include <boost/asio/post.hpp>
 
 #include <rpc/server.h>
@@ -60,6 +61,11 @@ namespace rpc {
       #include <util/disable-ue4-macros.h>
       #endif // LIBCARLA_INCLUDED_FROM_UE4
       _sync_io_context.restart();
+      // With no pending handlers, run_for otherwise returns immediately and
+      // CARLA's synchronous tick/readback loop spins millions of times per
+      // second. Keep the context alive for the bounded wait; posted RPC work
+      // wakes it immediately, and the caller regains control at the deadline.
+      auto work = boost::asio::make_work_guard(_sync_io_context);
       _sync_io_context.run_for(duration.to_chrono());
     }
 

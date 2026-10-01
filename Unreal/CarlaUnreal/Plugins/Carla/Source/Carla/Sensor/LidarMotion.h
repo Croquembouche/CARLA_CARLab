@@ -15,6 +15,14 @@ struct Node {
   FVector3f Min,Max;
   uint32 Left=0,Right=0; // leaf: Left high bit plus first triangle, Right count
 };
+// Immutable local-space geometry can outlive a frame and be shared with the
+// render thread. Transforms and sample times remain specific to each Mesh.
+struct MeshGeometry {
+  TArray<Triangle> Triangles;
+  TArray<Node> Nodes;
+  TArray<FVector4f> PackedNodes, PackedTriangles;
+  float LocalRadius=0;
+};
 struct Mesh {
   TWeakObjectPtr<UPrimitiveComponent> Component;
   uint32 Primitive=0;
@@ -22,8 +30,7 @@ struct Mesh {
   FVector Center=FVector::ZeroVector;
   float Radius=0;
   double BeforeTime=0,AfterTime=0;
-  TArray<Triangle> Triangles;
-  TArray<Node> Nodes;
+  TSharedPtr<const MeshGeometry,ESPMode::ThreadSafe> Geometry;
 };
 struct Snapshot {
   TArray<Mesh> Meshes;
@@ -31,7 +38,7 @@ struct Snapshot {
   uint32 MissingGeometry=0;
   double Time=0,OldestCoveredTime=0;
   void GpuBuffers(const FVector& Translation,TArray<FVector4f>& Info,TArray<FVector4f>& Nodes,
-      TArray<FVector4f>& Triangles,TArray<FUintVector4>& Lookup) const;
+      TArray<FVector4f>& Triangles,TArray<FUintVector4>& Lookup,bool IncludeGeometry=true,const TArray<FIntPoint>* GeometryOffsets=nullptr) const;
   bool Intersect(const FVector& Origin,const FVector& Direction,float Range,float TimeFraction,
       FHitResult& Hit,uint32& Section,FVector2f& UV,double SceneTime=-1) const;
 };

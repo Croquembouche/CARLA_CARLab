@@ -14,11 +14,31 @@
 #include "Engine/World.h"
 #include "EngineUtils.h"
 namespace CarlaLidarOptics {
-Material Resolve(UPrimitiveComponent* C, UMaterialInterface* M) {
+static MaterialInputs ReadMaterialInputs(UMaterialInterface* M) {
+  MaterialInputs Inputs;
+  if(!M)return Inputs;
+  Inputs.Name=M->GetName().ToLower();
+  const TCHAR* Names[]={TEXT("LidarDiffuse"),TEXT("LidarRetro"),TEXT("LidarSpecular"),TEXT("LidarTransmission"),TEXT("LidarIOR"),TEXT("LidarRoughness"),TEXT("LidarThinSheet")};
+  for(int I=0;I<7;++I) {
+    float V;
+    if(M->GetScalarParameterValue(FMaterialParameterInfo(Names[I]),V) && FMath::IsFinite(V)) {
+      Inputs.Present[I]=true;
+      Inputs.Scalars[I]=FMath::Clamp(V,I==4?1.f:0.f,I==4?3.f:1.f);
+    }
+  }
+  return Inputs;
+}
+Material Resolve(UPrimitiveComponent* C, UMaterialInterface* M,SnapshotMaterialCache* Cache) {
   Material P;
   // Match material names, never the actor name (a vehicle may have glass,
   // rubber, paint and mirror surfaces on separate sections).
-  FString Name=M ? M->GetName().ToLower() : FString();
+  MaterialInputs Local;
+  const MaterialInputs* Inputs=nullptr;
+  if(Cache && M) {
+    Inputs=Cache->Find(M);
+    if(!Inputs)Inputs=&Cache->Add(M,ReadMaterialInputs(M));
+  } else { Local=ReadMaterialInputs(M);Inputs=&Local; }
+  FString Name=Inputs->Name;
   FString Override;
   bool RoadLine=false;
   if (C) for (const auto& Tag:C->ComponentTags) {
@@ -44,27 +64,24 @@ Material Resolve(UPrimitiveComponent* C, UMaterialInterface* M) {
   if (C && C->ComponentHasTag(TEXT("LidarSolid"))) P.thinSheet=0.f;
   // Explicit scalar parameters override heuristic presets, and can be authored
   // on material instances independently of visible-light base color.
-  if (M) {
-    const TCHAR* Names[]={TEXT("LidarDiffuse"),TEXT("LidarRetro"),TEXT("LidarSpecular"),TEXT("LidarTransmission"),TEXT("LidarIOR"),TEXT("LidarRoughness"),TEXT("LidarThinSheet")};
-    float* Values[]={&P.diffuse,&P.retro,&P.specular,&P.transmission,&P.ior,&P.roughness,&P.thinSheet};
-    for (int I=0;I<7;++I) { float V; if (M->GetScalarParameterValue(FMaterialParameterInfo(Names[I]),V) && FMath::IsFinite(V)) *Values[I]=FMath::Clamp(V,I==4?1.f:0.f,I==4?3.f:1.f); }
-  }
+  float* Values[]={&P.diffuse,&P.retro,&P.specular,&P.transmission,&P.ior,&P.roughness,&P.thinSheet};
+  for(int I=0;I<7;++I)if(Inputs->Present[I])*Values[I]=Inputs->Scalars[I];
   P.infrared=CarlaLidarInfrared::Find(C,M);
   return P;
 }
-TArray<Material> Sections(UPrimitiveComponent* C) {
+TArray<Material> Sections(UPrimitiveComponent* C,SnapshotMaterialCache* Cache) {
   TArray<Material> Out;
   if (auto* S=Cast<UStaticMeshComponent>(C)) {
     if (S->GetStaticMesh() && S->GetStaticMesh()->GetRenderData() && S->GetStaticMesh()->GetRenderData()->LODResources.Num())
       for (const auto& Section:S->GetStaticMesh()->GetRenderData()->LODResources[0].Sections)
-        Out.Add(Resolve(C,C->GetMaterial(Section.MaterialIndex)));
+        Out.Add(Resolve(C,C->GetMaterial(Section.MaterialIndex),Cache));
   } else if (auto* S=Cast<USkinnedMeshComponent>(C)) {
     if (auto* Mesh=Cast<USkeletalMesh>(S->GetSkinnedAsset()))
       if (auto* Data=Mesh->GetResourceForRendering())
         if (Data->LODRenderData.Num()) for (const auto& Section:Data->LODRenderData[0].RenderSections)
-          Out.Add(Resolve(C,C->GetMaterial(Section.MaterialIndex)));
+          Out.Add(Resolve(C,C->GetMaterial(Section.MaterialIndex),Cache));
   }
-  if (Out.IsEmpty()) Out.Add(Resolve(C,C->GetMaterial(0)));
+  if (Out.IsEmpty()) Out.Add(Resolve(C,C->GetMaterial(0),Cache));
   return Out;
 }
 struct OpticalComponent { TWeakObjectPtr<UStaticMeshComponent> Component; FBox Bounds; };
