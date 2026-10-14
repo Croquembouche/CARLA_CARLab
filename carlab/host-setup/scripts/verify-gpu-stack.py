@@ -16,7 +16,7 @@ import xml.etree.ElementTree as ET
 import carla
 import numpy as np
 
-ROOT = Path('/mnt/simulations/carla/carlab/host-setup')
+ROOT = Path('/media/william/mist1/Simulations')
 LINUX = Path('/mnt/simulations')
 OUT = LINUX / 'verification'
 

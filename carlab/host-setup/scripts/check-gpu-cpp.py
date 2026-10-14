@@ -24,7 +24,7 @@ files=sys.argv[1:] or ['Sensor/GpuSensorDispatcher.cpp','Sensor/GpuSensorSelfTes
        'Sensor/SceneCaptureCamera.cpp','Sensor/DepthCamera.cpp','Sensor/NormalsCamera.cpp',
        'Sensor/SemanticSegmentationCamera.cpp','Sensor/InstanceSegmentationCamera.cpp','Sensor/OpticalFlowCamera.cpp']
 def run(name):
-    log=Path('/mnt/simulations/carla/carlab/host-setup/logs')/(Path(name).name+'.carla-syntax.log')
+    log=Path('/media/william/mist1/Simulations/logs')/(Path(name).name+'.carla-syntax.log')
     command=[str(compiler),*out,'-fsyntax-only','-fno-color-diagnostics',str(plugin/'Source/Carla'/name)]
     with log.open('w') as handle:
         result=subprocess.run(command,cwd=ue/'Source',stdout=handle,stderr=subprocess.STDOUT)

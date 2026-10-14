@@ -1,0 +1,632 @@
+[
+  {
+    "SM_LincolnDoor_Front_L": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9e168) {x: 95.953049, y: -87.410210, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9e180) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec68790) {x: 10554.875106, y: -1367.740050, z: 157.092610}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec68790) {pitch: -0.000000, yaw: -89.609258, roll: -0.000000}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FL": {
+      "parent": "SM_LincolnDoor_Front_L",
+      "relative_location": "<Struct 'Vector' (0x501f3c9ef68) {x: -95.953059, y: 87.410206, z: -87.399000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9ef80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec686f0) {x: 10641.628910, y: -1271.193112, z: 69.693610}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec686f0) {pitch: -0.000000, yaw: -89.609258, roll: -0.000000}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "SM_LincolnDoor_Front_R": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9f668) {x: 95.953064, y: 88.020957, z: 87.398895}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9f680) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec68650) {x: 10730.302194, y: -1366.543665, z: 157.092503}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec68650) {pitch: -0.000000, yaw: -89.609258, roll: -0.000000}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FR": {
+      "parent": "SM_LincolnDoor_Front_R",
+      "relative_location": "<Struct 'Vector' (0x501d54f4068) {x: -95.953059, y: -88.020962, z: -87.398899}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501d54f4080) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec68560) {x: 10641.628909, y: -1271.193112, z: 69.693605}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec68560) {pitch: -0.000000, yaw: -89.609258, roll: -0.000000}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    }
+  },
+  {
+    "SM_LincolnDoor_Front_L": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9e168) {x: 95.953049, y: -87.410210, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9e180) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec68420) {x: 10554.875106, y: -1367.740050, z: 130.781159}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec68420) {pitch: -0.000000, yaw: -89.609258, roll: -0.000000}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FL": {
+      "parent": "SM_LincolnDoor_Front_L",
+      "relative_location": "<Struct 'Vector' (0x501f3c9ef68) {x: -95.953059, y: 87.410206, z: -87.399000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9ef80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec683d0) {x: 10641.628910, y: -1271.193112, z: 43.382159}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec683d0) {pitch: -0.000000, yaw: -89.609258, roll: -0.000000}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "SM_LincolnDoor_Front_R": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9f668) {x: 95.953064, y: 88.020957, z: 87.398895}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9f680) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec68380) {x: 10730.302194, y: -1366.543665, z: 130.781052}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec68380) {pitch: -0.000000, yaw: -89.609258, roll: -0.000000}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FR": {
+      "parent": "SM_LincolnDoor_Front_R",
+      "relative_location": "<Struct 'Vector' (0x501d54f4068) {x: -95.953059, y: -88.020962, z: -87.398899}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501d54f4080) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec68150) {x: 10641.628909, y: -1271.193112, z: 43.382153}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec68150) {pitch: -0.000000, yaw: -89.609258, roll: -0.000000}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    }
+  },
+  {
+    "SM_LincolnDoor_Front_L": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9e168) {x: 95.953049, y: -87.410210, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9e180) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec68920) {x: 10554.875106, y: -1367.740050, z: 101.019760}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec68920) {pitch: -0.000000, yaw: -89.609258, roll: -0.000000}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FL": {
+      "parent": "SM_LincolnDoor_Front_L",
+      "relative_location": "<Struct 'Vector' (0x501f3c9ef68) {x: -95.953059, y: 87.410206, z: -87.399000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9ef80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec68a10) {x: 10641.628910, y: -1271.193112, z: 13.620760}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec68a10) {pitch: -0.000000, yaw: -89.609258, roll: -0.000000}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "SM_LincolnDoor_Front_R": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9f668) {x: 95.953064, y: 88.020957, z: 87.398895}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9f680) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec68a60) {x: 10730.302194, y: -1366.543665, z: 101.019653}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec68a60) {pitch: -0.000000, yaw: -89.609258, roll: -0.000000}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FR": {
+      "parent": "SM_LincolnDoor_Front_R",
+      "relative_location": "<Struct 'Vector' (0x501d54f4068) {x: -95.953059, y: -88.020962, z: -87.398899}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501d54f4080) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec688d0) {x: 10641.628909, y: -1271.193112, z: 13.620755}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec688d0) {pitch: -0.000000, yaw: -89.609258, roll: -0.000000}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    }
+  },
+  {
+    "SM_LincolnDoor_Front_L": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9e168) {x: 95.953049, y: -87.410210, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9e180) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec689c0) {x: 10554.875106, y: -1367.740050, z: 82.476596}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec689c0) {pitch: -0.000000, yaw: -89.609258, roll: -0.000000}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FL": {
+      "parent": "SM_LincolnDoor_Front_L",
+      "relative_location": "<Struct 'Vector' (0x501f3c9ef68) {x: -95.953059, y: 87.410206, z: -87.399000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9ef80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec68d30) {x: 10641.628910, y: -1271.193112, z: -4.922404}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec68d30) {pitch: -0.000000, yaw: -89.609258, roll: -0.000000}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "SM_LincolnDoor_Front_R": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9f668) {x: 95.953064, y: 88.020957, z: 87.398895}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9f680) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec68b00) {x: 10730.302194, y: -1366.543665, z: 82.476490}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec68b00) {pitch: -0.000000, yaw: -89.609258, roll: -0.000000}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FR": {
+      "parent": "SM_LincolnDoor_Front_R",
+      "relative_location": "<Struct 'Vector' (0x501d54f4068) {x: -95.953059, y: -88.020962, z: -87.398899}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501d54f4080) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec68bf0) {x: 10641.628909, y: -1271.193112, z: -4.922409}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec68bf0) {pitch: -0.000000, yaw: -89.609258, roll: -0.000000}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    }
+  },
+  {
+    "SM_LincolnDoor_Front_L": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9e168) {x: 95.953049, y: -87.410210, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9e180) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec68fb0) {x: 10555.007912, y: -1368.350338, z: 73.115567}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec68fb0) {pitch: -0.622518, yaw: -89.620860, roll: 0.116897}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FL": {
+      "parent": "SM_LincolnDoor_Front_L",
+      "relative_location": "<Struct 'Vector' (0x501f3c9ef68) {x: -95.953059, y: 87.410206, z: -87.399000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9ef80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec69000) {x: 10641.596513, y: -1270.876328, z: -13.413910}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec69000) {pitch: -0.622518, yaw: -89.620860, roll: 0.116897}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "SM_LincolnDoor_Front_R": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9f668) {x: 95.953064, y: 88.020957, z: 87.398895}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9f680) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec68d80) {x: 10730.434848, y: -1367.185588, z: 72.757562}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec68d80) {pitch: -0.622518, yaw: -89.620860, roll: 0.116897}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FR": {
+      "parent": "SM_LincolnDoor_Front_R",
+      "relative_location": "<Struct 'Vector' (0x501d54f4068) {x: -95.953059, y: -88.020962, z: -87.398899}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501d54f4080) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec68f10) {x: 10641.596512, y: -1270.876328, z: -13.413915}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec68f10) {pitch: -0.622518, yaw: -89.620860, roll: 0.116897}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    }
+  },
+  {
+    "SM_LincolnDoor_Front_L": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9e168) {x: 95.953049, y: -87.410210, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9e180) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec691e0) {x: 10555.011896, y: -1368.385345, z: 71.876929}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec691e0) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FL": {
+      "parent": "SM_LincolnDoor_Front_L",
+      "relative_location": "<Struct 'Vector' (0x501f3c9ef68) {x: -95.953059, y: 87.410206, z: -87.399000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9ef80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec69320) {x: 10641.612704, y: -1270.831679, z: -14.550504}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec69320) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "SM_LincolnDoor_Front_R": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9f668) {x: 95.953064, y: 88.020957, z: 87.398895}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9f680) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec69050) {x: 10730.438882, y: -1367.220698, z: 71.544286}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec69050) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FR": {
+      "parent": "SM_LincolnDoor_Front_R",
+      "relative_location": "<Struct 'Vector' (0x501d54f4068) {x: -95.953059, y: -88.020962, z: -87.398899}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501d54f4080) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec68ec0) {x: 10641.612703, y: -1270.831679, z: -14.550510}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec68ec0) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    }
+  },
+  {
+    "SM_LincolnDoor_Front_L": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9e168) {x: 95.953049, y: -87.410210, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9e180) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec695a0) {x: 10555.011896, y: -1368.385345, z: 71.876929}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec695a0) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FL": {
+      "parent": "SM_LincolnDoor_Front_L",
+      "relative_location": "<Struct 'Vector' (0x501f3c9ef68) {x: -95.953059, y: 87.410206, z: -87.399000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9ef80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec695f0) {x: 10641.612704, y: -1270.831679, z: -14.550504}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec695f0) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "SM_LincolnDoor_Front_R": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9f668) {x: 95.953064, y: 88.020957, z: 87.398895}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9f680) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec690f0) {x: 10730.438882, y: -1367.220698, z: 71.544286}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec690f0) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FR": {
+      "parent": "SM_LincolnDoor_Front_R",
+      "relative_location": "<Struct 'Vector' (0x501d54f4068) {x: -95.953059, y: -88.020962, z: -87.398899}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501d54f4080) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec69280) {x: 10641.612703, y: -1270.831679, z: -14.550510}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec69280) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    }
+  },
+  {
+    "SM_LincolnDoor_Front_L": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9e168) {x: 95.953049, y: -87.410210, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9e180) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec698c0) {x: 10555.011896, y: -1368.385345, z: 71.876929}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec698c0) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FL": {
+      "parent": "SM_LincolnDoor_Front_L",
+      "relative_location": "<Struct 'Vector' (0x501f3c9ef68) {x: -95.953059, y: 87.410206, z: -87.399000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9ef80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec69910) {x: 10641.612704, y: -1270.831679, z: -14.550504}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec69910) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "SM_LincolnDoor_Front_R": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9f668) {x: 95.953064, y: 88.020957, z: 87.398895}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9f680) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec694b0) {x: 10730.438882, y: -1367.220698, z: 71.544286}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec694b0) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FR": {
+      "parent": "SM_LincolnDoor_Front_R",
+      "relative_location": "<Struct 'Vector' (0x501d54f4068) {x: -95.953059, y: -88.020962, z: -87.398899}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501d54f4080) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec69550) {x: 10641.612703, y: -1270.831679, z: -14.550510}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec69550) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    }
+  },
+  {
+    "SM_LincolnDoor_Front_L": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9e168) {x: 95.953049, y: -87.410210, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9e180) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec69b40) {x: 10555.011896, y: -1368.385345, z: 71.876929}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec69b40) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FL": {
+      "parent": "SM_LincolnDoor_Front_L",
+      "relative_location": "<Struct 'Vector' (0x501f3c9ef68) {x: -95.953059, y: 87.410206, z: -87.399000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9ef80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec69b90) {x: 10641.612704, y: -1270.831679, z: -14.550504}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec69b90) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "SM_LincolnDoor_Front_R": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9f668) {x: 95.953064, y: 88.020957, z: 87.398895}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9f680) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec697d0) {x: 10730.438882, y: -1367.220698, z: 71.544286}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec697d0) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FR": {
+      "parent": "SM_LincolnDoor_Front_R",
+      "relative_location": "<Struct 'Vector' (0x501d54f4068) {x: -95.953059, y: -88.020962, z: -87.398899}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501d54f4080) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec69640) {x: 10641.612703, y: -1270.831679, z: -14.550510}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec69640) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    }
+  },
+  {
+    "SM_LincolnDoor_Front_L": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9e168) {x: 95.953049, y: -87.410210, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9e180) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec69e60) {x: 10555.011896, y: -1368.385345, z: 71.876929}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec69e60) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FL": {
+      "parent": "SM_LincolnDoor_Front_L",
+      "relative_location": "<Struct 'Vector' (0x501f3c9ef68) {x: -95.953059, y: 87.410206, z: -87.399000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9ef80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec69eb0) {x: 10641.612704, y: -1270.831679, z: -14.550504}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec69eb0) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "SM_LincolnDoor_Front_R": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9f668) {x: 95.953064, y: 88.020957, z: 87.398895}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9f680) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec684c0) {x: 10730.438882, y: -1367.220698, z: 71.544286}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec684c0) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FR": {
+      "parent": "SM_LincolnDoor_Front_R",
+      "relative_location": "<Struct 'Vector' (0x501d54f4068) {x: -95.953059, y: -88.020962, z: -87.398899}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501d54f4080) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec69af0) {x: 10641.612703, y: -1270.831679, z: -14.550510}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec69af0) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    }
+  },
+  {
+    "SM_LincolnDoor_Front_L": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9e168) {x: 95.953049, y: -87.410210, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9e180) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec6a180) {x: 10555.011896, y: -1368.385345, z: 71.876929}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec6a180) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FL": {
+      "parent": "SM_LincolnDoor_Front_L",
+      "relative_location": "<Struct 'Vector' (0x501f3c9ef68) {x: -95.953059, y: 87.410206, z: -87.399000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9ef80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec6a1d0) {x: 10641.612704, y: -1270.831679, z: -14.550504}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec6a1d0) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "SM_LincolnDoor_Front_R": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9f668) {x: 95.953064, y: 88.020957, z: 87.398895}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9f680) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec69d70) {x: 10730.438882, y: -1367.220698, z: 71.544286}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec69d70) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FR": {
+      "parent": "SM_LincolnDoor_Front_R",
+      "relative_location": "<Struct 'Vector' (0x501d54f4068) {x: -95.953059, y: -88.020962, z: -87.398899}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501d54f4080) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec69e10) {x: 10641.612703, y: -1270.831679, z: -14.550510}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec69e10) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    }
+  },
+  {
+    "SM_LincolnDoor_Front_L": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9e168) {x: 95.953049, y: -87.410210, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9e180) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec6a270) {x: 10555.011896, y: -1368.385345, z: 71.876929}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec6a270) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FL": {
+      "parent": "SM_LincolnDoor_Front_L",
+      "relative_location": "<Struct 'Vector' (0x501f3c9ef68) {x: -95.953059, y: 87.410206, z: -87.399000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9ef80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec6a4f0) {x: 10641.612704, y: -1270.831679, z: -14.550504}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec6a4f0) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "SM_LincolnDoor_Front_R": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9f668) {x: 95.953064, y: 88.020957, z: 87.398895}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9f680) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec6a090) {x: 10730.438882, y: -1367.220698, z: 71.544286}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec6a090) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FR": {
+      "parent": "SM_LincolnDoor_Front_R",
+      "relative_location": "<Struct 'Vector' (0x501d54f4068) {x: -95.953059, y: -88.020962, z: -87.398899}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501d54f4080) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec69f00) {x: 10641.612703, y: -1270.831679, z: -14.550510}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec69f00) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    }
+  },
+  {
+    "SM_LincolnDoor_Front_L": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9e168) {x: 95.953049, y: -87.410210, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9e180) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec6a590) {x: 10555.011896, y: -1368.385345, z: 71.876929}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec6a590) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FL": {
+      "parent": "SM_LincolnDoor_Front_L",
+      "relative_location": "<Struct 'Vector' (0x501f3c9ef68) {x: -95.953059, y: 87.410206, z: -87.399000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9ef80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec6a770) {x: 10641.612704, y: -1270.831679, z: -14.550504}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec6a770) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "SM_LincolnDoor_Front_R": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9f668) {x: 95.953064, y: 88.020957, z: 87.398895}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9f680) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec6a130) {x: 10730.438882, y: -1367.220698, z: 71.544286}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec6a130) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FR": {
+      "parent": "SM_LincolnDoor_Front_R",
+      "relative_location": "<Struct 'Vector' (0x501d54f4068) {x: -95.953059, y: -88.020962, z: -87.398899}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501d54f4080) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec6a220) {x: 10641.612703, y: -1270.831679, z: -14.550510}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec6a220) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    }
+  },
+  {
+    "SM_LincolnDoor_Front_L": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9e168) {x: 95.953049, y: -87.410210, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9e180) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec6aa40) {x: 10555.011896, y: -1368.385345, z: 71.876929}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec6aa40) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FL": {
+      "parent": "SM_LincolnDoor_Front_L",
+      "relative_location": "<Struct 'Vector' (0x501f3c9ef68) {x: -95.953059, y: 87.410206, z: -87.399000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9ef80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec6aa90) {x: 10641.612704, y: -1270.831679, z: -14.550504}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec6aa90) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "SM_LincolnDoor_Front_R": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9f668) {x: 95.953064, y: 88.020957, z: 87.398895}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9f680) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec68b50) {x: 10730.438882, y: -1367.220698, z: 71.544286}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec68b50) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FR": {
+      "parent": "SM_LincolnDoor_Front_R",
+      "relative_location": "<Struct 'Vector' (0x501d54f4068) {x: -95.953059, y: -88.020962, z: -87.398899}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501d54f4080) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec6a540) {x: 10641.612703, y: -1270.831679, z: -14.550510}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec6a540) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    }
+  },
+  {
+    "SM_LincolnDoor_Front_L": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9e168) {x: 95.953049, y: -87.410210, z: 87.399002}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9e180) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec6ab30) {x: 10555.011896, y: -1368.385345, z: 71.876929}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec6ab30) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FL": {
+      "parent": "SM_LincolnDoor_Front_L",
+      "relative_location": "<Struct 'Vector' (0x501f3c9ef68) {x: -95.953059, y: 87.410206, z: -87.399000}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9ef80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec6adb0) {x: 10641.612704, y: -1270.831679, z: -14.550504}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec6adb0) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "SM_LincolnDoor_Front_R": {
+      "parent": "VehicleMesh",
+      "relative_location": "<Struct 'Vector' (0x501f3c9f668) {x: 95.953064, y: 88.020957, z: 87.398895}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501f3c9f680) {pitch: -0.000000, yaw: -0.000005, roll: -0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec6a6d0) {x: 10730.438882, y: -1367.220698, z: 71.544286}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec6a6d0) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    },
+    "BrochureDoorDetails_FR": {
+      "parent": "SM_LincolnDoor_Front_R",
+      "relative_location": "<Struct 'Vector' (0x501d54f4068) {x: -95.953059, y: -88.020962, z: -87.398899}>",
+      "relative_rotation": "<Struct 'Rotator' (0x501d54f4080) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "world_location": "<Struct 'Vector' (0x7fad9ec6a5e0) {x: 10641.612703, y: -1270.831679, z: -14.550510}>",
+      "world_rotation": "<Struct 'Rotator' (0x7fad9ec6a5e0) {pitch: -0.675378, yaw: -89.620904, roll: 0.108614}>",
+      "absolute_location": false,
+      "absolute_rotation": false,
+      "simulating": false
+    }
+  }
+]

@@ -1,0 +1,38 @@
+{
+  "result": "VERIFIED_IN_FRESH_CARLA",
+  "objects": {
+    "FL": [
+      "DoorDetail_FL_Tweeter_Housing",
+      "DoorDetail_FL_Tweeter_Grille",
+      "DoorDetail_FL_Tweeter_Bezel",
+      "DoorDetail_FL_Tweeter_Perforations",
+      "DoorDetail_FL_Tweeter_Housing_Skirt",
+      "DoorDetail_FL_Lower_Speaker_Housing",
+      "DoorDetail_FL_Lower_Speaker_Grille",
+      "DoorDetail_FL_Lower_Speaker_Bezel",
+      "DoorDetail_FL_Lower_Speaker_Perforations",
+      "DoorDetail_FL_Lower_Speaker_Housing_Skirt",
+      "DoorDetail_FL_Padded_Armrest",
+      "DoorDetail_FL_Window_Switch_Bezel",
+      "DoorDetail_FL_Window_Rocker_0",
+      "DoorDetail_FL_Window_Rocker_1"
+    ],
+    "FR": [
+      "DoorDetail_FR_Tweeter_Housing",
+      "DoorDetail_FR_Tweeter_Grille",
+      "DoorDetail_FR_Tweeter_Bezel",
+      "DoorDetail_FR_Tweeter_Perforations",
+      "DoorDetail_FR_Tweeter_Housing_Skirt",
+      "DoorDetail_FR_Lower_Speaker_Housing",
+      "DoorDetail_FR_Lower_Speaker_Grille",
+      "DoorDetail_FR_Lower_Speaker_Bezel",
+      "DoorDetail_FR_Lower_Speaker_Perforations",
+      "DoorDetail_FR_Lower_Speaker_Housing_Skirt",
+      "DoorDetail_FR_Padded_Armrest",
+      "DoorDetail_FR_Window_Switch_Bezel",
+      "DoorDetail_FR_Window_Rocker_0",
+      "DoorDetail_FR_Window_Rocker_1"
+    ]
+  },
+  "attachment": "Front-door child components with inverse skeleton-hinge offsets"
+}

@@ -43,7 +43,7 @@ namespace multigpu {
     if (_socket.is_open()) {
       boost::system::error_code ec;
       _socket.shutdown(boost::asio::socket_base::shutdown_both, ec);
-      _socket.close();
+      _socket.close(ec);
     }
   }
 
@@ -56,7 +56,14 @@ namespace multigpu {
     // This forces not using Nagle's algorithm.
     // Improves the sync mode velocity on Linux by a factor of ~3.
     const boost::asio::ip::tcp::no_delay option(true);
-    _socket.set_option(option);
+    boost::system::error_code ec;
+    _socket.set_option(option, ec);
+    if (ec) {
+      // An accepted connection can be cancelled before this queued Open runs.
+      // Do not publish a session or throw out of an asynchronous handler.
+      log_debug("session", _session_id, "open cancelled: ", ec.message());
+      return;
+    }
 
     // callbacks
     _on_closed = std::move(on_closed);
@@ -206,7 +213,7 @@ namespace multigpu {
       if (_socket.is_open()) {
         boost::system::error_code ec2;
         _socket.shutdown(boost::asio::socket_base::shutdown_both, ec2);
-        _socket.close();
+        _socket.close(ec2);
       }
     }
     _on_closed(shared_from_this());

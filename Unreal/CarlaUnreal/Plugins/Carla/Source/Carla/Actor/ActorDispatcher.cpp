@@ -30,11 +30,36 @@ void UActorDispatcher::Bind(FActorDefinition Definition, SpawnFunctionType Funct
     Definitions.Emplace(Definition);
     SpawnFunctions.Emplace(Functor);
     Classes.Add(Definition.Id, Definition.Class);
+    if (!Definition.SoftClass.IsNull())
+    {
+      SoftClasses.Add(Definition.Id, Definition.SoftClass);
+    }
+    else
+    {
+      SoftClasses.Remove(Definition.Id);
+    }
   }
   else
   {
     UE_LOG(LogCarla, Warning, TEXT("Invalid definition '%s' ignored"), *Definition.Id);
   }
+}
+
+UClass* UActorDispatcher::ResolveActorClass(const FString& Id)
+{
+  TSubclassOf<AActor>* Class = Classes.Find(Id);
+  if (!Class) return nullptr;
+  if (!Class->Get())
+  {
+    if (TSoftClassPtr<AActor>* SoftClass = SoftClasses.Find(Id))
+    {
+      UClass* Loaded = SoftClass->LoadSynchronous();
+      *Class = Loaded;
+      UE_LOG(LogCarla, Display, TEXT("ACTOR_CLASS_LAZY_RESOLVE id=%s path=%s loaded=%d"),
+          *Id, *SoftClass->ToSoftObjectPath().ToString(), IsValid(Loaded) ? 1 : 0);
+    }
+  }
+  return Class->Get();
 }
 
 void UActorDispatcher::Bind(ACarlaActorFactory &ActorFactory)
@@ -67,7 +92,12 @@ TPair<EActorSpawnResultStatus, FCarlaActor*> UActorDispatcher::SpawnActor(
     return MakeTuple(EActorSpawnResultStatus::InvalidDescription, nullptr);
   }
 
-  Description.Class = *Class;
+  Description.Class = ResolveActorClass(Description.Id);
+  if (!Description.Class && SoftClasses.Contains(Description.Id))
+  {
+    UE_LOG(LogCarla, Error, TEXT("Cannot resolve actor class for '%s'"), *Description.Id);
+    return MakeTuple(EActorSpawnResultStatus::InvalidDescription, nullptr);
+  }
   FActorSpawnResult Result = SpawnFunctions[Description.UId - 1](Transform, Description);
 
   if ((Result.Status == EActorSpawnResultStatus::Success) && (Result.Actor == nullptr))
@@ -111,7 +141,12 @@ AActor* UActorDispatcher::ReSpawnActor(
     return nullptr;
   }
 
-  Description.Class = *Class;
+  Description.Class = ResolveActorClass(Description.Id);
+  if (!Description.Class && SoftClasses.Contains(Description.Id))
+  {
+    UE_LOG(LogCarla, Error, TEXT("Cannot resolve actor class for '%s'"), *Description.Id);
+    return nullptr;
+  }
   FActorSpawnResult Result = SpawnFunctions[Description.UId - 1](Transform, Description);
 
   if ((Result.Status == EActorSpawnResultStatus::Success) && (Result.Actor == nullptr))

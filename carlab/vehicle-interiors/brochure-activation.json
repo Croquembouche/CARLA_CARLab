@@ -1,0 +1,13 @@
+{
+  "result": "SAVED_AND_COMPILED",
+  "blueprint": "/Game/VehicleInteriors/Lincoln/BP_LincolnMKZ_Interior.BP_LincolnMKZ_Interior",
+  "cabin": "/Game/VehicleInteriors/Lincoln/SM_MKZ_Cabin_Brochure.SM_MKZ_Cabin_Brochure",
+  "changed": [
+    "CabinReplacement",
+    "SM_LincolnDoor_Back_R",
+    "SM_LincolnDoor_Back_L",
+    "SM_LincolnDoor_Front_L",
+    "SM_LincolnDoor_Front_R"
+  ],
+  "visual_acceptance": "PENDING_FINAL_FRESH_RUN"
+}

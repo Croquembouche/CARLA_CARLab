@@ -29,6 +29,7 @@
 
 #include <util/ue-header-guard-begin.h>
 #include "Misc/App.h"
+#include "CoreGlobals.h"
 #include "PhysicsEngine/PhysicsSettings.h"
 #include <util/ue-header-guard-end.h>
 
@@ -329,7 +330,7 @@ void FCarlaEngine::OnPreTick(UWorld *, ELevelTick TickType, float DeltaSeconds)
         Server.RunSome(1u);
         CarlaGpuSensors::Pump();
       }
-      while (bSynchronousMode && !Server.TickCueReceived());
+      while (!IsEngineExitRequested() && bSynchronousMode && !Server.TickCueReceived());
     }
     else
     {
@@ -340,8 +341,13 @@ void FCarlaEngine::OnPreTick(UWorld *, ELevelTick TickType, float DeltaSeconds)
         Server.RunSome(1u);
         CarlaGpuSensors::Pump();
       }
-      while (!FramesToProcess.size() || CarlaGpuSensors::HasPendingFrames());
+      while (!IsEngineExitRequested() &&
+             (!FramesToProcess.size() || CarlaGpuSensors::HasPendingFrames()));
     }
+
+    // A paused owner or renderer can remain in the RPC pump indefinitely.
+    // Let Unreal retire its world without fabricating an extra world frame.
+    if (IsEngineExitRequested()) return;
 
     // update frame counter
     UpdateFrameCounter();

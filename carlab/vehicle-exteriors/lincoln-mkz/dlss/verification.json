@@ -1,0 +1,185 @@
+{
+  "status": "PASS",
+  "backend": "actual CUDA community DLSS 5 approximation",
+  "source_count": 8,
+  "enhanced_count": 16,
+  "resolution": [
+    1280,
+    800
+  ],
+  "unchanged_native_report": true,
+  "profiles": {
+    "standard": {
+      "model_load_seconds": 0.740494795027189,
+      "first_frame_seconds": 0.7201703849714249,
+      "warmed_median_seconds": 0.5623925789259374,
+      "weights_sha256": "a1be4df1f9621ef736cc1ae53ec430e84c5f82fb3bfe9fef35f340fc540c8329",
+      "source_revisions": {
+        "comfyui-dlss5-pre-rtx": "d6351397097c66efd8023395a091ef94fca88a12",
+        "MLX-DLSS": "0ca2deab092fe6f3e331bf4f616271dbc64521d0"
+      },
+      "gpu": "NVIDIA GeForce RTX 2080 Ti",
+      "gpu_uuid": "40de027c-7906-c37f-f054-03f93e42eacc",
+      "peak_cuda_allocated_mib": 1361.53369140625
+    },
+    "natural": {
+      "model_load_seconds": 0.7444161920575425,
+      "first_frame_seconds": 0.705839397967793,
+      "warmed_median_seconds": 0.5682369840797037,
+      "weights_sha256": "a1be4df1f9621ef736cc1ae53ec430e84c5f82fb3bfe9fef35f340fc540c8329",
+      "source_revisions": {
+        "comfyui-dlss5-pre-rtx": "d6351397097c66efd8023395a091ef94fca88a12",
+        "MLX-DLSS": "0ca2deab092fe6f3e331bf4f616271dbc64521d0"
+      },
+      "gpu": "NVIDIA GeForce RTX 2080 Ti",
+      "gpu_uuid": "40de027c-7906-c37f-f054-03f93e42eacc",
+      "peak_cuda_allocated_mib": 1361.53369140625
+    }
+  },
+  "checks": [
+    {
+      "profile": "standard",
+      "camera": "stock-front-three-quarter",
+      "frame": 85,
+      "native_hash_unchanged": true,
+      "original_pixels_exact": true,
+      "output_shape_preserved": true,
+      "enhanced_hash_verified": true
+    },
+    {
+      "profile": "standard",
+      "camera": "stock-rear-three-quarter",
+      "frame": 165,
+      "native_hash_unchanged": true,
+      "original_pixels_exact": true,
+      "output_shape_preserved": true,
+      "enhanced_hash_verified": true
+    },
+    {
+      "profile": "standard",
+      "camera": "stock-front-detail",
+      "frame": 245,
+      "native_hash_unchanged": true,
+      "original_pixels_exact": true,
+      "output_shape_preserved": true,
+      "enhanced_hash_verified": true
+    },
+    {
+      "profile": "standard",
+      "camera": "stock-wheel-detail",
+      "frame": 325,
+      "native_hash_unchanged": true,
+      "original_pixels_exact": true,
+      "output_shape_preserved": true,
+      "enhanced_hash_verified": true
+    },
+    {
+      "profile": "standard",
+      "camera": "refined-front-three-quarter",
+      "frame": 405,
+      "native_hash_unchanged": true,
+      "original_pixels_exact": true,
+      "output_shape_preserved": true,
+      "enhanced_hash_verified": true
+    },
+    {
+      "profile": "standard",
+      "camera": "refined-rear-three-quarter",
+      "frame": 485,
+      "native_hash_unchanged": true,
+      "original_pixels_exact": true,
+      "output_shape_preserved": true,
+      "enhanced_hash_verified": true
+    },
+    {
+      "profile": "standard",
+      "camera": "refined-front-detail",
+      "frame": 565,
+      "native_hash_unchanged": true,
+      "original_pixels_exact": true,
+      "output_shape_preserved": true,
+      "enhanced_hash_verified": true
+    },
+    {
+      "profile": "standard",
+      "camera": "refined-wheel-detail",
+      "frame": 645,
+      "native_hash_unchanged": true,
+      "original_pixels_exact": true,
+      "output_shape_preserved": true,
+      "enhanced_hash_verified": true
+    },
+    {
+      "profile": "natural",
+      "camera": "stock-front-three-quarter",
+      "frame": 85,
+      "native_hash_unchanged": true,
+      "original_pixels_exact": true,
+      "output_shape_preserved": true,
+      "enhanced_hash_verified": true
+    },
+    {
+      "profile": "natural",
+      "camera": "stock-rear-three-quarter",
+      "frame": 165,
+      "native_hash_unchanged": true,
+      "original_pixels_exact": true,
+      "output_shape_preserved": true,
+      "enhanced_hash_verified": true
+    },
+    {
+      "profile": "natural",
+      "camera": "stock-front-detail",
+      "frame": 245,
+      "native_hash_unchanged": true,
+      "original_pixels_exact": true,
+      "output_shape_preserved": true,
+      "enhanced_hash_verified": true
+    },
+    {
+      "profile": "natural",
+      "camera": "stock-wheel-detail",
+      "frame": 325,
+      "native_hash_unchanged": true,
+      "original_pixels_exact": true,
+      "output_shape_preserved": true,
+      "enhanced_hash_verified": true
+    },
+    {
+      "profile": "natural",
+      "camera": "refined-front-three-quarter",
+      "frame": 405,
+      "native_hash_unchanged": true,
+      "original_pixels_exact": true,
+      "output_shape_preserved": true,
+      "enhanced_hash_verified": true
+    },
+    {
+      "profile": "natural",
+      "camera": "refined-rear-three-quarter",
+      "frame": 485,
+      "native_hash_unchanged": true,
+      "original_pixels_exact": true,
+      "output_shape_preserved": true,
+      "enhanced_hash_verified": true
+    },
+    {
+      "profile": "natural",
+      "camera": "refined-front-detail",
+      "frame": 565,
+      "native_hash_unchanged": true,
+      "original_pixels_exact": true,
+      "output_shape_preserved": true,
+      "enhanced_hash_verified": true
+    },
+    {
+      "profile": "natural",
+      "camera": "refined-wheel-detail",
+      "frame": 645,
+      "native_hash_unchanged": true,
+      "original_pixels_exact": true,
+      "output_shape_preserved": true,
+      "enhanced_hash_verified": true
+    }
+  ]
+}

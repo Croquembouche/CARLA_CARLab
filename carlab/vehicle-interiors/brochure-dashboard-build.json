@@ -1,0 +1,80 @@
+{
+  "result": "SAVED_VISUAL_REVIEW_PENDING",
+  "smoothed_surfaces": [
+    {
+      "name": "Brochure_Dashboard0",
+      "source_vertices": 126,
+      "bounds": [
+        [
+          0.6339051723480225,
+          -0.001947033335454762,
+          0.7132103443145752
+        ],
+        [
+          1.074424386024475,
+          0.8098501563072205,
+          1.0097241401672363
+        ]
+      ]
+    },
+    {
+      "name": "Brochure_Dashboard1",
+      "source_vertices": 86,
+      "bounds": [
+        [
+          0.6339051723480225,
+          -0.8098501563072205,
+          0.7132103443145752
+        ],
+        [
+          1.074424386024475,
+          3.552713678800501e-15,
+          1.0097241401672363
+        ]
+      ]
+    },
+    {
+      "name": "Brochure_Instrument_Hood2",
+      "source_vertices": 92,
+      "bounds": [
+        [
+          0.7823423743247986,
+          0.17354491353034973,
+          0.9316167235374451
+        ],
+        [
+          1.0533344745635986,
+          0.5725539922714233,
+          1.0026979446411133
+        ]
+      ]
+    },
+    {
+      "name": "Brochure_Instrument_Hood3",
+      "source_vertices": 125,
+      "bounds": [
+        [
+          0.7805713415145874,
+          0.17050109803676605,
+          0.9316167235374451
+        ],
+        [
+          1.0562121868133545,
+          0.5755157470703125,
+          1.012666940689087
+        ]
+      ]
+    }
+  ],
+  "new_trim": [
+    "Brochure_Dashboard0",
+    "Brochure_Dashboard1",
+    "Brochure_Instrument_Hood2",
+    "Brochure_Instrument_Hood3",
+    "Brochure_Console_Sliding_Cover",
+    "Brochure_Console_Cover_Finger_Pull",
+    "Brochure_Center_Armrest_Leather",
+    "Brochure_Console_Edge_-1",
+    "Brochure_Console_Edge_1"
+  ]
+}

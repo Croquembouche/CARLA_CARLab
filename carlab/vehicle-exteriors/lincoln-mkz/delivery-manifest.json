@@ -1,0 +1,216 @@
+{
+  "status": "DELIVERED_NATIVE_VERIFIED",
+  "carla_id": "vehicle.lincoln.mkz_refined",
+  "source": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/Lincoln_MKZ_Exterior_Refined.blend",
+  "runtime": "PASS_NATIVE_CAPTURE_AND_PHYSICS",
+  "new_detail_components": 8,
+  "stock_assets_unchanged": true,
+  "existing_simulator": "stopped by user, remains stopped",
+  "files": [
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/Lincoln_MKZ_Exterior_Refined.blend",
+      "bytes": 75791594,
+      "sha256": "0456949d5d0995732cfdffad5fb9a9d9722b7487a530e7a0ab66c01d6cbf3b56"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/exports/SM_MKZ_Hardware_Wheel_Front_Left.fbx",
+      "bytes": 96844,
+      "sha256": "665dfeda35486040246533ca7ba6207861e63f02c0e9ebe3bd7458b8bbd263ed"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/exports/SM_MKZ_Rotor_Wheel_Front_Right.fbx",
+      "bytes": 338812,
+      "sha256": "a6501cda1857686dbafd8722321593a7f5a35819e8b593d113c5029f625a4c78"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/exports/SM_MKZ_Hardware_Wheel_Rear_Left.fbx",
+      "bytes": 96796,
+      "sha256": "9c4e0852ee952b2cf5de5a167616a621dd3440bf902154cfd474329238779cc4"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/exports/SM_MKZ_Hardware_Wheel_Front_Right.fbx",
+      "bytes": 96908,
+      "sha256": "b634444def72cfc8c1781707ea983b057d3b402de180da5f47794f2b51f173dc"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/exports/atlas-review.png",
+      "bytes": 509383,
+      "sha256": "8ec166b4c76adfb9475b303f8f32ab05f420878120e3f02041c6743fea49a8d5"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/exports/T_MKZ_Exterior02_BaseColor.png",
+      "bytes": 1215227,
+      "sha256": "2679649310ee6d9990e48fecee4f7ffd9843c38e708d66193e1b7b747b968d2b"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/exports/SM_MKZ_Hardware_Wheel_Rear_Right.fbx",
+      "bytes": 96748,
+      "sha256": "b172e8a90f26a7179c1ef420500e416dc1feb4d129cce5385dd9e2b197f22282"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/exports/SM_MKZ_Rotor_Wheel_Rear_Right.fbx",
+      "bytes": 338812,
+      "sha256": "821e3787907cd54d848dc4867641a0a2a30a8153188b9a5cf457f578a7df3123"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/exports/SM_MKZ_Rotor_Wheel_Front_Left.fbx",
+      "bytes": 338908,
+      "sha256": "349de392ae048f375b5cf024fc167f0b37139c110b2aa7c1946487a7a41410b8"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/exports/T_MKZ_Exterior02_ORM.png",
+      "bytes": 3781510,
+      "sha256": "7e7d19e74af1d3a47d948c8c34e64030b7c059cbfe0cac211dab6004cfe6a307"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/exports/SM_MKZ_Rotor_Wheel_Rear_Left.fbx",
+      "bytes": 338892,
+      "sha256": "9787f128a1e0656e88829a271e95050b06c07f6015d6fd2ebd97e4a1f47aadde"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-stock-wheel-detail.png",
+      "bytes": 1204679,
+      "sha256": "3d7caf7c571a9157f07771ea045b480ef9d03d7147bab9671bea9a1cce7dc7c2"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-refined-front-detail.png",
+      "bytes": 1505433,
+      "sha256": "eabe53e3c2ad49a56822d86b6ee544f87fe025fe730d64d3a4c46fb923420534"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-stock-front-three-quarter.png",
+      "bytes": 1372460,
+      "sha256": "54e68242f17b5094c9ea84ba5d3a9b7578efe94992e3760c71ef1331f837e542"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-stock-rear-three-quarter.png",
+      "bytes": 1309116,
+      "sha256": "09793df69cd63f5f27a6dfedde7baf04dc6e55f13789e4a277c27a72e45349bd"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-refined-wheel-detail.png",
+      "bytes": 1206558,
+      "sha256": "9c53907635fa667218132d1d2a85087d3bb4001620c515382c2e62e535cebc81"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-stock-front-detail.png",
+      "bytes": 1454740,
+      "sha256": "f67991489f9af13da7e33c6ff62847deb0cb4e438d4987377f37e320548b4ca7"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-refined-rear-three-quarter.png",
+      "bytes": 1330902,
+      "sha256": "e198805cf04dad2e229bcfa6a4aef748a8984fdba51490fbcc898e262dfc7e50"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-refined-front-three-quarter.png",
+      "bytes": 1396258,
+      "sha256": "cfb9c713a261abd9fb31997a92b5d214bf98586d3fe123d9fa9a654d19da47cc"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/M_MKZ_StudioBackdrop.uasset",
+      "bytes": 5174,
+      "sha256": "ca79f361bd95cdccffda8fea145c7b09abf60e995b9eabbc07be32376c1d4a16"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/MI_MKZ_ExteriorTrim.uasset",
+      "bytes": 7347,
+      "sha256": "83416ffc766b83e3a733051caa1c7c697079537533e18fafc1830856e0ba7713"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/T_MKZ_Exterior02_BaseColor.uasset",
+      "bytes": 991939,
+      "sha256": "607ada0f43495d68250d49a7b2f5b3348a38c3f4852dec16b5b4b927f1723c9b"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/SM_MKZ_Rotor_Wheel_Front_Left.uasset",
+      "bytes": 516948,
+      "sha256": "9bde4a78aafd2ddb30f71a75cf14eecb072384a84d02f7f976fb9fa11fdcae54"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/M_MKZ_StudioFloor.uasset",
+      "bytes": 5504,
+      "sha256": "e67ad3a90b8fcd25110303df99894398e372230a5df462182c71b20be11a0e64"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/SM_MKZ_Rotor_Wheel_Rear_Left.uasset",
+      "bytes": 517564,
+      "sha256": "4dd0903ff0d60dde05110590cd366866ff9304ef489a740f178dbb82caf0ae2d"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/SM_MKZ_Hardware_Wheel_Front_Right.uasset",
+      "bytes": 186994,
+      "sha256": "a759b4d2ff558546f10ff5d5495dbaa2966c473912c68b307597507c1db72d67"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/MI_MKZ_ClearcoatPaint.uasset",
+      "bytes": 6736,
+      "sha256": "5371516dd4d0c0300d1e2cebd5c0dc00e0b9c78f5b097e0fd7f8e6b7671f30d6"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/SM_MKZ_Hardware_Wheel_Rear_Left.uasset",
+      "bytes": 186701,
+      "sha256": "9364c7ca1a05913567b39c7cdf20ef27c91817a78501b9bbcd85f7db0ea9f163"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/M_MKZ_Fastener.uasset",
+      "bytes": 6212,
+      "sha256": "b2de8239770c43df87a7864ff9c0576cfb23d70f39e9cbce5684049e2be5fd56"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/SM_MKZ_Hardware_Wheel_Rear_Right.uasset",
+      "bytes": 187034,
+      "sha256": "9a884d63b4dfa9cc576868583000f8836a4a634d444f0a5d37d74f4faae63363"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/SM_MKZ_Rotor_Wheel_Rear_Right.uasset",
+      "bytes": 516860,
+      "sha256": "490d65b09041b4e65a8847fcddef40ebf79bce359d6fa910787f1b762c1f9199"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/SM_MKZ_Hardware_Wheel_Front_Left.uasset",
+      "bytes": 186757,
+      "sha256": "0a38545cc5d02bdd3aacbd5a09e71b711cef1c101ad37eef10a49a3a9e6b539e"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/BP_LincolnMKZ_Refined.uasset",
+      "bytes": 119520,
+      "sha256": "ea6a8419437634f93eb66ea76abfb7caf4c344ede4ea8c5545040f72732b1583"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/M_MKZ_ValveRubber.uasset",
+      "bytes": 6198,
+      "sha256": "8e75dc056db9efedd27c56b024c92c5c3e5e9074f6bbf8db814c422064670782"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/MI_MKZ_ExteriorGlass.uasset",
+      "bytes": 6329,
+      "sha256": "ac366905dd973b1c1b77e2be4a46104953cf08b56c8f0898d277a2b9dbe42e58"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/T_MKZ_Exterior02_ORM.uasset",
+      "bytes": 3208861,
+      "sha256": "018c8a133d66992a9d8f581f8dedd93e85730985fd974567e5dcfbbcd23f1e24"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/M_MKZ_BrakeSteel.uasset",
+      "bytes": 6222,
+      "sha256": "b448e3e9e404b4867e987f3e37749ef6da1260db2c0f5691b1052efeb7d5b21e"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/SM_MKZ_Rotor_Wheel_Front_Right.uasset",
+      "bytes": 516875,
+      "sha256": "10d909696188aa6d5df480083fb98acb3cbf63d0691d78440ee87845372f347d"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleExteriors/LincolnMKZ/L_ExteriorStudio.umap",
+      "bytes": 22252,
+      "sha256": "c7fe39fd58217ec46189697f8df2666ea3e8a46d71cfdc56cf56b35abcf8f3a1"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/Carla/Config/PostProcess/MKZExteriorStudio.json",
+      "bytes": 20446,
+      "sha256": "3d2cc4456851aa608a61779122b962b63208c3638b04405705049bbb226f753c"
+    }
+  ]
+}

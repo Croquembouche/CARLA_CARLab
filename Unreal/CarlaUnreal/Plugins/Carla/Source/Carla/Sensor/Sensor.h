@@ -262,6 +262,8 @@ protected:
 
 private:
 
+  friend class FSensorManager;
+
   FDataStream Stream;
 
   FDelegateHandle OnPostTickDelegate;

@@ -35,9 +35,16 @@ using Buffer = std::deque<SimpleWaypointPtr>;
     cg::Location middle_location,
     cg::Location last_location);
 
+/// Tightest adjacent-triplet or broad first/middle/last circumradius in a
+/// planned path. Fewer than three points or a straight path returns max float.
+[[nodiscard]] float GetMinimumCurveRadius(
+    const std::vector<cg::Location> &locations);
+
 /// Locations-only variant of GetTargetData. Takes a flat list of waypoint
 /// locations and walks them to find the bracketing pair around
 /// `target_distance` from `vehicle_location`, then linearly interpolates.
+/// When the first waypoint is farther away, interpolate along the approach
+/// from the vehicle to that waypoint instead of extrapolating the next segment.
 /// Exposed as a free function so the unit-test suite can exercise it
 /// without constructing SimpleWaypoint instances (which require a real
 /// carla::client::Waypoint and therefore a road map).

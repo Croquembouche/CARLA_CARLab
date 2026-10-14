@@ -425,7 +425,7 @@
       "a": 1
     },
     "indirectLightingIntensity": 1,
-    "lumenRayLightingMode": "Default",
+    "lumenRayLightingMode": "HitLightingForReflections",
     "lumenSceneLightingQuality": 1,
     "lumenSceneDetail": 1,
     "lumenSceneViewDistance": 20000,
@@ -443,7 +443,7 @@
     "lumenReflectionsScreenTraces": true,
     "lumenFrontLayerTranslucencyReflections": true,
     "lumenMaxRoughnessToTraceReflections": 0.4000000059604645,
-    "lumenMaxReflectionBounces": 1,
+    "lumenMaxReflectionBounces": 3,
     "lumenMaxRefractionBounces": 0,
     "screenSpaceReflectionIntensity": 100,
     "screenSpaceReflectionQuality": 50,

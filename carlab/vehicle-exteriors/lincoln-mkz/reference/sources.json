@@ -1,0 +1,14 @@
+{
+  "vehicle": "Lincoln MKZ 2017-2020 exterior family",
+  "sources": [
+    {
+      "url": "https://www.lincoln.com/luxury-cars/mkz/",
+      "kind": "Manufacturer exterior images, retrieved online"
+    },
+    {
+      "url": "https://www.auto-brochures.com/makes/Lincoln/MKZ/Lincoln_US%20MKZ_2020.pdf",
+      "kind": "Manufacturer brochure, existing local PDF inspected on pages 1, 2, and 6"
+    }
+  ],
+  "scope": "Authored visual approximation based on references; original rig and physics preserved."
+}

@@ -1,0 +1,317 @@
+{
+  "accepted_at": "2026-09-13T04:06:57.244448+00:00",
+  "revision": "brochure material refinement v3",
+  "user_acceptance": "good enough; build it into carla",
+  "files": [
+    {
+      "path": "/mnt/simulations/vehicle-interiors/Lincoln_MKZ_Interior_Brochure.blend",
+      "bytes": 80382402,
+      "sha256": "455ada4deda576585914334a587d137adff5c181a6df336b6ec0bba084287f23"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-interiors/Lincoln_MKZ_Interior_Completed.blend",
+      "bytes": 80382169,
+      "sha256": "1652581995b6a727f54d361be0260b87cc521537b5aafc5a5f9b6f1b99fe81e3"
+    },
+    {
+      "path": "/mnt/simulations/vehicle-interiors/Lincoln_MKZ_Interior_Final.blend",
+      "bytes": 80382402,
+      "sha256": "455ada4deda576585914334a587d137adff5c181a6df336b6ec0bba084287f23"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/SM_MKZ_Completion_Details.uasset",
+      "bytes": 361656,
+      "sha256": "d1e725d5ccf8f934f549b1dcdbe07dc6579522e87b9034696a57c31bd1f3f928"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MI_MKZ_Brochure_Interior.uasset",
+      "bytes": 7273,
+      "sha256": "2f5ae67f6a844ef29c33ac589dedb8daa3b24a32818ff0862444658d38d246d5"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/M_Mannequin_Joints.uasset",
+      "bytes": 5483,
+      "sha256": "7b329346c28a4dc37877f543d0ff333425514bd59b8993663bd2ab9962e10995"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/SM_MKZ_Cabin_Final.uasset",
+      "bytes": 13985937,
+      "sha256": "11ab7496d9c5b0a02fb1b8c5054909ac36b6c5ff34e7e3155c2346f1dd76e2c1"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/M_Interior_Edge.uasset",
+      "bytes": 5433,
+      "sha256": "e2a731e13a57ded97a66879c40f970a12e9068543e595cec892a4108a8ac32eb"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MKZ_Fine_Satin.uasset",
+      "bytes": 8592,
+      "sha256": "ad967bc9a3f1a3d25c44cbb1145c0726a58e8ed5be9007e97487eec1ec8f3081"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/M_Hidden_StockCabin.uasset",
+      "bytes": 4666,
+      "sha256": "3db71d55ff62c706ecf71334f0d212d98a309a5ee2602f320da633966e7326e8"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/M_MKZ_Interior_PBR.uasset",
+      "bytes": 6563,
+      "sha256": "f919b11a79d635c8e75320cd1cd6d73e080371e736d6f9b8b2d56d9abe58d90d"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/T_MKZ_Perforated_Normal.uasset",
+      "bytes": 585101,
+      "sha256": "41935a16589b2ec48266a8a72491e3bbc087ea0553da61edc3d3c5c595ee5aa1"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MKZ_Vent_Recess.uasset",
+      "bytes": 5384,
+      "sha256": "7c671edc185b7539f44ccaa65d2c04f14825295e30ab4872e10c433984e1d9af"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/M_Mannequin_Eye.uasset",
+      "bytes": 5439,
+      "sha256": "d9cfa9369cd06bdeca97b14ca2825e202c2e0fc043766b59251bc1b70ca90ae1"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/M_MKZ_Moonroof_Master.uasset",
+      "bytes": 8423,
+      "sha256": "6d6e7b6bdc7f8cf6efc878706b0b2d9fc17157f60302f9c227209c8282e20983"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MKZ_Brochure_Satin.uasset",
+      "bytes": 5428,
+      "sha256": "429b24d88a2c0c7e34bdf0737d535c7aead39b62a141ca04fac608bccf91afe4"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/SM_MKZ_Glass_Without_Moonroof.uasset",
+      "bytes": 487838,
+      "sha256": "c66a16d928897e8b3c2a0b5da4c3706ea66b1d9fd16a08add23264013c038e33"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/T_MKZ_Perforation_Mask.uasset",
+      "bytes": 12643,
+      "sha256": "0deef735e9243eb29257f6db5eaa09df8f1949b97e4e7ae28c48c19e699b59ee"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/M_Interior_Mat.uasset",
+      "bytes": 5428,
+      "sha256": "a65bcf278cb11362a9474d5af566663043d3cd37b8a5a04bbf1b2b175ec79ff4"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MI_MKZ_Final_Interior.uasset",
+      "bytes": 7102,
+      "sha256": "31eb91027cc8f4e3debdc52f688b80e83f44098d0c271d22f8e4eee1b85e4a42"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/SK_MKZ_ExteriorOnly.uasset",
+      "bytes": 73253041,
+      "sha256": "9fe76b27319220ad510cd7f3c82d98201655d6ad8f9989fd3c366bbe1095b33d"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/T_MKZ_Ebony_ORM.uasset",
+      "bytes": 13836044,
+      "sha256": "c751578dfec24efebf0693b057c9862c36e66925d135b4ebe91e5d2972be40a4"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/SM_MKZ_Moonroof_Glass.uasset",
+      "bytes": 92565,
+      "sha256": "5c05b7f4b1dfeebbe6cc7cde7f137ffa42dd0f4ffb851a9c2c968e9497d1e2f2"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MKZ_Seat_Hardware.uasset",
+      "bytes": 5472,
+      "sha256": "e9896a056f9ebb238bbd87fddc986ca23f68a5967ecbffb530d6fa6f17a737d5"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MI_MKZ_Moonroof_Tint.uasset",
+      "bytes": 6429,
+      "sha256": "484395fc61e21fc38e7ff1898bfada79b0c5ad4645aa4a42180565606ebfa91b"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MKZ_Seam_Shadow.uasset",
+      "bytes": 5384,
+      "sha256": "9ae5ef97a8e3dcc7b20893330abe6884c608969f7d2a5b21efcf3a8ad09eaf63"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/T_MKZ_Brushed_Roughness.uasset",
+      "bytes": 241442,
+      "sha256": "d379395de1bd3ff3124b8d8aede0d09a24180be7a2ee9e0f3596f66dc2a75c9a"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/T_MKZ_Perforated_Roughness.uasset",
+      "bytes": 513895,
+      "sha256": "6e89fb36329ed4f35fb3f71db206bff1bd0a916855284e49f03d74410d919cba"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/T_MKZ_Leather_Roughness.uasset",
+      "bytes": 383880,
+      "sha256": "fd801372740d375e04cbf7b6351ff71e76340531383d38bc1517ac28e450fa60"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/M_Mannequin_Iris.uasset",
+      "bytes": 5473,
+      "sha256": "c02d8f10aa3abb70008301e9cec2cb19e446ed45c1d455e7856e9935a8f3bf5c"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MKZ_Completion_Lens.uasset",
+      "bytes": 5404,
+      "sha256": "369c231955fcbb28828d053dfbfd9dd49fbc9637f93742af664d96721cdbe082"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/T_MKZ_Brochure_ORM.uasset",
+      "bytes": 14148086,
+      "sha256": "041a6481f6dc3b064a8c84ada0598faa686418794da30f4a79368438a7922fcc"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MKZ_Stitch_Charcoal.uasset",
+      "bytes": 5453,
+      "sha256": "144bffbaa26e5f330a012e5eb7bc521e93133f6af5fef4dedef02de2aad2548a"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MKZ_Completion_Rubber.uasset",
+      "bytes": 5414,
+      "sha256": "265e91d6bccdea76ad4cc253723873a974b0e0f10d4a2874681bfe6e57167820"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/T_MKZ_Brushed_Normal.uasset",
+      "bytes": 16079,
+      "sha256": "bd014ee05de0e30589e7ad0a0935da6c3e17596ab453cf04744a3d920df8b843"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/BP_LincolnMKZ_Interior.uasset",
+      "bytes": 121126,
+      "sha256": "c63654e775a800cb87cb7380e89aaccd2737322d0dcae3e11828b96d70d9226e"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MKZ_Moonroof_Glass.uasset",
+      "bytes": 6087,
+      "sha256": "6da49f7365fd7b4960ebd96a460414814a9387282ef420c1f07bb9dc5125ca92"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/T_MKZ_Ebony_BaseColor.uasset",
+      "bytes": 10897790,
+      "sha256": "a10044b030c49dcbbc2c8a6e37d52b0db182ebb973c50980d915ae01a800b2a3"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/SM_MKZ_Cabin_Brochure.uasset",
+      "bytes": 17045929,
+      "sha256": "e08a0590f9212d25e30eebb5e0519e2df90fae25b694441f7719ffa87d9d3fba"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/SK_MKZ_Exterior_Final.uasset",
+      "bytes": 73199072,
+      "sha256": "b4c383cd55f2d2e8b71e3675ec0d645e4b6ab77314e8eb9aa8b5f5d2f9ac1eb6"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/SK_SeatedMannequin_Skeleton.uasset",
+      "bytes": 5974,
+      "sha256": "dd309bb0331151684cfc03dcbb53fe4e8e21a74f65031fa081f3fb2ea6570118"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MI_MKZ_Ebony_Interior.uasset",
+      "bytes": 7246,
+      "sha256": "956189edfcb4913c61534795a9743116761f09dcdbc1c10890637698e4da0429"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/T_MKZ_Brochure_BaseColor.uasset",
+      "bytes": 12995121,
+      "sha256": "c8e2fb6bd889d70ad7679a7266a0e70fc7ed68adcb1e63159412fd95f9dad756"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/SM_MKZ_Cabin_v2.uasset",
+      "bytes": 7233162,
+      "sha256": "a71e842e0a5f15ebd3ee7bc0447119c49e7778132cff419def8331114f3a807c"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.uasset",
+      "bytes": 7994,
+      "sha256": "9c6927c9e28456c0fdeb7cefd971c9bd3728c691ba827987ba7dab560101bfaa"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MKZ_Brochure_Chrome.uasset",
+      "bytes": 5433,
+      "sha256": "ae13b38574600d6851783e5ee6ff3f9d6ff53f87af8efd2f293636a6108f9c52"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MI_MKZ_Glass_NoDepth.uasset",
+      "bytes": 6421,
+      "sha256": "a7f987ee9b323ffd0741296f41079ed0b9b694d31998d0712da19f07b0392d0b"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MKZ_Belt_Release.uasset",
+      "bytes": 5438,
+      "sha256": "1f2ebcfd4e1d6c6335794e1bcd9e9135d08a7f92c0cc75cad70df9bcb77f2c40"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/T_MKZ_Leather_Normal.uasset",
+      "bytes": 1094214,
+      "sha256": "c4cb34e8b8686bda2bc9941f3d3de4c8328825632a1e46017382866eab6a376e"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/M_Mannequin_Shell.uasset",
+      "bytes": 5478,
+      "sha256": "18169e5fcb1f38ccd2fe6613298529af61fdece0f9b823af43b19a765dc713db"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MKZ_Vent_Louver.uasset",
+      "bytes": 5384,
+      "sha256": "64e81118f1b306902ca06dd9303a0e41d2f0e51ec9d8be99653676cdbebba7d1"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/SM_MKZ_Driver_Worn_Belt.uasset",
+      "bytes": 174775,
+      "sha256": "a72d1d4b4971a12b79559558810b66464bb9e42b5c18fe0d58734d48c2400c65"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/M_MKZ_Glass_NoDepth.uasset",
+      "bytes": 8464,
+      "sha256": "98b5f1b5a0fe118d82631d0222057fa5e11cd2cb9212d160723abe7f50299199"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MKZ_Perforated_Leather.uasset",
+      "bytes": 9257,
+      "sha256": "df200417905bf2ead89151f6e382fe99a489f8b7cc0ed6a5b235b6d79473df48"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.uasset",
+      "bytes": 5463,
+      "sha256": "16ad391e726b96ec4f25750d844a0ad4aa397d872da9faaa8d796312efc6e8d9"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/SM_MKZ_Door_Details_FL.uasset",
+      "bytes": 330999,
+      "sha256": "20a194efacadab6fe5a05f554316068ec07e622dc2ecc10c68c5af46ddb2b029"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MKZ_Speaker_Metal.uasset",
+      "bytes": 5423,
+      "sha256": "60006d8d38c3f950802c8335f3d58b042f562cc241a3b49b9fd26007701ece84"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/SM_LincolnCabinDetails.uasset",
+      "bytes": 127314,
+      "sha256": "a1526f6e2b1fccdd6b322c963d9495470deca9e92b6ee218b17694eafab3feda"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/SM_MKZ_Door_Details_FR.uasset",
+      "bytes": 329202,
+      "sha256": "bc2330d6d9a8ed7852f02a1d233854af74a627d24e6eebd69b7f994120a4d488"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MKZ_Completion_Headliner.uasset",
+      "bytes": 5429,
+      "sha256": "3fbd2d962e9e9bcf872aa63cb2b9de81173b088564e0808ce4621292530752d1"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/MKZ_Seatbelt_Webbing.uasset",
+      "bytes": 5409,
+      "sha256": "c9469bc21049c649674249582a4410edf13c4ee8a237bae36528ac589f2d4ad8"
+    },
+    {
+      "path": "/mnt/simulations/carla/Unreal/CarlaUnreal/Content/VehicleInteriors/Lincoln/SK_SeatedMannequin.uasset",
+      "bytes": 6379998,
+      "sha256": "165ccb579413837f919e1f87141eb351ea2efe5c2f2c4848222d209d25a8f9e2"
+    }
+  ]
+}

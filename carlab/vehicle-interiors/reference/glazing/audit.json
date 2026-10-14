@@ -1,0 +1,62 @@
+{
+  "SM_LincolnMKZ_Glass_Ext1": {
+    "bounds": "<Struct 'BoxSphereBounds' (0xb0142655700) {origin: {x: -3.470924, y: 0.000000, z: 102.326714}, box_extent: {x: 238.702736, y: 89.894073, z: 53.099144}, sphere_radius: 245.741607}>",
+    "materials": [
+      "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext' (0xb00cbcc3000) Class 'MaterialInstanceConstant'>",
+      "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Emissive_Glass_Ext.MI_LincolnMKZ_Emissive_Glass_Ext' (0xb00cbcc5000) Class 'MaterialInstanceConstant'>"
+    ]
+  },
+  "SM_LincolnMKZ_Glass_Ext2": {
+    "bounds": "<Struct 'BoxSphereBounds' (0xb0151f41840) {origin: {x: -32.346153, y: -0.000023, z: 125.611687}, box_extent: {x: 156.437103, y: 76.056778, z: 27.973854}, sphere_radius: 176.180979}>",
+    "materials": [
+      "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Int.MI_LincolnMKZ_Glass_Int' (0xb00cbcc9800) Class 'MaterialInstanceConstant'>"
+    ]
+  },
+  "SM_LincolnMKZ_Door_FL_Glass_Ext1": {
+    "bounds": "<Struct 'BoxSphereBounds' (0xb0151f41700) {origin: {x: 36.553272, y: -70.482866, z: 123.653332}, box_extent: {x: 55.443104, y: 7.760092, z: 20.602238}, sphere_radius: 59.626708}>",
+    "materials": [
+      "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext' (0xb00cbcc3000) Class 'MaterialInstanceConstant'>"
+    ]
+  },
+  "SM_LincolnMKZ_Door_FR_Glass_Ext1": {
+    "bounds": "<Struct 'BoxSphereBounds' (0xb0151f421c0) {origin: {x: 36.553272, y: 70.482809, z: 123.653374}, box_extent: {x: 55.443104, y: 7.760103, z: 20.602242}, sphere_radius: 59.626707}>",
+    "materials": [
+      "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext' (0xb00cbcc3000) Class 'MaterialInstanceConstant'>"
+    ]
+  },
+  "SM_LincolnMKZ_Door_RL_Glass_Ext1": {
+    "bounds": "<Struct 'BoxSphereBounds' (0xb0151f42180) {origin: {x: -64.646564, y: -70.184507, z: 126.838398}, box_extent: {x: 34.813152, y: 7.973284, z: 18.087490}, sphere_radius: 39.954778}>",
+    "materials": [
+      "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext' (0xb00cbcc3000) Class 'MaterialInstanceConstant'>"
+    ]
+  },
+  "SM_LincolnMKZ_Door_RR_Glass_Ext1": {
+    "bounds": "<Struct 'BoxSphereBounds' (0xb0151f41700) {origin: {x: -64.646564, y: 70.184446, z: 126.838432}, box_extent: {x: 34.813152, y: 7.973291, z: 18.087486}, sphere_radius: 39.954774}>",
+    "materials": [
+      "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext' (0xb00cbcc3000) Class 'MaterialInstanceConstant'>"
+    ]
+  },
+  "material_Int": {
+    "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/Vehicles/M_GlassInt_Master.M_GlassInt_Master' (0xb014254ee00) Class 'Material'>",
+    "scalar": {
+      "Opacity": 0.949999988079071,
+      "EXP": 5.0,
+      "Intensity": 0.029999999329447746
+    },
+    "vector": {
+      "Glass Color": "<Struct 'LinearColor' (0x7f52a2f8caa0) {r: 0.000000, g: 0.000000, b: 0.000000, a: 1.000000}>"
+    }
+  },
+  "material_Ext": {
+    "parent": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/M_Glass.M_Glass' (0xb00c67b7e00) Class 'Material'>",
+    "scalar": {
+      "Metallic": 0.0,
+      "Specular": 0.5,
+      "Roughness": 0.019999999552965164,
+      "Opacity": 0.8500000238418579
+    },
+    "vector": {
+      "Color": "<Struct 'LinearColor' (0x7f52a2f8cce0) {r: 0.000000, g: 0.000000, b: 0.000000, a: 1.000000}>"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "result": "PASS_CAPTURE_CHECK",
+  "visual_review": "REVIEWED_MATERIAL_V3_IMPROVED_APPROXIMATION",
+  "vehicle": "vehicle.lincoln.mkz_interior",
+  "map": "Carla/Maps/Town10HD_Opt",
+  "cameras": [
+    "brochure_dashboard",
+    "brochure_cabin"
+  ],
+  "server": "0.10.0",
+  "texture_pool_mb": 2048,
+  "shader_compilation": "project defaults; 150 warm-up ticks per camera",
+  "cache_profile": "NoZenLocalFallback with /home/william/.cache/carla-ddc",
+  "post_process_profile": "LincolnBrochure",
+  "simultaneous_cameras": 1,
+  "wheels": 4,
+  "extent_m": [
+    2.4459850788116455,
+    0.9178230166435242,
+    0.7620594501495361
+  ],
+  "note": "RGB cabin visibility. Epic scalability with bounded texture and virtual-shadow pools; no VR test.",
+  "engine_process_returncode": 0,
+  "shutdown_verified_clean": true,
+  "presentation": {
+    "post_process_profile": "LincolnBrochure",
+    "temporary_lighting_level": "/Game/VehicleInteriors/Lincoln/L_MKZ_Photography",
+    "empty_cabin": true,
+    "passenger_door_open_for_side_view": true,
+    "spawn_index": 8,
+    "resolution": [
+      1600,
+      800
+    ],
+    "fov_degrees": {
+      "dashboard": 100,
+      "cabin": 120
+    }
+  },
+  "material_review": {
+    "same_camera_and_lighting_as_v2": true,
+    "observations": [
+      "Leather is darker with stronger localized highlights and visible fine texture",
+      "Walnut is subdued and less orange",
+      "Console satin varies from dark reflected cabin to a bright reflection in the dashboard view"
+    ],
+    "remaining_limitations": [
+      "Stock trim still reads too pale in parts of the dashboard view",
+      "Stock controls have limited texture resolution",
+      "Finish match is a visual approximation"
+    ]
+  }
+}

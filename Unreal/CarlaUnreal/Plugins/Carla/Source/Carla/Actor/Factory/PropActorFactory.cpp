@@ -6,6 +6,7 @@
 
 
 #include "Carla/Actor/Factory/PropActorFactory.h"
+#include "HAL/IConsoleManager.h"
 #include "Carla/Actor/ActorBlueprintFunctionLibrary.h"
 #include "Carla/Actor/ActorDefinition.h"
 #include "Carla/Game/CarlaEpisode.h"
@@ -24,6 +25,11 @@ TArray<FActorDefinition> APropActorFactory::GetDefinitions()
   LoadPropParametersArrayFromFile("PropParameters.json", PropsParams);
 
   MeshCacheByPath.Reset();
+  // Catalogue metadata already contains mesh paths. In deferred mode the
+  // existing SpawnActor cache-miss path loads and retains the requested mesh.
+  const IConsoleVariable* LazyClasses = IConsoleManager::Get().FindConsoleVariable(TEXT("carla.ActorDefinitions.LazyClasses"));
+  const bool bPreloadMeshes = !LazyClasses || LazyClasses->GetInt() == 0;
+  if (bPreloadMeshes)
   for (const FPropParameters& Params : PropsParams)
   {
     if (Params.Mesh.IsNull())

@@ -10,6 +10,7 @@
 
 #include <util/ue-header-guard-begin.h>
 #include "GameFramework/Actor.h"
+#include "UObject/SoftObjectPtr.h"
 #include <util/ue-header-guard-end.h>
 
 #include "ActorDefinition.generated.h"
@@ -47,6 +48,11 @@ struct FActorDefinition
   /// help the user identifying and filtering actors.
   UPROPERTY(EditAnywhere, BlueprintReadWrite)
   TArray<FActorAttribute> Attributes;
+
+  /// Optional deferred spawn target. Internal to the native dispatcher;
+  /// client IDs, tags, attributes and variations are unchanged.
+  UPROPERTY()
+  TSoftClassPtr<AActor> SoftClass;
 };
 
 /// A definition of a Vehicle Actor with all the variation and attributes.

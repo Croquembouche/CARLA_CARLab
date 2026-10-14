@@ -22,10 +22,14 @@ Router::~Router() {
 }
 
 void Router::Stop() {
-  ClearSessions();
-  _listener->Stop();
-  _listener.reset();
+  // Quiesce and join callbacks before destroying sessions or the listener.
+  // Closing/restarting their context while run() is active races socket Open.
   _pool.Stop();
+  ClearSessions();
+  if (_listener) {
+    _listener->Stop();
+    _listener.reset();
+  }
 }
 
 Router::Router(uint16_t port) :
@@ -117,6 +121,10 @@ void Router::DisconnectSession(std::shared_ptr<Primary> session) {
 void Router::ClearSessions() {
   std::scoped_lock<std::mutex> lock(_mutex);
   _sessions.clear();
+  for (auto &item : _promises)
+    item.second->set_exception(std::make_exception_ptr(std::runtime_error("GPU router stopped")));
+  _promises.clear();
+  _sensor_load.clear();
   log_info("Disconnecting all secondary servers");
 }
 

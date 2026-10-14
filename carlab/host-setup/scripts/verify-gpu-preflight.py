@@ -7,7 +7,7 @@ import socket
 import subprocess
 import time
 
-root = Path('/mnt/simulations/carla/carlab/host-setup')
+root = Path('/media/william/mist1/Simulations')
 out = Path('/mnt/simulations/verification')
 for port in (2250, 2251, 2252):
     with socket.socket() as probe:

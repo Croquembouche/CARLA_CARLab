@@ -3,7 +3,7 @@ StructuredBuffer<float4> InfraredInfo;
 StructuredBuffer<float4> InfraredUVs;
 StructuredBuffer<float4> InfraredPixels;
 float4 InfraredMaterial(uint Mat,float4 Base,uint Triangle,float2 Bary,float2 MotionUV,bool Moving,float2 Sensor) {
-    uint I=Mat*6;float4 Flags=InfraredInfo[I+5];if(Flags.w<.5)return Base;
+    uint I=Mat*8;float4 Flags=InfraredInfo[I+5];if(Flags.w<.5)return Base;
     float4 Spectrum=InfraredInfo[I+3];
     float T=saturate((Sensor.x-Spectrum.x)/(Spectrum.y-Spectrum.x));
     float4 Value=saturate(lerp(InfraredInfo[I],InfraredInfo[I+1],T)*lerp(1,InfraredInfo[I+2],saturate(Sensor.y)));
@@ -18,4 +18,26 @@ float4 InfraredMaterial(uint Mat,float4 Base,uint Triangle,float2 Bary,float2 Mo
         uint2 Pixel=min(uint2(Width-1,Height-1),uint2(UV*float2(Width,Height)));
         Value*=InfraredPixels[asuint(Map.z)+Pixel.y*Width+Pixel.x];
     }return Value;
+}
+
+bool InfraredAllowsHit(uint Mat,uint Triangle,float2 Bary,float2 MotionUV,bool Moving) {
+    uint I=Mat*8;float4 Map=InfraredInfo[I+6];uint Width=asuint(Map.y),Height=asuint(Map.z);
+    if(Width==0)return true;
+    float2 UV=MotionUV;
+    if(!Moving) {
+        float4 Flags=InfraredInfo[I+5];if(Triangle>=asuint(Flags.z))return false;
+        uint Offset=asuint(Flags.y)+Triangle*3;
+        UV=InfraredUVs[Offset].xy*(1-Bary.x-Bary.y)+InfraredUVs[Offset+1].xy*Bary.x+InfraredUVs[Offset+2].xy*Bary.y;
+    }
+    float4 Transform=InfraredInfo[I+7];UV=UV*Transform.xy+Transform.zw;
+    uint Flags=uint(InfraredInfo[I+5].w);bool ClampX=(Flags&2u)!=0,ClampY=(Flags&4u)!=0;
+    float2 Addressed=float2(ClampX?saturate(UV.x):frac(UV.x),ClampY?saturate(UV.y):frac(UV.y));
+    float2 Pos=Addressed*float2(Width,Height)-.5;
+    int2 Pixel=int2(floor(Pos));float2 F=frac(Pos);
+    int X0=ClampX?clamp(Pixel.x,0,int(Width)-1):(Pixel.x%int(Width)+int(Width))%int(Width),X1=ClampX?clamp(Pixel.x+1,0,int(Width)-1):(X0+1)%int(Width);
+    int Y0=ClampY?clamp(Pixel.y,0,int(Height)-1):(Pixel.y%int(Height)+int(Height))%int(Height),Y1=ClampY?clamp(Pixel.y+1,0,int(Height)-1):(Y0+1)%int(Height);
+    uint Base=asuint(Map.x);
+    float A=lerp(InfraredPixels[Base+Y0*Width+X0].x,InfraredPixels[Base+Y0*Width+X1].x,F.x);
+    float B=lerp(InfraredPixels[Base+Y1*Width+X0].x,InfraredPixels[Base+Y1*Width+X1].x,F.x);
+    return lerp(A,B,F.y)>=Map.w;
 }

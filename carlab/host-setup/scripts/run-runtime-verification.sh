@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
-source /mnt/simulations/carla/carlab/host-setup/env.sh
+source /media/william/mist1/Simulations/env.sh
 status() { printf '%s %s\n' "$(date --iso-8601=seconds)" "$*" | tee "$SIMULATIONS_ROOT/logs/build-status.txt"; }
 verification_log=runtime-verification.log
 if [[ "${1:-}" == --gpu-only ]]; then verification_log=gpu-verification.log; fi

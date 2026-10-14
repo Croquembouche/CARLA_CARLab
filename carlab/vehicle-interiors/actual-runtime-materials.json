@@ -3,15 +3,15 @@
     "materials": [
       {
         "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
-        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/Vehicles/M_CarPaintMaster.M_CarPaintMaster' (0xa263672b600) Class 'Material'>"
+        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/Vehicles/M_CarPaintMaster.M_CarPaintMaster' (0x4ff8650c400) Class 'Material'>"
       },
       {
         "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior2.MI_LincolnMKZ_Interior2",
-        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster' (0xa2615289a00) Class 'Material'>"
+        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster' (0x4ff691da800) Class 'Material'>"
       },
       {
         "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior01.MI_LincolnMKZ_Interior01",
-        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster' (0xa2615289a00) Class 'Material'>"
+        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster' (0x4ff691da800) Class 'Material'>"
       }
     ],
     "visible": true,
@@ -30,7 +30,7 @@
     "materials": [
       {
         "name": "/Game/Carla/Maps/Town10HD_Opt.Town10HD_Opt:PersistentLevel.BP_LincolnMKZ_Interior_C_0.SM_Lincolnv1_lights.MID_MI_LincolnMKZ_Emissive_0",
-        "parent": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Emissive.MI_LincolnMKZ_Emissive' (0xa267826a000) Class 'MaterialInstanceConstant'>"
+        "parent": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Emissive.MI_LincolnMKZ_Emissive' (0x5006ff97800) Class 'MaterialInstanceConstant'>"
       }
     ],
     "visible": true,
@@ -40,14 +40,15 @@
     "materials": [
       {
         "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
-        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/Vehicles/M_CarPaintMaster.M_CarPaintMaster' (0xa263672b600) Class 'Material'>"
+        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/Vehicles/M_CarPaintMaster.M_CarPaintMaster' (0x4ff8650c400) Class 'Material'>"
       },
       {
         "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior2.MI_LincolnMKZ_Interior2",
-        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster' (0xa2615289a00) Class 'Material'>"
+        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster' (0x4ff691da800) Class 'Material'>"
       },
       {
-        "name": "/Game/VehicleInteriors/Lincoln/M_MKZ_Interior_PBR.M_MKZ_Interior_PBR"
+        "name": "/Game/VehicleInteriors/Lincoln/MI_MKZ_Brochure_Interior.MI_MKZ_Brochure_Interior",
+        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster' (0x4ff691da800) Class 'Material'>"
       }
     ],
     "visible": true,
@@ -57,7 +58,7 @@
     "materials": [
       {
         "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext",
-        "parent": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/M_Glass.M_Glass' (0xa2675f0e000) Class 'Material'>"
+        "parent": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/M_Glass.M_Glass' (0x501137bb600) Class 'Material'>"
       }
     ],
     "visible": true,
@@ -67,14 +68,15 @@
     "materials": [
       {
         "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
-        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/Vehicles/M_CarPaintMaster.M_CarPaintMaster' (0xa263672b600) Class 'Material'>"
+        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/Vehicles/M_CarPaintMaster.M_CarPaintMaster' (0x4ff8650c400) Class 'Material'>"
       },
       {
         "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior2.MI_LincolnMKZ_Interior2",
-        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster' (0xa2615289a00) Class 'Material'>"
+        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster' (0x4ff691da800) Class 'Material'>"
       },
       {
-        "name": "/Game/VehicleInteriors/Lincoln/M_MKZ_Interior_PBR.M_MKZ_Interior_PBR"
+        "name": "/Game/VehicleInteriors/Lincoln/MI_MKZ_Brochure_Interior.MI_MKZ_Brochure_Interior",
+        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster' (0x4ff691da800) Class 'Material'>"
       }
     ],
     "visible": true,
@@ -84,7 +86,7 @@
     "materials": [
       {
         "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext",
-        "parent": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/M_Glass.M_Glass' (0xa2675f0e000) Class 'Material'>"
+        "parent": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/M_Glass.M_Glass' (0x501137bb600) Class 'Material'>"
       }
     ],
     "visible": true,
@@ -94,14 +96,15 @@
     "materials": [
       {
         "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
-        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/Vehicles/M_CarPaintMaster.M_CarPaintMaster' (0xa263672b600) Class 'Material'>"
+        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/Vehicles/M_CarPaintMaster.M_CarPaintMaster' (0x4ff8650c400) Class 'Material'>"
       },
       {
         "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior2.MI_LincolnMKZ_Interior2",
-        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster' (0xa2615289a00) Class 'Material'>"
+        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster' (0x4ff691da800) Class 'Material'>"
       },
       {
-        "name": "/Game/VehicleInteriors/Lincoln/M_MKZ_Interior_PBR.M_MKZ_Interior_PBR"
+        "name": "/Game/VehicleInteriors/Lincoln/MI_MKZ_Brochure_Interior.MI_MKZ_Brochure_Interior",
+        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster' (0x4ff691da800) Class 'Material'>"
       }
     ],
     "visible": true,
@@ -111,7 +114,28 @@
     "materials": [
       {
         "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext",
-        "parent": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/M_Glass.M_Glass' (0xa2675f0e000) Class 'Material'>"
+        "parent": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/M_Glass.M_Glass' (0x501137bb600) Class 'Material'>"
+      }
+    ],
+    "visible": true,
+    "hidden_in_game": false
+  },
+  "BrochureDoorDetails_FL": {
+    "materials": [
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Fine_Satin.MKZ_Fine_Satin"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Speaker_Metal.MKZ_Speaker_Metal"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.MKZ_Seat_Base_Plastic"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Vent_Recess.MKZ_Vent_Recess"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather"
       }
     ],
     "visible": true,
@@ -121,14 +145,15 @@
     "materials": [
       {
         "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
-        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/Vehicles/M_CarPaintMaster.M_CarPaintMaster' (0xa263672b600) Class 'Material'>"
+        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/Vehicles/M_CarPaintMaster.M_CarPaintMaster' (0x4ff8650c400) Class 'Material'>"
       },
       {
         "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior2.MI_LincolnMKZ_Interior2",
-        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster' (0xa2615289a00) Class 'Material'>"
+        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster' (0x4ff691da800) Class 'Material'>"
       },
       {
-        "name": "/Game/VehicleInteriors/Lincoln/M_MKZ_Interior_PBR.M_MKZ_Interior_PBR"
+        "name": "/Game/VehicleInteriors/Lincoln/MI_MKZ_Brochure_Interior.MI_MKZ_Brochure_Interior",
+        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster' (0x4ff691da800) Class 'Material'>"
       }
     ],
     "visible": true,
@@ -138,7 +163,28 @@
     "materials": [
       {
         "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext",
-        "parent": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/M_Glass.M_Glass' (0xa2675f0e000) Class 'Material'>"
+        "parent": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/M_Glass.M_Glass' (0x501137bb600) Class 'Material'>"
+      }
+    ],
+    "visible": true,
+    "hidden_in_game": false
+  },
+  "BrochureDoorDetails_FR": {
+    "materials": [
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Fine_Satin.MKZ_Fine_Satin"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Speaker_Metal.MKZ_Speaker_Metal"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.MKZ_Seat_Base_Plastic"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Vent_Recess.MKZ_Vent_Recess"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather"
       }
     ],
     "visible": true,
@@ -148,11 +194,11 @@
     "materials": [
       {
         "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext",
-        "parent": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/M_Glass.M_Glass' (0xa2675f0e000) Class 'Material'>"
+        "parent": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/M_Glass.M_Glass' (0x501137bb600) Class 'Material'>"
       },
       {
-        "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext",
-        "parent": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/M_Glass.M_Glass' (0xa2675f0e000) Class 'Material'>"
+        "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Emissive_Glass_Ext.MI_LincolnMKZ_Emissive_Glass_Ext",
+        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/Vehicles/M_GlassExt_Master.M_GlassExt_Master' (0x4ffc935b600) Class 'Material'>"
       }
     ],
     "visible": true,
@@ -173,19 +219,29 @@
   "CabinReplacement": {
     "materials": [
       {
-        "name": "/Game/VehicleInteriors/Lincoln/M_MKZ_Interior_PBR.M_MKZ_Interior_PBR"
+        "name": "/Game/VehicleInteriors/Lincoln/MI_MKZ_Brochure_Interior.MI_MKZ_Brochure_Interior",
+        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster' (0x4ff691da800) Class 'Material'>"
       },
       {
-        "name": "/Game/VehicleInteriors/Lincoln/M_Interior_Mat.M_Interior_Mat"
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather"
       },
       {
-        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.MKZ_Seat_Base_Plastic"
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Brochure_Chrome.MKZ_Brochure_Chrome"
       },
       {
-        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Hardware.MKZ_Seat_Hardware"
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Vent_Recess.MKZ_Vent_Recess"
       },
       {
-        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Belt_Release.MKZ_Belt_Release"
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Vent_Louver.MKZ_Vent_Louver"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Fine_Satin.MKZ_Fine_Satin"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Stitch_Charcoal.MKZ_Stitch_Charcoal"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Seam_Shadow.MKZ_Seam_Shadow"
       },
       {
         "name": "/Game/VehicleInteriors/Lincoln/M_Interior_Mat.M_Interior_Mat"
@@ -194,13 +250,72 @@
         "name": "/Game/VehicleInteriors/Lincoln/M_Interior_Edge.M_Interior_Edge"
       },
       {
-        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather"
-      },
-      {
         "name": "/Game/VehicleInteriors/Lincoln/MKZ_Perforated_Leather.MKZ_Perforated_Leather"
       },
       {
-        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Stitch_Charcoal.MKZ_Stitch_Charcoal"
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.MKZ_Seat_Base_Plastic"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Hardware.MKZ_Seat_Hardware"
+      }
+    ],
+    "visible": true,
+    "hidden_in_game": false
+  },
+  "InteriorCompletion": {
+    "materials": [
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.MKZ_Seat_Base_Plastic"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Belt_Release.MKZ_Belt_Release"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Completion_Rubber.MKZ_Completion_Rubber"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Hardware.MKZ_Seat_Hardware"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Seatbelt_Webbing.MKZ_Seatbelt_Webbing"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Completion_Headliner.MKZ_Completion_Headliner"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Completion_Lens.MKZ_Completion_Lens"
+      }
+    ],
+    "visible": true,
+    "hidden_in_game": false
+  },
+  "MoonroofGlass": {
+    "materials": [
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MI_MKZ_Moonroof_Tint.MI_MKZ_Moonroof_Tint",
+        "parent": "<Object '/Game/VehicleInteriors/Lincoln/M_MKZ_Moonroof_Master.M_MKZ_Moonroof_Master' (0x501b0709a00) Class 'Material'>"
+      }
+    ],
+    "visible": true,
+    "hidden_in_game": false
+  },
+  "DriverWornBelt": {
+    "materials": [
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Seatbelt_Webbing.MKZ_Seatbelt_Webbing"
+      }
+    ],
+    "visible": true,
+    "hidden_in_game": false
+  },
+  "MoonroofFrame": {
+    "materials": [
+      {
+        "name": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
+        "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/Vehicles/M_CarPaintMaster.M_CarPaintMaster' (0x4ff8650c400) Class 'Material'>"
+      },
+      {
+        "name": "/Game/VehicleInteriors/Lincoln/MKZ_Completion_Headliner.MKZ_Completion_Headliner"
       }
     ],
     "visible": true,

@@ -13,6 +13,7 @@
 #include "Carla/Lights/CarlaLight.h"
 #include "Carla/Vehicle/VehicleSpawnPoint.h"
 #include "Carla/Util/BoundingBoxCalculator.h"
+#include "Carla/Util/InstancePlacementOverrides.h"
 
 #include <util/disable-ue4-macros.h>
 #include "carla/opendrive/OpenDriveParser.h"
@@ -655,6 +656,7 @@ void ACarlaGameModeBase::RegisterEnvironmentObjects()
   // Get all actors of the level
   TArray<AActor*> FoundActors;
   UGameplayStatics::GetAllActorsOfClass(GetWorld(), AActor::StaticClass(), FoundActors);
+  CarlaInstancePlacement::Apply(FoundActors);
   ObjectRegister->RegisterObjects(FoundActors);
 }
 

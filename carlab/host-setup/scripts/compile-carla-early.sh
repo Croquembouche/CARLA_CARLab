@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
-source /mnt/simulations/carla/carlab/host-setup/env.sh
+source /media/william/mist1/Simulations/env.sh
 export PATH="$CARLA_VENV/bin:$SIMULATIONS_LINUX/bin:/opt/cmake-3.28.3-linux-x86_64/bin:/usr/local/bin:/usr/bin:/bin"
 export TMPDIR="$SIMULATIONS_LINUX/tmp"
 export NUGET_PACKAGES="$SIMULATIONS_LINUX/cache/nuget"

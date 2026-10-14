@@ -21,6 +21,9 @@
 #include "Components/ExponentialHeightFogComponent.h"
 #include "Components/VolumetricCloudComponent.h"
 #include "Materials/MaterialInstanceDynamic.h"
+#include "Materials/MaterialParameterCollection.h"
+#include "Kismet/KismetMaterialLibrary.h"
+#include "Engine/World.h"
 #include "Curves/CurveFloat.h"
 #include "Kismet/GameplayStatics.h"
 #include "UObject/ConstructorHelpers.h"
@@ -53,6 +56,29 @@ void ApplyLoadedSkyWeather(AWeather* WeatherActor, const FWeatherParameters& Par
 {
     TArray<AActor*> Skies;
     UGameplayStatics::GetAllActorsOfClass(WeatherActor->GetWorld(), ASkyBase::StaticClass(), Skies);
+    // Town02's revised surfaces opt in explicitly. The legacy weather graph
+    // leaves canonical Wetness at zero even when the API requests rain/wetness.
+    // The legacy camera shader divides Wetness by125, so its input is the
+    // API percentage, not the0..1 fraction used by native infrared sampling.
+    // Apply the percentage after that graph has run, including zero
+    // on dry transitions. Stock map backups and other towns have no marker.
+    const bool bTown02WetnessOptIn = WeatherActor->GetWorld()->GetMapName().Contains(TEXT("Town02_Opt")) &&
+        Skies.ContainsByPredicate([](const AActor* Sky)
+        {
+            return Sky && Sky->ActorHasTag(TEXT("Town02RealismWetness"));
+        });
+    if (bTown02WetnessOptIn)
+    {
+        UMaterialParameterCollection* Collection = LoadObject<UMaterialParameterCollection>(nullptr,
+            TEXT("/Game/Carla/Blueprints/Weather/Materials/WeatherMaterialParameters.WeatherMaterialParameters"));
+        if (Collection)
+        {
+            const float Wetness = static_cast<float>(CarlaLidarSceneWeather::percentage(Parameters.Wetness));
+            UKismetMaterialLibrary::SetScalarParameterValue(WeatherActor, Collection, TEXT("Wetness"), Wetness);
+            UE_LOG(LogCarla, Log, TEXT("Town02 opted-in wetness: api=%.3f material=%.3f"), Parameters.Wetness, Wetness);
+        }
+    }
+
     const auto CurveValue = [WeatherActor](const TCHAR* PropertyName, float Input, float Fallback)
     {
         const FObjectPropertyBase* Property = FindFProperty<FObjectPropertyBase>(WeatherActor->GetClass(), PropertyName);
@@ -287,4 +313,42 @@ void AWeather::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEven
     Super::PostEditChangeProperty(PropertyChangedEvent);
     ApplyWeather(Weather);
 }
+#endif
+
+#if WITH_EDITOR && WITH_DEV_AUTOMATION_TESTS
+#include "HAL/IConsoleManager.h"
+#include "Misc/Paths.h"
+#include "Misc/FileHelper.h"
+#include "Dom/JsonObject.h"
+#include "Serialization/JsonSerializer.h"
+#include "Serialization/JsonWriter.h"
+// Headless fixture uses native SpawnActor, never GUI placement APIs.
+static FAutoConsoleCommand TestTown02Wetness(TEXT("carla.Weather.TestTown02Wetness"),
+  TEXT("Owned copied-map production wetness bridge diagnostic; output JSON path."),
+  FConsoleCommandWithArgsDelegate::CreateLambda([](const TArray<FString>& Args) {
+  const FString Project=FPaths::ConvertRelativePathToFull(FPaths::ProjectDir());
+  if(Args.Num()!=1||Project!=TEXT("/mnt/simulations/town-realism/Town02/native-validation382/CarlaUnreal/")||!Args[0].StartsWith(TEXT("/mnt/simulations/town-realism/Town02/reports/materials396/"))||Args[0].Contains(TEXT(".."))) {UE_LOG(LogCarla,Error,TEXT("WEATHER_TRANSITIONS396_FAILED scope"));return;}
+  UWorld* W=FindObject<UWorld>(nullptr,TEXT("/Game/Carla/Maps/Town02_Opt.Town02_Opt"));
+  if(!W||W->HasBegunPlay()||W->GetGameInstance()){UE_LOG(LogCarla,Error,TEXT("WEATHER_TRANSITIONS396_FAILED editor_world"));return;}
+  UClass* Cls=LoadClass<AWeather>(nullptr,TEXT("/Game/Carla/Blueprints/Weather/BP_CarlaWeather.BP_CarlaWeather_C"));
+  AWeather* Weather=Cls?W->SpawnActor<AWeather>(Cls,FTransform::Identity):nullptr;
+  if(!Weather){UE_LOG(LogCarla,Error,TEXT("WEATHER_TRANSITIONS396_FAILED weather_actor"));return;}
+  struct FRemove{UWorld* W;AActor* A;~FRemove(){W->DestroyActor(A);}} Remove{W,Weather};
+  auto* Collection=LoadObject<UMaterialParameterCollection>(nullptr,TEXT("/Game/Carla/Blueprints/Weather/Materials/WeatherMaterialParameters.WeatherMaterialParameters"));
+  if(!Collection){UE_LOG(LogCarla,Error,TEXT("WEATHER_TRANSITIONS396_FAILED collection"));return;}
+  TArray<TSharedPtr<FJsonValue>> Rows;bool Passed=true;
+  for(float Api:{0.f,80.f,100.f,-20.f,140.f,0.f}) {
+    FWeatherParameters P;P.Wetness=Api;P.Precipitation=0;P.PrecipitationDeposits=0;P.SunAltitudeAngle=35;
+    Weather->ApplyWeather(P);
+    const float Actual=UKismetMaterialLibrary::GetScalarParameterValue(W,Collection,TEXT("Wetness"));
+    const float Expected=static_cast<float>(CarlaLidarSceneWeather::percentage(Api));
+    Passed &= FMath::IsNearlyEqual(Actual,Expected,.00001f)&&Weather->GetCurrentWeather().Wetness==Expected;
+    auto R=MakeShared<FJsonObject>();R->SetNumberField(TEXT("api_wetness"),Api);R->SetNumberField(TEXT("native_api_wetness"),Weather->GetCurrentWeather().Wetness);R->SetNumberField(TEXT("native_mpc_wetness"),Actual);R->SetNumberField(TEXT("expected_mpc_wetness"),Expected);R->SetNumberField(TEXT("shader_divide125_input"),Actual/125.f);R->SetNumberField(TEXT("infrared_clamped_fraction"),Expected/100.f);R->SetNumberField(TEXT("rain"),0);R->SetNumberField(TEXT("puddles"),0);Rows.Add(MakeShared<FJsonValueObject>(R));
+  }
+  Passed &= !W->HasBegunPlay()&&!W->GetGameInstance();
+  auto Result=MakeShared<FJsonObject>();Result->SetStringField(TEXT("status"),Passed?TEXT("PASS production native camera-MPC percent transitions in copied Town02 editor world"):TEXT("FAILED native wetness transitions"));Result->SetArrayField(TEXT("rows"),Rows);Result->SetBoolField(TEXT("begin_play"),W->HasBegunPlay());Result->SetBoolField(TEXT("game_instance_created"),W->GetGameInstance()!=nullptr);Result->SetBoolField(TEXT("asset_saves"),false);Result->SetBoolField(TEXT("temporary_weather_actor"),true);
+  Result->SetStringField(TEXT("scope"),TEXT("Production ApplyWeather bridge to native MPC, NullRHI copied saved editor world. No RPC/gameplay/tick or asset saves. Infrared fraction is arithmetic contract, not a new receiver scan; no GPU shader/pixel/live deployment acceptance."));
+  FString Text;bool Saved=FJsonSerializer::Serialize(Result,TJsonWriterFactory<>::Create(&Text))&&FFileHelper::SaveStringToFile(Text,*Args[0],FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM);
+  UE_LOG(LogCarla,Display,TEXT("WEATHER_TRANSITIONS396_%s rows=%d"),Passed&&Saved?TEXT("PASS"):TEXT("FAILED"),Rows.Num());
+}));
 #endif

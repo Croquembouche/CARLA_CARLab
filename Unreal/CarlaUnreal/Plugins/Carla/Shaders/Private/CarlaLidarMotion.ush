@@ -23,7 +23,7 @@ bool MotionBox(float3 O,float3 D,float3 Lo,float3 Hi,float Limit) {
 struct FCarlaMotionHit {
     float Distance;uint Component,Section;float3 Normal;float2 UV;
 };
-FCarlaMotionHit TraceMotion(float3 Origin,float3 Direction,float Limit,float FallbackAlpha,float SceneTime) {
+FCarlaMotionHit TraceMotion(float3 Origin,float3 Direction,float Limit,float FallbackAlpha,float SceneTime,bool OpticalOpacity) {
     FCarlaMotionHit Result=(FCarlaMotionHit)0;Result.Distance=Limit;
     [loop] for(uint Mesh=0;Mesh<MotionCount;++Mesh) {
         uint Base=Mesh*8;float4 Times=MotionInfo[Base+7];
@@ -50,7 +50,11 @@ FCarlaMotionHit TraceMotion(float3 Origin,float3 Direction,float Limit,float Fal
                 float3 X=O-A;float U=dot(X,P)/Det;if(U<0 || U>1)continue;
                 float3 R=cross(X,E1);float V=dot(D,R)/Det;if(V<0 || U+V>1)continue;
                 float Distance=dot(E2,R)/Det;if(Distance<.001 || Distance>=Result.Distance)continue;
-                Result.Distance=Distance;Result.Component=asuint(MotionInfo[Base+7].x);Result.Section=asuint(Meta.x);
+                uint Component=asuint(MotionInfo[Base+7].x),Section=asuint(Meta.x);
+                float2 UV=float2(A0.w,B0.w)*(1-U-V)+float2(C0.w,A1.w)*U+float2(B1.w,C1.w)*V;
+                uint4 Entry=Lookup(Component);uint Mat=Entry.z+min(Section,(Entry.w&0x3fffffffu)-1);
+                if(OpticalOpacity&&!InfraredAllowsHit(Mat,0,0,UV,true))continue;
+                Result.Distance=Distance;Result.Component=Component;Result.Section=Section;
                 Result.Normal=normalize(cross(RotateQuat(Q,E1*Scale),RotateQuat(Q,E2*Scale)))*Meta.z;
                 Result.UV=float2(A0.w,B0.w)*(1-U-V)+float2(C0.w,A1.w)*U+float2(B1.w,C1.w)*V;
             }

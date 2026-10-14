@@ -54,14 +54,14 @@ namespace multigpu {
       boost::asio::post(
         _io_context,
         [
-          this,
+          self = shared_from_this(),
           on_session_opened = std::move(on_session_opened),
           on_session_closed = std::move(on_session_closed),
           on_response = std::move(on_response)
         ]()
         {
-          OpenSession(
-            _timeout,
+          self->OpenSession(
+            self->_timeout,
             on_session_opened,
             on_session_closed,
             on_response);
@@ -81,6 +81,7 @@ namespace multigpu {
     boost::asio::io_context         &_io_context;
     boost::asio::ip::tcp::acceptor  _acceptor;
     std::atomic<time_duration>      _timeout;
+    std::atomic_bool                _stopping{false};
   };
 
 } // namespace multigpu

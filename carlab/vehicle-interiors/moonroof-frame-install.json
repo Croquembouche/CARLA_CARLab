@@ -1,0 +1,10 @@
+{
+  "result": "PASS_SAVED_BLUEPRINT",
+  "blueprint": "/Game/VehicleInteriors/Lincoln/BP_LincolnMKZ_Interior.BP_LincolnMKZ_Interior",
+  "component": "MoonroofFrame",
+  "frame_mesh": "/Game/VehicleInteriors/Lincoln/SM_MKZ_Moonroof_Frame.SM_MKZ_Moonroof_Frame",
+  "exterior_material": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
+  "interior_material": "/Game/VehicleInteriors/Lincoln/MKZ_Completion_Headliner.MKZ_Completion_Headliner",
+  "moonroof_glass": "/Game/VehicleInteriors/Lincoln/SM_MKZ_Moonroof_Glass.SM_MKZ_Moonroof_Glass",
+  "bounds": "<Struct 'BoxSphereBounds' (0x63bec240d70) {origin: {x: -48.000004, y: 0.000004, z: 143.198395}, box_extent: {x: 112.000011, y: 68.000011, z: 7.914444}, sphere_radius: 131.265530}>"
+}

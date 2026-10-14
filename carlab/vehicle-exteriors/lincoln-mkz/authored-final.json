@@ -1,0 +1,8 @@
+{
+  "result": "FINAL_SOURCE",
+  "rejected_optical_additions": "Measured additions still overlapped the existing caps after refraction. Removed; original authored optics are retained.",
+  "caliper_seam_pixels_repaired": 3799,
+  "new_geometry": "Five hex fasteners and a valve for each wheel; concentric brake machining rings.",
+  "paint_color_preserved": true,
+  "original_body_rig_physics_preserved": true
+}

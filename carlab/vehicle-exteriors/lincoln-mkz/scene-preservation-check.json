@@ -1,0 +1,56 @@
+{
+  "scene": {
+    "phase": true,
+    "running": true,
+    "recording": true,
+    "frame": true,
+    "time": true,
+    "map": true,
+    "delta": true,
+    "mode": true,
+    "actors": true,
+    "sensors": true,
+    "managed": true,
+    "weather": true,
+    "movement_programs": true,
+    "authoring": true
+  },
+  "stock_assets_unchanged": {
+    "Carla/Blueprints/Vehicles/LincolnMKZ/BP_LincolnMKZ.uasset": true,
+    "Carla/Static/Car/4Wheeled/LincolnMKZ/SK_LincolnMKZ.uasset": true
+  },
+  "before_frame": 165,
+  "after_frame": 165,
+  "original_catalog_entries_preserved": true,
+  "catalog_entries_added": [
+    {
+      "Make": "lincoln",
+      "Model": "mkz_refined",
+      "Class": "/Game/VehicleExteriors/LincolnMKZ/BP_LincolnMKZ_Refined.BP_LincolnMKZ_Refined_C",
+      "NumberOfWheels": 4,
+      "Generation": 3,
+      "ObjectType": "",
+      "BaseType": "car",
+      "SpecialType": "",
+      "HasDynamicDoors": true,
+      "HasLights": true,
+      "RecommendedColors": [
+        {
+          "R": 43,
+          "G": 60,
+          "B": 72,
+          "A": 255
+        }
+      ],
+      "SupportedDrivers": []
+    }
+  ],
+  "preservation_check_timing": "Original paused scene verified before the user explicitly stopped it.",
+  "after_user_stop": {
+    "phase": "offline",
+    "running": false,
+    "frame": 0,
+    "map": null,
+    "reason": "User explicitly stopped existing CARLA simulator during the task; it was not restarted."
+  }
+}

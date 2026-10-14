@@ -1,0 +1,44 @@
+{
+  "InteriorCompletion": {
+    "materials": [
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.MKZ_Seat_Base_Plastic' (0xb155b7c0000) Class 'Material'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Belt_Release.MKZ_Belt_Release' (0xb155a7dd200) Class 'Material'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Completion_Rubber.MKZ_Completion_Rubber' (0xb155b7c4600) Class 'Material'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Seat_Hardware.MKZ_Seat_Hardware' (0xb155b7c0e00) Class 'Material'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Seatbelt_Webbing.MKZ_Seatbelt_Webbing' (0xb155b7c5400) Class 'Material'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Completion_Headliner.MKZ_Completion_Headliner' (0xb155b7c2a00) Class 'Material'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Completion_Lens.MKZ_Completion_Lens' (0xb155b7c3800) Class 'Material'>"
+    ],
+    "transform": "<Struct 'Transform' (0x7f50d9355410) {rotation: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}, translation: {x: 0.000000, y: 0.000000, z: 0.000000}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+    "visible": true,
+    "hidden": false,
+    "mesh": "<Object '/Game/VehicleInteriors/Lincoln/SM_MKZ_Completion_Details.SM_MKZ_Completion_Details' (0xb155b7a6800) Class 'StaticMesh'>"
+  },
+  "MoonroofGlass": {
+    "materials": [
+      "<Object '/Game/VehicleInteriors/Lincoln/MI_MKZ_Moonroof_Tint.MI_MKZ_Moonroof_Tint' (0xb155b7a7000) Class 'MaterialInstanceConstant'>"
+    ],
+    "transform": "<Struct 'Transform' (0x7f50d9355410) {rotation: {x: 0.000000, y: 0.000000, z: 0.000000, w: 1.000000}, translation: {x: 0.000000, y: 0.000000, z: 0.000000}, scale3d: {x: 1.000000, y: 1.000000, z: 1.000000}}>",
+    "visible": true,
+    "hidden": false,
+    "mesh": "<Object '/Game/VehicleInteriors/Lincoln/SM_MKZ_Moonroof_Glass.SM_MKZ_Moonroof_Glass' (0xb155b7a7800) Class 'StaticMesh'>"
+  },
+  "override": {
+    "override_two_sided": true,
+    "two_sided": true
+  },
+  "stock": {
+    "blend_mode": "<BlendMode.BLEND_TRANSLUCENT: 2>",
+    "two_sided": "False",
+    "translucency_lighting_mode": "<TranslucencyLightingMode.TLM_SURFACE_PER_PIXEL_LIGHTING: 5>",
+    "opacity": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/M_Glass.M_Glass:MaterialExpressionScalarParameter_3' (0xb155b4d3a00) Class 'MaterialExpressionScalarParameter'>",
+    "base": "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/M_Glass.M_Glass:MaterialExpressionVectorParameter_0' (0xb155a57bcc0) Class 'MaterialExpressionVectorParameter'>"
+  },
+  "custom": {
+    "blend_mode": "<BlendMode.BLEND_TRANSLUCENT: 2>",
+    "two_sided": "True",
+    "translucency_lighting_mode": "<TranslucencyLightingMode.TLM_SURFACE: 4>",
+    "opacity": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Moonroof_Glass.MKZ_Moonroof_Glass:MaterialExpressionConstant_2' (0xb155b8531e0) Class 'MaterialExpressionConstant'>",
+    "base": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Moonroof_Glass.MKZ_Moonroof_Glass:MaterialExpressionConstant3Vector_0' (0xb155b853d40) Class 'MaterialExpressionConstant3Vector'>"
+  }
+}

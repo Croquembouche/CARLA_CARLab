@@ -1,43 +1,41 @@
 {
-  "stage": "COMPLETE: final Blender model and CARLA UE5 integration",
-  "blender": {
-    "file": "Lincoln_MKZ_Interior_Final.blend",
-    "verification": {
-      "seatbelt_webbing": 5,
-      "new_detail_objects": 19,
-      "cameras": [
-        "Camera_Cabin",
-        "Camera_Passenger",
-        "Camera_Driver",
-        "MKZ_Dashboard",
-        "MKZ_Driver_View",
-        "MKZ_Rear_Seats",
-        "MKZ_Front_Seats",
-        "MKZ_Passenger_Seat"
-      ],
-      "unpacked_images": [],
-      "result": "PASS",
-      "file": "/mnt/simulations/vehicle-interiors/Lincoln_MKZ_Interior_Final.blend"
-    }
-  },
-  "unreal": {
-    "blueprint": "/Game/VehicleInteriors/Lincoln/BP_LincolnMKZ_Interior",
-    "carla_id": "vehicle.lincoln.mkz_interior",
-    "runtime_visual_review": "PASS",
-    "cache_graph": "LincolnInteriorDDC",
-    "compiler": "in-process Linux Vulkan",
-    "material_compile": "Latest texture and mask compilation completed without material compile errors",
-    "import": "PASS: final cabin and exterior assets saved and Blueprint construction checked",
-    "spawn_and_physics": "PASS: four wheels; stock-sized vehicle bounds",
-    "shutdown": "PASS: normal engine exit, return code 0",
-    "material": "MI_MKZ_Final_Interior",
-    "rig": "PASS: all nine bone reference transforms match stock",
-    "runtime_report": "runtime-report.json"
-  },
-  "quest": "Deferred by user",
+  "revision": "2026-09-12 brochure material refinement v3",
+  "result": "USER_ACCEPTED_BUILT_INTO_CARLA",
+  "editable_blend": "/mnt/simulations/vehicle-interiors/Lincoln_MKZ_Interior_Brochure.blend",
+  "compatibility_blend": "/mnt/simulations/vehicle-interiors/Lincoln_MKZ_Interior_Final.blend",
+  "carla_blueprint": "vehicle.lincoln.mkz_interior",
+  "runtime_report": "/mnt/simulations/vehicle-interiors/runtime-report.json",
+  "roof_overlap_fix": "/mnt/simulations/vehicle-interiors/roof-overlap-import.json",
+  "moonroof_frame_install": "/mnt/simulations/vehicle-interiors/moonroof-frame-install.json",
+  "moonroof_collision_install": "/mnt/simulations/vehicle-interiors/moonroof-collision-install.json",
+  "moonroof_correction_report": "/mnt/simulations/vehicle-interiors/moonroof-correction-report.md",
+  "model_audit": "/mnt/simulations/vehicle-interiors/completion-build.json",
+  "fresh_session_required_to_reload_assets": true,
+  "brochure_visual_match": "CLOSER_MATERIAL_REFINEMENT_NOT_EXACT",
+  "acceptance_target": "Very close visual agreement with 2020 MKZ brochure pages 3 and 4, checked in actual CARLA renders",
+  "brochure_runtime_report": "/mnt/simulations/vehicle-interiors/brochure-runtime-report.json",
   "limitations": [
-    "Seats and trim are modeled approximations, not manufacturer CAD or scans.",
-    "Dashboard control textures retain visible source-resolution limits in close views.",
-    "Blender procedural leather detail is richer than the basic Unreal upholstery materials."
-  ]
+    "Stock dashboard texture resolution and simplified trim geometry remain",
+    "Driver belt is fitted to the default static mannequin pose",
+    "Quest validation deferred",
+    "Worn belt still has slack and an angular transition at the shoulder",
+    "Some trim remains pale from the dashboard angle; direct sunlight still washes out parts of dark upholstery."
+  ],
+  "normal_runtime_cameras": 7,
+  "engine_process_returncode": 0,
+  "visual_review": "REVIEWED_MATERIAL_V3_APPROXIMATION",
+  "current_changes": [
+    "deeper ebony and semi-gloss leather",
+    "perforated insert color/normal/roughness detail",
+    "subdued walnut veneer",
+    "corrected bright metal atlas reflectance and roughness",
+    "directional brushed satin normal/roughness and anisotropy"
+  ],
+  "door_details_report": "/mnt/simulations/vehicle-interiors/brochure-doors-import.json",
+  "brochure_runtime_cameras": 2,
+  "material_v3_review": "VERIFIED_IMPROVED_APPROXIMATION",
+  "material_report": "/mnt/simulations/vehicle-interiors/materials-v3-import.json",
+  "user_accepted": true,
+  "accepted_build_report": "/mnt/simulations/vehicle-interiors/accepted-build-native.json",
+  "accepted_build_manifest": "/mnt/simulations/vehicle-interiors/accepted-build-manifest.json"
 }

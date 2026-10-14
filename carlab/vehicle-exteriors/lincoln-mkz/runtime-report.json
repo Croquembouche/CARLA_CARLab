@@ -1,0 +1,132 @@
+{
+  "status": "PASS_NATIVE_CAPTURE_AND_PHYSICS",
+  "command": [
+    "/mnt/simulations/bin/carla-editor",
+    "/Game/VehicleExteriors/LincolnMKZ/L_ExteriorStudio",
+    "-game",
+    "-RenderOffScreen",
+    "-graphicsadapter=0",
+    "-SkipVulkanProfileCheck",
+    "-carla-rpc-port=2250",
+    "-ResX=160",
+    "-ResY=90",
+    "-quality-level=Epic",
+    "-unattended",
+    "-nosound",
+    "-notraceserver",
+    "-ddc=NoZenLocalFallback",
+    "-LocalDataCachePath=/home/william/.cache/carla-ddc",
+    "-ini:Engine:[SystemSettings]:r.RayTracing=1,[SystemSettings]:r.Nanite=1,[SystemSettings]:r.Shadow.Virtual.Enable=1,[SystemSettings]:r.Streaming.PoolSize=2048,[SystemSettings]:r.Nanite.Streaming.StreamingPoolSize=256,[SystemSettings]:r.Lumen.DiffuseIndirect.Allow=1,[SystemSettings]:r.Lumen.Reflections.Allow=1,[SystemSettings]:r.AOGlobalDFResolution=64,[SystemSettings]:r.GenerateMeshDistanceFields=1",
+    "-ini:Engine:[DevOptions.Shaders]:bAllowAsynchronousShaderCompiling=False",
+    "-ExecCmds=r.Streaming.PoolSize 2048,r.Shadow.Virtual.Enable 1,r.Nanite 1,r.Lumen.DiffuseIndirect.Allow 1,r.Lumen.Reflections.Allow 1,carla.Camera.UseRayTracing 1,py /mnt/simulations/vehicle-exteriors/lincoln-mkz/scripts/runtime_observer.py",
+    "-abslog=/mnt/simulations/vehicle-exteriors/lincoln-mkz/native-unreal.log"
+  ],
+  "port": 2250,
+  "resolution": [
+    1280,
+    800
+  ],
+  "exposure_ev100": 6.8777442499,
+  "post_process_profile": "MKZExteriorStudio",
+  "controlled_paint_linear_rgb": [
+    0.024,
+    0.045,
+    0.065
+  ],
+  "color_assignment": "Identical runtime shader color assigned to both owned actors; stock Blueprint bodywork slot does not implement color correctly.",
+  "postprocessing": "Native CARLA RGB, no DLSS or neural processing",
+  "preview_rendering": "Epic isolated studio using native Unreal scene-capture RGB, Lumen hardware ray tracing and virtual shadows. Ray tracing explicitly enabled for scene captures; exposure locked at EV100 6.88 for the studio. Existing town remains stopped by the user.",
+  "server_version": "0.10.0",
+  "vehicles": {
+    "stock": {
+      "id": "vehicle.lincoln.mkz",
+      "extent_m": [
+        2.4459850788116455,
+        0.9178230166435242,
+        0.7620594501495361
+      ],
+      "wheels": 4,
+      "captures": {
+        "front-three-quarter": {
+          "file": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-stock-front-three-quarter.png",
+          "frame": 85,
+          "timestamp": 4.256669930997305,
+          "transform": "Transform(Location(x=6.300000, y=-5.400000, z=2.700000), Rotation(pitch=-12.897364, yaw=139.398712, roll=0.000000))",
+          "fov": 39.4
+        },
+        "rear-three-quarter": {
+          "file": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-stock-rear-three-quarter.png",
+          "frame": 165,
+          "timestamp": 8.25666999060195,
+          "transform": "Transform(Location(x=-6.300000, y=-5.200000, z=2.500000), Rotation(pitch=-11.755904, yaw=39.536156, roll=0.000000))",
+          "fov": 39.4
+        },
+        "front-detail": {
+          "file": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-stock-front-detail.png",
+          "frame": 245,
+          "timestamp": 12.256670050206594,
+          "transform": "Transform(Location(x=4.400000, y=-1.800000, z=1.350000), Rotation(pitch=-12.966474, yaw=143.695496, roll=0.000000))",
+          "fov": 31.4
+        },
+        "wheel-detail": {
+          "file": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-stock-wheel-detail.png",
+          "frame": 325,
+          "timestamp": 16.25667010981124,
+          "transform": "Transform(Location(x=2.550000, y=-2.800000, z=0.900000), Rotation(pitch=-13.101505, yaw=118.369049, roll=0.000000))",
+          "fov": 29.6
+        }
+      }
+    },
+    "refined": {
+      "id": "vehicle.lincoln.mkz_refined",
+      "extent_m": [
+        2.4459850788116455,
+        0.9178230166435242,
+        0.7620594501495361
+      ],
+      "wheels": 4,
+      "captures": {
+        "front-three-quarter": {
+          "file": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-refined-front-three-quarter.png",
+          "frame": 405,
+          "timestamp": 20.256670169415884,
+          "transform": "Transform(Location(x=6.300000, y=-5.400000, z=2.700000), Rotation(pitch=-12.897364, yaw=139.398712, roll=0.000000))",
+          "fov": 39.4
+        },
+        "rear-three-quarter": {
+          "file": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-refined-rear-three-quarter.png",
+          "frame": 485,
+          "timestamp": 24.25667022902053,
+          "transform": "Transform(Location(x=-6.300000, y=-5.200000, z=2.500000), Rotation(pitch=-11.755904, yaw=39.536156, roll=0.000000))",
+          "fov": 39.4
+        },
+        "front-detail": {
+          "file": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-refined-front-detail.png",
+          "frame": 565,
+          "timestamp": 28.256670288625173,
+          "transform": "Transform(Location(x=4.400000, y=-1.800000, z=1.350000), Rotation(pitch=-12.966474, yaw=143.695496, roll=0.000000))",
+          "fov": 31.4
+        },
+        "wheel-detail": {
+          "file": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-refined-wheel-detail.png",
+          "frame": 645,
+          "timestamp": 32.25667034822982,
+          "transform": "Transform(Location(x=2.550000, y=-2.800000, z=0.900000), Rotation(pitch=-13.101505, yaw=118.369049, roll=0.000000))",
+          "fov": 29.6
+        }
+      },
+      "movement_distance_m": 1.97993803024292,
+      "final_location_m": [
+        1.9776031970977783,
+        0.037990208715200424,
+        -0.004391134716570377
+      ]
+    }
+  },
+  "engine_returncode": 0,
+  "attachment_validation": {
+    "component_count": 8,
+    "all_expected_wheel_bones": true,
+    "maximum_socket_position_error_cm": 0.0
+  }
+}

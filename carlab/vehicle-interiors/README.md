@@ -1,82 +1,73 @@
-# Lincoln MKZ interior — final Blender model
+# Lincoln MKZ interior — accepted CARLA build
 
-The current editable model is `Lincoln_MKZ_Interior_Final.blend`. Textures are packed.
-The finishing pass adds five stowed seatbelts, guides, anchors, buckle hardware,
-and subtle leather surface detail while retaining the reviewed seat and trim design.
-The mannequin and seat markers remain available; Quest work is deferred.
+The user accepted the brochure material v3 revision on September 13, 2026. It is installed in the native CARLA project as `vehicle.lincoln.mkz_interior`. `accepted-build-native.json` records final Blueprint compilation, `accepted-build-manifest.json` records hashes of the saved Blender sources and installed Unreal assets, and `runtime-report.json` records the fresh runtime check.
 
-## Deliverables
+This revision refines the cabin against pages 3–4 of the 2020 Lincoln MKZ brochure. See the latest runtime reports for capture checks and visual review. Brochure similarity is a visual assessment, separate from successful vehicle integration. This remains an approximation; the stock dashboard texture resolution and simplified trim geometry prevent an exact photographic match.
 
-- `Lincoln_MKZ_Interior_Final.blend`: final editable cabin and mannequin scene.
-- `renders/Final_Dashboard.png`, `Final_Passenger.png`, `Final_Rear.png`: reviewed Blender renders.
-- `exports/SM_MKZ_Cabin_Final.fbx`: dashboard/cabin section, replacement seats, trim and belts.
-- `exports/SK_MKZ_ExteriorOnly.fbx`: exterior and wheel rig with the original cabin section removed.
-- `Lincoln_MKZ_Exterior_Rig.blend`: saved centimeter-scale exterior export rig.
-- `final-rig-compatibility.json`: all nine reference bone positions, rotations and scales compared with stock.
-- `exports/T_MKZ_Ebony_BaseColor.png`, `T_MKZ_Ebony_ORM.png`: 4096px material atlases.
-- `blender-final-verification.json`: packed-image, geometry and seatbelt checks.
-- `final-unreal-import.json`: saved Unreal assets, bone compatibility and constructed Blueprint checks.
-- `runtime-report.json`: runtime capture status; acceptance requires manual image review.
+The current editable assembly is `Lincoln_MKZ_Interior_Brochure.blend`, also saved as `Lincoln_MKZ_Interior_Completed.blend` and `Lincoln_MKZ_Interior_Final.blend`. All contain the latest geometry and packed leather textures.
 
-Before running the authoring commands, complete [the optional Blender setup](../SETUP.md#optional-blender-and-custom-interior-authoring), including the `/mnt/simulations/vehicle-interiors` symlink. The final native assets are already installed by the content overlay.
+This revision adds a curved, closed tinted moonroof panel with a watertight painted roof frame and interior headliner surround, rubber seals and sunshade guides; front and rear belt webbing, guides, retractors and buckles; a driver shoulder/lap belt fitted to the temporary mannequin; overhead console/map-light lenses, sun visors and vanity covers; grab handles; rear console vents, USB openings and power cover; and front seatback pockets. The moonroof glass blocks collision queries and physics so rain cannot pass through the panel. Original stock window glazing is included in the Blender assembly.
 
-## CARLA integration
+The driver belt is static geometry fitted to the default seated mannequin; visible slack and an angular upper-shoulder transition remain. It does not yet follow a different seat, body shape, or animated torso. Roof switches, ports, visors and shade are modeled details, not functional controls. The cabin remains a modeled approximation fitted to CARLA stock geometry, not OEM CAD.
 
-The custom Blueprint is `/Game/VehicleInteriors/Lincoln/BP_LincolnMKZ_Interior`.
-Its CARLA identifier is `vehicle.lincoln.mkz_interior`.
-It now uses `SK_MKZ_Exterior_Final` and `SM_MKZ_Cabin_Final`, sharing the stock
-Lincoln skeleton and physics asset. The exterior preserves the stock three material
-slots, but physically omits the old cabin faces to prevent overlapping interiors.
-Original stock vehicle assets are preserved. The redundant editor mannequin
-preview is removed from the Blueprint to prevent CARLA from treating it as a
-motorcycle rider when calculating vehicle bounds. The runtime poseable mannequin
-is preserved. The earlier material-mask approach
-is superseded. The separate door components retain their meshes and hinges.
+## Brochure detail refinement v2
 
-**Runtime camera and physics checks pass.** The custom vehicle spawns with four
-wheels and stock-sized bounds. Fresh `renders/carla_*.png` show the dashboard,
-passenger seat, rear seats and test mannequin. The baked textures use
-`MI_MKZ_Final_Interior`, a material instance of the stock Lincoln master; the
-earlier standalone PBR shader is superseded. The final isolated test exited normally with return code 0.
-`runtime-report.json` records the successful spawn, four-wheel physics, bounds,
-manual review of all three RGB captures, and clean shutdown.
+The second brochure pass adds separate center-vent blades and a center divider, tapered side-vent louvers with small adjustment tabs, two inset console lids and a recessed longitudinal pull, dark upholstery insert welts/center bindings, headrest seams and a closed rear-center armrest outline. The satin finish on the new console panels is darker and rougher than the earlier cover.
 
-With the updated project running in CARLA, spawn the variant using:
+Both front doors now have round upper grilles, oval lower grilles, padded armrests and window-switch details. The grilles use modeled caps, bezels and a geometric perforation pattern. They are visual components, without audio or switch functionality. `DoorDetail_FL` and `DoorDetail_FR` remain separate in Blender and export to `SM_MKZ_Door_Details_FL.fbx` and `SM_MKZ_Door_Details_FR.fbx`; they are excluded from the baked cabin export. Their Unreal components are children of the matching moving door, with an inverse hinge-position offset and no added collision. The detail FBXs use whole-car coordinates; the inverse offset is derived from the original skeleton heads in `reference/blender-audit.json`, because CARLA moves each parent door component to its hinge at runtime. Do not reset that child offset to zero.
+
+The source backup preceding these edits is `backups/before-brochure-details-v2.blend`. `refine_brochure_details_v2.py` rebuilds the new cabin details, and `refine_brochure_doors_v2.py` rebuilds the door details. Import using `import_brochure_details_v2.py` followed by `import_brochure_doors_v2.py`. All three current Blender assemblies are saved after these changes. The new scripts leave the original CARLA vehicle assets in place and update only the custom interior variant.
+
+`renders/before_details_v2_dashboard.png` and `renders/before_details_v2_cabin.png` preserve the previous comparison views. `brochure-details-v2.json`, `brochure-doors-v2.json` and `brochure-doors-import.json` record geometry and integration. The normal runtime check now captures seven views, including `carla_front_door.png` with the front passenger door open. See the runtime report for the current capture and visual-review outcome.
+
+## Material refinement v3
+
+The third pass changes materials while preserving the detail geometry and the comparison cameras/lighting. The seat leather is deeper ebony with finer roughness variation; perforated inserts now have coordinated color, normal and roughness maps. Walnut veneer is darker and less orange. The stock atlas metal regions have reduced brightness and revised roughness, and the separate satin console/vent trim uses directional normal and roughness textures with anisotropy. These are authored visual approximations of the brochure finishes, not measured OEM material data.
+
+All three current Blender assemblies contain the revised materials and packed textures. `materials-v3-import.json` records the native Unreal update. `renders/before_materials_v3_dashboard.png` and `renders/before_materials_v3_cabin.png` preserve the previous comparison under identical capture settings. The latest runtime reports record visual review of the new captures.
+
+The source/atlas backup is under `backups/before-materials-v3/`. `refine_materials_v3.py` performs the initial source transformation and should only be applied to that preceding source; it is not a repeatable incremental adjustment. `build_material_textures_v3.py` creates the detail maps; `sync_materials_v3.py` packs them into the current assemblies and bakes the atlas; `import_materials_v3.py` updates the native textures/materials. No mesh reimport is needed for this material-only pass because material slots and geometry did not change.
+
+## Assets and integration
+
+- `Lincoln_MKZ_Interior_Completed.blend`: editable assembly, with separate named completion objects and glass.
+- `Lincoln_MKZ_Interior_Final.blend`: current compatibility copy.
+- `exports/SM_MKZ_Cabin_Final.fbx`: cabin and seats, with earlier belt strips removed.
+- `exports/SM_MKZ_Completion_Details.fbx`: additional opaque cabin fittings and unused belts.
+- `exports/SM_MKZ_Driver_Worn_Belt.fbx`: separate shoulder/lap webbing for the default mannequin.
+- `exports/SM_MKZ_Cabin_Brochure.fbx`: latest cabin and seat geometry.
+- `exports/SM_MKZ_Moonroof_Glass.fbx`: separate curved translucent roof panel.
+- `exports/SM_MKZ_Moonroof_Frame.fbx`: watertight opaque roof/headliner ring around the bounded glass opening.
+- `exports/SM_MKZ_Glass_Without_Moonroof.fbx`: original windshield/other glass with the overlapping roof section removed.
+- `Lincoln_MKZ_Glazing_Export.blend`: saved glazing export source with original material slots.
+- `roof-overlap-import.json`: saved blueprint replacement and stock glass material verification.
+- `completion-import.json`: imported meshes, material assignments and bounds.
+- `runtime-report.json`: latest CARLA camera/physics checks and visual review status.
+- `renders/carla_*.png`: latest runtime captures, including roof, driver belt and rear console.
+
+Blueprint: `/Game/VehicleInteriors/Lincoln/BP_LincolnMKZ_Interior`.
+CARLA vehicle identifier: `vehicle.lincoln.mkz_interior`.
+The stock skeleton, physics and exterior rig remain in use. All additional fittings use static mesh components. The active cabin component uses `SM_MKZ_Cabin_Brochure` and `MI_MKZ_Brochure_Interior`, derived from the stock material master. The new finish restores clean center-stack metal pixels, smooths major dashboard panels, rounds headrests, softens seat bolsters and adds leather grain/perforation normal maps plus a closed console cover and padded armrest.
+
+Start a fresh CARLA session to load updated assets, then spawn using:
 
 ```bash
-/mnt/simulations/venvs/carla/bin/python \
-  /mnt/simulations/vehicle-interiors/scripts/spawn_lincoln.py --port 2000
+/mnt/simulations/bin/carla-python /mnt/simulations/vehicle-interiors/scripts/spawn_lincoln.py --port 2000
 ```
 
-Use `--spawn-index 1` (or another free map spawn) if occupied. The script leaves
-its parked car in the session and does not change world settings. A synchronous
-session needs its existing tick owner to keep running. A server already holding
-older assets must load the updated project assets in a fresh session.
+## Editing and verification
 
-## Reproducing this revision
+Edit the saved completed Blender assembly directly. Do not rerun the historical `finish_blender_interior.py` script over it: that script rebuilds the earlier incomplete revision. `complete_missing_interior.py` records the initial completion build; `fit_completion_belts.py` records an earlier body fit, superseded by `refine_worn_belts.py` for smooth shoulder and lap webbing. Repeatedly rebuilding from the already-completed file would duplicate details.
 
-Run Blender scripts sequentially, with no other Blender instance open:
-`finish_blender_interior.py`, then `export_final_interior.py`. The first saves
-and renders the final `.blend`; the second produces the cabin and exterior FBXs
-and calls `fix_exterior_export.py` for the centimeter-scale physics-compatible rig.
-`scripts/import_final_interior.py` imports and assigns the final Unreal assets;
-set `LINCOLN_REIMPORT=1` when intentionally replacing already imported FBX assets.
-`scripts/use_stock_cabin_master.py` creates and assigns the final material instance.
-Use that shader path for the baked atlas; the older `fix_cabin_pbr.py` is diagnostic
-and should not be used to overwrite the final material assignments.
-Runtime checks use port 2230 and the `LincolnInteriorDDC` cache graph, in-process
-shader compilation and global Nanite enabled. Only one RGB camera is active at a
-time to fit the test GPU. Do not disable global Nanite: the local CARLA
-segmentation renderer has crashed under that diagnostic configuration.
+`import_completion.py` imports the four current FBX meshes, assigns materials and saves the blueprint. `fix_moonroof_material.py` creates the two-sided tinted instance of the stock vehicle glass shader; retain that assignment when reimporting. `import_roof_overlap_fix.py` imports and assigns the stock-glass replacement. This is required: the original glass mesh contains an overlapping roof surface that suppresses the new transparent panel in the interior view. The replacement preserves both original glass/emissive material slots and removes only 1,364 roof faces. `build_moonroof_frame.py` and `install_moonroof_frame.py` build and install the painted exterior/headliner ring that bounds the glass opening. `enable_moonroof_collision.py` configures the glass as a curved `BlockAll` collision surface; rerun it after any Blueprint or glass-mesh reimport that resets component collision. `verify_carla.py` starts an isolated server on port 2230, captures views sequentially, checks four-wheel physics and vehicle bounds, and shuts down its own session. Set `LINCOLN_ROOF_ONLY=1` to capture the moonroof interior and exterior validation pair. The test uses `NoZenLocalFallback` with the current local cache at `/home/william/.cache/carla-ddc`, and project-default shader compilation. Read `runtime-report.json` for the actual outcome; image capture alone does not imply visual acceptance. Quest testing remains deferred.
 
-The seats and trim are modeled approximations fitted to the CARLA vehicle,
-not manufacturer CAD or scans. Close-up dashboard texture detail remains limited
-by the source asset. Blender procedural leather detail is richer than the Unreal
-material translation; actual CARLA RGB captures determine runtime acceptance.
+## Brochure comparison captures
 
-Visual references:
-- [Lincoln 2020 MKZ brochure, pages 3–4](https://www.auto-brochures.com/makes/Lincoln/MKZ/Lincoln_US%20MKZ_2020.pdf)
-- [Edmunds interior gallery](https://www.edmunds.com/lincoln/mkz/2020/pictures/interior/)
+`renders/brochure_dashboard.png` and `renders/brochure_cabin.png` are actual CARLA RGB sensor images, captured with `render_brochure_carla.py`. The latter opens the front passenger door. The capture helper temporarily hides the mannequin and its worn belt and loads `L_MKZ_Photography` with three soft fill lights for these empty-cabin images. These are presentation conditions; the saved vehicle retains its mannequin and normal runtime lighting.
+
+`LincolnBrochure` and `LincolnInterior` post-process profiles are installed under the project's `Content/Carla/Config/PostProcess` directory; copies are in `reference/`. `LincolnInterior` is used for the six ordinary occupied inspection views. `brochure-runtime-report.json` records the presentation settings and results. `activate_brochure_cabin.py` assigns the current cabin mesh, finish and matching door materials. `import_worn_belt.py` updates only the worn belt mesh.
+
+The current finish and geometry are visibly closer to the ebony brochure reference, but instrument graphics, small controls, door trim shapes and some upholstery details still reflect the simplified stock/procedural assets. Do not interpret a runtime PASS as an exact brochure-match certification.
 
 ---
 

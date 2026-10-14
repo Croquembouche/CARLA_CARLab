@@ -1,0 +1,70 @@
+{
+  "result": "AUTHORED_PASS_1",
+  "original_mesh_geometry_preserved": true,
+  "new_hardware_sets": [
+    "SM_MKZ_Hardware_Wheel_Front_Left",
+    "SM_MKZ_Rotor_Wheel_Front_Left",
+    "SM_MKZ_Hardware_Wheel_Front_Right",
+    "SM_MKZ_Rotor_Wheel_Front_Right",
+    "SM_MKZ_Hardware_Wheel_Rear_Right",
+    "SM_MKZ_Rotor_Wheel_Rear_Right",
+    "SM_MKZ_Hardware_Wheel_Rear_Left",
+    "SM_MKZ_Rotor_Wheel_Rear_Left",
+    "SM_MKZ_Optical_Details"
+  ],
+  "texture_selection": {
+    "rim": 97716,
+    "caliper": 5592
+  },
+  "changed_caliper_pixels": 29198,
+  "rim_mask_pixels": 206074,
+  "new_geometry": {
+    "SM_MKZ_Hardware_Wheel_Front_Left": {
+      "vertices": 2384,
+      "faces": 2200
+    },
+    "SM_MKZ_Rotor_Wheel_Front_Left": {
+      "vertices": 10368,
+      "faces": 10368
+    },
+    "SM_MKZ_Hardware_Wheel_Front_Right": {
+      "vertices": 2384,
+      "faces": 2200
+    },
+    "SM_MKZ_Rotor_Wheel_Front_Right": {
+      "vertices": 10368,
+      "faces": 10368
+    },
+    "SM_MKZ_Hardware_Wheel_Rear_Right": {
+      "vertices": 2384,
+      "faces": 2200
+    },
+    "SM_MKZ_Rotor_Wheel_Rear_Right": {
+      "vertices": 10368,
+      "faces": 10368
+    },
+    "SM_MKZ_Hardware_Wheel_Rear_Left": {
+      "vertices": 2384,
+      "faces": 2200
+    },
+    "SM_MKZ_Rotor_Wheel_Rear_Left": {
+      "vertices": 10368,
+      "faces": 10368
+    },
+    "SM_MKZ_Optical_Details": {
+      "vertices": 3192,
+      "faces": 3456
+    }
+  },
+  "paint": {
+    "base_color_linear": [
+      0.024,
+      0.045,
+      0.065
+    ],
+    "roughness": 0.19,
+    "clearcoat": 1,
+    "coat_roughness": 0.075
+  },
+  "scope": "Visual approximation; original tire size, silhouette, rig and physics retained."
+}

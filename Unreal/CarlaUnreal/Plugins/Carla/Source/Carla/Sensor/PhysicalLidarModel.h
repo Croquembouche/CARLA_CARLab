@@ -144,7 +144,9 @@ inline std::vector<BeamSample> beam_samples(int count) {
   return samples;
 }
 
-inline std::vector<Detection> detect(std::vector<Echo> echoes, const Receiver& p, Random& random) {
+inline void detect_into(std::vector<Echo>& echoes, const Receiver& p, Random& random,
+                        std::vector<Detection>& output) {
+  output.clear();
   echoes.erase(std::remove_if(echoes.begin(), echoes.end(), [&](const Echo& e) {
     return !std::isfinite(e.range_m) || !std::isfinite(e.response) || e.response <= 0 ||
         e.range_m < p.minimum_range_m || e.range_m > p.maximum_range_m;
@@ -157,7 +159,6 @@ inline std::vector<Detection> detect(std::vector<Echo> echoes, const Receiver& p
   const double background_sigma = std::sqrt(std::max(0.0, p.background_photons) +
       p.electronic_noise_photons * p.electronic_noise_photons);
   const double threshold = p.minimum_signal_photons + p.detection_sigma * background_sigma;
-  std::vector<Detection> output;
   for (size_t first = 0; first < echoes.size();) {
     size_t last = first; double energy = 0, weighted = 0, weighted2 = 0, largest = -1;
     uint32_t flags = 0, object = 0; bool mixed_object = false;
@@ -209,6 +210,12 @@ inline std::vector<Detection> detect(std::vector<Echo> echoes, const Receiver& p
   if (p.return_order != 0) std::sort(output.begin(), output.end(), [&](const Detection& a, const Detection& b) {
     return p.return_order == 1 ? a.range_m < b.range_m : a.range_m > b.range_m;
   });
+}
+
+// Preserve the allocating API for existing callers. Scratch users retain capacity.
+inline std::vector<Detection> detect(std::vector<Echo> echoes, const Receiver& p, Random& random) {
+  std::vector<Detection> output;
+  detect_into(echoes,p,random,output);
   return output;
 }
 } // namespace CarlaPhysicalLidar

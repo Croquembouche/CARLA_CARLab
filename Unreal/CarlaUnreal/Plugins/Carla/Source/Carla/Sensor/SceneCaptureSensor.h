@@ -131,6 +131,10 @@ class CARLA_API ASceneCaptureSensor : public ASensor
 public:
   ASceneCaptureSensor(const FObjectInitializer &ObjectInitializer);
 
+  /// Opt-in RGB pair preparation. Both ordinary readbacks must follow this.
+  static bool TryCapturePair(ASceneCaptureSensor& First, ASceneCaptureSensor& Second);
+  static bool TryCaptureGroup(ASceneCaptureSensor& First, ASceneCaptureSensor& Second);
+
   void Set(const FActorDescription &ActorDescription) override;
 
   void SetImageSize(uint32 Width, uint32 Height);
@@ -651,6 +655,8 @@ protected:
   bool ShouldCaptureThisFrame();
 
 private:
+
+  uint64 PairCaptureFrame = MAX_uint64;
   void ApplyRayTracingSetting();
 
 #ifdef CARLA_HAS_GBUFFER_API

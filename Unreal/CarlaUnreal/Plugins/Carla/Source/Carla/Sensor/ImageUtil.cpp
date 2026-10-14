@@ -38,6 +38,7 @@ namespace ImageUtil
 {
   static TAutoConsoleVariable<int32> EarlyCameraSubmit(TEXT("carla.Sensors.EarlyCameraSubmit"),0,
       TEXT("Submit camera copy commands without blocking, before preparing later views."));
+  #include "CarlaCameraCopyTiming.inl"
   bool DecodePixelsByFormat(
     const void* PixelData,
     int32 SourcePitch,
@@ -214,8 +215,11 @@ namespace ImageUtil
     TUniquePtr<FRHIGPUTextureReadback> FallbackReadback;
     FRHIGPUReadbackPoolPtr Pool;
     int32 SlotIndex = INDEX_NONE;
-    double Enqueued=0;
-    FRenderQueryRHIRef CopyStart,CopyEnd;
+    double Enqueued=0,Requested=0;
+    FRenderQueryRHIRef CopyStart,CopyEnd,ReferenceStart,ReferenceEnd;
+    TUniquePtr<FRHIGPUTextureReadback> ReferenceReadback;
+    uint32 TimingAuditSerial=0;
+    bool CopyTimingEnabled=true;
   };
 
   static void ReadImageDataBegin(
@@ -249,9 +253,36 @@ namespace ImageUtil
     auto ResolveRect = FResolveRect();
     CmdList.Transition(FRHITransitionInfo(Texture, ERHIAccess::Unknown, ERHIAccess::CopySrc));
     Self.Enqueued=FPlatformTime::Seconds();
-    if (GSupportsTimestampRenderQueries) {Self.CopyStart=RHICreateRenderQuery(RQT_AbsoluteTime);Self.CopyEnd=RHICreateRenderQuery(RQT_AbsoluteTime);CmdList.EndRenderQuery(Self.CopyStart);}
+    if(Self.Requested>0)CarlaGpuSensors::ProfileSample(TEXT("camera_readback_request_to_enqueue_ms"),(Self.Enqueued-Self.Requested)*1000);
+    Self.CopyTimingEnabled=CameraCopyTiming::Enabled.GetValueOnRenderThread()!=0;
+    Self.TimingAuditSerial=CameraCopyTiming::NextAudit();
+    if (Self.CopyTimingEnabled && GSupportsTimestampRenderQueries) {Self.CopyStart=RHICreateRenderQuery(RQT_AbsoluteTime);Self.CopyEnd=RHICreateRenderQuery(RQT_AbsoluteTime);CmdList.EndRenderQuery(Self.CopyStart);}
     Self.Readback->EnqueueCopy(CmdList, Texture, ResolveRect);
     if (Self.CopyEnd) CmdList.EndRenderQuery(Self.CopyEnd);
+    if (CameraCopyTiming::Verify.GetValueOnRenderThread()!=0)
+    {
+      Self.ReferenceReadback=MakeUnique<FRHIGPUTextureReadback>(TEXT("CameraCopyTiming-Reference"));
+      if (GSupportsTimestampRenderQueries)
+      {
+        Self.ReferenceStart=RHICreateRenderQuery(RQT_AbsoluteTime);Self.ReferenceEnd=RHICreateRenderQuery(RQT_AbsoluteTime);
+        CmdList.EndRenderQuery(Self.ReferenceStart);
+      }
+      Self.ReferenceReadback->EnqueueCopy(CmdList,Texture,ResolveRect);
+      if (Self.ReferenceEnd) CmdList.EndRenderQuery(Self.ReferenceEnd);
+      ++CameraCopyTiming::Pending;
+    }
+    if (Self.TimingAuditSerial)
+    {
+      const uint32 Serial=Self.TimingAuditSerial;
+      const bool Timing=Self.CopyTimingEnabled,Supported=GSupportsTimestampRenderQueries;
+      const int32 Writes=(Self.CopyStart?1:0)+(Self.CopyEnd?1:0),ReferenceWrites=(Self.ReferenceStart?1:0)+(Self.ReferenceEnd?1:0);
+      const FIntPoint Size=Self.Size;
+      CmdList.EnqueueLambda([Serial,Timing,Supported,Writes,ReferenceWrites,Size](FRHICommandListImmediate&)
+      {
+        UE_LOG(LogCarla,Log,TEXT("CARLA_CAMERA_COPY_TIMING serial=%u timing=%d supported=%d query_writes=%d reference_query_writes=%d width=%d height=%d actual_rhi=%d"),
+          Serial,Timing?1:0,Supported?1:0,Writes,ReferenceWrites,Size.X,Size.Y,IsInRHIThread()?1:0);
+      });
+    }
     CmdList.Transition(FRHITransitionInfo(Texture, ERHIAccess::CopySrc, ERHIAccess::SRVMask));
 
     // Submit this capture/copy while the CPU prepares later cameras and the
@@ -280,7 +311,30 @@ namespace ImageUtil
     check(IsInRenderingThread());
     int32 RowPitch, BufferHeight;
     auto MappedPtr = Self.Readback->Lock(RowPitch, &BufferHeight);
-    if (!MappedPtr) { ReadImageDataRelease(Self); return; }
+
+    if (!MappedPtr) { if(Self.ReferenceReadback) --CameraCopyTiming::Pending; ReadImageDataRelease(Self); return; }
+    if (Self.ReferenceReadback)
+    {
+      int32 ReferencePitch=0,ReferenceHeight=0;
+      const void* Reference=Self.ReferenceReadback->Lock(ReferencePitch,&ReferenceHeight);
+      const auto& Info=GPixelFormats[Self.Format];
+      bool Match=Reference && Info.BlockSizeX==1 && Info.BlockSizeY==1 && RowPitch>=Self.Size.X && ReferencePitch>=Self.Size.X && BufferHeight>=Self.Size.Y && ReferenceHeight>=Self.Size.Y;
+      uint64 ComparedBytes=0;
+      if (Match)
+      {
+        for (int32 Row=0;Row<Self.Size.Y;++Row)
+        {
+          const SIZE_T Bytes=SIZE_T(Self.Size.X)*Info.BlockBytes;
+          const uint8* ActualRow=static_cast<const uint8*>(MappedPtr)+SIZE_T(Row)*RowPitch*Info.BlockBytes;
+          const uint8* ReferenceRow=static_cast<const uint8*>(Reference)+SIZE_T(Row)*ReferencePitch*Info.BlockBytes;
+          Match=(FMemory::Memcmp(ActualRow,ReferenceRow,Bytes)==0) && Match;ComparedBytes+=Bytes;
+        }
+      }
+      if(Reference) Self.ReferenceReadback->Unlock();
+      Self.ReferenceReadback.Reset();--CameraCopyTiming::Pending;++CameraCopyTiming::Compared;
+      UE_LOG(LogCarla,Log,TEXT("CARLA_CAMERA_COPY_TIMING_COMPARE serial=%u timing=%d width=%d height=%d bytes=%llu matched=%d actual_rt=%d"),
+        Self.TimingAuditSerial,Self.CopyTimingEnabled?1:0,Self.Size.X,Self.Size.Y,ComparedBytes,Match?1:0,IsInRenderingThread()?1:0);
+    }
     // RHI mapping/unmapping stays on the render thread. Keep the staging slot
     // locked while a background task converts its pixels, without a raw copy.
     CarlaGpuSensors::DispatchReadbackCallback([
@@ -307,7 +361,7 @@ namespace ImageUtil
     if (!Self.Readback) return;
     CarlaGpuSensors::PollReadback([Self = std::move(Self)]() mutable
     {
-      if (!Self.Readback->IsReady()) return false;
+      if (!Self.Readback->IsReady() || (Self.ReferenceReadback && !Self.ReferenceReadback->IsReady())) return false;
       CarlaGpuSensors::ProfileSample(TEXT("camera_readback_ready_ms"),(FPlatformTime::Seconds()-Self.Enqueued)*1000);
       uint64 Start=0,End=0;
       if (Self.CopyStart && RHIGetRenderQueryResult(Self.CopyStart,Start,false) && RHIGetRenderQueryResult(Self.CopyEnd,End,false) && End>=Start)
@@ -318,11 +372,13 @@ namespace ImageUtil
   }
 
   static void ReadImageDataAsyncCommand(
+    double Requested,
     UTextureRenderTarget2D& RenderTarget,
     FRHIGPUReadbackPoolPtr Pool,
     ReadImageDataAsyncCallback&& Callback)
   {
     ReadImageDataContext Context = { };
+    Context.Requested=Requested;
     ReadImageDataBegin(Context, RenderTarget, std::move(Pool), std::move(Callback));
     ReadImageDataEndAsync(std::move(Context));
   }
@@ -334,9 +390,11 @@ namespace ImageUtil
     FRHIGPUReadbackPoolPtr Pool,
     ReadImageDataAsyncCallback&& Callback)
   {
+    const double Requested=FPlatformTime::Seconds();
     if (IsInRenderingThread())
     {
       ReadImageDataAsyncCommand(
+        Requested,
         RenderTarget,
         std::move(Pool),
         std::move(Callback));
@@ -344,10 +402,11 @@ namespace ImageUtil
     else
     {
       ENQUEUE_RENDER_COMMAND(ReadImageDataAsyncCmd)([
-        &RenderTarget, Pool = std::move(Pool), Callback = std::move(Callback)
+        Requested, &RenderTarget, Pool = std::move(Pool), Callback = std::move(Callback)
       ](auto& CmdList) mutable
       {
         ReadImageDataContext Context = { };
+        Context.Requested=Requested;
         ReadImageDataBegin(Context, RenderTarget, std::move(Pool), std::move(Callback));
         ReadImageDataEndAsync(std::move(Context));
       });

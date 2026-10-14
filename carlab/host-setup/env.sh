@@ -1,5 +1,5 @@
 # Source this file to use the Simulations toolchain.
-export SIMULATIONS_ROOT=/mnt/simulations/carla/carlab/host-setup
+export SIMULATIONS_ROOT=/media/william/mist1/Simulations
 export SIMULATIONS_LINUX=/mnt/simulations
 export CARLA_ROOT="$SIMULATIONS_LINUX/carla"
 export CARLA_PATH="$CARLA_ROOT"

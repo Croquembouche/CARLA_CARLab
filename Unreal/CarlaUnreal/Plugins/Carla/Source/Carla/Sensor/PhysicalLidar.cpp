@@ -16,9 +16,26 @@
 #include "Async/ParallelFor.h"
 #include "ProfilingDebugging/CpuProfilerTrace.h"
 #include "Carla.h"
+#include <atomic>
+#include <type_traits>
+#include "Misc/Crc.h"
+#include "HAL/IConsoleManager.h"
 
 using namespace CarlaPhysicalLidar;
 namespace {
+static TAutoConsoleVariable<int32> CVarReuseReceiverScratch(
+    TEXT("carla.Sensors.ReuseReceiverScratch"),0,
+    TEXT("Reuse physical receiver scratch within bounded 128-pulse blocks; preserve pulse order and streams."),ECVF_Default);
+using FSharedRays=TSharedPtr<TArray<FCarlaGpuRay>,ESPMode::ThreadSafe>;
+FSharedRays AcquireRayStorage(FSharedRays& Storage) {
+  // Only this game-thread owner publishes new references. No weak references
+  // escape. Pending GPU batches and receivers hold strong references, so a
+  // borrowed frame always gets separate storage. Pair the uniqueness load with
+  // the shared controller's release decrement before writing reused storage.
+  if(Storage.IsValid() && Storage.IsUnique())std::atomic_thread_fence(std::memory_order_acquire);
+  else Storage=MakeShared<TArray<FCarlaGpuRay>,ESPMode::ThreadSafe>();
+  return Storage;
+}
 struct Firing {
   FVector Origin,Direction,LocalOrigin,LocalDirection;
   uint64 Id=0;
@@ -41,7 +58,22 @@ void PrepareRays(TArray<Firing>& Pulses,TArray<FCarlaGpuRay>& Rays,
     const FTransform& Before,const FTransform& Current,const FWeatherParameters& Weather,
     double Epoch,double Start,double End,double SceneTime,bool WarmStart,bool Parallel) {
   TRACE_CPUPROFILER_EVENT_SCOPE(CarlaPhysicalPrepareRays);
-  Rays.SetNum(Pulses.Num()*Samples.size());
+  static_assert(std::is_trivially_copyable<FCarlaGpuRay>::value,"Ray slots must support complete aggregate assignment");
+  const double ResizeStarted=FPlatformTime::Seconds();
+  // Every slot is assigned a complete ray below. Keep the original initialized
+  // array in the serial oracle to catch missing fields or unwritten slots.
+  if(Parallel)Rays.SetNumUninitialized(Pulses.Num()*Samples.size(),EAllowShrinking::No);
+  else Rays.SetNum(Pulses.Num()*Samples.size());
+  if(Parallel)CarlaGpuSensors::ProfileSample(TEXT("physical_ray_resize_ms"),(FPlatformTime::Seconds()-ResizeStarted)*1000);
+  const double MathStarted=FPlatformTime::Seconds();
+  // Beam quadrature is constant for a scan. Preserve exactly the same
+  // normalization and offset arithmetic without repeating it for every firing.
+  TArray<FVector> BeamDirections,BeamOffsets;
+  const double AngularSigma=FMath::DegreesToRadians(Profile.BeamDivergenceDeg)/2.354820045;
+  for(const auto& Sample:Samples) {
+    BeamDirections.Add(FVector(1,Sample.x*AngularSigma,Sample.y*AngularSigma).GetSafeNormal());
+    BeamOffsets.Add(FVector(0,Sample.x,Sample.y));
+  }
   ParallelFor(Pulses.Num(),[&](int32 I) {
       auto& F=Pulses[I];const uint32 C=F.Channel;const double Time=F.Time;
       F.FirstRay=I*Samples.size();
@@ -66,15 +98,92 @@ void PrepareRays(TArray<Firing>& Pulses,TArray<FCarlaGpuRay>& Rays,
       }
       int32 SubIndex=0;
       for(const auto& Sample:Samples) {
-        const double AngularSigma=FMath::DegreesToRadians(Profile.BeamDivergenceDeg)/2.354820045;
-        const FVector Local(1,Sample.x*AngularSigma,Sample.y*AngularSigma);
-        const FVector Offset=Rotation.RotateVector(FVector(0,Sample.x,Sample.y))*Profile.BeamDiameterM*100/2.354820045;
-        FCarlaGpuRay Ray{F.Origin+Offset,Rotation.RotateVector(Local.GetSafeNormal()),D.Range,true,0};
+        // The serial automation reference retains per-firing quadrature math
+        // and checks the cached parallel output against it bit for bit.
+        const FVector Local=Parallel?BeamDirections[SubIndex]:FVector(1,Sample.x*AngularSigma,Sample.y*AngularSigma).GetSafeNormal();
+        const FVector Aperture=Parallel?BeamOffsets[SubIndex]:FVector(0,Sample.x,Sample.y);
+        const FVector Offset=Rotation.RotateVector(Aperture)*Profile.BeamDiameterM*100/2.354820045;
+        FCarlaGpuRay Ray{F.Origin+Offset,Rotation.RotateVector(Local),D.Range,true,0};
         Ray.PhysicalModel=true;Ray.TimeFraction=Alpha;Ray.TargetMotion=Profile.TargetMotion && !WarmStart;
         Ray.WavelengthNm=Profile.Receiver.wavelength_nm;Ray.Wetness=Weather.Wetness*.01f;Ray.SceneTime=SceneTime-(End-Time);
         Rays[F.FirstRay+SubIndex++]=Ray;
       }
   },Parallel?EParallelForFlags::None:EParallelForFlags::ForceSingleThread);
+  if(Parallel)CarlaGpuSensors::ProfileSample(TEXT("physical_ray_math_ms"),(FPlatformTime::Seconds()-MathStarted)*1000);
+}
+std::vector<carla::sensor::data::PhysicalLidarDetection> ReceivePhysicalPoints(
+    const TArray<Firing>& Pulses,const TArray<FCarlaGpuRay>& Rays,
+    const CarlaGpuSensors::FPhysicalHitView& Hits,const std::vector<BeamSample>& Samples,
+    const FPhysicalLidarProfile& ProfileCopy,const FLidarDescription& D,
+    const TArray<FPhysicalLidarVolume>& Volumes,const FWeatherParameters& Weather,
+    double Start,double ClockScale,bool ReuseScratch,int32 RequestedBlockSize) {
+    TArray<std::vector<carla::sensor::data::PhysicalLidarDetection>> Results;const int32 BlockSize=ReuseScratch?FMath::Clamp(RequestedBlockSize,1,1024):1;
+    const int32 Blocks=Pulses.Num()/BlockSize+(Pulses.Num()%BlockSize!=0);
+    Results.SetNum(Blocks);
+    // Weather and receiver background are immutable snapshots. Their order of
+    // arithmetic and per-pulse random streams remain unchanged.
+    const double Rain=FMath::Max(ProfileCopy.RainMmH,CarlaLidarSceneWeather::rain_mm_h(Weather.Precipitation));
+    const double Extinction=FMath::Max(0.0,double(D.AtmospAttenRate))+
+        CarlaLidarSceneWeather::rain_extinction(Rain)+(ProfileCopy.FogVisibilityM>0?3.912/ProfileCopy.FogVisibilityM:0)+
+        ProfileCopy.SmokeExtinction+ProfileCopy.DustExtinction+ProfileCopy.SnowExtinction+
+        CarlaLidarSceneWeather::dust_extinction(Weather.DustStorm);
+    const double SceneFog=CarlaLidarSceneWeather::fog_extinction(Weather.FogDensity);
+    const double FogStart=FMath::Clamp(double(Weather.FogDistance),0.0,double(D.Range)*.01);
+    const double Backscatter=FMath::Max(0.0,Extinction-FMath::Max(0.0,double(D.AtmospAttenRate)))*.15;
+    std::vector<MediumSegment> BaseMedium{{0,D.Range*.01,Extinction,Backscatter}};
+    if(SceneFog>0)BaseMedium.push_back({FogStart,D.Range*.01,SceneFog,SceneFog*.15});
+    double Lux=ProfileCopy.AmbientLux;
+    if(ProfileCopy.AmbientFromWeather) Lux=100000*FMath::Max(0.0,std::sin(FMath::DegreesToRadians(double(Weather.SunAltitudeAngle))))*(1-.8*FMath::Clamp(double(Weather.Cloudiness)*.01,0.0,1.0));
+    const FVector SunDirection=FRotator(Weather.SunAltitudeAngle,Weather.SunAzimuthAngle,0).Vector();
+    ParallelFor(Blocks,[&](int32 Block) {
+      std::vector<Echo> Echoes;
+      std::vector<Detection> Detected;
+      std::vector<Echo> Sub;
+      std::vector<MediumSegment> Medium;
+      if(!Volumes.IsEmpty())Medium.reserve(BaseMedium.size()+Volumes.Num());
+      const int32 First=Block*BlockSize,Last=First+FMath::Min(BlockSize,Pulses.Num()-First);
+      for(int32 I=First;I<Last;++I) {
+        const auto& F=Pulses[I];Echoes.clear();
+        for(int S=0;S<int(Samples.size());++S) {
+          const int Index=F.FirstRay+S;if(!Hits.IsValidIndex(Index))continue;
+          const auto& H=Hits[Index];const auto& Ray=Rays[Index];Sub.clear();
+          for(uint32 E=0;E<H.EchoCount;++E) {
+            const auto& V=H.Echoes[E];Sub.push_back({V.Distance*.01,V.SurfaceReturn*Samples[S].weight,V.Flags,V.Component});
+          }
+          // Scene fog starts at the same distance used by the camera renderer.
+          // Weather is snapshotted every scan; existing sensors update in place.
+          if(!Volumes.IsEmpty()) {
+            Medium.assign(BaseMedium.begin(),BaseMedium.end());
+            for(const auto& V:Volumes) { double Begin,Finish;if(VolumeInterval(V,Ray.Origin,Ray.Direction,D.Range*.01,Begin,Finish))Medium.push_back({Begin,Finish,V.Extinction,V.Backscatter}); }
+          }
+          Random WeatherRandom(uint64(D.RandomSeed)^F.Id^(UINT64_C(0x7b23ad819657d8c1)*(S+1)));
+          propagate_medium(Sub,Volumes.IsEmpty()?BaseMedium:Medium,H.UnoccludedRange*.01,Samples[S].weight,WeatherRandom);
+          for(auto& E:Sub) { E.response*=F.Transmission*F.Transmission*Value(ProfileCopy.ChannelGain,F.Channel,1);Echoes.push_back(E); }
+        }
+        if(F.Scatter>0)Echoes.push_back({.2,F.Scatter,Cover,0});
+        Receiver ReceiverCopy=ProfileCopy.Receiver;ReceiverCopy.range_bias_m+=Value(ProfileCopy.ChannelRangeBiasM,F.Channel,0);
+        const double Direct=Weather.SunAltitudeAngle>0?ProfileCopy.DirectSunGain*std::exp((FVector::DotProduct(F.Direction,SunDirection)-1)/.002):0;
+        ReceiverCopy.background_photons+=Lux*.001*ProfileCopy.BackgroundPerKlux*(1+Direct);
+        Random DetectionRandom(uint64(D.RandomSeed)^F.Id^UINT64_C(0xa42b507ce5390217));
+        if(ReuseScratch)detect_into(Echoes,ReceiverCopy,DetectionRandom,Detected);
+        else Detected=detect(MoveTemp(Echoes),ReceiverCopy,DetectionRandom);
+        for(size_t R=0;R<Detected.size();++R) {
+          const auto& V=Detected[R];carla::sensor::data::PhysicalLidarDetection Point;
+          const FVector Local=F.LocalOrigin*.01+F.LocalDirection*V.range_m;
+          Point.x=Local.X;Point.y=Local.Y;Point.z=Local.Z;Point.intensity=V.reflectivity;
+          Point.range=V.range_m;Point.signal=V.signal;Point.ambient=V.ambient;Point.pulse_width=V.pulse_width_ns;
+          Point.azimuth=FMath::DegreesToRadians(F.Azimuth);Point.elevation=FMath::DegreesToRadians(F.Elevation);
+          Point.time_offset=(F.Time-Start)*ClockScale;Point.confidence=V.confidence;
+          Point.pulse_id=F.Id;Point.channel=F.Channel;Point.return_id=R;Point.return_count=Detected.size();Point.flags=V.flags;
+          Results[Block].push_back(Point);
+        }
+      }
+    });
+    size_t PointCount=0;
+    for(const auto& Points:Results)PointCount+=Points.size();
+    std::vector<carla::sensor::data::PhysicalLidarDetection> Output;Output.reserve(PointCount);
+    for(auto& Points:Results)Output.insert(Output.end(),Points.begin(),Points.end());
+    return Output;
 }
 }
 bool FPhysicalLidarState::Initialize(const FLidarDescription& D,FString& Error) {
@@ -118,7 +227,11 @@ void FPhysicalLidarState::Simulate(ASensor& Sensor,const FLidarDescription& D,fl
   FWeatherParameters Weather;
   if(auto* W=Sensor.GetEpisode().GetWeather())Weather=W->GetCurrentWeather();
   const auto Samples=beam_samples(Profile.BeamSamples);
-  TArray<Firing> Pulses;TArray<FCarlaGpuRay> Rays;
+  const double StorageStarted=FPlatformTime::Seconds();
+  const bool Reusing=RayStorage.IsValid() && RayStorage.IsUnique();
+  auto RayCopy=AcquireRayStorage(RayStorage);
+  auto& Rays=*RayCopy;
+  TArray<Firing> Pulses;
   const double Expected=FMath::Max(0.0,End-Start)*D.PointsPerSecond;
   if((FMath::CeilToDouble(Expected)+D.Channels)*Samples.size()>2097120) {
     UE_LOG(LogCarla,Error,TEXT("Physical lidar frame exceeds the GPU dispatch bound; reduce points_per_second, beam_samples or sensor_tick"));
@@ -126,6 +239,9 @@ void FPhysicalLidarState::Simulate(ASensor& Sensor,const FLidarDescription& D,fl
     PreviousPose=Current;PreviousTime=End;NextFiring.Reset();return;
   }
   Pulses.Reserve(FMath::CeilToInt(Expected)+D.Channels);Rays.Reserve(FMath::CeilToInt(Expected)*Samples.size()+D.Channels*Samples.size());
+  CarlaGpuSensors::ProfileSample(TEXT("physical_ray_storage_ms"),(FPlatformTime::Seconds()-StorageStarted)*1000);
+  CarlaGpuSensors::ProfileSample(TEXT("physical_ray_storage_reused"),Reusing?1:0);
+  const double ScheduleStarted=FPlatformTime::Seconds();
   for(uint32 C=0;C<D.Channels;++C) {
     while(NextFiring[C]<End-1.e-10) {
       const double Time=NextFiring[C];NextFiring[C]+=Period;if(Time<Start-1.e-8)continue;
@@ -135,10 +251,11 @@ void FPhysicalLidarState::Simulate(ASensor& Sensor,const FLidarDescription& D,fl
       Pulses.Add(F);
     }
   }
+  CarlaGpuSensors::ProfileSample(TEXT("physical_pulse_schedule_ms"),(FPlatformTime::Seconds()-ScheduleStarted)*1000);
   // The scheduler above remains serial and defines pulse order. Preparation
   // writes disjoint preallocated pulse/ray slots and never accesses UObjects.
   PrepareRays(Pulses,Rays,Profile,D,Samples,Before,Current,Weather,Epoch,Start,End,
-      Sensor.GetWorld()->GetTimeSeconds(),WarmStart,true);
+      End,WarmStart,true);
   PreviousPose=Current;PreviousTime=End;
   TArray<FPhysicalLidarVolume> Volumes=Profile.Volumes;
   if(Profile.RoadSpray && Weather.Wetness>0) {
@@ -152,7 +269,6 @@ void FPhysicalLidarState::Simulate(ASensor& Sensor,const FLidarDescription& D,fl
   const auto ProfileCopy=Profile;
   const uint64 PacketSequence=Sequence++;
   // Preserve per-ray directions for spatial medium integration after readback.
-  auto RayCopy=MakeShared<TArray<FCarlaGpuRay>,ESPMode::ThreadSafe>(MoveTemp(Rays));
   auto Receive=[Pulses=MoveTemp(Pulses),RayCopy,Samples,ProfileCopy,D,Volumes=MoveTemp(Volumes),Weather,Start,End,WarmStart,PacketSequence,Complete=MoveTemp(Complete)](const CarlaGpuSensors::FPhysicalHitView& Hits) mutable {
     TRACE_CPUPROFILER_EVENT_SCOPE(CarlaPhysicalReceiver);
     const double ReceiveStarted=FPlatformTime::Seconds();
@@ -168,61 +284,17 @@ void FPhysicalLidarState::Simulate(ASensor& Sensor,const FLidarDescription& D,fl
     if(PacketRandom.uniform()<ProfileCopy.Receiver.packet_loss_probability) {
       Frame.Data.header.flags|=4;Complete(MoveTemp(Frame));return;
     }
-    TArray<std::vector<carla::sensor::data::PhysicalLidarDetection>> Results;Results.SetNum(Pulses.Num());
-    ParallelFor(Pulses.Num(),[&](int32 I) {
-      const auto& F=Pulses[I];std::vector<Echo> Echoes;
-      const double Rain=FMath::Max(ProfileCopy.RainMmH,CarlaLidarSceneWeather::rain_mm_h(Weather.Precipitation));
-      // Rain law is an empirical generic approximation; fog uses visibility to extinction.
-      const double Extinction=FMath::Max(0.0,double(D.AtmospAttenRate))+
-          CarlaLidarSceneWeather::rain_extinction(Rain)+(ProfileCopy.FogVisibilityM>0?3.912/ProfileCopy.FogVisibilityM:0)+
-          ProfileCopy.SmokeExtinction+ProfileCopy.DustExtinction+ProfileCopy.SnowExtinction+
-          CarlaLidarSceneWeather::dust_extinction(Weather.DustStorm);
-      const double SceneFog=CarlaLidarSceneWeather::fog_extinction(Weather.FogDensity);
-      const double FogStart=FMath::Clamp(double(Weather.FogDistance),0.0,double(D.Range)*.01);
-      const double Backscatter=FMath::Max(0.0,Extinction-FMath::Max(0.0,double(D.AtmospAttenRate)))*.15;
-      for(int S=0;S<int(Samples.size());++S) {
-        const int Index=F.FirstRay+S;if(!Hits.IsValidIndex(Index))continue;
-        const auto& H=Hits[Index];const auto& Ray=(*RayCopy)[Index];std::vector<Echo> Sub;
-        for(uint32 E=0;E<H.EchoCount;++E) {
-          const auto& V=H.Echoes[E];Sub.push_back({V.Distance*.01,V.SurfaceReturn*Samples[S].weight,V.Flags,V.Component});
-        }
-        std::vector<MediumSegment> Medium{{0,D.Range*.01,Extinction,Backscatter}};
-        // Scene fog starts at the same distance used by the camera renderer.
-        // Weather is snapshotted every scan; existing sensors update in place.
-        if(SceneFog>0)Medium.push_back({FogStart,D.Range*.01,SceneFog,SceneFog*.15});
-        for(const auto& V:Volumes) { double Begin,Finish;if(VolumeInterval(V,Ray.Origin,Ray.Direction,D.Range*.01,Begin,Finish))Medium.push_back({Begin,Finish,V.Extinction,V.Backscatter}); }
-        Random WeatherRandom(uint64(D.RandomSeed)^F.Id^(UINT64_C(0x7b23ad819657d8c1)*(S+1)));
-        propagate_medium(Sub,Medium,H.UnoccludedRange*.01,Samples[S].weight,WeatherRandom);
-        for(auto& E:Sub) { E.response*=F.Transmission*F.Transmission*Value(ProfileCopy.ChannelGain,F.Channel,1);Echoes.push_back(E); }
-      }
-      if(F.Scatter>0)Echoes.push_back({.2,F.Scatter,Cover,0});
-      Receiver ReceiverCopy=ProfileCopy.Receiver;ReceiverCopy.range_bias_m+=Value(ProfileCopy.ChannelRangeBiasM,F.Channel,0);
-      double Lux=ProfileCopy.AmbientLux;
-      if(ProfileCopy.AmbientFromWeather) Lux=100000*FMath::Max(0.0,std::sin(FMath::DegreesToRadians(double(Weather.SunAltitudeAngle))))*(1-.8*FMath::Clamp(double(Weather.Cloudiness)*.01,0.0,1.0));
-      const FVector SunDirection=FRotator(Weather.SunAltitudeAngle,Weather.SunAzimuthAngle,0).Vector();
-      const double Direct=Weather.SunAltitudeAngle>0?ProfileCopy.DirectSunGain*std::exp((FVector::DotProduct(F.Direction,SunDirection)-1)/.002):0;
-      ReceiverCopy.background_photons+=Lux*.001*ProfileCopy.BackgroundPerKlux*(1+Direct);
-      Random DetectionRandom(uint64(D.RandomSeed)^F.Id^UINT64_C(0xa42b507ce5390217));
-      auto Detected=detect(MoveTemp(Echoes),ReceiverCopy,DetectionRandom);
-      for(size_t R=0;R<Detected.size();++R) {
-        const auto& V=Detected[R];carla::sensor::data::PhysicalLidarDetection Point;
-        const FVector Local=F.LocalOrigin*.01+F.LocalDirection*V.range_m;
-        Point.x=Local.X;Point.y=Local.Y;Point.z=Local.Z;Point.intensity=V.reflectivity;
-        Point.range=V.range_m;Point.signal=V.signal;Point.ambient=V.ambient;Point.pulse_width=V.pulse_width_ns;
-        Point.azimuth=FMath::DegreesToRadians(F.Azimuth);Point.elevation=FMath::DegreesToRadians(F.Elevation);
-        Point.time_offset=(F.Time-Start)*ClockScale;Point.confidence=V.confidence;
-        Point.pulse_id=F.Id;Point.channel=F.Channel;Point.return_id=R;Point.return_count=Detected.size();Point.flags=V.flags;
-        Results[I].push_back(Point);
-      }
-    });
-    for(auto& Points:Results)Frame.Data.points.insert(Frame.Data.points.end(),Points.begin(),Points.end());
+    const bool ReuseScratch=CVarReuseReceiverScratch.GetValueOnAnyThread()!=0;
+    CarlaGpuSensors::ProfileSample(TEXT("physical_receiver_scratch_reused"),ReuseScratch?1:0);
+    Frame.Data.points=ReceivePhysicalPoints(Pulses,*RayCopy,Hits,Samples,ProfileCopy,D,
+        Volumes,Weather,Start,ClockScale,ReuseScratch,128);
     Frame.Data.header.point_count=Frame.Data.points.size();
     if(!Pulses.IsEmpty())Frame.Data.header.horizontal_angle=FMath::DegreesToRadians(Pulses.Last().Azimuth);
     CarlaGpuSensors::ProfileSample(TEXT("physical_receiver_ms"),(FPlatformTime::Seconds()-ReceiveStarted)*1000);
     Complete(MoveTemp(Frame));
   };
   CarlaGpuSensors::ProfileSample(TEXT("physical_generate_rays_ms"),(FPlatformTime::Seconds()-PrepareStarted)*1000);
-  if(CarlaGpuSensors::IsEnabled())CarlaGpuSensors::SubmitPhysical(Sensor,RayCopy,MoveTemp(Receive));
+  if(CarlaGpuSensors::IsEnabled())CarlaGpuSensors::SubmitPhysical(Sensor,RayCopy.ToSharedRef(),MoveTemp(Receive));
   else {
     // CPU compatibility uses the existing collision/static-render optics path.
     // The GPU path additionally interpolates deforming render meshes.
@@ -238,7 +310,7 @@ void FPhysicalLidarState::Simulate(ASensor& Sensor,const FLidarDescription& D,fl
         if(C->GetOwner()==&Sensor)continue;
         const bool Solid=C->IsQueryCollisionEnabled() && C->GetCollisionResponseToChannel(ECC_GameTraceChannel2)==ECR_Block;
         const auto Materials=CarlaLidarOptics::Sections(C);
-        if(HasProxy || Solid || Materials.ContainsByPredicate([](const CarlaLidarOptics::Material& M) { return M.transmission>0 || M.specular>.5f || M.retro>0; }))Components.Add(C);
+        if(HasProxy || Solid || CarlaLidarOptics::NeedsRenderSurface(C,Materials))Components.Add(C);
       }
     }
     auto Motion=CarlaLidarMotion::Prepare(Sensor.GetWorld(),Components);
@@ -260,9 +332,124 @@ void FPhysicalLidarState::Simulate(ASensor& Sensor,const FLidarDescription& D,fl
 
 #if WITH_DEV_AUTOMATION_TESTS
 #include "Misc/AutomationTest.h"
+#include "HAL/IConsoleManager.h"
+
+#include "Carla/Sensor/Tests/PhysicalLidarReceiverReference.h"
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCarlaPhysicalReceiverScratchTest,"Carla.Sensors.PhysicalReceiverScratch",
+    EAutomationTestFlags_ApplicationContextMask | EAutomationTestFlags::EngineFilter)
+bool FCarlaPhysicalReceiverScratchTest::RunTest(const FString&) {
+  // The frozen allocating algorithm is independent of the new scratch wrapper.
+  std::vector<Echo> Scratch;std::vector<Detection> Output;
+  for(int32 Setting=0;Setting<24;++Setting)for(int32 Count:{0,1,2,7,8,33,129,512})for(uint64 Seed=0;Seed<16;++Seed) {
+    Receiver P;P.maximum_range_m=150;P.max_returns=Setting%5;P.return_order=Setting%3;
+    P.shot_noise=Setting%2;P.false_alarms=Setting%4!=0;P.background_photons=Setting%3?1:500;
+    P.electronic_noise_photons=Setting%3;P.saturation_photons=Setting%4?65535:200;
+    P.range_bias_m=.01;P.temperature_c=32;P.temperature_bias_m_per_c=.001;
+    P.time_walk_m=.2;P.saturation_bias_m=.04;P.range_quantization_m=Setting%3?.002:0;
+    std::vector<Echo> Echoes;Random Generate(Seed+Setting*1234);
+    for(int32 I=0;I<Count;++I) {
+      Echo E{Generate.uniform()*170-5,Generate.uniform()*.9,uint32(1u<<(I%4)),uint32(I%7)};
+      if(I%9==0)E.range_m=12+.03*(I%4);
+      if(I%31==0)E.response=std::numeric_limits<double>::quiet_NaN();
+      if(I%29==0)E.range_m=std::numeric_limits<double>::infinity();
+      Echoes.push_back(E);
+    }
+    Random A(Seed),B(Seed);const auto Reference=detect_reference(Echoes,P,A);
+    Scratch.assign(Echoes.begin(),Echoes.end());Output.assign(17,Detection{999});
+    detect_into(Scratch,P,B,Output);
+    bool Equal=Reference.size()==Output.size() && A.state==B.state;
+    for(size_t I=0;Equal && I<Output.size();++I)Equal=FMemory::Memcmp(&Reference[I],&Output[I],sizeof(Detection))==0;
+    if(!Equal) {AddError(FString::Printf(TEXT("Frozen receiver mismatch setting=%d count=%d seed=%u"),Setting,Count,uint32(Seed)));return false;}
+  }
+  const auto Samples=beam_samples(7);
+  for(int32 Scenario=0;Scenario<5;++Scenario)for(int32 Count:{0,1,127,128,129,4097,80001}) {
+    // Large throughput-sized coverage uses the clear scenario; the remaining
+    // cases exercise weather, calibration, cover and return ordering at tails.
+    if(Count==80001 && Scenario!=0)continue;
+    FLidarDescription D;D.Channels=64;D.Range=15000;D.RandomSeed=42;
+    FPhysicalLidarProfile Profile;Profile.Receiver.maximum_range_m=150;
+    Profile.Receiver.shot_noise=Scenario%2;Profile.Receiver.max_returns=1+Scenario%4;
+    Profile.Receiver.return_order=Scenario%3;Profile.Receiver.false_alarms=true;
+    Profile.Receiver.background_photons=Scenario==3?500:1;
+    Profile.Receiver.range_bias_m=.017;Profile.ClockDriftPpm=40;
+    Profile.ChannelGain={.3,.9,1.1,2.};Profile.ChannelRangeBiasM={-.003,.001,.02};
+    Profile.RainMmH=Scenario==1?20:0;Profile.FogVisibilityM=Scenario==2?300:0;
+    Profile.AmbientFromWeather=Scenario!=3;Profile.DirectSunGain=.4;Profile.BackgroundPerKlux=1;
+    FWeatherParameters Weather;Weather.SunAltitudeAngle=35;Weather.SunAzimuthAngle=70;
+    Weather.Cloudiness=23;Weather.Wetness=Scenario==1?50:0;
+    Weather.FogDensity=Scenario==2?12:0;Weather.FogDistance=5;
+    TArray<FPhysicalLidarVolume> Volumes;
+    if(Scenario==4) {
+      FPhysicalLidarVolume V;V.Transform=FTransform(FRotator(0,30,0),FVector(1400,-120,80));
+      V.Extent=FVector(900,500,150);V.Extinction=.01;V.Backscatter=.004;Volumes.Add(V);
+    }
+    TArray<Firing> Pulses;Pulses.SetNum(Count);
+    TArray<FCarlaGpuRay> Rays;Rays.SetNum(Count*Samples.size());
+    TArray<FCarlaPhysicalGpuHit> Hits;Hits.SetNum(Rays.Num());
+    for(int32 I=0;I<Count;++I) {
+      auto& F=Pulses[I];F.Channel=I%64;F.Id=UINT64_C(0x123456780000)+I;
+      F.FirstRay=I*Samples.size();F.Azimuth=(I%360)-180;F.Elevation=-15+(I%31);
+      F.Time=7+I*.000002;F.LocalOrigin=FVector(.12,-.23,.45);
+      F.LocalDirection=FRotator(F.Elevation,F.Azimuth,0).Vector();F.Direction=F.LocalDirection;
+      F.Origin=FVector(2000000000.0,-1000000000.0,3000000000.0);
+      F.Transmission=I%7==0?.63:1;F.Scatter=I%11==0?.02:0;
+      for(int32 S=0;S<int32(Samples.size());++S) {
+        const int32 Index=F.FirstRay+S;auto& Ray=Rays[Index];auto& H=Hits[Index];
+        Ray.Origin=FVector::ZeroVector;Ray.Direction=F.Direction;Ray.Range=D.Range;
+        H.UnoccludedRange=15000;H.EchoCount=Index%5==0?0:1+Index%8;
+        for(uint32 E=0;E<H.EchoCount;++E) {
+          auto& V=H.Echoes[E];V.Distance=500+(I%4000)+E*10;
+          V.SurfaceReturn=.02+(S%4)*.03;V.Flags=E%2?Surface:Surface|Multipath;V.Component=E%3;
+        }
+      }
+    }
+    const uint32 RayHash=FCrc::MemCrc32(Rays.GetData(),Rays.Num()*sizeof(FCarlaGpuRay));
+    const uint32 HitHash=FCrc::MemCrc32(Hits.GetData(),Hits.Num()*sizeof(FCarlaPhysicalGpuHit));
+    const CarlaGpuSensors::FPhysicalHitView View(Hits);
+    const auto Reference=ReceivePhysicalPoints(Pulses,Rays,View,Samples,Profile,D,Volumes,Weather,7,1.00004,false,1);
+    for(int32 BlockSize:{1,3,128,1024}) {
+      if(Count==80001 && BlockSize!=128)continue;
+      const auto Actual=ReceivePhysicalPoints(Pulses,Rays,View,Samples,Profile,D,Volumes,Weather,7,1.00004,true,BlockSize);
+      bool Equal=Reference.size()==Actual.size();
+      for(size_t I=0;Equal && I<Actual.size();++I)Equal=FMemory::Memcmp(&Reference[I],&Actual[I],sizeof(Actual[I]))==0;
+      if(!Equal) {AddError(FString::Printf(TEXT("Physical wire/order mismatch scenario=%d pulses=%d block=%d"),Scenario,Count,BlockSize));return false;}
+    }
+    TestEqual(TEXT("receiver leaves every ray byte immutable"),FCrc::MemCrc32(Rays.GetData(),Rays.Num()*sizeof(FCarlaGpuRay)),RayHash);
+    TestEqual(TEXT("receiver leaves every hit byte immutable"),FCrc::MemCrc32(Hits.GetData(),Hits.Num()*sizeof(FCarlaPhysicalGpuHit)),HitHash);
+  }
+  return true;
+}
+static FAutoConsoleCommand PhysicalReceiverScratchTestCommand(
+    TEXT("carla.Sensors.TestPhysicalReceiverScratch"),TEXT("Verify frozen receiver model and complete scratch/legacy wire output."),
+    FConsoleCommandDelegate::CreateLambda([]() {
+      auto& Framework=FAutomationTestFramework::Get();
+      if(Framework.GetCurrentTest()) {UE_LOG(LogCarla,Warning,TEXT("PHYSICAL_RECEIVER_SCRATCH_TEST busy"));return;}
+      Framework.StartTestByName(TEXT("FCarlaPhysicalReceiverScratchTest"),0,TEXT("Carla.Sensors.PhysicalReceiverScratch"));
+      if(!Framework.GetCurrentTest()) {UE_LOG(LogCarla,Warning,TEXT("PHYSICAL_RECEIVER_SCRATCH_TEST result=Fail test_did_not_start"));return;}
+      FAutomationTestExecutionInfo Info;const bool Passed=Framework.StopTest(Info);
+      UE_LOG(LogCarla,Display,TEXT("PHYSICAL_RECEIVER_SCRATCH_TEST result=%s"),Passed?TEXT("Success"):TEXT("Fail"));
+    }));
+
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCarlaPhysicalRayPreparationTest,"Carla.Sensors.PhysicalRayPreparation",
     EAutomationTestFlags_ApplicationContextMask | EAutomationTestFlags::EngineFilter)
 bool FCarlaPhysicalRayPreparationTest::RunTest(const FString&) {
+  {
+    FSharedRays Storage;
+    auto Borrowed=AcquireRayStorage(Storage);
+    Borrowed->SetNum(5);(*Borrowed)[0].Range=1234;
+    auto Next=AcquireRayStorage(Storage);
+    TestTrue(TEXT("pending frame gets independent ray storage"),Next.Get()!=Borrowed.Get());
+    Next->SetNum(7);(*Next)[0].Range=9876;
+    TestEqual(TEXT("a pending frame remains immutable"),(*Borrowed)[0].Range,1234.f);
+    auto* Array=Next.Get();auto* Allocation=Next->GetData();
+    Next.Reset();
+    auto Reused=AcquireRayStorage(Storage);
+    TestTrue(TEXT("completed frame reuses its array"),Reused.Get()==Array);
+    TestTrue(TEXT("completed frame retains its allocation"),Reused->GetData()==Allocation);
+    TestEqual(TEXT("reused storage contents survive until overwritten"),(*Reused)[0].Range,9876.f);
+    Reused->SetNumUninitialized(0,EAllowShrinking::No);
+    TestTrue(TEXT("empty frame retains capacity"),Reused->GetData()==Allocation && Reused->Max()>=7);
+  }
   {
     TArray<FCarlaGpuRay> Rays;Rays.SetNum(32769);
     const FVector Translation(-1000000000.0,2000000000.0,-3000000000.0);
@@ -313,6 +500,81 @@ bool FCarlaPhysicalRayPreparationTest::RunTest(const FString&) {
     CarlaLidarOptics::SnapshotMaterialCache NextSnapshot;
     B=CarlaLidarOptics::Resolve(C,M,&NextSnapshot);
     TestEqual(TEXT("next snapshot observes runtime scalar edits"),B.diffuse,.31f);
+  }
+  {
+    auto* Var=IConsoleManager::Get().FindConsoleVariable(TEXT("carla.Sensors.CacheMaterialPresets"));
+    TestNotNull(TEXT("material preset trial registered"),Var);
+    if(Var) {
+      const int32 Previous=Var->GetInt();
+      const EConsoleVariableFlags PreviousFlags=Var->GetFlags();
+      Var->Set(1,ECVF_SetByConsole);
+      struct Expected { const TCHAR* Name; float Diffuse,Retro,Specular,Transmission; };
+      const Expected Cases[]={
+        {TEXT("MIRROR_window"),0,0,.95f,0},{TEXT("glass_sign"),.002f,0,0,.96f},
+        {TEXT("Window"),.002f,0,0,.96f},{TEXT("roadline"),.45f,.45f,0,0},
+        {TEXT("road_line"),.45f,.45f,0,0},{TEXT("marking"),.45f,.45f,0,0},
+        {TEXT("lane_mark"),.45f,.45f,0,0},{TEXT("sign"),.25f,.7f,0,0},
+        {TEXT("signal"),.3f,0,0,0},{TEXT("design"),.3f,0,0,0},
+        {TEXT("sign_post"),.3f,0,0,0},{TEXT("sign_back"),.3f,0,0,0},
+        {TEXT("asphalt"),.1f,0,0,0},{TEXT("concrete"),.3f,0,0,0},
+        {TEXT("cement"),.3f,0,0,0},{TEXT("rubber"),.08f,0,0,0},
+        {TEXT("tire"),.08f,0,0,0},{TEXT("unclassified"),.3f,0,0,0}};
+      auto Check=[&](const CarlaLidarOptics::Material& A,const CarlaLidarOptics::Material& B) {
+        TestEqual(TEXT("preset diffuse exact"),A.diffuse,B.diffuse);
+        TestEqual(TEXT("preset retro exact"),A.retro,B.retro);
+        TestEqual(TEXT("preset specular exact"),A.specular,B.specular);
+        TestEqual(TEXT("preset transmission exact"),A.transmission,B.transmission);
+        TestEqual(TEXT("preset IOR exact"),A.ior,B.ior);
+        TestEqual(TEXT("preset roughness exact"),A.roughness,B.roughness);
+        TestEqual(TEXT("preset thin sheet exact"),A.thinSheet,B.thinSheet);
+        TestEqual(TEXT("preset infrared exact"),A.infrared,B.infrared);
+      };
+      auto* C=NewObject<UStaticMeshComponent>();
+      for(const auto& E:Cases) {
+        auto* Outer=NewObject<UStaticMeshComponent>();
+        auto* M=UMaterialInstanceDynamic::Create(UMaterial::GetDefaultMaterial(MD_Surface),Outer,FName(E.Name));
+        CarlaLidarOptics::SnapshotMaterialCache Cache;
+        const auto A=CarlaLidarOptics::Resolve(C,M,&Cache);
+        CarlaLidarOptics::Material ExpectedMaterial;
+        ExpectedMaterial.diffuse=E.Diffuse;ExpectedMaterial.retro=E.Retro;
+        ExpectedMaterial.specular=E.Specular;ExpectedMaterial.transmission=E.Transmission;
+        Check(A,ExpectedMaterial);
+        Check(CarlaLidarOptics::Resolve(C,M,&Cache),A);
+        TestTrue(TEXT("snapshot preset stored after first lookup"),Cache.FindChecked(M).HasPreset);
+        for(const auto& Tags:TArray<TArray<FName>>{
+          {TEXT("RoadLine")},{TEXT("RoadLines"),TEXT("LidarMaterial=mirror")},
+          {TEXT("LidarMaterial=glass"),TEXT("RoadLine")},{TEXT("RoadLine"),TEXT("LidarMaterial=")},
+          {TEXT("LidarMaterial="),TEXT("RoadLine")},{TEXT("LidarMaterial=glass"),TEXT("LidarSolid")},
+          {TEXT("LidarIR=missing"),TEXT("LidarIR=physical-test-checker")}}) {
+          C->ComponentTags=Tags;
+          const auto Cached=CarlaLidarOptics::Resolve(C,M,&Cache);
+          const auto Uncached=CarlaLidarOptics::Resolve(C,M);
+          Check(Cached,Uncached);
+        }
+        C->ComponentTags.Reset();
+      }
+      auto* Outer=NewObject<UStaticMeshComponent>();
+      auto* M=UMaterialInstanceDynamic::Create(UMaterial::GetDefaultMaterial(MD_Surface),Outer,TEXT("physical-test-checker"));
+      CarlaLidarOptics::SnapshotMaterialCache Cache;
+      auto A=CarlaLidarOptics::Resolve(C,M,&Cache);
+      TestTrue(TEXT("cached material infrared profile found"),A.infrared>=0);
+      C->ComponentTags={TEXT("LidarIR=missing")};
+      Check(CarlaLidarOptics::Resolve(C,M,&Cache),CarlaLidarOptics::Resolve(C,M));
+      C->ComponentTags={TEXT("RoadLine"),TEXT("LidarMaterial=")};
+      A=CarlaLidarOptics::Resolve(C,M,&Cache);
+      TestEqual(TEXT("empty override after road tag retains marking preset"),A.retro,.45f);
+      C->ComponentTags={TEXT("LidarMaterial="),TEXT("RoadLine")};
+      A=CarlaLidarOptics::Resolve(C,M,&Cache);
+      TestEqual(TEXT("tags after first material override stay ignored"),A.retro,0.f);
+      FScalarParameterValue Scalar;Scalar.ParameterInfo=FMaterialParameterInfo(TEXT("LidarDiffuse"));Scalar.ParameterValue=.123f;
+      M->ScalarParameterValues.Add(Scalar);
+      CarlaLidarOptics::SnapshotMaterialCache Next;
+      TestEqual(TEXT("fresh snapshot observes changed scalar with cached presets"),CarlaLidarOptics::Resolve(C,M,&Next).diffuse,.123f);
+      TestEqual(TEXT("existing snapshot retains captured scalar inputs"),CarlaLidarOptics::Resolve(C,M,&Cache).diffuse,.3f);
+      Var->Set(Previous,ECVF_SetByConsole);
+      Var->ClearFlags(ECVF_SetByMask);
+      Var->SetFlags(static_cast<EConsoleVariableFlags>(PreviousFlags&ECVF_SetByMask));
+    }
   }
   TestTrue(TEXT("physical readback avoids the generic collision hit storage"),sizeof(FCarlaPhysicalGpuHit)<sizeof(FCarlaGpuHit));
   FVector4f Output[10];
@@ -388,6 +650,8 @@ bool FCarlaPhysicalRayPreparationTest::RunTest(const FString&) {
   for(int32 I=0;I<4096;++I) { Firing F;F.Id=10000+I;F.Channel=I%64;F.Time=1+I*.1/4096;Scheduled.Add(F); }
   for(bool WarmStart:{false,true}) {
     auto Serial=Scheduled,Parallel=Scheduled;TArray<FCarlaGpuRay> SerialRays,ParallelRays;
+    ParallelRays.SetNumUninitialized(Scheduled.Num()*Samples.size()*2);
+    FMemory::Memset(ParallelRays.GetData(),0xa5,ParallelRays.Num()*sizeof(FCarlaGpuRay));
     PrepareRays(Serial,SerialRays,Profile,D,Samples,Before,After,Weather,0,1,1.1,12.1,WarmStart,false);
     PrepareRays(Parallel,ParallelRays,Profile,D,Samples,Before,After,Weather,0,1,1.1,12.1,WarmStart,true);
     bool PulsesMatch=Serial.Num()==Parallel.Num(),RaysMatch=SerialRays.Num()==ParallelRays.Num();
@@ -406,6 +670,40 @@ bool FCarlaPhysicalRayPreparationTest::RunTest(const FString&) {
     TestTrue(TEXT("parallel preparation preserves ordered pulse data exactly"),PulsesMatch);
     TestTrue(TEXT("parallel preparation preserves all sub-beam values exactly"),RaysMatch);
   }
+  {
+    // A worker's local UWorld clock may advance by 0.197 seconds while the
+    // replicated episode advances by 0.2. Firing and history must both use
+    // the episode endpoints; a local-clock conversion would reject this scan.
+    auto ClockPulses=Scheduled;TArray<FCarlaGpuRay> ClockRays;
+    PrepareRays(ClockPulses,ClockRays,Profile,D,Samples,Before,After,Weather,0,1,1.1,1.1,false,true);
+    bool SameClock=true;
+    for(const auto& Pulse:ClockPulses)for(int32 B=0;B<int32(Samples.size());++B)
+      SameClock=SameClock && FMath::Abs(ClockRays[Pulse.FirstRay+B].SceneTime-Pulse.Time)<1.e-12;
+    TestTrue(TEXT("motion ray times retain the exact episode firing clock"),SameClock);
+    TArray<FVector4f> Hits;Hits.SetNumZeroed(ClockRays.Num()*10);
+    CarlaGpuSensors::FPhysicalHitView Covered(Hits,ClockRays,10,true,false,1.0);
+    TestFalse(TEXT("all early pulses are covered by the previous episode frame"),Covered.HasIncompleteMotion());
+    CarlaGpuSensors::FPhysicalHitView LocalClock(Hits,ClockRays,10,true,false,1.0029);
+    TestTrue(TEXT("a mismatched local world clock still fails the coverage guard"),LocalClock.HasIncompleteMotion());
+  }
   return true;
 }
+static FAutoConsoleCommand PhysicalRayPreparationTestCommand(
+    TEXT("carla.Sensors.TestPhysicalRayPreparation"),TEXT("Run CPU physical ray preparation and material snapshot tests."),
+    FConsoleCommandDelegate::CreateLambda([]() {
+      auto& Framework=FAutomationTestFramework::Get();
+      if(Framework.GetCurrentTest()) {UE_LOG(LogCarla,Warning,TEXT("PHYSICAL_RAY_PREPARATION_TEST busy"));return;}
+      Framework.StartTestByName(TEXT("FCarlaPhysicalRayPreparationTest"),0,TEXT("Carla.Sensors.PhysicalRayPreparation"));
+      if(!Framework.GetCurrentTest()) {UE_LOG(LogCarla,Warning,TEXT("PHYSICAL_RAY_PREPARATION_TEST result=Fail test_did_not_start"));return;}
+      FAutomationTestExecutionInfo Info;
+      const bool Passed=Framework.StopTest(Info);
+      UE_LOG(LogCarla,Display,TEXT("PHYSICAL_RAY_PREPARATION_TEST result=%s"),Passed?TEXT("Success"):TEXT("Fail"));
+    }));
+#endif
+
+#if WITH_DEV_AUTOMATION_TESTS
+#include "Carla/Sensor/Tests/PhysicalLidarMaterialFixture.inl"
+#include "Carla/Sensor/Tests/LidarSensorStreamingFixture.inl"
+#include "Carla/Sensor/Tests/Town02MaterialProbe.inl"
+#include "Carla/Sensor/Tests/Town02SensorStream.inl"
 #endif

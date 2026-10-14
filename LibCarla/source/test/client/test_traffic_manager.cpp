@@ -13,6 +13,7 @@
 
 #include <carla/geom/Location.h>
 #include <carla/trafficmanager/Constants.h>
+#include <carla/trafficmanager/PIDController.h>
 #include <carla/trafficmanager/TrafficManagerGeometry.h>
 
 namespace cg = carla::geom;
@@ -92,6 +93,56 @@ TEST(TrafficManagerGeometry, ThreePointCircleRadius_PerfectlyCollinearReturnsMax
   EXPECT_EQ(radius, std::numeric_limits<float>::max());
 }
 
+TEST(TrafficManagerGeometry, CircleRadiusDoesNotDependOnWorldOrigin) {
+  // Squaring absolute coordinates in float loses the small triangle's
+  // circumradius. A translated 3-4-5 triangle must still have radius 2.5.
+  const float radius = GetThreePointCircleRadius(
+      {10000.0f, 20000.0f, 0.0f},
+      {10003.0f, 20000.0f, 0.0f},
+      {10000.0f, 20004.0f, 0.0f});
+  EXPECT_NEAR(radius, 2.5f, kRadiusTolerance);
+}
+
+TEST(TrafficManagerGeometry, LocalRadiusFindsTightTown05BendBeforeStraightExit) {
+  // Captured OpenDrive connector 2065 at one-metre intervals, starting at s=8.
+  // The broad circle has radius >10 m; the actual tighter arc is about 3.82 m.
+  const std::vector<cg::Location> locations{
+      {36.07962418f, 148.31483459f, 0.0f},
+      {36.33779526f, 147.45606995f, 0.0f},
+      {36.61950302f, 146.83206177f, 0.0f},
+      {37.00819397f, 146.26844788f, 0.0f},
+      {37.49134827f, 145.78335571f, 0.0f},
+      {38.05341721f, 145.39242554f, 0.0f},
+      {38.67629623f, 145.10824585f, 0.0f},
+      {39.33993912f, 144.93994141f, 0.0f},
+      {40.02297211f, 144.89294434f, 0.0f},
+      {40.99204636f, 144.93006897f, 0.0f},
+      {41.99129105f, 144.96894836f, 0.0f},
+      {42.99053574f, 145.00782776f, 0.0f},
+      {43.98978043f, 145.04670715f, 0.0f},
+      {44.98902130f, 145.08560181f, 0.0f},
+      {45.98826599f, 145.12448120f, 0.0f},
+      {46.98751068f, 145.16336060f, 0.0f},
+      {47.98675537f, 145.20223999f, 0.0f},
+      {48.98600006f, 145.24113464f, 0.0f},
+  };
+  const float broad = GetThreePointCircleRadius(
+      locations.front(), locations.at(locations.size()/2), locations.back());
+  const float local = carla::traffic_manager::GetMinimumCurveRadius(locations);
+  EXPECT_GT(broad, 10.0f);
+  EXPECT_NEAR(local, 3.815f, .02f);
+}
+
+TEST(TrafficManagerGeometry, LocalRadiusDoesNotConstrainStraightOrShortPaths) {
+  EXPECT_EQ(carla::traffic_manager::GetMinimumCurveRadius({}),
+      std::numeric_limits<float>::max());
+  EXPECT_EQ(carla::traffic_manager::GetMinimumCurveRadius({{0,0,0},{1,1,0}}),
+      std::numeric_limits<float>::max());
+  EXPECT_EQ(carla::traffic_manager::GetMinimumCurveRadius(
+      {{10000,20000,0},{10003,20004,0},{10006,20008,0},{10009,20012,0}}),
+      std::numeric_limits<float>::max());
+}
+
 // -----------------------------------------------------------------------------
 // InterpolateBufferAt (the SimpleWaypoint-free seam used by GetTargetData)
 // -----------------------------------------------------------------------------
@@ -129,18 +180,15 @@ TEST(TrafficManagerInterpolation, InterpolateBufferAt_LinearInterpBetweenTwoPoin
 
 TEST(TrafficManagerInterpolation, InterpolateBufferAt_DistanceShorterThanFirstWaypoint) {
   // Vehicle at origin; first waypoint at x=10. Asking for distance 3 falls
-  // before the first waypoint, so the helper brackets with the first segment
-  // (indices 0 and 1) and interpolates a point ahead of the vehicle along
-  // the planned path.
+  // before the first waypoint, so the helper interpolates along the approach
+  // from the vehicle to that waypoint.
   const std::vector<cg::Location> buffer{
       {10.0f, 0.0f, 0.0f},
       {20.0f, 0.0f, 0.0f}};
   const cg::Location vehicle_location{0.0f, 0.0f, 0.0f};
 
   const auto [location, index] = InterpolateBufferAt(buffer, 3.0f, vehicle_location);
-  // closest=0, farthest=0 → fix-up to (0, 1):
-  //   t = (3 - 10) / (20 - 10) = -0.7
-  //   x = 10 + (20 - 10) * -0.7 = 3
+  // The straight approach retains the original target at x=3.
   ExpectLocationNear(location, cg::Location{3.0f, 0.0f, 0.0f}, kLocationTolerance);
   EXPECT_EQ(index, 0u);
 }
@@ -157,6 +205,25 @@ TEST(TrafficManagerInterpolation, InterpolateBufferAt_DistanceBeyondLastWaypoint
   const auto [location, index] = InterpolateBufferAt(buffer, 100.0f, vehicle_location);
   ExpectLocationNear(location, buffer.back(), kLocationTolerance);
   EXPECT_EQ(index, buffer.size() - 1u);
+}
+
+TEST(TrafficManagerInterpolation, DistantLaneChangeTargetDoesNotJumpAcrossLane) {
+  // A lane change clears the old buffer and starts on the destination lane.
+  // The look-ahead target must stay on the approach segment, rather than
+  // extrapolating the destination lane backward across its full width.
+  const cg::Location vehicle{-68.07f, -91.649f, 0.0f};
+  const std::vector<cg::Location> buffer{
+      {-85.771965f, -95.023003f, 0.0f},
+      {-88.271965f, -95.026768f, 0.0f}};
+  const float distance = 4.125f;
+  const auto [target, index] = InterpolateBufferAt(buffer, distance, vehicle);
+  const auto direction = buffer.front() - vehicle;
+  const cg::Location expected{cg::Vector3D{vehicle} +
+      direction * (distance / direction.Length())};
+  ExpectLocationNear(target, expected, kLocationTolerance);
+  EXPECT_NEAR(vehicle.Distance(target), distance, kLocationTolerance);
+  EXPECT_LT(std::abs(target.y - vehicle.y), 1.0f);
+  EXPECT_EQ(index, 0u);
 }
 
 TEST(TrafficManagerInterpolation, InterpolateBufferAt_BracketBetweenLastTwoWaypoints) {
@@ -332,4 +399,75 @@ TEST(TrafficManagerWideTurn, OffsetSideOccupied_OppositeSideNeighbourIsClear) {
 TEST(TrafficManagerWideTurn, OffsetSideOccupied_NeighbourAheadOutsideWindowIsClear) {
   // On the offset side but 20 m ahead: outside the longitudinal window.
   EXPECT_FALSE(SampleOccupied({{{20.0f, 1.0f, 0.0f}, 1.0f}}));
+}
+
+namespace {
+carla::traffic_manager::StateEntry ControllerState(double elapsed, double delta,
+    float velocity = 0.0f, float angle = 0.0f, float steer = 0.0f) {
+  carla::traffic_manager::StateEntry state{};
+  state.time_instance.elapsed_seconds = elapsed;
+  state.time_instance.delta_seconds = delta;
+  state.velocity_deviation = velocity;
+  state.angular_deviation = angle;
+  state.steer = steer;
+  return state;
+}
+} // namespace
+
+TEST(TrafficManagerPID, DerivativesUseEpisodeTimeAtFiveHz) {
+  const auto previous = ControllerState(1.0, .2, .02f, .05f, .025f);
+  const auto present = ControllerState(1.2, .2, .1f, .1f);
+  const auto actuation = carla::traffic_manager::PID::RunStep(
+      present, previous, {0.f, 0.f, .5f}, {0.f, 0.f, .1f});
+  EXPECT_NEAR(actuation.throttle, .2f, 1e-6f);
+  EXPECT_FLOAT_EQ(actuation.brake, 0.f);
+  EXPECT_NEAR(actuation.steer, .025f, 1e-6f);
+}
+
+TEST(TrafficManagerPID, IntegralsUseEpisodeTimeAtFiveHz) {
+  const auto actuation = carla::traffic_manager::PID::RunStep(
+      ControllerState(1.2, .2, .4f), ControllerState(1.0, .2, .2f),
+      {0.f, .5f, 0.f}, {0.f, 0.f, 0.f});
+  EXPECT_NEAR(actuation.throttle, .06f, 1e-6f);
+}
+
+TEST(TrafficManagerPID, SteeringRateIsConstantPerSimulationSecond) {
+  for (const double delta : {.05, .1, .2}) {
+    for (const float direction : {-1.f, 1.f}) {
+      const auto actuation = carla::traffic_manager::PID::RunStep(
+          ControllerState(delta, delta, 0.f, direction), ControllerState(0, delta),
+          {0.f, 0.f, 0.f}, {10.f, 0.f, 0.f});
+      EXPECT_NEAR(actuation.steer, direction * 3.f * delta, 1e-6f);
+    }
+  }
+  const auto saturated = carla::traffic_manager::PID::RunStep(
+      ControllerState(.2, .2, 0.f, 1.f), ControllerState(0, .2, 0.f, 0.f, .7f),
+      {0.f, 0.f, 0.f}, {10.f, 0.f, 0.f});
+  EXPECT_FLOAT_EQ(saturated.steer, .8f);
+}
+
+TEST(TrafficManagerPID, InitialPausedAndRewoundStatesUseWorldDelta) {
+  using carla::traffic_manager::PID::UpdateInterval;
+  for (const double previous : {1.0, 2.0, -10.0}) {
+    EXPECT_FLOAT_EQ(UpdateInterval(ControllerState(1, .2), ControllerState(previous, .2)), .2f);
+  }
+  EXPECT_FLOAT_EQ(UpdateInterval(ControllerState(1.2, .1), ControllerState(1, .1)), .2f);
+  EXPECT_FLOAT_EQ(UpdateInterval(ControllerState(std::numeric_limits<double>::infinity(), .2),
+      ControllerState(1, .2)), .2f);
+  for (const double delta : {0.0, -1.0, 2.0, std::numeric_limits<double>::quiet_NaN(),
+                            std::numeric_limits<double>::infinity()}) {
+    EXPECT_FLOAT_EQ(UpdateInterval(ControllerState(1, delta), ControllerState(1, delta)), .05f);
+  }
+}
+
+TEST(TrafficManagerPID, LegacyFiftyMillisecondWorldRetainsControls) {
+  const auto previous = ControllerState(0, .05, .08f, .01f, .02f);
+  const auto present = ControllerState(.05, .05, .1f, .02f);
+  const auto actuation = carla::traffic_manager::PID::RunStep(
+      present, previous, {.5f, .2f, .1f}, {.2f, .1f, .1f});
+  const float expected_throttle = .5f * .1f + .2f * (.1f + .08f) * .05f + .1f * (.1f - .08f) * 20.f;
+  const float expected_steer = .2f * .02f + .1f * (.02f + .01f) * .05f + .1f * (.02f - .01f) * 20.f;
+  EXPECT_FLOAT_EQ(actuation.throttle, expected_throttle);
+  EXPECT_FLOAT_EQ(actuation.brake, 0.f);
+  EXPECT_FLOAT_EQ(actuation.steer, expected_steer);
 }

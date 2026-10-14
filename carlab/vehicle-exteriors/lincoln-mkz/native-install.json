@@ -1,0 +1,83 @@
+{
+  "blueprint": "/Game/VehicleExteriors/LincolnMKZ/BP_LincolnMKZ_Refined",
+  "carla_id": "vehicle.lincoln.mkz_refined",
+  "materials": {
+    "M_MKZ_Fastener": "/Game/VehicleExteriors/LincolnMKZ/M_MKZ_Fastener.M_MKZ_Fastener",
+    "M_MKZ_ValveRubber": "/Game/VehicleExteriors/LincolnMKZ/M_MKZ_ValveRubber.M_MKZ_ValveRubber",
+    "M_MKZ_BrakeSteel": "/Game/VehicleExteriors/LincolnMKZ/M_MKZ_BrakeSteel.M_MKZ_BrakeSteel",
+    "paint": "/Game/VehicleExteriors/LincolnMKZ/MI_MKZ_ClearcoatPaint.MI_MKZ_ClearcoatPaint",
+    "M_MKZ_StudioFloor": "/Game/VehicleExteriors/LincolnMKZ/M_MKZ_StudioFloor.M_MKZ_StudioFloor",
+    "M_MKZ_StudioBackdrop": "/Game/VehicleExteriors/LincolnMKZ/M_MKZ_StudioBackdrop.M_MKZ_StudioBackdrop"
+  },
+  "meshes": {
+    "SM_MKZ_Hardware_Wheel_Front_Left": {
+      "path": "/Game/VehicleExteriors/LincolnMKZ/SM_MKZ_Hardware_Wheel_Front_Left.SM_MKZ_Hardware_Wheel_Front_Left",
+      "bounds": "<Struct 'BoxSphereBounds' (0xbc4a7915280) {origin: {x: -3.272012, y: -9.770324, z: -6.112974}, box_extent: {x: 8.936305, y: 1.465653, z: 11.129642}, sphere_radius: 14.156963}>"
+    },
+    "SM_MKZ_Hardware_Wheel_Front_Right": {
+      "path": "/Game/VehicleExteriors/LincolnMKZ/SM_MKZ_Hardware_Wheel_Front_Right.SM_MKZ_Hardware_Wheel_Front_Right",
+      "bounds": "<Struct 'BoxSphereBounds' (0xbc4a7b4d1c0) {origin: {x: -3.272010, y: 9.770325, z: -6.112974}, box_extent: {x: 8.936305, y: 1.465653, z: 11.129642}, sphere_radius: 14.156962}>"
+    },
+    "SM_MKZ_Hardware_Wheel_Rear_Left": {
+      "path": "/Game/VehicleExteriors/LincolnMKZ/SM_MKZ_Hardware_Wheel_Rear_Left.SM_MKZ_Hardware_Wheel_Rear_Left",
+      "bounds": "<Struct 'BoxSphereBounds' (0xbc4b3aa0c40) {origin: {x: -3.272012, y: -7.577986, z: -6.112974}, box_extent: {x: 8.936305, y: 1.807988, z: 11.129642}, sphere_radius: 14.146672}>"
+    },
+    "SM_MKZ_Hardware_Wheel_Rear_Right": {
+      "path": "/Game/VehicleExteriors/LincolnMKZ/SM_MKZ_Hardware_Wheel_Rear_Right.SM_MKZ_Hardware_Wheel_Rear_Right",
+      "bounds": "<Struct 'BoxSphereBounds' (0xbc4b3aa7d00) {origin: {x: -3.272010, y: 7.566739, z: -6.112974}, box_extent: {x: 8.936305, y: 1.807988, z: 11.129642}, sphere_radius: 14.146673}>"
+    },
+    "SM_MKZ_Rotor_Wheel_Front_Left": {
+      "path": "/Game/VehicleExteriors/LincolnMKZ/SM_MKZ_Rotor_Wheel_Front_Left.SM_MKZ_Rotor_Wheel_Front_Left",
+      "bounds": "<Struct 'BoxSphereBounds' (0xbc4b3aa44c0) {origin: {x: 0.000001, y: 1.045978, z: 0.000000}, box_extent: {x: 16.037999, y: 0.038002, z: 16.037998}, sphere_radius: 16.038000}>"
+    },
+    "SM_MKZ_Rotor_Wheel_Front_Right": {
+      "path": "/Game/VehicleExteriors/LincolnMKZ/SM_MKZ_Rotor_Wheel_Front_Right.SM_MKZ_Rotor_Wheel_Front_Right",
+      "bounds": "<Struct 'BoxSphereBounds' (0xbc4b3aa1800) {origin: {x: -0.000001, y: -1.045978, z: 0.000000}, box_extent: {x: 16.037999, y: 0.038002, z: 16.037998}, sphere_radius: 16.038001}>"
+    },
+    "SM_MKZ_Rotor_Wheel_Rear_Left": {
+      "path": "/Game/VehicleExteriors/LincolnMKZ/SM_MKZ_Rotor_Wheel_Rear_Left.SM_MKZ_Rotor_Wheel_Rear_Left",
+      "bounds": "<Struct 'BoxSphereBounds' (0xbc4b354bb00) {origin: {x: 0.000001, y: 1.034731, z: 0.000000}, box_extent: {x: 16.037999, y: 0.038002, z: 16.037998}, sphere_radius: 16.038000}>"
+    },
+    "SM_MKZ_Rotor_Wheel_Rear_Right": {
+      "path": "/Game/VehicleExteriors/LincolnMKZ/SM_MKZ_Rotor_Wheel_Rear_Right.SM_MKZ_Rotor_Wheel_Rear_Right",
+      "bounds": "<Struct 'BoxSphereBounds' (0xbc4b3542cc0) {origin: {x: -0.000001, y: -1.045978, z: 0.000000}, box_extent: {x: 16.037999, y: 0.038002, z: 16.037998}, sphere_radius: 16.038001}>"
+    }
+  },
+  "components": [
+    {
+      "name": "SM_MKZ_Hardware_Wheel_Front_Left",
+      "socket": "Wheel_Front_Left"
+    },
+    {
+      "name": "SM_MKZ_Hardware_Wheel_Front_Right",
+      "socket": "Wheel_Front_Right"
+    },
+    {
+      "name": "SM_MKZ_Hardware_Wheel_Rear_Left",
+      "socket": "Wheel_Rear_Left"
+    },
+    {
+      "name": "SM_MKZ_Hardware_Wheel_Rear_Right",
+      "socket": "Wheel_Rear_Right"
+    },
+    {
+      "name": "SM_MKZ_Rotor_Wheel_Front_Left",
+      "socket": "Wheel_Front_Left"
+    },
+    {
+      "name": "SM_MKZ_Rotor_Wheel_Front_Right",
+      "socket": "Wheel_Front_Right"
+    },
+    {
+      "name": "SM_MKZ_Rotor_Wheel_Rear_Left",
+      "socket": "Wheel_Rear_Left"
+    },
+    {
+      "name": "SM_MKZ_Rotor_Wheel_Rear_Right",
+      "socket": "Wheel_Rear_Right"
+    }
+  ],
+  "lab_map": "/Game/VehicleExteriors/LincolnMKZ/L_ExteriorStudio",
+  "status": "INSTALLED_AND_NATIVE_RUNTIME_VERIFIED",
+  "runtime_report": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/runtime-report.json"
+}

@@ -101,11 +101,21 @@ private:
   UFUNCTION()
   void OnActorDestroyed(AActor *Actor);
 
+  UClass* ResolveActorClass(const FString& Id);
+
+  friend class FActorDefinitionLazyClassTest;
+
+  UPROPERTY()
   TArray<FActorDefinition> Definitions;
 
   TArray<SpawnFunctionType> SpawnFunctions;
 
+  // Retain resolved classes across collection and later dormant respawns.
+  UPROPERTY()
   TMap<FString, TSubclassOf<AActor>> Classes;
+
+  UPROPERTY()
+  TMap<FString, TSoftClassPtr<AActor>> SoftClasses;
 
   FActorRegistry Registry;
 

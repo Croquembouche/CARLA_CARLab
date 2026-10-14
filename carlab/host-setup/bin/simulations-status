@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from pathlib import Path
 import subprocess
-root=Path('/mnt/simulations/carla/carlab/host-setup')
+root=Path('/media/william/mist1/Simulations')
 for unit in ('simulations-build', 'simulations-runtime-verification', 'simulations-gpu-verification'):
     result = subprocess.run(['systemctl','--user','show',unit,'-p','ActiveState','-p','SubState'],capture_output=True,text=True)
     if 'ActiveState=active' in result.stdout or 'ActiveState=failed' in result.stdout:

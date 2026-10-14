@@ -1,0 +1,187 @@
+{
+  "MI_MKZ_Brochure_Interior": {
+    "class": "MaterialInstanceConstant",
+    "parent": "<Object '/Game/Carla/Static/GenericMaterials/000_Masters/M_SimpleMaster.M_SimpleMaster' (0x72def3fa800) Class 'Material'>",
+    "scalars": {
+      "Scale X": 1.0,
+      "Scale Y": 1.0,
+      "Offset X": 0.0,
+      "Offset Y": 0.0,
+      "Rotation": 0.0,
+      "AxisSelection": 0.0,
+      "Dirt Opacity 1": 100.0,
+      "Dirt Opacity 2": 100.0,
+      "Dirt Opacity 3": 100.0,
+      "Dirt Roughness 1": 1.0,
+      "Dirt Roughness 2": 1.0,
+      "Dirt Roughness 3": 1.0,
+      "Metallic Value": 0.0,
+      "Roughness Value": 1.0,
+      "Tiling": 1.0,
+      "Saturation": 1.0,
+      "Brightness": 1.0,
+      "Contrast": 1.0,
+      "Roughness Contrast": 0.0,
+      "Roughness Correction": 0.0,
+      "AO Intensity": 0.0,
+      "MetalCorrection": 1.0,
+      "SpecularCorrection": 1.0,
+      "Normal Intensity": 0.09000000357627869,
+      "Tint Intensity": 0.0,
+      "Hue": 0.0,
+      "Displacement Intensity": 1.0,
+      "Displacement MidValue": 0.5,
+      "OpacityIntensity": 0.0,
+      "Specular Value": 0.5
+    },
+    "switches": {
+      "World Position": false,
+      "Triplanar": false,
+      "Dirt Texture 1": false,
+      "Dirt Texture 2": false,
+      "Dirt Texture 3": false,
+      "Diffuse": true,
+      "Metallic": true,
+      "Roughness": true,
+      "NormalMap": true,
+      "AO": true,
+      "LegacyOpacityIntensity": true,
+      "Specular": true,
+      "OpacityMap": false
+    }
+  },
+  "MKZ_Ebony_Leather": {
+    "class": "Material",
+    "<MaterialProperty.MP_BASE_COLOR: 5>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather:MaterialExpressionConstant3Vector_0' (0x72e8fa4a3a0) Class 'MaterialExpressionConstant3Vector'>",
+      "value": "<Struct 'LinearColor' (0x72e8fa4a460) {r: 0.013000, g: 0.015000, b: 0.017000, a: 1.000000}>"
+    },
+    "<MaterialProperty.MP_ROUGHNESS: 8>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather:MaterialExpressionTextureSample_1' (0x72e0cae2f80) Class 'MaterialExpressionTextureSample'>",
+      "texture": "/Game/VehicleInteriors/Lincoln/T_MKZ_Leather_Roughness.T_MKZ_Leather_Roughness",
+      "srgb": false
+    },
+    "<MaterialProperty.MP_METALLIC: 6>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather:MaterialExpressionConstant_1' (0x72e8fa4a560) Class 'MaterialExpressionConstant'>",
+      "value": 0.0
+    },
+    "<MaterialProperty.MP_SPECULAR: 7>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather:MaterialExpressionConstant_2' (0x72e8fa4a2c0) Class 'MaterialExpressionConstant'>",
+      "value": 0.3499999940395355
+    },
+    "<MaterialProperty.MP_NORMAL: 10>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather:MaterialExpressionTextureSample_0' (0x72e0cae2d00) Class 'MaterialExpressionTextureSample'>",
+      "texture": "/Game/VehicleInteriors/Lincoln/T_MKZ_Leather_Normal.T_MKZ_Leather_Normal",
+      "srgb": false
+    }
+  },
+  "MKZ_Perforated_Leather": {
+    "class": "Material",
+    "<MaterialProperty.MP_BASE_COLOR: 5>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Perforated_Leather.MKZ_Perforated_Leather:MaterialExpressionConstant3Vector_0' (0x72e8fa4c780) Class 'MaterialExpressionConstant3Vector'>",
+      "value": "<Struct 'LinearColor' (0x72e8fa4c840) {r: 0.012000, g: 0.014000, b: 0.016000, a: 1.000000}>"
+    },
+    "<MaterialProperty.MP_ROUGHNESS: 8>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Perforated_Leather.MKZ_Perforated_Leather:MaterialExpressionTextureSample_1' (0x72e0cae9380) Class 'MaterialExpressionTextureSample'>",
+      "texture": "/Game/VehicleInteriors/Lincoln/T_MKZ_Perforated_Roughness.T_MKZ_Perforated_Roughness",
+      "srgb": false
+    },
+    "<MaterialProperty.MP_METALLIC: 6>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Perforated_Leather.MKZ_Perforated_Leather:MaterialExpressionConstant_1' (0x72e8fa4c5c0) Class 'MaterialExpressionConstant'>",
+      "value": 0.0
+    },
+    "<MaterialProperty.MP_SPECULAR: 7>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Perforated_Leather.MKZ_Perforated_Leather:MaterialExpressionConstant_2' (0x72e8fa4c6a0) Class 'MaterialExpressionConstant'>",
+      "value": 0.3499999940395355
+    },
+    "<MaterialProperty.MP_NORMAL: 10>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Perforated_Leather.MKZ_Perforated_Leather:MaterialExpressionTextureSample_0' (0x72e8fd53e00) Class 'MaterialExpressionTextureSample'>",
+      "texture": "/Game/VehicleInteriors/Lincoln/T_MKZ_Perforated_Normal.T_MKZ_Perforated_Normal",
+      "srgb": false
+    }
+  },
+  "MKZ_Fine_Satin": {
+    "class": "Material",
+    "<MaterialProperty.MP_BASE_COLOR: 5>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Fine_Satin.MKZ_Fine_Satin:MaterialExpressionConstant3Vector_0' (0x72e8fa4d040) Class 'MaterialExpressionConstant3Vector'>",
+      "value": "<Struct 'LinearColor' (0x72e8fa4d100) {r: 0.220000, g: 0.235000, b: 0.250000, a: 1.000000}>"
+    },
+    "<MaterialProperty.MP_ROUGHNESS: 8>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Fine_Satin.MKZ_Fine_Satin:MaterialExpressionConstant_0' (0x72e8fa4d2e0) Class 'MaterialExpressionConstant'>",
+      "value": 0.4300000071525574
+    },
+    "<MaterialProperty.MP_METALLIC: 6>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Fine_Satin.MKZ_Fine_Satin:MaterialExpressionConstant_1' (0x72e8fa4cf60) Class 'MaterialExpressionConstant'>",
+      "value": 0.8500000238418579
+    },
+    "<MaterialProperty.MP_SPECULAR: 7>": {
+      "node": "None"
+    },
+    "<MaterialProperty.MP_NORMAL: 10>": {
+      "node": "None"
+    }
+  },
+  "MKZ_Brochure_Satin": {
+    "class": "Material",
+    "<MaterialProperty.MP_BASE_COLOR: 5>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Brochure_Satin.MKZ_Brochure_Satin:MaterialExpressionConstant3Vector_0' (0x72e8fa4d740) Class 'MaterialExpressionConstant3Vector'>",
+      "value": "<Struct 'LinearColor' (0x72e8fa4d800) {r: 0.350000, g: 0.370000, b: 0.390000, a: 1.000000}>"
+    },
+    "<MaterialProperty.MP_ROUGHNESS: 8>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Brochure_Satin.MKZ_Brochure_Satin:MaterialExpressionConstant_0' (0x72e8fa4ccc0) Class 'MaterialExpressionConstant'>",
+      "value": 0.4000000059604645
+    },
+    "<MaterialProperty.MP_METALLIC: 6>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Brochure_Satin.MKZ_Brochure_Satin:MaterialExpressionConstant_1' (0x72e8fa4cda0) Class 'MaterialExpressionConstant'>",
+      "value": 0.8999999761581421
+    },
+    "<MaterialProperty.MP_SPECULAR: 7>": {
+      "node": "None"
+    },
+    "<MaterialProperty.MP_NORMAL: 10>": {
+      "node": "None"
+    }
+  },
+  "MKZ_Brochure_Chrome": {
+    "class": "Material",
+    "<MaterialProperty.MP_BASE_COLOR: 5>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Brochure_Chrome.MKZ_Brochure_Chrome:MaterialExpressionConstant3Vector_0' (0x72e8fa4dc80) Class 'MaterialExpressionConstant3Vector'>",
+      "value": "<Struct 'LinearColor' (0x72e8fa4dd40) {r: 0.520000, g: 0.550000, b: 0.580000, a: 1.000000}>"
+    },
+    "<MaterialProperty.MP_ROUGHNESS: 8>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Brochure_Chrome.MKZ_Brochure_Chrome:MaterialExpressionConstant_0' (0x72e8fa4dd60) Class 'MaterialExpressionConstant'>",
+      "value": 0.2199999988079071
+    },
+    "<MaterialProperty.MP_METALLIC: 6>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Brochure_Chrome.MKZ_Brochure_Chrome:MaterialExpressionConstant_1' (0x72e8fa4e000) Class 'MaterialExpressionConstant'>",
+      "value": 1.0
+    },
+    "<MaterialProperty.MP_SPECULAR: 7>": {
+      "node": "None"
+    },
+    "<MaterialProperty.MP_NORMAL: 10>": {
+      "node": "None"
+    }
+  },
+  "MKZ_Speaker_Metal": {
+    "class": "Material",
+    "<MaterialProperty.MP_BASE_COLOR: 5>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Speaker_Metal.MKZ_Speaker_Metal:MaterialExpressionConstant3Vector_0' (0x72e8fa4f7a0) Class 'MaterialExpressionConstant3Vector'>",
+      "value": "<Struct 'LinearColor' (0x72e8fa4f860) {r: 0.130000, g: 0.145000, b: 0.160000, a: 1.000000}>"
+    },
+    "<MaterialProperty.MP_ROUGHNESS: 8>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Speaker_Metal.MKZ_Speaker_Metal:MaterialExpressionConstant_0' (0x72e8fa4f0a0) Class 'MaterialExpressionConstant'>",
+      "value": 0.46000000834465027
+    },
+    "<MaterialProperty.MP_METALLIC: 6>": {
+      "node": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Speaker_Metal.MKZ_Speaker_Metal:MaterialExpressionConstant_1' (0x72e8fa4f960) Class 'MaterialExpressionConstant'>",
+      "value": 0.7200000286102295
+    },
+    "<MaterialProperty.MP_SPECULAR: 7>": {
+      "node": "None"
+    },
+    "<MaterialProperty.MP_NORMAL: 10>": {
+      "node": "None"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "path": "/Game/VehicleInteriors/Lincoln/L_MKZ_Photography_LevelInstance_1.L_MKZ_Photography:PersistentLevel.RectLight_0",
+    "location": "<Struct 'Vector' (0x7f59961d49c0) {x: 10786.659633, y: -1275.204132, z: 203.571029}>",
+    "intensity": 320.0,
+    "units": "<LightUnits.LUMENS: 2>"
+  },
+  {
+    "path": "/Game/VehicleInteriors/Lincoln/L_MKZ_Photography_LevelInstance_1.L_MKZ_Photography:PersistentLevel.RectLight_1",
+    "location": "<Struct 'Vector' (0x7f59961d4bf0) {x: 10642.754168, y: -1436.189278, z: 223.571029}>",
+    "intensity": 450.0,
+    "units": "<LightUnits.LUMENS: 2>"
+  },
+  {
+    "path": "/Game/VehicleInteriors/Lincoln/L_MKZ_Photography_LevelInstance_1.L_MKZ_Photography:PersistentLevel.RectLight_2",
+    "location": "<Struct 'Vector' (0x7f59961d4ba0) {x: 10610.504342, y: -1106.401545, z: 213.571029}>",
+    "intensity": 200.0,
+    "units": "<LightUnits.LUMENS: 2>"
+  }
+]

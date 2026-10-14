@@ -1,0 +1,35 @@
+{
+  "status": "FAILED",
+  "command": [
+    "/mnt/simulations/bin/carla-editor",
+    "/Game/VehicleExteriors/LincolnMKZ/L_ExteriorStudio",
+    "-game",
+    "-RenderOffScreen",
+    "-graphicsadapter=0",
+    "-SkipVulkanProfileCheck",
+    "-carla-rpc-port=2250",
+    "-ResX=160",
+    "-ResY=90",
+    "-quality-level=Epic",
+    "-unattended",
+    "-nosound",
+    "-notraceserver",
+    "-ddc=NoZenLocalFallback",
+    "-LocalDataCachePath=/home/william/.cache/carla-ddc",
+    "-ini:Engine:[SystemSettings]:r.RayTracing=1,[SystemSettings]:r.Nanite=1,[SystemSettings]:r.Shadow.Virtual.Enable=1,[SystemSettings]:r.Streaming.PoolSize=2048,[SystemSettings]:r.Nanite.Streaming.StreamingPoolSize=256,[SystemSettings]:r.Lumen.DiffuseIndirect.Allow=1,[SystemSettings]:r.Lumen.Reflections.Allow=1,[SystemSettings]:r.AOGlobalDFResolution=64,[SystemSettings]:r.GenerateMeshDistanceFields=1",
+    "-ini:Engine:[DevOptions.Shaders]:bAllowAsynchronousShaderCompiling=False",
+    "-ExecCmds=r.Streaming.PoolSize 2048,r.Shadow.Virtual.Enable 1,r.Nanite 1,r.Lumen.DiffuseIndirect.Allow 1,r.Lumen.Reflections.Allow 1,carla.Sensors.GpuRayTracing 1,py /mnt/simulations/vehicle-exteriors/lincoln-mkz/scripts/runtime_observer.py",
+    "-abslog=/mnt/simulations/vehicle-exteriors/lincoln-mkz/native-unreal.log"
+  ],
+  "port": 2250,
+  "resolution": [
+    1280,
+    800
+  ],
+  "postprocessing": "Native CARLA RGB, no DLSS or neural processing",
+  "preview_rendering": "Epic isolated studio with hardware ray tracing, native GPU ray-traced RGB cameras, Lumen and virtual shadows enabled after the user stopped the existing town.",
+  "server_version": "0.10.0",
+  "vehicles": {},
+  "error": "std::exception",
+  "engine_returncode": 143
+}

@@ -5,9 +5,21 @@
 // For a copy, see <https://opensource.org/licenses/MIT>.
 
 #include "Carla/Sensor/SceneCaptureSensor.h"
+#include "SceneCapturePair.h"
+#include "SceneCaptureGroup.h"
+#include "Carla/Sensor/GpuSensorDispatcher.h"
 #include "Carla/Sensor/PostProcessConfig.h"
 #include "Carla.h"
 #include "Carla/Game/CarlaStatics.h"
+#include "Carla/Game/CarlaEngine.h"
+#include "Carla/Actor/CarlaActor.h"
+#include "Carla/Sensor/SceneCaptureCamera.h"
+#include "EngineUtils.h"
+#include "ImageUtils.h"
+#include "Misc/FileHelper.h"
+#include "Misc/SecureHash.h"
+#include "HAL/FileManager.h"
+#include "HAL/PlatformProcess.h"
 
 #include <util/ue-header-guard-begin.h>
 #include "Actor/ActorBlueprintFunctionLibrary.h"
@@ -912,12 +924,33 @@ bool ASceneCaptureSensor::ApplyPostProcessVolumeToSensor(APostProcessVolume *Ori
 void ASceneCaptureSensor::EnqueueRenderSceneImmediate()
 {
   TRACE_CPUPROFILER_EVENT_SCOPE(ASceneCaptureSensor::EnqueueRenderSceneImmediate);
+  // FSceneViewFamily::Time is the worker renderer's local clock, not the
+  // synchronized sensor clock. Attach immutable capture-time identity only
+  // to the explicit bounded audit. CaptureScene copies this string into its
+  // render command synchronously; restore the original property afterwards.
+  static const IConsoleVariable* GpuSpanAudit = IConsoleManager::Get().FindConsoleVariable(TEXT("r.SceneCapture.GpuSpanAudit"));
+  static const IConsoleVariable* RdgPassAudit = IConsoleManager::Get().FindConsoleVariable(TEXT("r.SceneCapture.RdgPassAudit"));
+  const bool bTagGpuSpan = (GpuSpanAudit && GpuSpanAudit->GetInt() != 0) || (RdgPassAudit && RdgPassAudit->GetInt() != 0);
+  FString SavedEventName;
+  if (bTagGpuSpan)
+  {
+    check(IsInGameThread());
+    const FCarlaActor* Actor = GetEpisode().FindCarlaActor(this);
+    const auto Role = GetAttribute(TEXT("role_name"));
+    SavedEventName = CaptureComponent2D->ProfilingEventName;
+    CaptureComponent2D->ProfilingEventName = FString::Printf(
+        TEXT("%s|actor_id=%u|role=%s|owner_frame=%llu|owner_time=%.9f"),
+        *GetName(), Actor ? Actor->GetActorId() : 0u,
+        Role.has_value() ? *Role->Value : TEXT("missing"),
+        (unsigned long long)FCarlaEngine::GetFrameCounter(), GetEpisode().GetElapsedGameTime());
+  }
   // Creates an snapshot of the scene, requieres bCaptureEveryFrame = false.
 #ifdef CARLA_HAS_GBUFFER_API
   CaptureSceneExtended();
 #else
   GetCaptureComponent2D()->CaptureScene();
 #endif
+  if (bTagGpuSpan) CaptureComponent2D->ProfilingEventName = MoveTemp(SavedEventName);
 }
 
 void ASceneCaptureSensor::BeginPlay()
@@ -1045,6 +1078,36 @@ void ASceneCaptureSensor::PrePhysTick(float DeltaSeconds)
       StreamingBoundingRadius);
 }
 
+bool ASceneCaptureSensor::TryCapturePair(ASceneCaptureSensor& First, ASceneCaptureSensor& Second)
+{
+  if (CVarCarlaCameraForceAllGBuffers.GetValueOnGameThread() != 0 ||
+      !First.ShouldCaptureThisFrame() || !Second.ShouldCaptureThisFrame() ||
+      First.IsAnyGBufferClientListening() || Second.IsAnyGBufferClientListening()) return false;
+  const double Started = FPlatformTime::Seconds();
+  if (!RenderSceneCapturePair(First.CaptureComponent2D, Second.CaptureComponent2D)) return false;
+  if (First.PairCaptureFrame == MAX_uint64 || Second.PairCaptureFrame == MAX_uint64)
+    UE_LOG(LogCarla, Log, TEXT("CAMERA_CAPTURE_PAIR first=%s second=%s views=2 separate_histories=1 separate_outputs=1"),
+        *First.GetName(), *Second.GetName());
+  First.PairCaptureFrame = Second.PairCaptureFrame = GFrameCounter;
+  CarlaGpuSensors::ProfileSample(TEXT("camera_pair_prepare_ms"), (FPlatformTime::Seconds() - Started) * 1000);
+  return true;
+}
+
+bool ASceneCaptureSensor::TryCaptureGroup(ASceneCaptureSensor& First, ASceneCaptureSensor& Second)
+{
+  if (CVarCarlaCameraForceAllGBuffers.GetValueOnGameThread() != 0 ||
+      !First.ShouldCaptureThisFrame() || !Second.ShouldCaptureThisFrame() ||
+      First.IsAnyGBufferClientListening() || Second.IsAnyGBufferClientListening()) return false;
+  const double Started = FPlatformTime::Seconds();
+  if (!RenderSceneCaptureGroup(First.CaptureComponent2D, Second.CaptureComponent2D)) return false;
+  if (First.PairCaptureFrame == MAX_uint64 || Second.PairCaptureFrame == MAX_uint64)
+    UE_LOG(LogCarla, Log, TEXT("CAMERA_CAPTURE_GROUP first=%s second=%s families=2 views_each=1 separate_histories=1 separate_outputs=1"),
+        *First.GetName(), *Second.GetName());
+  First.PairCaptureFrame = Second.PairCaptureFrame = GFrameCounter;
+  CarlaGpuSensors::ProfileSample(TEXT("camera_group_prepare_ms"), (FPlatformTime::Seconds() - Started) * 1000);
+  return true;
+}
+
 void ASceneCaptureSensor::PostPhysTick(UWorld *World, ELevelTick TickType, float DeltaTime)
 {
   TRACE_CPUPROFILER_EVENT_SCOPE(ASceneCaptureSensor::PostPhysTick);
@@ -1054,7 +1117,10 @@ void ASceneCaptureSensor::PostPhysTick(UWorld *World, ELevelTick TickType, float
   {
     return;
   }
+  if (PairCaptureFrame == GFrameCounter) return;
+  const double Started=FPlatformTime::Seconds();
   EnqueueRenderSceneImmediate();
+  CarlaGpuSensors::ProfileSample(TEXT("camera_capture_prepare_ms"),(FPlatformTime::Seconds()-Started)*1000);
 }
 
 void ASceneCaptureSensor::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -1263,3 +1329,86 @@ namespace SceneCaptureSensor_local_ns
     PostProcessSettings.LumenMaxReflectionBounces = 3;
   }
 } // namespace SceneCaptureSensor_local_ns
+
+// Explicit diagnostic only: no owner tick, no sensor publication, no automatic
+// invocation. Render/readback/PNG work must never run in a throughput window.
+static FAutoConsoleCommandWithWorldAndArgs CapturePairFrozenProbe(
+    TEXT("carla.Camera.PairFrozenProbe"),
+    TEXT("Capture two RGB targets at unchanged native frame: <label> <stock|shared|independent|group0|group1>."),
+    FConsoleCommandWithWorldAndArgsDelegate::CreateLambda([](const TArray<FString>& Args, UWorld* World)
+    {
+        check(IsInGameThread());
+        if (!World || Args.Num() != 2) return;
+        for (TCHAR Character : Args[0])
+            if (!FChar::IsAlnum(Character) && Character != TEXT('-')) return;
+        const bool bStock = Args[1] == TEXT("stock");
+        const bool bShared = Args[1] == TEXT("shared");
+        const bool bIndependent = Args[1] == TEXT("independent");
+        const bool bGroup0 = Args[1] == TEXT("group0");
+        const bool bGroup1 = Args[1] == TEXT("group1");
+        const bool bGroup = bGroup0 || bGroup1;
+        if (!bStock && !bShared && !bIndependent && !bGroup) return;
+        TArray<ASceneCaptureCamera*> Cameras;
+        for (TActorIterator<ASceneCaptureCamera> It(World); It; ++It)
+            if (It->HasActorBegunPlay() && It->AreClientsListening()) Cameras.Add(*It);
+        if (Cameras.Num() != 2)
+        {
+            UE_LOG(LogCarla, Error, TEXT("CAMERA_PAIR_FROZEN_PROBE rejected cameras=%d"), Cameras.Num());
+            return;
+        }
+        Cameras.Sort([](const ASceneCaptureCamera& A, const ASceneCaptureCamera& B)
+            { return A.GetName() < B.GetName(); });
+        IConsoleVariable* SeparateSBT = IConsoleManager::Get().FindConsoleVariable(TEXT("r.RayTracing.SceneCaptureIndependentViewSBT"));
+        check(SeparateSBT);
+        IConsoleVariable* SceneUpdateOnce = IConsoleManager::Get().FindConsoleVariable(TEXT("r.RayTracing.SceneUpdateOnce"));
+        check(SceneUpdateOnce);
+        const int32 SavedSceneUpdate = SceneUpdateOnce->GetInt();
+        SceneUpdateOnce->Set(bGroup1 ? 1 : 0, ECVF_SetByConsole);
+        const int32 SavedSBT = SeparateSBT->GetInt();
+        SeparateSBT->Set(bIndependent ? 1 : 0, ECVF_SetByConsole);
+        const uint64 NativeFrame = FCarlaEngine::GetFrameCounter();
+        const double WorldTime = World->GetTimeSeconds();
+        FTransform Poses[2] = { Cameras[0]->GetCaptureComponent()->GetComponentTransform(), Cameras[1]->GetCaptureComponent()->GetComponentTransform() };
+        bool bSuccess = true;
+        FString Directory = FString::Printf(TEXT("/mnt/simulations/verification/surround-5hz-20261002/%s/frozen/%s-%u"), bGroup ? TEXT("camera-group") : TEXT("camera-pair"), *Args[0], FPlatformProcess::GetCurrentProcessId());
+        bSuccess &= IFileManager::Get().MakeDirectory(*Directory, true);
+        // Fixed repetitions let temporal histories settle; every capture remains
+        // at the same native frame and poses. Save the last two for noise checks.
+        for (int32 Iteration = 0; Iteration < 6 && bSuccess; ++Iteration)
+        {
+            if (bStock)
+            {
+                Cameras[0]->GetCaptureComponent()->CaptureScene();
+                Cameras[1]->GetCaptureComponent()->CaptureScene();
+            }
+            else if (bGroup) bSuccess &= RenderSceneCaptureGroup(Cameras[0]->GetCaptureComponent(), Cameras[1]->GetCaptureComponent());
+            else bSuccess &= RenderSceneCapturePair(Cameras[0]->GetCaptureComponent(), Cameras[1]->GetCaptureComponent());
+            FlushRenderingCommands();
+            for (int32 Index = 0; Index < 2; ++Index)
+            {
+                bSuccess &= NativeFrame == FCarlaEngine::GetFrameCounter()
+                    && Poses[Index].Equals(Cameras[Index]->GetCaptureComponent()->GetComponentTransform(), 0.0);
+                if (Iteration < 4) continue;
+                auto* Component = Cameras[Index]->GetCaptureComponent();
+                TArray<FColor> Pixels;
+                FReadSurfaceDataFlags ReadFlags(RCM_UNorm);
+                ReadFlags.SetLinearToGamma(false);
+                bSuccess &= Component->TextureTarget->GameThread_GetRenderTargetResource()->ReadPixels(Pixels, ReadFlags);
+                bSuccess &= Pixels.Num() == int32(Cameras[Index]->GetImageWidth() * Cameras[Index]->GetImageHeight());
+                if (!bSuccess) break;
+                TArray64<uint8> PNG;
+                FImageUtils::PNGCompressImageArray(Cameras[Index]->GetImageWidth(), Cameras[Index]->GetImageHeight(), MakeArrayView(Pixels), PNG);
+                FString Filename = FString::Printf(TEXT("%s/%s-%d.png"), *Directory, *Cameras[Index]->GetName(), Iteration);
+                bSuccess &= FFileHelper::SaveArrayToFile(PNG, *Filename);
+                UE_LOG(LogCarla, Log, TEXT("CAMERA_PAIR_FROZEN_IMAGE actor=%s frame=%llu iteration=%d bytes=%d md5=%s file=%s"),
+                    *Cameras[Index]->GetName(), NativeFrame, Iteration, Pixels.Num() * int32(sizeof(FColor)),
+                    *FMD5::HashBytes(reinterpret_cast<const uint8*>(Pixels.GetData()), uint64(Pixels.Num()) * sizeof(FColor)), *Filename);
+            }
+        }
+        SeparateSBT->Set(SavedSBT, ECVF_SetByConsole);
+        SceneUpdateOnce->Set(SavedSceneUpdate, ECVF_SetByConsole);
+        const bool bFrozenTime = WorldTime == World->GetTimeSeconds();
+        bSuccess &= bFrozenTime && NativeFrame == FCarlaEngine::GetFrameCounter();
+        UE_LOG(LogCarla, Log, TEXT("CAMERA_PAIR_FROZEN_PROBE mode=%s passed=%d frame=%llu time_frozen=%d sbt_restored=%d scene_update_restored=%d directory=%s"),
+            *Args[1], bSuccess, NativeFrame, bFrozenTime, SeparateSBT->GetInt(), SceneUpdateOnce->GetInt(), *Directory);
+    }));

@@ -23,44 +23,35 @@ float GetThreePointCircleRadius(
     cg::Location middle_location,
     cg::Location last_location) {
 
-  const float x1{first_location.x};
-  const float y1{first_location.y};
-  const float x2{middle_location.x};
-  const float y2{middle_location.y};
-  const float x3{last_location.x};
-  const float y3{last_location.y};
-
-  const float x12{x1 - x2};
-  const float x13{x1 - x3};
-  const float y12{y1 - y2};
-  const float y13{y1 - y3};
-  const float y31{y3 - y1};
-  const float y21{y2 - y1};
-  const float x31{x3 - x1};
-  const float x21{x2 - x1};
-
-  const float sx13{x1 * x1 - x3 * x3};
-  const float sy13{y1 * y1 - y3 * y3};
-  const float sx21{x2 * x2 - x1 * x1};
-  const float sy21{y2 * y2 - y1 * y1};
-
-  const float f_denom{2.0f * (y31 * x12 - y21 * x13)};
-  if (std::abs(f_denom) <= EPSILON) {
+  // Translate before doing any arithmetic. Absolute-coordinate squares in
+  // float can erase a small turn radius far from the world origin.
+  const double ab_x = double(middle_location.x) - first_location.x;
+  const double ab_y = double(middle_location.y) - first_location.y;
+  const double ac_x = double(last_location.x) - first_location.x;
+  const double ac_y = double(last_location.y) - first_location.y;
+  const double bc_x = double(last_location.x) - middle_location.x;
+  const double bc_y = double(last_location.y) - middle_location.y;
+  const double twice_area = std::abs(ab_x * ac_y - ab_y * ac_x);
+  if (!std::isfinite(twice_area) || 2.0 * twice_area <= EPSILON) {
     return std::numeric_limits<float>::max();
   }
-  const float f{(sx13 * x12 + sy13 * x12 + sx21 * x13 + sy21 * x13) / f_denom};
+  const double radius = std::hypot(ab_x, ab_y) * std::hypot(ac_x, ac_y) *
+      std::hypot(bc_x, bc_y) / (2.0 * twice_area);
+  return static_cast<float>(std::min(radius,
+      double(std::numeric_limits<float>::max())));
+}
 
-  const float g_denom{2.0f * (x31 * y12 - x21 * y13)};
-  if (std::abs(g_denom) <= EPSILON) {
-    return std::numeric_limits<float>::max();
+float GetMinimumCurveRadius(const std::vector<cg::Location> &locations) {
+  if (locations.size() < 3u) return std::numeric_limits<float>::max();
+  // Preserve the broad turn constraint, then include each local bend. A
+  // straight exit must not mask a tighter section earlier in the buffer.
+  float radius = GetThreePointCircleRadius(
+      locations.front(), locations.at(locations.size() / 2u), locations.back());
+  for (size_t i = 0u; i + 2u < locations.size(); ++i) {
+    radius = std::min(radius, GetThreePointCircleRadius(
+        locations.at(i), locations.at(i + 1u), locations.at(i + 2u)));
   }
-  const float g{(sx13 * y12 + sy13 * y12 + sx21 * y13 + sy21 * y13) / g_denom};
-
-  const float c{-(x1 * x1 + y1 * y1) - 2.0f * g * x1 - 2.0f * f * y1};
-  const float h{-g};
-  const float k{-f};
-
-  return std::sqrt(h * h + k * k - c);
+  return radius;
 }
 
 std::pair<cg::Location, uint64_t> InterpolateBufferAt(
@@ -103,11 +94,22 @@ std::pair<cg::Location, uint64_t> InterpolateBufferAt(
     return std::make_pair(waypoint_locations.at(last_index), last_index);
   }
 
-  // Target distance is shorter than the distance to the first waypoint:
-  // bracket with the first segment so the interpolation produces a point
-  // ahead of the vehicle along the planned path.
+  // A lane change can replace the buffer with points on the destination
+  // lane, all farther away than the look-ahead distance. Approach the first
+  // point from the vehicle; extrapolating the destination lane backward
+  // would move the target across the full lane width in a single update.
   if (closest_index == 0u && farthest_index == 0u) {
-    farthest_index = 1u;
+    const cg::Location first_location{waypoint_locations.front()};
+    const float first_distance{vehicle_location.Distance(first_location)};
+    if (first_distance <= EPSILON) {
+      return std::make_pair(first_location, 0u);
+    }
+    const float t{std::clamp(target_distance / first_distance, 0.0f, 1.0f)};
+    const cg::Location target_location{
+        vehicle_location.x + (first_location.x - vehicle_location.x) * t,
+        vehicle_location.y + (first_location.y - vehicle_location.y) * t,
+        vehicle_location.z + (first_location.z - vehicle_location.z) * t};
+    return std::make_pair(target_location, 0u);
   }
 
   const cg::Location target_close_location{waypoint_locations.at(closest_index)};

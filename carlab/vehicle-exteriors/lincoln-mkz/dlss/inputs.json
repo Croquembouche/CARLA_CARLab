@@ -1,0 +1,143 @@
+{
+  "description": "Eight saved native CARLA MKZ studio RGB captures, stock and refined, without resizing or world ticks.",
+  "native_report": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/runtime-report.json",
+  "native_report_sha256": "32e97c57969a6e144b2b86401d91696ee4881281e8fb96856f5a82966d2b034f",
+  "frames": [
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-stock-front-three-quarter.png",
+      "sha256": "54e68242f17b5094c9ea84ba5d3a9b7578efe94992e3760c71ef1331f837e542",
+      "size": [
+        1280,
+        800
+      ],
+      "camera": "stock-front-three-quarter",
+      "frame": 85,
+      "timestamp": 4.256669930997305,
+      "map": "/Game/VehicleExteriors/LincolnMKZ/L_ExteriorStudio",
+      "vehicle": "stock",
+      "vehicle_id": "vehicle.lincoln.mkz",
+      "view": "front-three-quarter",
+      "transform": "Transform(Location(x=6.300000, y=-5.400000, z=2.700000), Rotation(pitch=-12.897364, yaw=139.398712, roll=0.000000))",
+      "fov": 39.4
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-stock-rear-three-quarter.png",
+      "sha256": "09793df69cd63f5f27a6dfedde7baf04dc6e55f13789e4a277c27a72e45349bd",
+      "size": [
+        1280,
+        800
+      ],
+      "camera": "stock-rear-three-quarter",
+      "frame": 165,
+      "timestamp": 8.25666999060195,
+      "map": "/Game/VehicleExteriors/LincolnMKZ/L_ExteriorStudio",
+      "vehicle": "stock",
+      "vehicle_id": "vehicle.lincoln.mkz",
+      "view": "rear-three-quarter",
+      "transform": "Transform(Location(x=-6.300000, y=-5.200000, z=2.500000), Rotation(pitch=-11.755904, yaw=39.536156, roll=0.000000))",
+      "fov": 39.4
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-stock-front-detail.png",
+      "sha256": "f67991489f9af13da7e33c6ff62847deb0cb4e438d4987377f37e320548b4ca7",
+      "size": [
+        1280,
+        800
+      ],
+      "camera": "stock-front-detail",
+      "frame": 245,
+      "timestamp": 12.256670050206594,
+      "map": "/Game/VehicleExteriors/LincolnMKZ/L_ExteriorStudio",
+      "vehicle": "stock",
+      "vehicle_id": "vehicle.lincoln.mkz",
+      "view": "front-detail",
+      "transform": "Transform(Location(x=4.400000, y=-1.800000, z=1.350000), Rotation(pitch=-12.966474, yaw=143.695496, roll=0.000000))",
+      "fov": 31.4
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-stock-wheel-detail.png",
+      "sha256": "3d7caf7c571a9157f07771ea045b480ef9d03d7147bab9671bea9a1cce7dc7c2",
+      "size": [
+        1280,
+        800
+      ],
+      "camera": "stock-wheel-detail",
+      "frame": 325,
+      "timestamp": 16.25667010981124,
+      "map": "/Game/VehicleExteriors/LincolnMKZ/L_ExteriorStudio",
+      "vehicle": "stock",
+      "vehicle_id": "vehicle.lincoln.mkz",
+      "view": "wheel-detail",
+      "transform": "Transform(Location(x=2.550000, y=-2.800000, z=0.900000), Rotation(pitch=-13.101505, yaw=118.369049, roll=0.000000))",
+      "fov": 29.6
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-refined-front-three-quarter.png",
+      "sha256": "cfb9c713a261abd9fb31997a92b5d214bf98586d3fe123d9fa9a654d19da47cc",
+      "size": [
+        1280,
+        800
+      ],
+      "camera": "refined-front-three-quarter",
+      "frame": 405,
+      "timestamp": 20.256670169415884,
+      "map": "/Game/VehicleExteriors/LincolnMKZ/L_ExteriorStudio",
+      "vehicle": "refined",
+      "vehicle_id": "vehicle.lincoln.mkz_refined",
+      "view": "front-three-quarter",
+      "transform": "Transform(Location(x=6.300000, y=-5.400000, z=2.700000), Rotation(pitch=-12.897364, yaw=139.398712, roll=0.000000))",
+      "fov": 39.4
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-refined-rear-three-quarter.png",
+      "sha256": "e198805cf04dad2e229bcfa6a4aef748a8984fdba51490fbcc898e262dfc7e50",
+      "size": [
+        1280,
+        800
+      ],
+      "camera": "refined-rear-three-quarter",
+      "frame": 485,
+      "timestamp": 24.25667022902053,
+      "map": "/Game/VehicleExteriors/LincolnMKZ/L_ExteriorStudio",
+      "vehicle": "refined",
+      "vehicle_id": "vehicle.lincoln.mkz_refined",
+      "view": "rear-three-quarter",
+      "transform": "Transform(Location(x=-6.300000, y=-5.200000, z=2.500000), Rotation(pitch=-11.755904, yaw=39.536156, roll=0.000000))",
+      "fov": 39.4
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-refined-front-detail.png",
+      "sha256": "eabe53e3c2ad49a56822d86b6ee544f87fe025fe730d64d3a4c46fb923420534",
+      "size": [
+        1280,
+        800
+      ],
+      "camera": "refined-front-detail",
+      "frame": 565,
+      "timestamp": 28.256670288625173,
+      "map": "/Game/VehicleExteriors/LincolnMKZ/L_ExteriorStudio",
+      "vehicle": "refined",
+      "vehicle_id": "vehicle.lincoln.mkz_refined",
+      "view": "front-detail",
+      "transform": "Transform(Location(x=4.400000, y=-1.800000, z=1.350000), Rotation(pitch=-12.966474, yaw=143.695496, roll=0.000000))",
+      "fov": 31.4
+    },
+    {
+      "path": "/mnt/simulations/vehicle-exteriors/lincoln-mkz/renders/native-refined-wheel-detail.png",
+      "sha256": "9c53907635fa667218132d1d2a85087d3bb4001620c515382c2e62e535cebc81",
+      "size": [
+        1280,
+        800
+      ],
+      "camera": "refined-wheel-detail",
+      "frame": 645,
+      "timestamp": 32.25667034822982,
+      "map": "/Game/VehicleExteriors/LincolnMKZ/L_ExteriorStudio",
+      "vehicle": "refined",
+      "vehicle_id": "vehicle.lincoln.mkz_refined",
+      "view": "wheel-detail",
+      "transform": "Transform(Location(x=2.550000, y=-2.800000, z=0.900000), Rotation(pitch=-13.101505, yaw=118.369049, roll=0.000000))",
+      "fov": 29.6
+    }
+  ]
+}

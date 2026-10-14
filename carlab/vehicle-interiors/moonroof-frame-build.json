@@ -1,0 +1,32 @@
+{
+  "output": "/mnt/simulations/vehicle-interiors/exports/SM_MKZ_Moonroof_Frame.fbx",
+  "vertices": 320,
+  "polygons": 320,
+  "watertight_ring": true,
+  "material_slots": [
+    "MI_LincolnMKZ_Bodywork",
+    "MKZ_Completion_Headliner"
+  ],
+  "bounds_m": {
+    "min": [
+      -1.600000023841858,
+      -0.6800000071525574,
+      1.352839469909668
+    ],
+    "max": [
+      0.6399999856948853,
+      0.6800000071525574,
+      1.5111284255981445
+    ]
+  },
+  "moonroof_opening_m": {
+    "x": [
+      -0.88,
+      0.3
+    ],
+    "y": [
+      -0.485,
+      0.485
+    ]
+  }
+}

@@ -33,6 +33,11 @@ static constexpr float DefaultKannalaBrandtCoefficients[] =
   0.0008542188930970716f
 };
 
+static TAutoConsoleVariable<int32> CVarLazyActorClasses(
+    TEXT("carla.ActorDefinitions.LazyClasses"), 0,
+    TEXT("Resolve vehicle and pedestrian catalogue classes on first spawn. Default 0."),
+    ECVF_ReadOnly);
+
 /// Checks validity of FActorDefinition.
 class FActorDefinitionValidator
 {
@@ -1334,10 +1339,16 @@ void UActorBlueprintFunctionLibrary::MakeVehicleDefinition(
   FillIdAndTags(Definition, TEXT("vehicle"), Parameters.Make, Parameters.Model);
   AddRecommendedValuesForActorRoleName(Definition,
                                        {TEXT("autopilot"), TEXT("scenario"), TEXT("ego_vehicle")});
-  // Resolve the soft class at definition time. The catalog stores
-  // TSoftClassPtr so JSON parsing does not force-load; the UClass is needed
-  // here to hand the dispatcher a concrete spawn target.
-  Definition.Class = Parameters.Class.LoadSynchronous();
+  if (CVarLazyActorClasses.GetValueOnGameThread() != 0)
+  {
+    Definition.SoftClass = TSoftClassPtr<AActor>(Parameters.Class.ToSoftObjectPath());
+    Definition.Class = nullptr;
+  }
+  else
+  {
+    Definition.Class = Parameters.Class.LoadSynchronous();
+    Definition.SoftClass.Reset();
+  }
 
   if (Parameters.RecommendedColors.Num() > 0)
   {
@@ -1464,8 +1475,16 @@ void UActorBlueprintFunctionLibrary::MakePedestrianDefinition(
   /// @todo We need to validate here the params.
   FillIdAndTags(Definition, TEXT("walker"), TEXT("pedestrian"), Parameters.Id);
   AddRecommendedValuesForActorRoleName(Definition, {TEXT("pedestrian")});
-  // Resolve the soft class at definition time (see MakeVehicleDefinition).
-  Definition.Class = Parameters.Class.LoadSynchronous();
+  if (CVarLazyActorClasses.GetValueOnGameThread() != 0)
+  {
+    Definition.SoftClass = TSoftClassPtr<AActor>(Parameters.Class.ToSoftObjectPath());
+    Definition.Class = nullptr;
+  }
+  else
+  {
+    Definition.Class = Parameters.Class.LoadSynchronous();
+    Definition.SoftClass.Reset();
+  }
 
   auto GetGender = [](EPedestrianGender Value)
   {

@@ -1,0 +1,182 @@
+{
+  "Front_Right_Backrest": {
+    "vertices": 1369,
+    "polygons": 1296,
+    "modifiers": [
+      [
+        "Upholstery thickness",
+        "SOLIDIFY"
+      ],
+      [
+        "Soft sewn edges",
+        "BEVEL"
+      ]
+    ],
+    "materials": [
+      "MKZ_Ebony_Leather"
+    ],
+    "custom_normals": false
+  },
+  "Front_Right_Headrest": {
+    "vertices": 8,
+    "polygons": 6,
+    "modifiers": [
+      [
+        "Rounded upholstery",
+        "BEVEL"
+      ],
+      [
+        "Weighted corner normals",
+        "WEIGHTED_NORMAL"
+      ]
+    ],
+    "materials": [
+      "MKZ_Ebony_Leather"
+    ],
+    "custom_normals": false
+  },
+  "Front_Right_Headrest_Post": {
+    "vertices": 32,
+    "polygons": 18,
+    "modifiers": [],
+    "materials": [
+      "MKZ_Seat_Hardware"
+    ],
+    "custom_normals": false
+  },
+  "Front_Right_Headrest_Post.001": {
+    "vertices": 32,
+    "polygons": 18,
+    "modifiers": [],
+    "materials": [
+      "MKZ_Seat_Hardware"
+    ],
+    "custom_normals": false
+  },
+  "Front_Left_Headrest": {
+    "vertices": 8,
+    "polygons": 6,
+    "modifiers": [
+      [
+        "Rounded upholstery",
+        "BEVEL"
+      ],
+      [
+        "Weighted corner normals",
+        "WEIGHTED_NORMAL"
+      ]
+    ],
+    "materials": [
+      "MKZ_Ebony_Leather"
+    ],
+    "custom_normals": false
+  },
+  "Front_Left_Headrest_Post": {
+    "vertices": 32,
+    "polygons": 18,
+    "modifiers": [],
+    "materials": [
+      "MKZ_Seat_Hardware"
+    ],
+    "custom_normals": false
+  },
+  "Front_Left_Headrest_Post.001": {
+    "vertices": 32,
+    "polygons": 18,
+    "modifiers": [],
+    "materials": [
+      "MKZ_Seat_Hardware"
+    ],
+    "custom_normals": false
+  },
+  "Rear_Right_Headrest": {
+    "vertices": 8,
+    "polygons": 6,
+    "modifiers": [
+      [
+        "Rounded upholstery",
+        "BEVEL"
+      ],
+      [
+        "Weighted corner normals",
+        "WEIGHTED_NORMAL"
+      ]
+    ],
+    "materials": [
+      "MKZ_Ebony_Leather"
+    ],
+    "custom_normals": false
+  },
+  "Rear_Right_Headrest_Post": {
+    "vertices": 32,
+    "polygons": 18,
+    "modifiers": [],
+    "materials": [
+      "MKZ_Seat_Hardware"
+    ],
+    "custom_normals": false
+  },
+  "Rear_Right_Headrest_Post.001": {
+    "vertices": 32,
+    "polygons": 18,
+    "modifiers": [],
+    "materials": [
+      "MKZ_Seat_Hardware"
+    ],
+    "custom_normals": false
+  },
+  "Rear_Left_Headrest": {
+    "vertices": 8,
+    "polygons": 6,
+    "modifiers": [
+      [
+        "Rounded upholstery",
+        "BEVEL"
+      ],
+      [
+        "Weighted corner normals",
+        "WEIGHTED_NORMAL"
+      ]
+    ],
+    "materials": [
+      "MKZ_Ebony_Leather"
+    ],
+    "custom_normals": false
+  },
+  "Rear_Left_Headrest_Post": {
+    "vertices": 32,
+    "polygons": 18,
+    "modifiers": [],
+    "materials": [
+      "MKZ_Seat_Hardware"
+    ],
+    "custom_normals": false
+  },
+  "Rear_Left_Headrest_Post.001": {
+    "vertices": 32,
+    "polygons": 18,
+    "modifiers": [],
+    "materials": [
+      "MKZ_Seat_Hardware"
+    ],
+    "custom_normals": false
+  },
+  "Rear_Center_Headrest": {
+    "vertices": 8,
+    "polygons": 6,
+    "modifiers": [
+      [
+        "Rounded upholstery",
+        "BEVEL"
+      ],
+      [
+        "Weighted corner normals",
+        "WEIGHTED_NORMAL"
+      ]
+    ],
+    "materials": [
+      "MKZ_Ebony_Leather"
+    ],
+    "custom_normals": false
+  }
+}

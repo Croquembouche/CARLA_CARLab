@@ -1,5 +1,9 @@
 // Copyright (c) 2026. Licensed under the MIT license.
 #include "Carla/Sensor/LidarMotion.h"
+#include "Carla/Sensor/LidarInfrared.h"
+#include "Carla.h"
+#include "Carla/Game/CarlaStatics.h"
+#include "Carla/Game/CarlaEpisode.h"
 #include "Carla/Sensor/GpuSensorDispatcher.h"
 #include "Components/PrimitiveComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -51,6 +55,7 @@ struct History {
 TWeakObjectPtr<UWorld> PreviousWorld;
 TMap<uint32,History> Histories;
 uint64 CachedFrame=MAX_uint64;
+uint64 CachedInfraredRevision=MAX_uint64;
 TSharedPtr<Snapshot,ESPMode::ThreadSafe> Cached;
 
 bool ReadGeometry(UPrimitiveComponent* C,TSharedPtr<Geometry>& Out,TWeakObjectPtr<UObject>& Asset,uint32& PoseHash,const History* Old,GeometryReadCache* SharedShapes=nullptr) {
@@ -210,10 +215,18 @@ bool Box(const FVector& O,const FVector& D,const FVector3f& Lo,const FVector3f& 
 TSharedPtr<const Snapshot,ESPMode::ThreadSafe> Prepare(UWorld* World,const TArray<UPrimitiveComponent*>& Components) {
   check(IsInGameThread());
   if(PreviousWorld!=World) { Histories.Reset();PreviousWorld=World;CachedFrame=MAX_uint64; }
-  if(CachedFrame==GFrameCounter)return Cached;
+  CarlaLidarInfrared::Prepare();const uint64 Revision=CarlaLidarInfrared::Revision();
+  if(CachedFrame==GFrameCounter && CachedInfraredRevision==Revision)return Cached;
+  CachedInfraredRevision=Revision;
   const double Started=FPlatformTime::Seconds();double BuildSeconds=0;int ReusedMeshes=0,RebuiltMeshes=0;
   CachedFrame=GFrameCounter;Cached=MakeShared<Snapshot,ESPMode::ThreadSafe>();TSet<uint32> Seen;
-  Cached->Time=World->GetTimeSeconds();Cached->OldestCoveredTime=0;
+  // Secondary UWorld time advances on its local tick delta, while replicated
+  // actor poses and physical firing times use the primary episode clock. Keep
+  // motion endpoints in that same clock; mixing them can leave early pulses
+  // uncovered even with complete consecutive replicated snapshots.
+  const auto* Episode=UCarlaStatics::GetCurrentEpisode(World);
+  Cached->Time=Episode?Episode->GetElapsedGameTime():World->GetTimeSeconds();
+  Cached->OldestCoveredTime=0;
   struct PendingMesh { UPrimitiveComponent* Component; History Before,After; bool Compatible=false; };
   TArray<PendingMesh> Pending;TSet<AActor*> MovingActors;
   GeometryReadCache SharedShapes;
@@ -229,7 +242,15 @@ TSharedPtr<const Snapshot,ESPMode::ThreadSafe> Prepare(UWorld* World,const TArra
     const bool Moved=Old && (!Old->Transform.Equals(Current,1.e-8) || Old->Shape!=Shape);
     const bool Compatible=Available && Old && Old->Shape && Old->Asset==Asset &&
         (Old->Shape==Shape || (Old->Shape->Positions.Num()==Shape->Positions.Num() && Old->Shape->Indices==Shape->Indices));
-    if(Moved) { MovingActors.Add(C->GetOwner());if(!Compatible)++Cached->MissingGeometry; }
+    if(Moved) {
+      MovingActors.Add(C->GetOwner());
+      if(!Compatible) {
+        ++Cached->MissingGeometry;
+        UE_LOG(LogCarla,Warning,TEXT("PHYSICAL_MOTION_MISSING actor=%s component=%s available=%d old_vertices=%d new_vertices=%d time=%.12f"),
+            *C->GetOwner()->GetName(),*C->GetName(),int32(Available),
+            Old->Shape?Old->Shape->Positions.Num():0,Shape?Shape->Positions.Num():0,Cached->Time);
+      }
+    }
     const History After{C,Asset,Current,Shape,PoseHash,Cached->Time};
     Pending.Add({C,Old?*Old:After,After,Compatible});Histories.Add(Id,After);
   }
@@ -266,6 +287,7 @@ TSharedPtr<const Snapshot,ESPMode::ThreadSafe> Prepare(UWorld* World,const TArra
       Cached->OldestCoveredTime=FMath::Max(Cached->OldestCoveredTime,M.BeforeTime);
       M.Center=(M.Before.GetLocation()+M.After.GetLocation())*.5;
       M.Geometry=Results[I];
+      for(const auto& Material:CarlaLidarOptics::Sections(M.Component.Get()))M.InfraredProfiles.Add(Material.infrared);
       M.Radius=M.Geometry->LocalRadius*FMath::Max(M.Before.GetScale3D().GetAbsMax(),M.After.GetScale3D().GetAbsMax())+
           FVector::Distance(M.Before.GetLocation(),M.After.GetLocation())*.5+1;
       if(!M.Geometry->Triangles.IsEmpty()) { Cached->Primitives.Add(Id);Cached->Meshes.Add(MoveTemp(M)); }
@@ -276,6 +298,27 @@ TSharedPtr<const Snapshot,ESPMode::ThreadSafe> Prepare(UWorld* World,const TArra
   CarlaGpuSensors::ProfileSample(TEXT("motion_reused_meshes"),ReusedMeshes);
   CarlaGpuSensors::ProfileSample(TEXT("motion_rebuilt_meshes"),RebuiltMeshes);
   return Cached;
+}
+
+TSharedPtr<const Snapshot,ESPMode::ThreadSafe> WithinSphere(
+    const TSharedPtr<const Snapshot,ESPMode::ThreadSafe>& Source,const FSphere& Bounds) {
+  if(!Source || Bounds.Center.ContainsNaN() || !FMath::IsFinite(Bounds.W) || Bounds.W<0)return Source;
+  auto InBounds=[&](const Mesh& M) {
+    // Invalid bounds cannot prove exclusion. Keep tangent meshes and pad the
+    // comparison outward; the same swept sphere is used by the GPU broadphase.
+    if(M.Center.ContainsNaN() || !FMath::IsFinite(M.Radius) || M.Radius<0)return true;
+    const double Radius=double(M.Radius)+Bounds.W+1.0;
+    return FVector::DistSquared(M.Center,Bounds.Center)<=Radius*Radius;
+  };
+  if(!Source->Meshes.ContainsByPredicate([&](const Mesh& M) { return !InBounds(M); }))return Source;
+  auto Selected=MakeShared<Snapshot,ESPMode::ThreadSafe>();
+  Selected->Time=Source->Time;Selected->OldestCoveredTime=Source->OldestCoveredTime;
+  Selected->MissingGeometry=Source->MissingGeometry;
+  Selected->Meshes.Reserve(Source->Meshes.Num());
+  for(const auto& M:Source->Meshes)if(InBounds(M)) {
+    Selected->Meshes.Add(M);Selected->Primitives.Add(M.Primitive);
+  }
+  return Selected;
 }
 
 void Snapshot::GpuBuffers(const FVector& Translation,TArray<FVector4f>& Info,TArray<FVector4f>& NodeData,TArray<FVector4f>& TriangleData,TArray<FUintVector4>& Table,bool IncludeGeometry,const TArray<FIntPoint>* GeometryOffsets) const {
@@ -314,7 +357,7 @@ void Snapshot::GpuBuffers(const FVector& Translation,TArray<FVector4f>& Info,TAr
   if(IncludeGeometry) { if(NodeData.IsEmpty())NodeData.SetNumZeroed(2);if(TriangleData.IsEmpty())TriangleData.SetNumZeroed(7); }
 }
 
-bool Snapshot::Intersect(const FVector& Origin,const FVector& Direction,float Range,float TimeFraction,FHitResult& Hit,uint32& Section,FVector2f& UV,double SceneTime) const {
+bool Snapshot::Intersect(const FVector& Origin,const FVector& Direction,float Range,float TimeFraction,FHitResult& Hit,uint32& Section,FVector2f& UV,double SceneTime,bool OpticalOpacity) const {
   bool Found=false;double Nearest=Range;
   for(const auto& M:Meshes) {
     const float Alpha=SceneTime>=0?FMath::Clamp(float((SceneTime-M.BeforeTime)/FMath::Max(1.e-9,M.AfterTime-M.BeforeTime)),0.f,1.f):FMath::Clamp(TimeFraction,0.f,1.f);
@@ -334,6 +377,8 @@ bool Snapshot::Intersect(const FVector& Origin,const FVector& Direction,float Ra
         const FVector X=O-A;const double U=FVector::DotProduct(X,P)/Det;if(U<0 || U>1)continue;
         const FVector Q=FVector::CrossProduct(X,E1);const double W=FVector::DotProduct(D,Q)/Det;if(W<0 || W+U>1)continue;
         const double Distance=FVector::DotProduct(E2,Q)/Det;if(Distance<.001 || Distance>=Nearest)continue;
+        const FVector2f CandidateUV=T.UV[0]*float(1-U-W)+T.UV[1]*float(U)+T.UV[2]*float(W);
+        if(OpticalOpacity && M.InfraredProfiles.IsValidIndex(T.Section) && !CarlaLidarInfrared::AllowsHit(M.InfraredProfiles[T.Section],CandidateUV))continue;
         const FVector Normal=FVector::CrossProduct(Transform.TransformVector(E1),Transform.TransformVector(E2)).GetSafeNormal()*T.NormalSign;
         Hit=FHitResult(C->GetOwner(),C,Origin+Direction*Distance,Normal);Hit.bBlockingHit=true;Hit.Distance=Distance;Hit.FaceIndex=T.Face;
         Section=T.Section;UV=T.UV[0]*(1-U-W)+T.UV[1]*U+T.UV[2]*W;Nearest=Distance;Found=true;
@@ -439,6 +484,44 @@ bool FMotionGeometryCacheTest::RunTest(const FString&) {
       TestTrue(TEXT("material UV interpolation preserved"),FMath::Abs(UV.X-.217/4)<.0001 && FMath::Abs(UV.Y-.139/4)<.0001);
       TestEqual(TEXT("material section preserved"),Section,uint32(0));
     }
+  }
+  {
+    auto Full=MakeShared<Snapshot,ESPMode::ThreadSafe>();*Full=S;
+    Full->OldestCoveredTime=.875;Full->MissingGeometry=7;
+    Mesh Far=M;Far.Primitive=456;Far.Before.AddToTranslation(FVector(1000,0,0));
+    Far.After.AddToTranslation(FVector(1000,0,0));Far.Center+=FVector(1000,0,0);
+    Full->Meshes.Add(Far);Full->Primitives.Add(M.Primitive);Full->Primitives.Add(Far.Primitive);
+    const FSphere Query(M.Center,50);
+    const auto Selected=WithinSphere(Full,Query);
+    TestEqual(TEXT("query view excludes only the distant swept mesh"),Selected->Meshes.Num(),1);
+    TestTrue(TEXT("query view shares immutable geometry"),Selected->Meshes[0].Geometry==M.Geometry);
+    TestTrue(TEXT("query view preserves source history"),Full->Meshes.Num()==2 && Full->Primitives.Contains(456));
+    TestEqual(TEXT("query view keeps full coverage guard"),Selected->OldestCoveredTime,Full->OldestCoveredTime);
+    TestEqual(TEXT("query view keeps missing-geometry guard"),Selected->MissingGeometry,Full->MissingGeometry);
+    TestEqual(TEXT("query view keeps episode clock"),Selected->Time,Full->Time);
+    TestFalse(TEXT("excluded primitive is not marked as GPU motion"),Selected->Primitives.Contains(456));
+    for(float Alpha:{0.f,.2f,.5f,.9f,1.f}) {
+      FTransform T;T.Blend(M.Before,M.After,Alpha);
+      const FVector Surface=T.TransformPosition(FVector(.217,.139,0));
+      const FVector Normal=T.TransformVectorNoScale(FVector(0,0,1));
+      FHitResult A,B;uint32 SectionA=0,SectionB=0;FVector2f UVA,UVB;
+      const bool HitA=Full->Intersect(Surface+Normal*10,-Normal,50,Alpha,A,SectionA,UVA,1+Alpha);
+      const bool HitB=Selected->Intersect(Surface+Normal*10,-Normal,50,Alpha,B,SectionB,UVB,1+Alpha);
+      TestTrue(TEXT("bounded view preserves moving surface hit"),HitA && HitB);
+      TestEqual(TEXT("bounded view preserves exact range"),A.Distance,B.Distance);
+      TestTrue(TEXT("bounded view preserves material and UV"),SectionA==SectionB && UVA==UVB);
+    }
+    auto Boundary=MakeShared<Snapshot,ESPMode::ThreadSafe>();*Boundary=*Full;
+    Boundary->Meshes[1].Center=Query.Center+FVector(Query.W+Far.Radius,0,0);
+    TestTrue(TEXT("tangent swept sphere is retained without copying"),WithinSphere(Boundary,Query)==Boundary);
+    Boundary->Meshes[1].Center=Query.Center+FVector(Query.W+Far.Radius+.5,0,0);
+    TestTrue(TEXT("rounding padding retains just-outside boundary"),WithinSphere(Boundary,Query)==Boundary);
+    Boundary->Meshes[1].Radius=-1;
+    TestTrue(TEXT("invalid mesh bounds cannot prove exclusion"),WithinSphere(Boundary,Query)==Boundary);
+    TestTrue(TEXT("invalid query bounds keep full snapshot"),WithinSphere(Full,FSphere(Query.Center,-1))==Full);
+    TestTrue(TEXT("containing query reuses full snapshot"),WithinSphere(Full,FSphere(Query.Center,2000))==Full);
+    const auto Empty=WithinSphere(Full,FSphere(Query.Center+FVector(10000,0,0),50));
+    TestTrue(TEXT("empty query retains strict history metadata"),Empty->Meshes.IsEmpty() && Empty->MissingGeometry==7 && Empty->OldestCoveredTime==.875);
   }
   TArray<FVector4f> Info,Nodes,Triangles;TArray<FUintVector4> Lookup;
   S.GpuBuffers(FVector(100000,-200000,300000),Info,Nodes,Triangles,Lookup);

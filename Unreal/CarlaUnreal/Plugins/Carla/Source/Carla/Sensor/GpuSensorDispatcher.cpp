@@ -1,5 +1,6 @@
 // Copyright (c) 2026. Licensed under the MIT license.
 #include "Carla/Sensor/GpuSensorDispatcher.h"
+#include "Carla/Sensor/ReadbackPollGate.h"
 #include "GameFramework/Actor.h"
 #include "Carla.h"
 #include "Carla/Sensor/LidarOptics.h"
@@ -43,8 +44,55 @@
 #include "HAL/PlatformMisc.h"
 #include "Misc/ScopeLock.h"
 
+#include <atomic>
+
 namespace CarlaGpuSensorPrivate
 {
+using FSharedPackedRayInputs = TSharedPtr<TArray<FVector4f>, ESPMode::ThreadSafe>;
+TAutoConsoleVariable<int32> ReusePackedRayInputs(TEXT("carla.Sensors.ReusePackedRayInputs"), 0,
+    TEXT("Reuse CPU ray input arrays only after all batch and RDG upload leases retire."));
+
+TAutoConsoleVariable<int32> ParallelRayValidation(TEXT("carla.Sensors.ParallelRayValidation"), 0,
+    TEXT("Validate every physical GPU ray in bounded CPU blocks before delivery."));
+
+TAutoConsoleVariable<int32> SkipUnrenderedSnapshotComponents(TEXT("carla.Sensors.SkipUnrenderedSnapshotComponents"), 0,
+    TEXT("Skip material classification for registered components without a render primitive ID; snapshot output is unchanged."));
+
+bool HasCollisionRetraceOverflow(TConstArrayView<FVector4f> Encoded, int32 RayCount, int32 HitStride, bool Parallel)
+{
+  check(HitStride>0 && RayCount>=0 && RayCount<=Encoded.Num()/HitStride);
+  constexpr int32 BlockSize=4096;
+  if (!Parallel || RayCount<=BlockSize)
+  {
+    for (int32 I=0;I<RayCount;++I)
+      if (Encoded[I*HitStride].X==-2) return true;
+    return false;
+  }
+  std::atomic<bool> Overflow{false};
+  const int32 Blocks=RayCount/BlockSize+int32(RayCount%BlockSize!=0);
+  ParallelFor(TEXT("CarlaValidatePhysicalRays"),Blocks,1,[&](int32 Block)
+  {
+    bool LocalOverflow=false;
+    const int32 Begin=Block*BlockSize;
+    const int32 End=Begin+FMath::Min(BlockSize,RayCount-Begin);
+    for (int32 I=Begin;I<End;++I)
+      LocalOverflow|=Encoded[I*HitStride].X==-2;
+    if (LocalOverflow) Overflow.store(true,std::memory_order_relaxed);
+  },EParallelForFlags::Unbalanced);
+  // ParallelFor joins before the readback owner can unmap or retire the batch.
+  return Overflow.load(std::memory_order_relaxed);
+}
+
+FSharedPackedRayInputs AcquirePackedRayInputs(FSharedPackedRayInputs& Storage)
+{
+  // The game-thread owner alone publishes references. Batches and RDG uploads
+  // keep strong leases; a remaining borrower always gets independent storage.
+  if (Storage.IsValid() && Storage.IsUnique())
+    std::atomic_thread_fence(std::memory_order_acquire);
+  else
+    Storage = MakeShared<TArray<FVector4f>, ESPMode::ThreadSafe>();
+  return Storage;
+}
 TAutoConsoleVariable<int32> Enabled(TEXT("carla.Sensors.GpuRayTracing"), 0,
     TEXT("Experimental render-geometry GPU LiDAR/radar. Requires patched UE, inline RT, and a rendered view. No CPU fallback."));
 
@@ -91,6 +139,8 @@ IMPLEMENT_GLOBAL_SHADER(FCarlaSensorTraceCS, "/Plugin/Carla/Private/CarlaSensorT
 
 TAutoConsoleVariable<int32> Diagnostics(TEXT("carla.Sensors.GpuDiagnostics"), 0,
     TEXT("Log vehicle and pedestrian render component collision eligibility once per component."));
+TAutoConsoleVariable<int32> MotionQueryScope(TEXT("carla.Sensors.MotionQueryBounds"), 0,
+    TEXT("After full motion history preparation, restrict GPU motion meshes to conservative optical query bounds when material IORs are at least one."));
 TSet<uint32> DiagnosedComponents;
 
 struct FComponentSnapshot
@@ -100,12 +150,48 @@ struct FComponentSnapshot
   uint32 Actor;
   uint32 MaterialOffset, MaterialCount;
   bool OpticalOnly;
+  bool IgnoreOpticalCollision;
 };
+struct FInfraredSnapshot {
+  TArray<FVector4f> Info,UVs,Pixels;
+  // Only the render thread accesses these pooled GPU leases.
+  TRefCountPtr<FRDGPooledBuffer> InfoBuffer,UVBuffer,PixelBuffer;
+};
+struct FInfraredRequest {
+  TWeakObjectPtr<UPrimitiveComponent> Component;
+  uint32 Section;
+  int32 Profile;
+};
+struct FInfraredSignature {
+  CarlaLidarInfrared::GeometryKey Geometry;
+  int32 Profile;
+  bool operator==(const FInfraredSignature& B)const{return Profile==B.Profile && Geometry==B.Geometry;}
+};
+TSharedPtr<FInfraredSnapshot,ESPMode::ThreadSafe> CachedInfrared;
+TArray<FInfraredSignature> CachedInfraredSignature;
+uint64 PackedInfraredRevision=0;
+TSharedPtr<FInfraredSnapshot,ESPMode::ThreadSafe> BuildInfrared(const TArray<FInfraredRequest>& Requests,bool Shared=true) {
+  check(IsInGameThread());CarlaLidarInfrared::Prepare();
+  TArray<FInfraredSignature> Signature;Signature.Reserve(Requests.Num());
+  for(const auto& R:Requests)Signature.Add({CarlaLidarInfrared::Key(R.Component.Get(),R.Section),R.Profile});
+  const uint64 Revision=CarlaLidarInfrared::Revision();
+  if(Shared && CachedInfrared && PackedInfraredRevision==Revision && Signature==CachedInfraredSignature) {
+    CarlaGpuSensors::ProfileSample(TEXT("infrared_snapshot_reused"),1);return CachedInfrared;
+  }
+  auto Result=MakeShared<FInfraredSnapshot,ESPMode::ThreadSafe>();CarlaLidarInfrared::SnapshotUVCache Cache;
+  for(const auto& R:Requests)CarlaLidarInfrared::Append(R.Component.Get(),R.Section,R.Profile,Result->Info,Result->UVs,Shared?&Cache:nullptr);
+  if(Result->Info.IsEmpty())Result->Info.SetNumZeroed(8);
+  if(Result->UVs.IsEmpty())Result->UVs.SetNumZeroed(1);
+  Result->Pixels=CarlaLidarInfrared::Pixels();
+  if(Shared){CachedInfrared=Result;CachedInfraredSignature=MoveTemp(Signature);PackedInfraredRevision=Revision;}
+  CarlaGpuSensors::ProfileSample(TEXT("infrared_snapshot_reused"),0);return Result;
+}
 struct FCollisionSnapshot
 {
   TMap<uint32, FComponentSnapshot> Components;
   TArray<FUintVector4> Table;
-  TArray<FVector4f> Materials,InfraredInfo,InfraredUVs,InfraredPixels;
+  TArray<FVector4f> Materials;
+  TSharedPtr<FInfraredSnapshot,ESPMode::ThreadSafe> Infrared;
   TArray<TWeakObjectPtr<UPrimitiveComponent>> RenderComponents;
 };
 struct FBatch
@@ -118,6 +204,7 @@ struct FBatch
   double GpuMs=-1, Dispatched=0, Ready=0;
   TSharedRef<TArray<FCarlaGpuRay>,ESPMode::ThreadSafe> RayStorage;
   TArray<FCarlaGpuRay>& Rays;
+  FSharedPackedRayInputs PackedInputStorage;
   explicit FBatch(TSharedRef<TArray<FCarlaGpuRay>,ESPMode::ThreadSafe> InRays)
       : RayStorage(MoveTemp(InRays)), Rays(*RayStorage) {}
 
@@ -152,6 +239,35 @@ TMap<const FSceneInterface*, FSphere> FrameQueryBounds; // Game thread only.
 uint64 QueryBoundsFrame = MAX_uint64;
 TArray<TUniqueFunction<bool()>> Readbacks; // Render thread only.
 TAtomic<int32> ReadbackCount{0};
+FCarlaReadbackPollGate ReadbackPollGate;
+TAutoConsoleVariable<int32> CoalesceReadbackPolls(TEXT("carla.Sensors.CoalesceReadbackPolls"),0,
+    TEXT("Bound render-thread readback polling to one outstanding command; no change to readbacks or sensor frames."));
+TAutoConsoleVariable<int32> ReadbackPollAudit(TEXT("carla.Sensors.ReadbackPollAudit"),0,
+    TEXT("Collect cumulative readback polling counters and queue latency; diagnostic only."));
+uint64 PollEnqueued=0,PollCoalesced=0,PollPeakOutstanding=0; // Game thread only.
+TAtomic<uint64> PollExecuted{0},PollEmpty{0},PollQueueMicroseconds{0};
+FAutoConsoleCommand DumpReadbackPollStats(TEXT("carla.Sensors.DumpReadbackPollStats"),
+    TEXT("Log bounded readback polling counters without waiting or advancing the world."),
+    FConsoleCommandDelegate::CreateLambda([] {
+      check(IsInGameThread());
+      UE_LOG(LogCarla,Log,TEXT("CARLA_READBACK_POLL_STATS mode=%d audit=%d enqueued=%llu executed=%llu coalesced=%llu empty=%llu peak=%llu outstanding=%d queue_us=%llu"),
+          CoalesceReadbackPolls.GetValueOnGameThread(),ReadbackPollAudit.GetValueOnGameThread(),
+          PollEnqueued,PollExecuted.Load(),PollCoalesced,PollEmpty.Load(),PollPeakOutstanding,
+          ReadbackPollGate.NumOutstanding(),PollQueueMicroseconds.Load());
+    }));
+FAutoConsoleCommand ResetReadbackPollStats(TEXT("carla.Sensors.ResetReadbackPollStats"),
+    TEXT("Reset polling counters only after all queued poll commands have retired."),
+    FConsoleCommandDelegate::CreateLambda([] {
+      check(IsInGameThread());
+      if (ReadbackPollGate.NumOutstanding()!=0)
+      {
+        UE_LOG(LogCarla,Warning,TEXT("CARLA_READBACK_POLL_RESET refused=pending"));
+        return;
+      }
+      PollEnqueued=PollCoalesced=PollPeakOutstanding=0;
+      PollExecuted.Store(0);PollEmpty.Store(0);PollQueueMicroseconds.Store(0);
+      UE_LOG(LogCarla,Log,TEXT("CARLA_READBACK_POLL_RESET passed=1"));
+    }));
 FGraphEventArray CallbackTasks; // Render thread; joined after the shutdown fence.
 FCriticalSection ProfileMutex;
 FGraphEventRef ProfileWriteTask; // One best-effort writer, joined on shutdown.
@@ -160,8 +276,10 @@ TQueue<TUniqueFunction<void()>, EQueueMode::Mpsc> GameCallbacks;
 struct FDelayedDelivery { TWeakObjectPtr<AActor> Owner; double Due; TUniqueFunction<void()> Deliver; };
 TArray<FDelayedDelivery> DelayedDeliveries;
 TMap<TWeakObjectPtr<AActor>, double> InFlight; // Game thread only.
+TMap<TWeakObjectPtr<AActor>, FSharedPackedRayInputs> PackedInputFrames; // Game thread only.
 TWeakObjectPtr<UWorld> CachedWorld;
 uint64 CachedFrame = MAX_uint64;
+uint64 CachedInfraredRevision=MAX_uint64;
 TSharedPtr<FCollisionSnapshot, ESPMode::ThreadSafe> CachedCollision;
 FDelegateHandle RenderHandle;
 FDelegateHandle PreExitHandle;
@@ -169,12 +287,18 @@ FTSTicker::FDelegateHandle TickHandle;
 bool Running = false;
 double LastPoll = 0;
 
-TSharedPtr<FCollisionSnapshot, ESPMode::ThreadSafe> Snapshot(UWorld* World)
+struct FSnapshotBuildCounts
 {
-  if (CachedWorld == World && CachedFrame == GFrameCounter) return CachedCollision;
+  int32 Registered=0, Unrendered=0, MaterialQueries=0;
+};
+
+TSharedPtr<FCollisionSnapshot, ESPMode::ThreadSafe> BuildSnapshot(UWorld* World, bool SkipUnrendered,
+    FSnapshotBuildCounts* Counts=nullptr, bool ShareInfraredUVs=true)
+{
   TRACE_CPUPROFILER_EVENT_SCOPE(CarlaRayCollisionSnapshot);
   auto Result = MakeShared<FCollisionSnapshot, ESPMode::ThreadSafe>();
   CarlaLidarOptics::SnapshotMaterialCache MaterialCache;
+  TArray<FInfraredRequest> InfraredRequests;
   // Once per world/frame, not once per ray. Capture velocity alongside IDs so
   // delayed radar readback never samples velocity from a later physics tick.
   for (TActorIterator<AActor> Actor(World); Actor; ++Actor)
@@ -230,30 +354,39 @@ TSharedPtr<FCollisionSnapshot, ESPMode::ThreadSafe> Snapshot(UWorld* World)
             CollisionComponent ? int32(CollisionComponent->GetCollisionResponseToChannel(ECC_GameTraceChannel2)) : -1, *GetNameSafe(CollisionComponent));
       }
       if (!C->IsRegistered()) continue;
+      uint32 Id=0;
+      if (SkipUnrendered || Counts)
+      {
+        Id=C->GetPrimitiveSceneId().PrimIDValue;
+        if (Counts) { ++Counts->Registered; Counts->Unrendered+=int32(Id==0); }
+        // The original path never adds ID zero to any snapshot output. Do not
+        // classify its materials, but keep all registered render primitives,
+        // including non-solid optical surfaces and collision-proxy associations.
+        if (SkipUnrendered && !Id) continue;
+      }
       const bool CollisionEligible=CollisionComponent && CollisionComponent->IsRegistered() &&
           CollisionComponent->IsQueryCollisionEnabled() &&
           CollisionComponent->GetCollisionResponseToChannel(ECC_GameTraceChannel2)==ECR_Block;
+      if (Counts) ++Counts->MaterialQueries;
       const auto Materials=CarlaLidarOptics::Sections(C,&MaterialCache);
       // Visible optical surfaces can be non-solid (windows and painted road
       // meshes). Include them only for material-aware LiDAR, preserving the
       // existing collision predicate for radar and semantic/legacy LiDAR.
       const bool OpticalEligible=Actor->GetActorEnableCollision() && !Actor->IsHidden() && C->IsVisible() && !C->bHiddenInGame &&
-          !C->ComponentHasTag(TEXT("LidarIgnore")) && Materials.ContainsByPredicate([](const CarlaLidarOptics::Material& M) {
-            return M.transmission>0 || M.specular>.5f || M.retro>0;
-          });
+          CarlaLidarOptics::NeedsRenderSurface(C,Materials);
       if (!CollisionEligible && !OpticalEligible) continue;
       if (!CollisionEligible) CollisionComponent=C;
-      const uint32 Id = C->GetPrimitiveSceneId().PrimIDValue;
+      if (!SkipUnrendered) Id=C->GetPrimitiveSceneId().PrimIDValue;
       if (Id) {
         Result->RenderComponents.Add(C);
         const uint32 Offset=Result->Materials.Num()/2;
         uint32 SectionIndex=0;
         for (const auto& M:Materials) {
-          CarlaLidarInfrared::Append(C,SectionIndex++,M.infrared,Result->InfraredInfo,Result->InfraredUVs);
+          InfraredRequests.Add({C,SectionIndex++,M.infrared});
           Result->Materials.Add(FVector4f(M.diffuse,M.retro,M.specular,M.transmission));
           Result->Materials.Add(FVector4f(M.ior,M.roughness,M.thinSheet,0));
         }
-        Result->Components.Add(Id, {CollisionComponent, Velocity, Actor->GetUniqueID(),Offset,uint32(Materials.Num()),!CollisionEligible});
+        Result->Components.Add(Id, {CollisionComponent, Velocity, Actor->GetUniqueID(),Offset,uint32(Materials.Num()),!CollisionEligible,CarlaLidarOptics::IgnoresOpticalCollision(C) || CarlaLidarOptics::IgnoresOpticalCollision(CollisionComponent)});
       }
     }
   }
@@ -263,25 +396,86 @@ TSharedPtr<FCollisionSnapshot, ESPMode::ThreadSafe> Snapshot(UWorld* World)
   {
     uint32 Slot = (Entry.Key * 2654435761u) & (Size - 1);
     while (Result->Table[Slot].X != 0) Slot = (Slot + 1) & (Size - 1);
-    Result->Table[Slot] = FUintVector4(Entry.Key, Entry.Value.Actor, Entry.Value.MaterialOffset, Entry.Value.MaterialCount | (Entry.Value.OpticalOnly ? 0x80000000u : 0u));
+    Result->Table[Slot] = FUintVector4(Entry.Key, Entry.Value.Actor, Entry.Value.MaterialOffset, Entry.Value.MaterialCount | (Entry.Value.OpticalOnly ? 0x80000000u : 0u) | (Entry.Value.IgnoreOpticalCollision ? 0x40000000u : 0u));
   }
   if (Result->Materials.IsEmpty()) Result->Materials.SetNumZeroed(2);
-  if(Result->InfraredInfo.IsEmpty())Result->InfraredInfo.SetNumZeroed(6);
-  if(Result->InfraredUVs.IsEmpty())Result->InfraredUVs.SetNumZeroed(1);
-  CarlaLidarInfrared::Prepare();Result->InfraredPixels=CarlaLidarInfrared::Pixels();
+  Result->Infrared=BuildInfrared(InfraredRequests,ShareInfraredUVs);
+  CarlaGpuSensors::ProfileSample(TEXT("infrared_uv_mb"),Result->Infrared->UVs.Num()*sizeof(FVector4f)/1048576.0);
+  CarlaGpuSensors::ProfileSample(TEXT("infrared_atlas_mb"),Result->Infrared->Pixels.Num()*sizeof(FVector4f)/1048576.0);
+  return Result;
+}
+
+TSharedPtr<FCollisionSnapshot, ESPMode::ThreadSafe> Snapshot(UWorld* World)
+{
+  CarlaLidarInfrared::Prepare();
+  const uint64 InfraredRevision=CarlaLidarInfrared::Revision();
+  if (CachedWorld == World && CachedFrame == GFrameCounter && CachedInfraredRevision==InfraredRevision) return CachedCollision;
+  auto Result=BuildSnapshot(World,SkipUnrenderedSnapshotComponents.GetValueOnGameThread()!=0);
   CachedWorld = World;
   CachedFrame = GFrameCounter;
+  CachedInfraredRevision=InfraredRevision;
   CachedCollision = Result;
   return Result;
 }
 
-// Render-thread-owned, bounded to the last uploaded geometry layout. Strong
-// identities prevent address reuse; new/deforming geometry invalidates it.
-TArray<TSharedPtr<const CarlaLidarMotion::MeshGeometry,ESPMode::ThreadSafe>> MotionGeometryLayout;
+// Render-thread-owned immutable identities keep atlas offsets valid even when
+// an actor stops or a component disappears. RDG owns every old GPU buffer used
+// by a copy pass; publishing its replacement never mutates a borrowed buffer.
+using FMotionGeometry = TSharedPtr<const CarlaLidarMotion::MeshGeometry,ESPMode::ThreadSafe>;
+TArray<FMotionGeometry> MotionGeometryLayout;
 TArray<FIntPoint> MotionGeometryOffsets;
 TRefCountPtr<FRDGPooledBuffer> MotionNodeBuffer,MotionTriangleBuffer;
 TAutoConsoleVariable<int32> CacheMotionGeometry(TEXT("carla.Sensors.CacheMotionGeometry"),1,
     TEXT("Reuse unchanged physical LiDAR motion geometry GPU buffers; transforms and sample times always refresh."));
+TAutoConsoleVariable<int32> AppendMotionGeometry(TEXT("carla.Sensors.AppendMotionGeometry"),0,
+    TEXT("Append new immutable LiDAR geometry using GPU prefix copies, bounded to 512 MiB before full active-set compaction."),ECVF_RenderThreadSafe);
+
+struct FMotionAtlasPlan
+{
+  bool Reuse=false,Append=false;
+  uint32 NodeElements=0,TriangleElements=0;
+  TArray<FIntPoint> CurrentOffsets,MissingOffsets;
+  TArray<FMotionGeometry> Missing;
+};
+
+FMotionAtlasPlan PlanMotionAtlas(const TArray<FMotionGeometry>& Layout,const TArray<FIntPoint>& Offsets,
+    const TArray<FMotionGeometry>& Current,uint32 OldNodeElements,uint32 OldTriangleElements,
+    bool AllowAppend,uint64 BudgetBytes)
+{
+  FMotionAtlasPlan Plan;
+  if(Layout.IsEmpty() || Layout.Num()!=Offsets.Num())return Plan;
+  uint64 Nodes=0,Triangles=0;
+  // Only densely packed immutable layouts can be extended. Cold/dummy buffers
+  // and any inconsistent descriptor take the complete legacy upload path.
+  for(int32 I=0;I<Layout.Num();++I)
+  {
+    const auto& G=Layout[I];
+    if(!G || G->PackedNodes.IsEmpty() || G->PackedTriangles.IsEmpty() ||
+        G->PackedNodes.Num()%2 || G->PackedTriangles.Num()%7 ||
+        Offsets[I]!=FIntPoint(Nodes/2,Triangles/7))return Plan;
+    Nodes+=G->PackedNodes.Num();Triangles+=G->PackedTriangles.Num();
+  }
+  if(Nodes!=OldNodeElements || Triangles!=OldTriangleElements)return Plan;
+  Plan.CurrentOffsets.Reserve(Current.Num());
+  for(const auto& G:Current)
+  {
+    if(!G || G->PackedNodes.IsEmpty() || G->PackedTriangles.IsEmpty() ||
+        G->PackedNodes.Num()%2 || G->PackedTriangles.Num()%7)return FMotionAtlasPlan();
+    const int32 Existing=Layout.IndexOfByKey(G);
+    if(Existing!=INDEX_NONE){Plan.CurrentOffsets.Add(Offsets[Existing]);continue;}
+    const int32 Missing=Plan.Missing.IndexOfByKey(G);
+    if(Missing!=INDEX_NONE){Plan.CurrentOffsets.Add(Plan.MissingOffsets[Missing]);continue;}
+    if(!AllowAppend)return FMotionAtlasPlan();
+    Plan.Missing.Add(G);Plan.MissingOffsets.Add(FIntPoint(Nodes/2,Triangles/7));
+    Plan.CurrentOffsets.Add(Plan.MissingOffsets.Last());
+    Nodes+=G->PackedNodes.Num();Triangles+=G->PackedTriangles.Num();
+    if(Nodes>MAX_int32 || Triangles>MAX_int32 ||
+        (Nodes+Triangles)*sizeof(FVector4f)>BudgetBytes)return FMotionAtlasPlan();
+  }
+  Plan.Reuse=Plan.Missing.IsEmpty();Plan.Append=!Plan.Reuse;
+  Plan.NodeElements=Nodes;Plan.TriangleElements=Triangles;
+  return Plan;
+}
 
 void Render(FPostOpaqueRenderParameters& P)
 {
@@ -298,7 +492,8 @@ void Render(FPostOpaqueRenderParameters& P)
     if (Batch->Scene != Scene) { ++Index; continue; }
     Pending.RemoveAt(Index);
     const double RenderSetupStarted=FPlatformTime::Seconds();
-    TArray<FVector4f> Input;
+    TArray<FVector4f> LocalInput;
+    TArray<FVector4f>& Input = Batch->PackedInputStorage.IsValid() ? *Batch->PackedInputStorage : LocalInput;
     {
     TRACE_CPUPROFILER_EVENT_SCOPE(CarlaRayInputPack);
     CarlaGpuSensors::PackRayInputs(Batch->Rays,View->ViewMatrices.GetPreViewTranslation(),
@@ -316,19 +511,31 @@ void Render(FPostOpaqueRenderParameters& P)
     TArray<FVector4f> MotionInfo,MotionNodes,MotionTriangles;TArray<FUintVector4> MotionLookup;
     const double MotionPackStarted=FPlatformTime::Seconds();
     const int32 MeshCount=Batch->Motion?Batch->Motion->Meshes.Num():0;
-    bool ReuseGeometry=CacheMotionGeometry.GetValueOnRenderThread()!=0 && MotionNodeBuffer.IsValid() && MotionTriangleBuffer.IsValid();
-    TArray<FIntPoint> ExistingOffsets;ExistingOffsets.Reserve(MeshCount);
-    for(int32 I=0;ReuseGeometry && I<MeshCount;++I) {
-      const int32 CachedIndex=MotionGeometryLayout.IndexOfByKey(Batch->Motion->Meshes[I].Geometry);
-      ReuseGeometry=CachedIndex!=INDEX_NONE;
-      if(ReuseGeometry)ExistingOffsets.Add(MotionGeometryOffsets[CachedIndex]);
+    FMotionAtlasPlan AtlasPlan;
+    if(CacheMotionGeometry.GetValueOnRenderThread()!=0 && MotionNodeBuffer.IsValid() && MotionTriangleBuffer.IsValid())
+    {
+      TArray<FMotionGeometry> Current;Current.Reserve(MeshCount);
+      if(Batch->Motion)for(const auto& Mesh:Batch->Motion->Meshes)Current.Add(Mesh.Geometry);
+      AtlasPlan=PlanMotionAtlas(MotionGeometryLayout,MotionGeometryOffsets,Current,
+          MotionNodeBuffer->Desc.NumElements,MotionTriangleBuffer->Desc.NumElements,
+          AppendMotionGeometry.GetValueOnRenderThread()!=0,512ull*1024*1024);
     }
+    const bool ReuseGeometry=AtlasPlan.Reuse,AppendGeometry=AtlasPlan.Append;
+    const bool HasGeometry=ReuseGeometry || AppendGeometry;
+    if(AppendGeometry)
+      for(const auto& G:AtlasPlan.Missing)
+      {
+        MotionNodes.Append(G->PackedNodes);MotionTriangles.Append(G->PackedTriangles);
+      }
     // Stopping or reordering an actor changes the active mesh set, not its
     // immutable geometry. Keep the last atlas when it contains this subset.
-    if (Batch->Motion) Batch->Motion->GpuBuffers(View->ViewMatrices.GetPreViewTranslation(),MotionInfo,MotionNodes,MotionTriangles,MotionLookup,!ReuseGeometry,ReuseGeometry?&ExistingOffsets:nullptr);
+    if (Batch->Motion) Batch->Motion->GpuBuffers(View->ViewMatrices.GetPreViewTranslation(),MotionInfo,MotionNodes,MotionTriangles,MotionLookup,!HasGeometry,HasGeometry?&AtlasPlan.CurrentOffsets:nullptr);
     else { MotionInfo.SetNumZeroed(8);MotionNodes.SetNumZeroed(2);MotionTriangles.SetNumZeroed(7);MotionLookup.SetNumZeroed(2); }
     CarlaGpuSensors::ProfileSample(TEXT("motion_gpu_pack_ms"),(FPlatformTime::Seconds()-MotionPackStarted)*1000);
     CarlaGpuSensors::ProfileSample(TEXT("motion_geometry_upload_mb"),ReuseGeometry?0:(MotionNodes.Num()+double(MotionTriangles.Num()))*sizeof(FVector4f)/(1024*1024));
+    CarlaGpuSensors::ProfileSample(TEXT("motion_geometry_append"),AppendGeometry?1:0);
+    CarlaGpuSensors::ProfileSample(TEXT("motion_geometry_copy_mb"),AppendGeometry?
+        (MotionNodeBuffer->Desc.NumElements+double(MotionTriangleBuffer->Desc.NumElements))*sizeof(FVector4f)/(1024*1024):0);
     Params->MotionCount=MeshCount;
     Params->MotionMask=MotionLookup.Num()-1;
     Params->MotionInfo=Graph.CreateSRV(CreateStructuredBuffer(Graph,TEXT("Carla.MotionInfo"),sizeof(FVector4f),MotionInfo.Num(),MotionInfo.GetData(),MotionInfo.Num()*sizeof(FVector4f)));
@@ -336,6 +543,22 @@ void Render(FPostOpaqueRenderParameters& P)
     if(ReuseGeometry) {
       NodesBuffer=Graph.RegisterExternalBuffer(MotionNodeBuffer);
       TrianglesBuffer=Graph.RegisterExternalBuffer(MotionTriangleBuffer);
+    } else if(AppendGeometry) {
+      auto OldNodes=Graph.RegisterExternalBuffer(MotionNodeBuffer);
+      auto OldTriangles=Graph.RegisterExternalBuffer(MotionTriangleBuffer);
+      NodesBuffer=Graph.CreateBuffer(FRDGBufferDesc::CreateStructuredDesc(sizeof(FVector4f),AtlasPlan.NodeElements),TEXT("Carla.MotionNodes"));
+      TrianglesBuffer=Graph.CreateBuffer(FRDGBufferDesc::CreateStructuredDesc(sizeof(FVector4f),AtlasPlan.TriangleElements),TEXT("Carla.MotionTriangles"));
+      const uint64 NodeBytes=uint64(MotionNodeBuffer->Desc.NumElements)*sizeof(FVector4f);
+      const uint64 TriangleBytes=uint64(MotionTriangleBuffer->Desc.NumElements)*sizeof(FVector4f);
+      AddCopyBufferPass(Graph,NodesBuffer,0,OldNodes,0,NodeBytes);
+      AddCopyBufferPass(Graph,TrianglesBuffer,0,OldTriangles,0,TriangleBytes);
+      auto NewNodes=CreateStructuredBuffer(Graph,TEXT("Carla.MotionNodeSuffix"),MoveTemp(MotionNodes));
+      auto NewTriangles=CreateStructuredBuffer(Graph,TEXT("Carla.MotionTriangleSuffix"),MoveTemp(MotionTriangles));
+      AddCopyBufferPass(Graph,NodesBuffer,NodeBytes,NewNodes,0,NewNodes->Desc.GetSize());
+      AddCopyBufferPass(Graph,TrianglesBuffer,TriangleBytes,NewTriangles,0,NewTriangles->Desc.GetSize());
+      MotionNodeBuffer=Graph.ConvertToExternalBuffer(NodesBuffer);
+      MotionTriangleBuffer=Graph.ConvertToExternalBuffer(TrianglesBuffer);
+      MotionGeometryLayout.Append(AtlasPlan.Missing);MotionGeometryOffsets.Append(AtlasPlan.MissingOffsets);
     } else {
       NodesBuffer=CreateStructuredBuffer(Graph,TEXT("Carla.MotionNodes"),MoveTemp(MotionNodes));
       TrianglesBuffer=CreateStructuredBuffer(Graph,TEXT("Carla.MotionTriangles"),MoveTemp(MotionTriangles));
@@ -354,16 +577,35 @@ void Render(FPostOpaqueRenderParameters& P)
     Params->MotionLookup=Graph.CreateSRV(CreateStructuredBuffer(Graph,TEXT("Carla.MotionLookup"),sizeof(FUintVector4),MotionLookup.Num(),MotionLookup.GetData(),MotionLookup.Num()*sizeof(FUintVector4)));
     // Transfer ownership to RDG; its TArray overload retains the upload data
     // until execution and avoids another full copy of the packed ray array.
-    Params->Rays = Graph.CreateSRV(CreateStructuredBuffer(Graph, TEXT("Carla.SensorRays"),MoveTemp(Input)));
+    if (Batch->PackedInputStorage.IsValid())
+    {
+      // NoCopy requires storage through graph execution. The graph holds its
+      // own lease in addition to the batch retained through GPU readback.
+      auto* UploadLease = Graph.AllocObject<FSharedPackedRayInputs>(Batch->PackedInputStorage);
+      Params->Rays = Graph.CreateSRV(CreateStructuredBuffer(Graph, TEXT("Carla.SensorRays"), **UploadLease, ERDGInitialDataFlags::NoCopy));
+    }
+    else
+      Params->Rays = Graph.CreateSRV(CreateStructuredBuffer(Graph, TEXT("Carla.SensorRays"), MoveTemp(LocalInput)));
     Params->CollisionTable = Graph.CreateSRV(CreateStructuredBuffer(Graph, TEXT("Carla.CollisionFilter"),
         sizeof(FUintVector4), Batch->Collision->Table.Num(), Batch->Collision->Table.GetData(),
         Batch->Collision->Table.Num() * sizeof(FUintVector4)));
     Params->OpticalMaterials = Graph.CreateSRV(CreateStructuredBuffer(Graph, TEXT("Carla.OpticalMaterials"),
         sizeof(FVector4f), Batch->Collision->Materials.Num(), Batch->Collision->Materials.GetData(),
         Batch->Collision->Materials.Num()*sizeof(FVector4f)));
-    Params->InfraredInfo=Graph.CreateSRV(CreateStructuredBuffer(Graph,TEXT("Carla.InfraredInfo"),sizeof(FVector4f),Batch->Collision->InfraredInfo.Num(),Batch->Collision->InfraredInfo.GetData(),Batch->Collision->InfraredInfo.Num()*sizeof(FVector4f)));
-    Params->InfraredUVs=Graph.CreateSRV(CreateStructuredBuffer(Graph,TEXT("Carla.InfraredUVs"),sizeof(FVector4f),Batch->Collision->InfraredUVs.Num(),Batch->Collision->InfraredUVs.GetData(),Batch->Collision->InfraredUVs.Num()*sizeof(FVector4f)));
-    Params->InfraredPixels=Graph.CreateSRV(CreateStructuredBuffer(Graph,TEXT("Carla.InfraredPixels"),sizeof(FVector4f),Batch->Collision->InfraredPixels.Num(),Batch->Collision->InfraredPixels.GetData(),Batch->Collision->InfraredPixels.Num()*sizeof(FVector4f)));
+    auto& IR=*Batch->Collision->Infrared;
+    auto UploadInfrared=[&](const TCHAR* Name,const TArray<FVector4f>& Data,TRefCountPtr<FRDGPooledBuffer>& Buffer) {
+      if(Buffer)return Graph.RegisterExternalBuffer(Buffer);
+      // RDG owns a CPU snapshot lease through execution. Published arrays never
+      // mutate; a geometry/profile revision creates a separate CPU/GPU snapshot.
+      Graph.AllocObject<TSharedPtr<FInfraredSnapshot,ESPMode::ThreadSafe>>(Batch->Collision->Infrared);
+      auto NewBuffer=CreateStructuredBuffer(Graph,Name,Data,ERDGInitialDataFlags::NoCopy);
+      Buffer=Graph.ConvertToExternalBuffer(NewBuffer);
+      CarlaGpuSensors::ProfileSample(TEXT("infrared_upload_mb"),Data.Num()*sizeof(FVector4f)/1048576.0);
+      return NewBuffer;
+    };
+    Params->InfraredInfo=Graph.CreateSRV(UploadInfrared(TEXT("Carla.InfraredInfo"),IR.Info,IR.InfoBuffer));
+    Params->InfraredUVs=Graph.CreateSRV(UploadInfrared(TEXT("Carla.InfraredUVs"),IR.UVs,IR.UVBuffer));
+    Params->InfraredPixels=Graph.CreateSRV(UploadInfrared(TEXT("Carla.InfraredPixels"),IR.Pixels,IR.PixelBuffer));
     FRDGBufferRef Output = Graph.CreateBuffer(FRDGBufferDesc::CreateStructuredDesc(
         sizeof(FVector4f), Batch->Rays.Num()*Batch->HitStride), TEXT("Carla.SensorHits"));
     Params->Hits = Graph.CreateUAV(Output);
@@ -422,7 +664,7 @@ using namespace CarlaGpuSensorPrivate;
 void PackRayInputs(TConstArrayView<FCarlaGpuRay> Rays,const FVector& PreViewTranslation,
     bool HasMotion,double MotionTime,TArray<FVector4f>& Input)
 {
-  Input.SetNumUninitialized(Rays.Num()*4);
+  Input.SetNumUninitialized(Rays.Num()*4, EAllowShrinking::No);
   ParallelFor(TEXT("CarlaPackRayInputs"),Rays.Num(),1024,[&](int32 I) {
     const auto& Ray=Rays[I];
     // Translate in double precision before converting to GPU floats, including
@@ -536,7 +778,12 @@ bool FPhysicalHitView::MotionIncompleteAt(int32 Index) const
 
 bool FPhysicalHitView::HasIncompleteMotion() const
 {
-  for(int32 I=0;I<Num();++I)if(MotionIncompleteAt(I))return true;
+  for(int32 I=0;I<Num();++I)if(MotionIncompleteAt(I)) {
+    if(!Output.IsEmpty())
+      UE_LOG(LogCarla,Warning,TEXT("PHYSICAL_MOTION_INCOMPLETE missing_geometry=%d ray_time=%.12f covered_from=%.12f ray_index=%d rays=%d"),
+          int32(MissingGeometry),Rays[I].SceneTime,OldestCoveredTime,I,Num());
+    return true;
+  }
   return false;
 }
 
@@ -578,9 +825,9 @@ void Pump()
       check(Batch->MappedOutput);
       TConstArrayView<FVector4f> Encoded(Batch->MappedOutput,Batch->Rays.Num()*Batch->HitStride);
       // Validate every ray even if the receiver subsequently models packet loss.
-      for(int32 I=0;I<Batch->Rays.Num();++I)
-        if(Encoded[I*Batch->HitStride].X==-2)
-          UE_LOG(LogCarla,Fatal,TEXT("GPU ray exceeded 256 collision-filter retraces; refusing incomplete sensor data"));
+      if(HasCollisionRetraceOverflow(Encoded,Batch->Rays.Num(),Batch->HitStride,
+          ParallelRayValidation.GetValueOnGameThread()!=0))
+        UE_LOG(LogCarla,Fatal,TEXT("GPU ray exceeded 256 collision-filter retraces; refusing incomplete sensor data"));
       FPhysicalHitView Hits(Encoded,Batch->Rays,Batch->HitStride,
           Batch->Motion.IsValid(),Batch->Motion && Batch->Motion->MissingGeometry>0,
           Batch->Motion?Batch->Motion->OldestCoveredTime:0);
@@ -631,9 +878,28 @@ void Pump()
   }
   if (Now - LastPoll < 0.002) return;
   if (ReadbackCount.Load() == 0 && InFlight.IsEmpty()) return;
-  LastPoll = Now;
-  ENQUEUE_RENDER_COMMAND(CarlaPollSensorReadbacks)([](FRHICommandListImmediate& Cmd)
+  const bool Audit=ReadbackPollAudit.GetValueOnGameThread()!=0;
+  if (!ReadbackPollGate.TryQueue(CoalesceReadbackPolls.GetValueOnGameThread()!=0))
   {
+    if (Audit) ++PollCoalesced;
+    return;
+  }
+  if (Audit)
+  {
+    ++PollEnqueued;
+    PollPeakOutstanding=FMath::Max(PollPeakOutstanding,uint64(ReadbackPollGate.NumOutstanding()));
+  }
+  LastPoll = Now;
+  ENQUEUE_RENDER_COMMAND(CarlaPollSensorReadbacks)([Audit,QueuedAt=Now](FRHICommandListImmediate& Cmd)
+  {
+    if (Audit)
+    {
+      ++PollExecuted;
+      if (Readbacks.IsEmpty()) ++PollEmpty;
+      // The render thread is the sole accumulator; atomic publication permits
+      // a game-thread snapshot without a cross-thread lock.
+      PollQueueMicroseconds.Store(PollQueueMicroseconds.Load()+uint64(FMath::Max(0.0,FPlatformTime::Seconds()-QueuedAt)*1000000.0));
+    }
     // A synchronous client can wait for this copy before allowing another
     // frame. Submit queued RHI work without waiting for the RHI thread or GPU,
     // so the fence can complete even when normal end-of-frame submission stops.
@@ -642,6 +908,9 @@ void Pump()
     for (int32 I = 0; I < Readbacks.Num();)
       if (Readbacks[I]()) Readbacks.RemoveAt(I); else ++I;
     ReadbackCount.Store(Readbacks.Num());
+    // Release after polling and publishing the remaining count. The regular
+    // game-thread pump retries pending/new work; no readback or wakeup is lost.
+    ReadbackPollGate.Complete();
   });
 }
 
@@ -677,6 +946,17 @@ static void SubmitImpl(AActor& Owner,
   if (GEngine && GEngine->GameViewport) GEngine->GameViewport->bDisableWorldRendering = false;
   auto Batch = MakeShared<FBatch, ESPMode::ThreadSafe>(MoveTemp(RayStorage));
   Batch->Owner = &Owner;
+  for (auto It = PackedInputFrames.CreateIterator(); It; ++It)
+    if (!It.Key().IsValid()) It.RemoveCurrent();
+  if (ReusePackedRayInputs.GetValueOnGameThread() != 0)
+  {
+    auto& Storage = PackedInputFrames.FindOrAdd(&Owner);
+    const bool bReused = Storage.IsValid() && Storage.IsUnique();
+    Batch->PackedInputStorage = AcquirePackedRayInputs(Storage);
+    ProfileSample(TEXT("ray_input_storage_reused"), bReused ? 1 : 0);
+  }
+  else
+    PackedInputFrames.Remove(&Owner);
   Batch->BuildHitResults=BuildHitResults;
   check(BuildHitResults || !Rays.ContainsByPredicate([](const FCarlaGpuRay& Ray) { return !Ray.PhysicalModel; }));
   Batch->Scene = Owner.GetWorld()->Scene;
@@ -707,6 +987,19 @@ static void SubmitImpl(AActor& Owner,
     TArray<UPrimitiveComponent*> RenderComponents;
     for (const auto& C:Batch->Collision->RenderComponents) if(C.IsValid()) RenderComponents.Add(C.Get());
     Batch->Motion=CarlaLidarMotion::Prepare(Owner.GetWorld(),RenderComponents);
+    ProfileSample(TEXT("motion_meshes_full"),Batch->Motion->Meshes.Num());
+    if(MotionQueryScope.GetValueOnGameThread()!=0) {
+      // Optical length bounds geometric path length only when all possible
+      // refractive indices are >=1. Preserve the full query for authored IORs
+      // below one or invalid material values; never silently clip those paths.
+      bool Bounded=true;
+      for(int32 I=0;I+1<Batch->Collision->Materials.Num();I+=2) {
+        const auto& M=Batch->Collision->Materials[I];const auto& P=Batch->Collision->Materials[I+1];
+        if(!FMath::IsFinite(M.W) || !FMath::IsFinite(P.X) || (M.W>0 && P.X<1)) { Bounded=false;break; }
+      }
+      if(Bounded)Batch->Motion=CarlaLidarMotion::WithinSphere(Batch->Motion,FSphere(QueryCenter,QueryRadius));
+    }
+    ProfileSample(TEXT("motion_meshes_query"),Batch->Motion->Meshes.Num());
   }
   Batch->Complete = MoveTemp(Complete);
   Batch->PhysicalComplete = MoveTemp(PhysicalComplete);
@@ -783,7 +1076,305 @@ void Shutdown()
   // Dropped completed physical batches can enqueue their final unmaps above.
   FlushRenderingCommands();
   InFlight.Empty();
+  PackedInputFrames.Empty();
   CachedCollision.Reset();
+  CachedInfrared.Reset();CachedInfraredSignature.Empty();PackedInfraredRevision=0;
   CachedWorld.Reset();
 }
 }
+
+#if WITH_DEV_AUTOMATION_TESTS
+#include "Misc/AutomationTest.h"
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCarlaCollisionSnapshotTest,"Carla.Sensors.CollisionSnapshotEquivalence",
+    EAutomationTestFlags_ApplicationContextMask | EAutomationTestFlags::EngineFilter)
+bool FCarlaCollisionSnapshotTest::RunTest(const FString&)
+{
+  using namespace CarlaGpuSensorPrivate;
+  UWorld* World=GEngine && GEngine->GameViewport ? GEngine->GameViewport->GetWorld() : nullptr;
+  if (!TestNotNull(TEXT("A live native scene is required"),World)) return false;
+  const auto EqualBytes=[](const auto& A,const auto& B)
+  {
+    return A.Num()==B.Num() && (A.Num()==0 || FMemory::Memcmp(A.GetData(),B.GetData(),A.Num()*sizeof(A[0]))==0);
+  };
+  double ReferenceMs=0, OptimizedMs=0;
+  FSnapshotBuildCounts ReferenceCounts,OptimizedCounts;
+  for (int32 Iteration=0;Iteration<7;++Iteration)
+  {
+    TSharedPtr<FCollisionSnapshot,ESPMode::ThreadSafe> Reference,Optimized;
+    const auto Build=[&](bool Skip)
+    {
+      FSnapshotBuildCounts Counts;
+      const double Started=FPlatformTime::Seconds();
+      auto Result=BuildSnapshot(World,Skip,&Counts);
+      const double Ms=(FPlatformTime::Seconds()-Started)*1000;
+      if (Skip) { Optimized=Result; OptimizedCounts=Counts; if (Iteration) OptimizedMs+=Ms; }
+      else { Reference=Result; ReferenceCounts=Counts; if (Iteration) ReferenceMs+=Ms; }
+    };
+    // Exclude the initial material/IR warmup and alternate comparison order.
+    if (Iteration%2) { Build(true);Build(false); } else { Build(false);Build(true); }
+    TestEqual(TEXT("Every component metadata entry remains present"),Reference->Components.Num(),Optimized->Components.Num());
+    for (const auto& Entry:Reference->Components)
+    {
+      const auto* B=Optimized->Components.Find(Entry.Key);const auto& A=Entry.Value;
+      if (!TestNotNull(TEXT("Matching native primitive identity"),B)) continue;
+      TestTrue(TEXT("Collision association, velocity, actor, materials and optical predicate are unchanged"),
+          A.Component==B->Component && A.Velocity==B->Velocity && A.Actor==B->Actor &&
+          A.MaterialOffset==B->MaterialOffset && A.MaterialCount==B->MaterialCount && A.OpticalOnly==B->OpticalOnly && A.IgnoreOpticalCollision==B->IgnoreOpticalCollision);
+    }
+    TestTrue(TEXT("Complete collision table is byte-identical"),EqualBytes(Reference->Table,Optimized->Table));
+    TestTrue(TEXT("Complete optical materials are byte-identical"),EqualBytes(Reference->Materials,Optimized->Materials));
+    TestTrue(TEXT("Complete IR information is byte-identical"),EqualBytes(Reference->Infrared->Info,Optimized->Infrared->Info));
+    TestTrue(TEXT("Complete IR UVs are byte-identical"),EqualBytes(Reference->Infrared->UVs,Optimized->Infrared->UVs));
+    TestTrue(TEXT("Complete IR pixels are byte-identical"),EqualBytes(Reference->Infrared->Pixels,Optimized->Infrared->Pixels));
+    TestTrue(TEXT("All render component leases remain identical and ordered"),Reference->RenderComponents==Optimized->RenderComponents);
+    TestEqual(TEXT("Only material queries for absent render IDs are skipped"),
+        ReferenceCounts.MaterialQueries-OptimizedCounts.MaterialQueries,ReferenceCounts.Unrendered);
+  }
+  UE_LOG(LogCarla,Display,TEXT("COLLISION_SNAPSHOT_EQUIVALENCE_STATS registered=%d unrendered=%d material_queries_before=%d material_queries_after=%d reference_mean_ms=%.6f optimized_mean_ms=%.6f"),
+      ReferenceCounts.Registered,ReferenceCounts.Unrendered,ReferenceCounts.MaterialQueries,OptimizedCounts.MaterialQueries,
+      ReferenceMs/6,OptimizedMs/6);
+  return true;
+}
+static FAutoConsoleCommand TestCollisionSnapshot(TEXT("carla.Sensors.TestCollisionSnapshot"),
+    TEXT("Compare complete native scene collision/optical/IR snapshots without advancing the world."),
+    FConsoleCommandDelegate::CreateLambda([]()
+    {
+      auto& Framework=FAutomationTestFramework::Get();
+      if (Framework.GetCurrentTest()) { UE_LOG(LogCarla,Warning,TEXT("COLLISION_SNAPSHOT_EQUIVALENCE_TEST busy"));return; }
+      Framework.StartTestByName(TEXT("FCarlaCollisionSnapshotTest"),0,TEXT("Carla.Sensors.CollisionSnapshotEquivalence"));
+      if (!Framework.GetCurrentTest()) { UE_LOG(LogCarla,Warning,TEXT("COLLISION_SNAPSHOT_EQUIVALENCE_TEST result=Fail test_did_not_start"));return; }
+      FAutomationTestExecutionInfo Info;const bool Passed=Framework.StopTest(Info);
+      UE_LOG(LogCarla,Display,TEXT("COLLISION_SNAPSHOT_EQUIVALENCE_TEST result=%s"),Passed?TEXT("Success"):TEXT("Fail"));
+    }));
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCarlaPackedRayInputTest, "Carla.Sensors.PackedRayInputStorage",
+    EAutomationTestFlags_ApplicationContextMask | EAutomationTestFlags::EngineFilter)
+bool FCarlaPackedRayInputTest::RunTest(const FString&)
+{
+  using namespace CarlaGpuSensorPrivate;
+  FSharedPackedRayInputs Storage;
+  auto BatchLease = AcquirePackedRayInputs(Storage);
+  BatchLease->SetNum(16);
+  FMemory::Memset(BatchLease->GetData(), 0xa5, BatchLease->Num() * sizeof(FVector4f));
+  auto UploadLease = BatchLease;
+  const auto* BorrowedAllocation = UploadLease->GetData();
+  BatchLease.Reset();
+  auto Next = AcquirePackedRayInputs(Storage);
+  TestTrue(TEXT("RDG upload lease prevents array reuse"), Next.Get() != UploadLease.Get());
+  Next->SetNum(16);
+  FMemory::Memzero(Next->GetData(), Next->Num() * sizeof(FVector4f));
+  for (int32 I = 0; I < 16 * int32(sizeof(FVector4f)); ++I)
+    if (reinterpret_cast<const uint8*>(BorrowedAllocation)[I] != 0xa5)
+    { AddError(TEXT("A pending upload was overwritten")); break; }
+  auto* NextArray = Next.Get();
+  auto* NextAllocation = Next->GetData();
+  Next.Reset();
+  auto Reused = AcquirePackedRayInputs(Storage);
+  TestTrue(TEXT("Completed array is reused"), Reused.Get() == NextArray);
+  TestTrue(TEXT("Completed array retains its allocation"), Reused->GetData() == NextAllocation);
+  UploadLease.Reset();
+
+  TArray<FCarlaGpuRay> Rays;
+  Rays.SetNum(4097);
+  const FVector Translation(-1000000000.0, 2000000000.0, -3000000000.0);
+  for (int32 I = 0; I < Rays.Num(); ++I)
+  {
+    auto& Ray = Rays[I];
+    Ray.Origin = -Translation + FVector(.125 * I, .03125 * I, -.0625 * I);
+    Ray.Direction = FVector(.125, -.25, .5);
+    Ray.Range = 15000.f - I * .01f;
+    Ray.MaterialModel = I % 2; Ray.PhysicalModel = I % 3; Ray.TargetMotion = I % 5;
+    Ray.AtmosphericAttenuation = .004f; Ray.TimeFraction = I / 4096.f;
+    Ray.WavelengthNm = 905.f + I % 7; Ray.Wetness = (I % 4) * .125f;
+    Ray.SceneTime = I % 2 ? 12345678.125 + I * .000001 : -1;
+  }
+  Reused->SetNumUninitialized(Rays.Num() * 4);
+  const auto* MaximumAllocation = Reused->GetData();
+  for (bool HasMotion : {false, true})
+    for (int32 Count : {4097, 3, 0, 4097})
+    {
+      Reused->SetNumUninitialized(Rays.Num() * 4, EAllowShrinking::No);
+      FMemory::Memset(Reused->GetData(), 0xa5, Reused->Num() * sizeof(FVector4f));
+      CarlaGpuSensors::PackRayInputs(MakeArrayView(Rays.GetData(), Count), Translation, HasMotion, 12345678.0, *Reused);
+      TestEqual(TEXT("Shrinking and empty batches retain exact counts"), Reused->Num(), Count * 4);
+      TestTrue(TEXT("Shrinking and regrowing retain capacity"), Reused->GetData() == MaximumAllocation);
+      TArray<FVector4f> Reference;
+      for (int32 I = 0; I < Count; ++I)
+      {
+        const auto& Ray = Rays[I];
+        Reference.Add(FVector4f(FVector3f(Ray.Origin + Translation), Ray.Range));
+        Reference.Add(FVector4f(FVector3f(Ray.Direction), Ray.MaterialModel ? Ray.AtmosphericAttenuation + 1.f : 0.f));
+        Reference.Add(FVector4f(Ray.PhysicalModel ? 1.f : 0.f, Ray.TimeFraction, Ray.TargetMotion ? 1.f : 0.f, 0));
+        Reference.Add(FVector4f(Ray.WavelengthNm, Ray.Wetness, Ray.SceneTime >= 0 && HasMotion ? float(Ray.SceneTime - 12345678.0) : FLT_MAX, 0));
+      }
+      TestTrue(TEXT("Poisoned reused storage matches serial encoding bit for bit"),
+          Count == 0 || FMemory::Memcmp(Reused->GetData(), Reference.GetData(), Reference.Num() * sizeof(FVector4f)) == 0);
+    }
+  return true;
+}
+static FAutoConsoleCommand TestPackedRayInputStorage(
+    TEXT("carla.Sensors.TestPackedRayInputs"), TEXT("Run CPU packed ray ownership and encoding tests."),
+    FConsoleCommandDelegate::CreateLambda([]()
+    {
+      auto& Framework = FAutomationTestFramework::Get();
+      if (Framework.GetCurrentTest()) { UE_LOG(LogCarla, Warning, TEXT("PACKED_RAY_INPUT_TEST busy")); return; }
+      Framework.StartTestByName(TEXT("FCarlaPackedRayInputTest"), 0, TEXT("Carla.Sensors.PackedRayInputStorage"));
+      if (!Framework.GetCurrentTest()) { UE_LOG(LogCarla, Warning, TEXT("PACKED_RAY_INPUT_TEST result=Fail test_did_not_start")); return; }
+      FAutomationTestExecutionInfo Info;
+      const bool Passed = Framework.StopTest(Info);
+      UE_LOG(LogCarla, Display, TEXT("PACKED_RAY_INPUT_TEST result=%s"), Passed ? TEXT("Success") : TEXT("Fail"));
+    }));
+#endif
+
+#if WITH_DEV_AUTOMATION_TESTS
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCarlaRayValidationTest,"Carla.Sensors.PhysicalRayValidation",
+    EAutomationTestFlags_ApplicationContextMask | EAutomationTestFlags::EngineFilter)
+bool FCarlaRayValidationTest::RunTest(const FString&)
+{
+  using namespace CarlaGpuSensorPrivate;
+  for (int32 Stride : {2,10,16})
+    for (int32 Count : {0,1,4096,4097,65536,560001})
+    {
+      TArray<FVector4f> Data;Data.SetNumUninitialized(Count*Stride+1);
+      for (auto& V : Data) V=FVector4f(-2,3,4,5);
+      for (int32 I=0;I<Count;++I) Data[I*Stride].X=I%2?-1.f:12.5f;
+      const TArray<FVector4f> Before=Data;
+      for (bool Parallel : {false,true})
+      {
+        TestFalse(TEXT("Misses and padding overflow markers are valid"),
+            HasCollisionRetraceOverflow(Data,Count,Stride,Parallel));
+        TestTrue(TEXT("Validation leaves all readback bytes unchanged"),
+            FMemory::Memcmp(Data.GetData(),Before.GetData(),Data.Num()*sizeof(FVector4f))==0);
+        if (Count)
+          for (int32 Index : {0,Count/2,Count-1})
+          {
+            const float Saved=Data[Index*Stride].X;
+            Data[Index*Stride].X=-2;
+            TestTrue(TEXT("First, middle and last overflowing rays are rejected"),
+                HasCollisionRetraceOverflow(Data,Count,Stride,Parallel));
+            Data[Index*Stride].X=Saved;
+          }
+      }
+    }
+  return true;
+}
+static FAutoConsoleCommand TestRayValidation(TEXT("carla.Sensors.TestRayValidation"),
+    TEXT("Test bounded physical-ray validation, overflow detection and readback immutability."),
+    FConsoleCommandDelegate::CreateLambda([]()
+    {
+      auto& Framework=FAutomationTestFramework::Get();
+      if(Framework.GetCurrentTest()){UE_LOG(LogCarla,Warning,TEXT("RAY_VALIDATION_TEST busy"));return;}
+      Framework.StartTestByName(TEXT("FCarlaRayValidationTest"),0,TEXT("Carla.Sensors.PhysicalRayValidation"));
+      if(!Framework.GetCurrentTest()){UE_LOG(LogCarla,Warning,TEXT("RAY_VALIDATION_TEST result=Fail test_did_not_start"));return;}
+      FAutomationTestExecutionInfo Info;const bool Passed=Framework.StopTest(Info);
+      UE_LOG(LogCarla,Display,TEXT("RAY_VALIDATION_TEST result=%s"),Passed?TEXT("Success"):TEXT("Fail"));
+    }));
+#endif
+
+#if WITH_DEV_AUTOMATION_TESTS
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FCarlaMotionAtlasTest,"Carla.Sensors.MotionAtlasAppend",
+    EAutomationTestFlags_ApplicationContextMask | EAutomationTestFlags::EngineFilter)
+bool FCarlaMotionAtlasTest::RunTest(const FString&)
+{
+  using namespace CarlaGpuSensorPrivate;
+  auto Geometry=[](int32 Nodes,int32 Triangles,float Tag)->FMotionGeometry
+  {
+    auto G=MakeShared<CarlaLidarMotion::MeshGeometry,ESPMode::ThreadSafe>();
+    G->Nodes.SetNum(Nodes);G->Triangles.SetNum(Triangles);
+    for(int32 I=0;I<Nodes*2;++I)G->PackedNodes.Add(FVector4f(Tag,I,31,47));
+    for(int32 I=0;I<Triangles*7;++I)G->PackedTriangles.Add(FVector4f(Tag,I,59,61));
+    return G;
+  };
+  const auto A=Geometry(2,3,101),B=Geometry(4,2,202),C=Geometry(3,5,303);
+  const TArray<FMotionGeometry> Layout={A,B};const TArray<FIntPoint> Offsets={FIntPoint(0,0),FIntPoint(2,3)};
+  constexpr uint64 Limit=512ull*1024*1024;
+  auto Plan=[&](const TArray<FMotionGeometry>& Current,bool Allow=true,uint64 Budget=Limit)
+  {return PlanMotionAtlas(Layout,Offsets,Current,12,35,Allow,Budget);};
+  for(const TArray<FMotionGeometry>& Current:{TArray<FMotionGeometry>{A,B},TArray<FMotionGeometry>{B,A,B},TArray<FMotionGeometry>{B},TArray<FMotionGeometry>{}})
+  {
+    const auto P=Plan(Current,false);
+    TestTrue(TEXT("Unchanged, reordered, repeated, stopped and empty sets reuse"),P.Reuse && !P.Append && P.Missing.IsEmpty());
+    for(int32 I=0;I<Current.Num();++I)TestEqual(TEXT("Cached offset unchanged"),P.CurrentOffsets[I],Offsets[Layout.IndexOfByKey(Current[I])]);
+  }
+  auto P=Plan({C,B,C,A});
+  TestTrue(TEXT("Only one missing immutable identity is appended"),P.Append && !P.Reuse && P.Missing.Num()==1 && P.Missing[0]==C);
+  TestEqual(TEXT("New offset follows existing prefix"),P.CurrentOffsets[0],FIntPoint(6,5));
+  TestEqual(TEXT("Duplicate uses same appended offset"),P.CurrentOffsets[2],P.CurrentOffsets[0]);
+  const uint64 Bytes=uint64(P.NodeElements+P.TriangleElements)*sizeof(FVector4f);
+  TestTrue(TEXT("Exact byte budget permits append"),Plan({C},true,Bytes).Append);
+  TestFalse(TEXT("One byte over budget compacts instead"),Plan({C},true,Bytes-1).Append);
+  TestFalse(TEXT("Disabled append takes full upload on a new identity"),Plan({C},false).Append);
+  TestFalse(TEXT("Cold atlas uses full upload"),PlanMotionAtlas({}, {}, {A},0,0,true,Limit).Append);
+  TestFalse(TEXT("Mismatched buffer descriptor uses full upload"),PlanMotionAtlas(Layout,Offsets,{C},13,35,true,Limit).Append);
+  auto WrongOffsets=Offsets;WrongOffsets[1].X++;
+  TestFalse(TEXT("Non-dense offsets use full upload"),PlanMotionAtlas(Layout,WrongOffsets,{C},12,35,true,Limit).Append);
+  TestFalse(TEXT("Invalid current geometry uses full upload"),Plan({FMotionGeometry()}).Append);
+  const auto SameBytes=Geometry(2,3,101);
+  TestTrue(TEXT("New/deforming identities never alias an old offset by content"),Plan({SameBytes}).Append);
+  TestEqual(TEXT("Original layout unchanged by planning"),Layout.Num(),2);
+  TestEqual(TEXT("Original geometry remains unchanged"),A->PackedNodes[0],FVector4f(101,0,31,47));
+
+  // Emulate the two GPU copies on CPU, then compare every referenced geometry
+  // byte and every per-frame transform/time/lookup field to the full uploader.
+  TArray<FMotionGeometry> Atlas=Layout;TArray<FIntPoint> AtlasOffsets=Offsets;
+  TArray<FVector4f> Nodes=A->PackedNodes,Triangles=A->PackedTriangles;
+  Nodes.Append(B->PackedNodes);Triangles.Append(B->PackedTriangles);
+  for(int32 Generation=0;Generation<40;++Generation)
+  {
+    const auto New=Geometry(1+Generation%5,1+Generation%7,float(Generation+400));
+    const TArray<FMotionGeometry> Current={New,Atlas.Last(),A,New};
+    const auto Next=PlanMotionAtlas(Atlas,AtlasOffsets,Current,Nodes.Num(),Triangles.Num(),true,Limit);
+    TestTrue(TEXT("Mixed new/current/history set extends atlas"),Next.Append);
+    for(const auto& G:Next.Missing){Nodes.Append(G->PackedNodes);Triangles.Append(G->PackedTriangles);}
+    Atlas.Append(Next.Missing);AtlasOffsets.Append(Next.MissingOffsets);
+    TestEqual(TEXT("Node descriptor covers all bytes"),uint32(Nodes.Num()),Next.NodeElements);
+    TestEqual(TEXT("Triangle descriptor covers all bytes"),uint32(Triangles.Num()),Next.TriangleElements);
+    CarlaLidarMotion::Snapshot Snapshot;Snapshot.Time=17.75;
+    for(int32 I=0;I<Current.Num();++I)
+    {
+      CarlaLidarMotion::Mesh Mesh;Mesh.Geometry=Current[I];Mesh.Primitive=23+I;
+      Mesh.Before=FTransform(FRotator(7,I*13,3),FVector(100+I,-300,17),FVector(1.2,.7,1.5));
+      Mesh.After=FTransform(FRotator(-5,I*19,11),FVector(900+I,400,29),FVector(.8,1.4,.9));
+      Mesh.BeforeTime=17.5;Mesh.AfterTime=17.9;Mesh.Center=FVector(501,52,26);Mesh.Radius=771;
+      Snapshot.Meshes.Add(Mesh);
+      const auto O=Next.CurrentOffsets[I];
+      TestTrue(TEXT("Every appended node byte matches its original geometry"),
+          FMemory::Memcmp(Nodes.GetData()+O.X*2,Current[I]->PackedNodes.GetData(),Current[I]->PackedNodes.Num()*sizeof(FVector4f))==0);
+      TestTrue(TEXT("Every appended triangle byte matches its original geometry"),
+          FMemory::Memcmp(Triangles.GetData()+O.Y*7,Current[I]->PackedTriangles.GetData(),Current[I]->PackedTriangles.Num()*sizeof(FVector4f))==0);
+    }
+    TArray<FVector4f> FullInfo,FullNodes,FullTriangles,AtlasInfo,NoNodes,NoTriangles;
+    TArray<FUintVector4> FullLookup,AtlasLookup;
+    Snapshot.GpuBuffers(FVector(100000,-250000,350000),FullInfo,FullNodes,FullTriangles,FullLookup);
+    Snapshot.GpuBuffers(FVector(100000,-250000,350000),AtlasInfo,NoNodes,NoTriangles,AtlasLookup,false,&Next.CurrentOffsets);
+    for(int32 I=0;I<Current.Num();++I)
+    {
+      const uint32 NodeBase=Next.CurrentOffsets[I].X,TriangleBase=Next.CurrentOffsets[I].Y;
+      FMemory::Memcpy(&FullInfo[I*8].W,&NodeBase,sizeof(NodeBase));
+      FMemory::Memcpy(&FullInfo[I*8+4].W,&TriangleBase,sizeof(TriangleBase));
+    }
+    TestTrue(TEXT("Transforms, times, counts and metadata match full uploader bit for bit"),
+        FullInfo.Num()==AtlasInfo.Num() && FMemory::Memcmp(FullInfo.GetData(),AtlasInfo.GetData(),FullInfo.Num()*sizeof(FVector4f))==0);
+    TestTrue(TEXT("Primitive lookup matches full uploader bit for bit"),
+        FullLookup.Num()==AtlasLookup.Num() && FMemory::Memcmp(FullLookup.GetData(),AtlasLookup.GetData(),FullLookup.Num()*sizeof(FUintVector4))==0);
+    TestTrue(TEXT("Existing atlas is reused after publication"),
+        PlanMotionAtlas(Atlas,AtlasOffsets,Current,Nodes.Num(),Triangles.Num(),true,Limit).Reuse);
+  }
+  return true;
+}
+static FAutoConsoleCommand TestMotionAtlas(TEXT("carla.Sensors.TestMotionAtlas"),
+    TEXT("Test incremental geometry identity, offsets, byte bounds and complete per-frame encoding."),
+    FConsoleCommandDelegate::CreateLambda([]()
+    {
+      auto& Framework=FAutomationTestFramework::Get();
+      if(Framework.GetCurrentTest()){UE_LOG(LogCarla,Warning,TEXT("MOTION_ATLAS_TEST busy"));return;}
+      Framework.StartTestByName(TEXT("FCarlaMotionAtlasTest"),0,TEXT("Carla.Sensors.MotionAtlasAppend"));
+      if(!Framework.GetCurrentTest()){UE_LOG(LogCarla,Warning,TEXT("MOTION_ATLAS_TEST result=Fail test_did_not_start"));return;}
+      FAutomationTestExecutionInfo Info;const bool Passed=Framework.StopTest(Info);
+      UE_LOG(LogCarla,Display,TEXT("MOTION_ATLAS_TEST result=%s"),Passed?TEXT("Success"):TEXT("Fail"));
+    }));
+#endif
+
+#if WITH_DEV_AUTOMATION_TESTS
+#include "Tests/InfraredSnapshotReuse.inl"
+#include "Tests/ReadbackPollGate.inl"
+#endif

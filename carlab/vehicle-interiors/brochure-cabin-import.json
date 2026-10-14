@@ -1,0 +1,20 @@
+{
+  "result": "IMPORTED_FOR_VISUAL_REVIEW",
+  "mesh": "/Game/VehicleInteriors/Lincoln/SM_MKZ_Cabin_Brochure.SM_MKZ_Cabin_Brochure",
+  "material": "/Game/VehicleInteriors/Lincoln/MI_MKZ_Brochure_Interior.MI_MKZ_Brochure_Interior",
+  "materials": [
+    "<Object '/Game/VehicleInteriors/Lincoln/MI_MKZ_Brochure_Interior.MI_MKZ_Brochure_Interior' (0x972de044000) Class 'MaterialInstanceConstant'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather' (0x973a03d6200) Class 'Material'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Brochure_Chrome.MKZ_Brochure_Chrome' (0x973a03d0e00) Class 'Material'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Vent_Recess.MKZ_Vent_Recess' (0x973a03d9a00) Class 'Material'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Vent_Louver.MKZ_Vent_Louver' (0x97319507000) Class 'Material'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Fine_Satin.MKZ_Fine_Satin' (0x972e3960e00) Class 'Material'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Stitch_Charcoal.MKZ_Stitch_Charcoal' (0x973a03d2a00) Class 'Material'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Seam_Shadow.MKZ_Seam_Shadow' (0x972d24bd200) Class 'Material'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/M_Interior_Mat.M_Interior_Mat' (0x973a03de000) Class 'Material'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/M_Interior_Edge.M_Interior_Edge' (0x973a03db600) Class 'Material'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Perforated_Leather.MKZ_Perforated_Leather' (0x973a03d7000) Class 'Material'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.MKZ_Seat_Base_Plastic' (0x973a03d8c00) Class 'Material'>",
+    "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Seat_Hardware.MKZ_Seat_Hardware' (0x973a03d4600) Class 'Material'>"
+  ]
+}

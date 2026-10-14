@@ -1,0 +1,80 @@
+{
+  "MKZ_Ebony_Leather": {
+    "class": "<class 'Material'>",
+    "<MaterialProperty.MP_BASE_COLOR: 5>": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather:MaterialExpressionConstant3Vector_0' (0xb78a4f22ae0) Class 'MaterialExpressionConstant3Vector'>",
+    "<MaterialProperty.MP_BASE_COLOR: 5>_value": "<Struct 'LinearColor' (0xb78a4f22ba0) {r: 0.018000, g: 0.021000, b: 0.024000, a: 1.000000}>",
+    "<MaterialProperty.MP_ROUGHNESS: 8>": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather:MaterialExpressionConstant_0' (0xb78a4f223e0) Class 'MaterialExpressionConstant'>",
+    "<MaterialProperty.MP_ROUGHNESS: 8>_value": 0.4000000059604645,
+    "<MaterialProperty.MP_METALLIC: 6>": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather:MaterialExpressionConstant_1' (0xb78a4f22920) Class 'MaterialExpressionConstant'>",
+    "<MaterialProperty.MP_METALLIC: 6>_value": 0.0,
+    "<MaterialProperty.MP_SPECULAR: 7>": "None",
+    "<MaterialProperty.MP_NORMAL: 10>": "None"
+  },
+  "MKZ_Perforated_Leather": {
+    "class": "<class 'Material'>",
+    "<MaterialProperty.MP_BASE_COLOR: 5>": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Perforated_Leather.MKZ_Perforated_Leather:MaterialExpressionConstant3Vector_0' (0xb78a4f22f40) Class 'MaterialExpressionConstant3Vector'>",
+    "<MaterialProperty.MP_BASE_COLOR: 5>_value": "<Struct 'LinearColor' (0xb78a4f23000) {r: 0.016000, g: 0.019000, b: 0.022000, a: 1.000000}>",
+    "<MaterialProperty.MP_ROUGHNESS: 8>": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Perforated_Leather.MKZ_Perforated_Leather:MaterialExpressionConstant_0' (0xb78a4f22e60) Class 'MaterialExpressionConstant'>",
+    "<MaterialProperty.MP_ROUGHNESS: 8>_value": 0.47999998927116394,
+    "<MaterialProperty.MP_METALLIC: 6>": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Perforated_Leather.MKZ_Perforated_Leather:MaterialExpressionConstant_1' (0xb78a4f22220) Class 'MaterialExpressionConstant'>",
+    "<MaterialProperty.MP_METALLIC: 6>_value": 0.0,
+    "<MaterialProperty.MP_SPECULAR: 7>": "None",
+    "<MaterialProperty.MP_NORMAL: 10>": "None"
+  },
+  "MI_MKZ_Final_Interior": {
+    "class": "<class 'MaterialInstanceConstant'>",
+    "scalars": {
+      "Scale X": 1.0,
+      "Scale Y": 1.0,
+      "Offset X": 0.0,
+      "Offset Y": 0.0,
+      "Rotation": 0.0,
+      "AxisSelection": 0.0,
+      "Dirt Opacity 1": 100.0,
+      "Dirt Opacity 2": 100.0,
+      "Dirt Opacity 3": 100.0,
+      "Dirt Roughness 1": 1.0,
+      "Dirt Roughness 2": 1.0,
+      "Dirt Roughness 3": 1.0,
+      "Metallic Value": 0.0,
+      "Roughness Value": 1.0,
+      "Tiling": 1.0,
+      "Saturation": 1.0,
+      "Brightness": 1.0,
+      "Contrast": 1.0,
+      "Roughness Contrast": 0.0,
+      "Roughness Correction": 0.0,
+      "AO Intensity": 0.0,
+      "MetalCorrection": 1.0,
+      "SpecularCorrection": 1.0,
+      "Normal Intensity": 0.09000000357627869,
+      "Tint Intensity": 0.0,
+      "Hue": 0.0,
+      "Displacement Intensity": 1.0,
+      "Displacement MidValue": 0.5,
+      "OpacityIntensity": 0.0,
+      "Specular Value": 0.5
+    },
+    "vectors": {
+      "Dirt Color 1": "<Struct 'LinearColor' (0x7f85945b9be0) {r: 0.090277, g: 0.019315, b: 0.005956, a: 1.000000}>",
+      "Dirt Color 2": "<Struct 'LinearColor' (0x7f85945b9c20) {r: 0.041667, g: 0.010660, b: 0.000000, a: 1.000000}>",
+      "Dirt Color 3": "<Struct 'LinearColor' (0x7f85945b9c60) {r: 0.041667, g: 0.010660, b: 0.000000, a: 1.000000}>",
+      "Rim Color 1": "<Struct 'LinearColor' (0x7f85945b9ca0) {r: 0.000000, g: 0.000000, b: 0.000000, a: 1.000000}>",
+      "Rim Color 2": "<Struct 'LinearColor' (0x7f85945b9ce0) {r: 0.000000, g: 0.000000, b: 0.000000, a: 1.000000}>",
+      "Rim Color 3": "<Struct 'LinearColor' (0x7f85945b9d20) {r: 0.000000, g: 0.000000, b: 0.000000, a: 1.000000}>",
+      "Base Color Value": "<Struct 'LinearColor' (0x7f85945b9d20) {r: 0.000000, g: 0.000000, b: 0.000000, a: 1.000000}>",
+      "Tint Color": "<Struct 'LinearColor' (0x7f85945b9d60) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>"
+    }
+  },
+  "MKZ_Stitch_Charcoal": {
+    "class": "<class 'Material'>",
+    "<MaterialProperty.MP_BASE_COLOR: 5>": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Stitch_Charcoal.MKZ_Stitch_Charcoal:MaterialExpressionConstant3Vector_0' (0xb78a4f248a0) Class 'MaterialExpressionConstant3Vector'>",
+    "<MaterialProperty.MP_BASE_COLOR: 5>_value": "<Struct 'LinearColor' (0xb78a4f24960) {r: 0.090000, g: 0.092000, b: 0.094000, a: 1.000000}>",
+    "<MaterialProperty.MP_ROUGHNESS: 8>": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Stitch_Charcoal.MKZ_Stitch_Charcoal:MaterialExpressionConstant_0' (0xb78a4f24de0) Class 'MaterialExpressionConstant'>",
+    "<MaterialProperty.MP_ROUGHNESS: 8>_value": 0.7599999904632568,
+    "<MaterialProperty.MP_METALLIC: 6>": "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Stitch_Charcoal.MKZ_Stitch_Charcoal:MaterialExpressionConstant_1' (0xb78a4f24980) Class 'MaterialExpressionConstant'>",
+    "<MaterialProperty.MP_METALLIC: 6>_value": 0.0,
+    "<MaterialProperty.MP_SPECULAR: 7>": "None",
+    "<MaterialProperty.MP_NORMAL: 10>": "None"
+  }
+}

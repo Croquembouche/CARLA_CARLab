@@ -1,0 +1,168 @@
+{
+  "result": "ACCEPTED_BUILD_INSTALLED_AND_RUNTIME_VERIFIED",
+  "blueprint": "/Game/VehicleInteriors/Lincoln/BP_LincolnMKZ_Interior.BP_LincolnMKZ_Interior",
+  "vehicle_id": "vehicle.lincoln.mkz_interior",
+  "components": {
+    "CabinReplacement": {
+      "mesh": "/Game/VehicleInteriors/Lincoln/SM_MKZ_Cabin_Brochure.SM_MKZ_Cabin_Brochure",
+      "materials": [
+        "/Game/VehicleInteriors/Lincoln/MI_MKZ_Brochure_Interior.MI_MKZ_Brochure_Interior",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Brochure_Chrome.MKZ_Brochure_Chrome",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Vent_Recess.MKZ_Vent_Recess",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Vent_Louver.MKZ_Vent_Louver",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Fine_Satin.MKZ_Fine_Satin",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Stitch_Charcoal.MKZ_Stitch_Charcoal",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Seam_Shadow.MKZ_Seam_Shadow",
+        "/Game/VehicleInteriors/Lincoln/M_Interior_Mat.M_Interior_Mat",
+        "/Game/VehicleInteriors/Lincoln/M_Interior_Edge.M_Interior_Edge",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Perforated_Leather.MKZ_Perforated_Leather",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.MKZ_Seat_Base_Plastic",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Hardware.MKZ_Seat_Hardware"
+      ]
+    },
+    "InteriorCompletion": {
+      "mesh": "/Game/VehicleInteriors/Lincoln/SM_MKZ_Completion_Details.SM_MKZ_Completion_Details",
+      "materials": [
+        "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.MKZ_Seat_Base_Plastic",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Belt_Release.MKZ_Belt_Release",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Completion_Rubber.MKZ_Completion_Rubber",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Hardware.MKZ_Seat_Hardware",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Seatbelt_Webbing.MKZ_Seatbelt_Webbing",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Completion_Headliner.MKZ_Completion_Headliner",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Completion_Lens.MKZ_Completion_Lens"
+      ]
+    },
+    "MoonroofGlass": {
+      "mesh": "/Game/VehicleInteriors/Lincoln/SM_MKZ_Moonroof_Glass.SM_MKZ_Moonroof_Glass",
+      "collision_enabled": "QueryAndPhysics",
+      "collision_profile": "BlockAll",
+      "collision_geometry": "ComplexAsSimple",
+      "materials": [
+        "/Game/VehicleInteriors/Lincoln/MI_MKZ_Moonroof_Tint.MI_MKZ_Moonroof_Tint"
+      ]
+    },
+    "MoonroofFrame": {
+      "mesh": "/Game/VehicleInteriors/Lincoln/SM_MKZ_Moonroof_Frame.SM_MKZ_Moonroof_Frame",
+      "materials": [
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Completion_Headliner.MKZ_Completion_Headliner"
+      ]
+    },
+    "DriverWornBelt": {
+      "mesh": "/Game/VehicleInteriors/Lincoln/SM_MKZ_Driver_Worn_Belt.SM_MKZ_Driver_Worn_Belt",
+      "materials": [
+        "/Game/VehicleInteriors/Lincoln/MKZ_Seatbelt_Webbing.MKZ_Seatbelt_Webbing"
+      ]
+    },
+    "CabinDetails": {
+      "mesh": "/Game/VehicleInteriors/Lincoln/SM_LincolnCabinDetails.SM_LincolnCabinDetails",
+      "materials": [
+        "/Game/VehicleInteriors/Lincoln/M_Interior_Mat.M_Interior_Mat",
+        "/Game/VehicleInteriors/Lincoln/M_Interior_Edge.M_Interior_Edge"
+      ]
+    },
+    "SM_Glass_DoorR_Lincoln_Rear_Ext1": {
+      "mesh": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_RR_Glass_Ext1.SM_LincolnMKZ_Door_RR_Glass_Ext1",
+      "materials": [
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext"
+      ]
+    },
+    "SM_Glass_DoorL_Lincoln_Rear_Ext1": {
+      "mesh": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_RL_Glass_Ext1.SM_LincolnMKZ_Door_RL_Glass_Ext1",
+      "materials": [
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext"
+      ]
+    },
+    "SM_LincolnDoor_Back_R": {
+      "mesh": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Doors/SM_LincolnMKZ_Door_RR.SM_LincolnMKZ_Door_RR",
+      "materials": [
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior2.MI_LincolnMKZ_Interior2",
+        "/Game/VehicleInteriors/Lincoln/MI_MKZ_Brochure_Interior.MI_MKZ_Brochure_Interior"
+      ]
+    },
+    "SM_LincolnDoor_Front_L": {
+      "mesh": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Doors/SM_LincolnMKZ_Door_FL.SM_LincolnMKZ_Door_FL",
+      "materials": [
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior2.MI_LincolnMKZ_Interior2",
+        "/Game/VehicleInteriors/Lincoln/MI_MKZ_Brochure_Interior.MI_MKZ_Brochure_Interior"
+      ]
+    },
+    "BrochureDoorDetails_FL": {
+      "mesh": "/Game/VehicleInteriors/Lincoln/SM_MKZ_Door_Details_FL.SM_MKZ_Door_Details_FL",
+      "materials": [
+        "/Game/VehicleInteriors/Lincoln/MKZ_Fine_Satin.MKZ_Fine_Satin",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Speaker_Metal.MKZ_Speaker_Metal",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.MKZ_Seat_Base_Plastic",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Vent_Recess.MKZ_Vent_Recess",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather"
+      ]
+    },
+    "SM_LincolnDoor_Back_L": {
+      "mesh": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Doors/SM_LincolnMKZ_Door_RL.SM_LincolnMKZ_Door_RL",
+      "materials": [
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior2.MI_LincolnMKZ_Interior2",
+        "/Game/VehicleInteriors/Lincoln/MI_MKZ_Brochure_Interior.MI_MKZ_Brochure_Interior"
+      ]
+    },
+    "SM_Glass_DoorL_Lincoln_Ext1": {
+      "mesh": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_FL_Glass_Ext1.SM_LincolnMKZ_Door_FL_Glass_Ext1",
+      "materials": [
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext"
+      ]
+    },
+    "SM_Lincolnv1_lights": {
+      "mesh": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Emissive/SM_LincolnMKZ_Emissive.SM_LincolnMKZ_Emissive",
+      "materials": [
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Emissive.MI_LincolnMKZ_Emissive"
+      ]
+    },
+    "CustomCollision": {
+      "mesh": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/SM_sc_LincolnMKZ.SM_sc_LincolnMKZ",
+      "materials": [
+        "/Engine/EngineMaterials/WorldGridMaterial.WorldGridMaterial"
+      ]
+    },
+    "SM_LincolnDoor_Front_R": {
+      "mesh": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Doors/SM_LincolnMKZ_Door_FR.SM_LincolnMKZ_Door_FR",
+      "materials": [
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Bodywork.MI_LincolnMKZ_Bodywork",
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior2.MI_LincolnMKZ_Interior2",
+        "/Game/VehicleInteriors/Lincoln/MI_MKZ_Brochure_Interior.MI_MKZ_Brochure_Interior"
+      ]
+    },
+    "SM_Glass_DoorR_Lincoln_Ext1": {
+      "mesh": "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Meshes/Glass/SM_LincolnMKZ_Door_FR_Glass_Ext1.SM_LincolnMKZ_Door_FR_Glass_Ext1",
+      "materials": [
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext"
+      ]
+    },
+    "BrochureDoorDetails_FR": {
+      "mesh": "/Game/VehicleInteriors/Lincoln/SM_MKZ_Door_Details_FR.SM_MKZ_Door_Details_FR",
+      "materials": [
+        "/Game/VehicleInteriors/Lincoln/MKZ_Fine_Satin.MKZ_Fine_Satin",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Speaker_Metal.MKZ_Speaker_Metal",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.MKZ_Seat_Base_Plastic",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Vent_Recess.MKZ_Vent_Recess",
+        "/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather"
+      ]
+    },
+    "SM_Glass_Lincoln_Ext1": {
+      "mesh": "/Game/VehicleInteriors/Lincoln/SM_MKZ_Glass_Without_Moonroof.SM_MKZ_Glass_Without_Moonroof",
+      "materials": [
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext",
+        "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Emissive_Glass_Ext.MI_LincolnMKZ_Emissive_Glass_Ext"
+      ]
+    }
+  },
+  "user_accepted_revision": "brochure material refinement v3",
+  "fresh_runtime_verification": {
+    "report": "/mnt/simulations/vehicle-interiors/runtime-report.json",
+    "camera_count": 7,
+    "wheels": 4,
+    "engine_exit_code": 0
+  }
+}

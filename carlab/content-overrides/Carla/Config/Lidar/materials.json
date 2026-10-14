@@ -1,24 +1,25 @@
 {
   "version": 1,
   "calibration": {
-    "status": "uncalibrated",
-    "description": "Synthetic acceptance fixture only; add measured scene-specific profiles with provenance before sensor validation."
+    "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATES; NOT MEASURED FACADE COEFFICIENTS",
+    "limits": "Separate clean/aged/repaired material regions resolve independently; no measured staining NIR/BRDF or vertical rain coverage, no wavelength extrapolation. New646painted cladding/trim profiles are independent uncalibrated estimates. Structural dimensions do not establish NIR reflectance.",
+    "live905": "Candidate and facade profiles retained; synthetic original-control profiles removed. Authored uncalibrated coefficients."
   },
   "materials": [
     {
-      "name": "physical-test-checker",
+      "name": "/Game/TownRealism/Town02/Materials/MI_T02_Asphalt.MI_T02_Asphalt",
       "wavelengths_nm": [
-        905,
-        1550
+        904,
+        906
       ],
       "dry_low": [
-        0.8,
+        0.12984626,
         0,
         0,
         0
       ],
       "dry_high": [
-        0.2,
+        0.12984626,
         0,
         0,
         0
@@ -29,27 +30,5593 @@
         1,
         1
       ],
-      "mask": {
-        "width": 2,
-        "height": 2,
-        "rgba": [
-          0.25,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0.25,
-          1,
+      "provenance": {
+        "reference_url": "https://landsat.usgs.gov/landsat/spectral_viewer/c3-master/htdocs/data/spectra/ArtificialMaterialsAsphalt.json",
+        "reference_sha256": "bf00da8297a6a3a8e09a27fa0a5fa1a976d3922c221dc34b565640d620ef4b93",
+        "reference_905": {
+          "reflectance_fraction": 0.12984626,
+          "method": "exact source sample",
+          "bracket_nm": [
+            905.0,
+            905.0
+          ],
+          "bracket_reflectance": [
+            0.12984626,
+            0.12984626
+          ]
+        },
+        "dry_model": "Measured reference-sample reflectance used as uncalibrated diffuse-return proxy; not measured Town02 surface or monostatic BRDF.",
+        "wet_model": "Authored sensitivity estimate, not derived from dry spectra or measured wet data.",
+        "unsupported_properties": "Specular, retroreflection and transmission set to zero as this opaque diffuse-only study control.",
+        "supported_sensor_wavelength_nm": 905,
+        "other_wavelengths": "Unsupported: narrow constant lookup around905 only; parser clamps outside interval, so wrapper must enforce905."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Materials/MI_T02_Concrete.MI_T02_Concrete",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.56459832,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.56459832,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "reference_url": "https://landsat.usgs.gov/landsat/spectral_viewer/c3-master/htdocs/data/spectra/ArtificialMaterialsConcrete.json",
+        "reference_sha256": "b24c743cef41ff4044353a964fd6030afc19fe3b7d0f05fbf341a898b5a4c346",
+        "reference_905": {
+          "reflectance_fraction": 0.56459832,
+          "method": "exact source sample",
+          "bracket_nm": [
+            905.0,
+            905.0
+          ],
+          "bracket_reflectance": [
+            0.56459832,
+            0.56459832
+          ]
+        },
+        "dry_model": "Measured reference-sample reflectance used as uncalibrated diffuse-return proxy; not measured Town02 surface or monostatic BRDF.",
+        "wet_model": "Authored sensitivity estimate, not derived from dry spectra or measured wet data.",
+        "unsupported_properties": "Specular, retroreflection and transmission set to zero as this opaque diffuse-only study control.",
+        "supported_sensor_wavelength_nm": 905,
+        "other_wavelengths": "Unsupported: narrow constant lookup around905 only; parser clamps outside interval, so wrapper must enforce905."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Materials/MI_T02_Sidewalk.MI_T02_Sidewalk",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.56459832,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.56459832,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "reference_url": "https://landsat.usgs.gov/landsat/spectral_viewer/c3-master/htdocs/data/spectra/ArtificialMaterialsConcrete.json",
+        "reference_sha256": "b24c743cef41ff4044353a964fd6030afc19fe3b7d0f05fbf341a898b5a4c346",
+        "reference_905": {
+          "reflectance_fraction": 0.56459832,
+          "method": "exact source sample",
+          "bracket_nm": [
+            905.0,
+            905.0
+          ],
+          "bracket_reflectance": [
+            0.56459832,
+            0.56459832
+          ]
+        },
+        "dry_model": "Measured reference-sample reflectance used as uncalibrated diffuse-return proxy; not measured Town02 surface or monostatic BRDF.",
+        "wet_model": "Authored sensitivity estimate, not derived from dry spectra or measured wet data.",
+        "unsupported_properties": "Specular, retroreflection and transmission set to zero as this opaque diffuse-only study control.",
+        "supported_sensor_wavelength_nm": 905,
+        "other_wavelengths": "Unsupported: narrow constant lookup around905 only; parser clamps outside interval, so wrapper must enforce905."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Materials/M_T02_Masonry67_ScannedBrick.M_T02_Masonry67_ScannedBrick",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.21469918,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.21469918,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "reference_url": "https://landsat.usgs.gov/landsat/spectral_viewer/c3-master/htdocs/data/spectra/ArtificialMaterialsBrick.json",
+        "reference_sha256": "c3d080dd13fc3b4fb2efcc0b082fcc70a30655fa030cf0f7da9dbd2fdc498f3c",
+        "reference_905": {
+          "reflectance_fraction": 0.21469918,
+          "method": "exact source sample",
+          "bracket_nm": [
+            905.0,
+            905.0
+          ],
+          "bracket_reflectance": [
+            0.21469918,
+            0.21469918
+          ]
+        },
+        "dry_model": "Measured reference-sample reflectance used as uncalibrated diffuse-return proxy; not measured Town02 surface or monostatic BRDF.",
+        "wet_model": "Authored sensitivity estimate, not derived from dry spectra or measured wet data.",
+        "unsupported_properties": "Specular, retroreflection and transmission set to zero as this opaque diffuse-only study control.",
+        "supported_sensor_wavelength_nm": 905,
+        "other_wavelengths": "Unsupported: narrow constant lookup around905 only; parser clamps outside interval, so wrapper must enforce905."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Materials/M_T02_PineSprayDetail19.M_T02_PineSprayDetail19",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.4,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.4,
+        0,
+        0,
+        0
+      ],
+      "opacity": {
+        "width": 2048,
+        "height": 2048,
+        "clip_value": 0.3499999940395355,
+        "address_x": "wrap",
+        "address_y": "wrap",
+        "uv_scale": [
           1,
           1
-        ]
+        ],
+        "uv_offset": [
+          0,
+          0
+        ],
+        "data_file": "T_BranchPine02_d.alpha8",
+        "sha1": "b7cd2b40e66201335d08188b51501fef4e704a51"
+      },
+      "provenance": "Actual native camera source alpha; independent synthetic0.4NIR fixture coefficient, uncalibrated",
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Materials/M_T02_AcerMainLeaf25.M_T02_AcerMainLeaf25",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.6426000000000001,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.6426000000000001,
+        0,
+        0,
+        0
+      ],
+      "opacity": {
+        "width": 1254,
+        "height": 1254,
+        "clip_value": 0.4000000059604645,
+        "address_x": "clamp",
+        "address_y": "clamp",
+        "uv_scale": [
+          1,
+          1
+        ],
+        "uv_offset": [
+          0,
+          0
+        ],
+        "data_file": "T_T02_LeafAtlas21.alpha8",
+        "sha1": "c9d358b60c62d97c0cfaf76f490b2ae534ae0dc8"
+      },
+      "provenance": {
+        "status": "STAGED uncalibrated measured-reference diffuse proxy; native acceptance pending",
+        "reference_url": "https://landsat.usgs.gov/landsat/spectral_viewer/c3-master/htdocs/data/spectra/VegetationMapleLeaves.json",
+        "reference_sha256": "ae9a30352f473646221aa2fea54528997bfae13a65d53b017fd4269089d23531",
+        "reference_905": {
+          "file": "VegetationMapleLeaves.json",
+          "url": "https://landsat.usgs.gov/landsat/spectral_viewer/c3-master/htdocs/data/spectra/VegetationMapleLeaves.json",
+          "status": 200,
+          "bytes": 36903,
+          "sha256": "ae9a30352f473646221aa2fea54528997bfae13a65d53b017fd4269089d23531",
+          "sample_count": 480,
+          "schema_verified": true,
+          "label": "Maple Leaves (USL)",
+          "wavelength_nm": 905,
+          "reflectance_fraction": 0.6426000000000001,
+          "method": "linear interpolation between adjacent source samples",
+          "bracket_nm": [
+            904.0,
+            914.0
+          ],
+          "bracket_reflectance": [
+            0.643,
+            0.639
+          ],
+          "curve_units": "source wavelength micrometers; dimensionless reflectance",
+          "source_page": "https://landsat.usgs.gov/spectral-characteristics-viewer"
+        },
+        "mapping_justification": "Maple reference sample is an uncalibrated genus-level proxy; actual modeled Acer species, leaf side, water content and monostatic BRDF are unmeasured.",
+        "dry_model": "Source spectral reflectance is a diffuse-return proxy, not a measured asset or monostatic BRDF.",
+        "wet_model": "No wet spectra available. Retain neutral multiplier1 as an explicitly unsupported wet-surface sensitivity; not a measured absence of wet response.",
+        "supported_sensor_wavelength_nm": 905,
+        "other_wavelengths": "Unsupported narrow constant905 lookup at904..906; runtime must enforce905.",
+        "unsupported_properties": "Specular, retroreflection and transmission remain zero; these are unsupported controls, not measured coefficients.",
+        "geometry": "Existing Acer source alpha, dimensions, addressing and clip retained exactly; bark has no newly invented alpha mask.",
+        "pending_acceptance": "Native parser, controlled material-only receiver comparisons, wholeTownCPU/GPU mapping, synchronized cameras, actual localwetness, permanence and real calibration remain open."
+      },
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Materials/M_T02_SassafrasMainLeaf25.M_T02_SassafrasMainLeaf25",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.4,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.4,
+        0,
+        0,
+        0
+      ],
+      "opacity": {
+        "width": 1254,
+        "height": 1254,
+        "clip_value": 0.4000000059604645,
+        "address_x": "clamp",
+        "address_y": "clamp",
+        "uv_scale": [
+          1,
+          1
+        ],
+        "uv_offset": [
+          0,
+          0
+        ],
+        "data_file": "T_T02_LeafAtlas21.alpha8",
+        "sha1": "c9d358b60c62d97c0cfaf76f490b2ae534ae0dc8"
+      },
+      "provenance": "Actual native camera source alpha; independent synthetic0.4NIR fixture coefficient, uncalibrated",
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Materials/M_T02_AshMainLeaf25.M_T02_AshMainLeaf25",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.4,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.4,
+        0,
+        0,
+        0
+      ],
+      "opacity": {
+        "width": 1254,
+        "height": 1254,
+        "clip_value": 0.4000000059604645,
+        "address_x": "clamp",
+        "address_y": "clamp",
+        "uv_scale": [
+          1,
+          1
+        ],
+        "uv_offset": [
+          0,
+          0
+        ],
+        "data_file": "T_T02_LeafAtlas21.alpha8",
+        "sha1": "c9d358b60c62d97c0cfaf76f490b2ae534ae0dc8"
+      },
+      "provenance": "Actual native camera source alpha; independent synthetic0.4NIR fixture coefficient, uncalibrated",
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Materials/M_T02_PineBark19.M_T02_PineBark19",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.16614,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.16614,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "STAGED uncalibrated measured-reference diffuse proxy; native acceptance pending",
+        "reference_url": "https://landsat.usgs.gov/landsat/spectral_viewer/c3-master/htdocs/data/spectra/NonPhotoVegPinusCoulteriBarkEco.json",
+        "reference_sha256": "901fb66dd76bd801ddca51528b2932fa395c9cd9f8058b48ad6a68f756243235",
+        "reference_905": {
+          "file": "NonPhotoVegPinusCoulteriBarkEco.json",
+          "url": "https://landsat.usgs.gov/landsat/spectral_viewer/c3-master/htdocs/data/spectra/NonPhotoVegPinusCoulteriBarkEco.json",
+          "status": 200,
+          "bytes": 369869,
+          "sha256": "901fb66dd76bd801ddca51528b2932fa395c9cd9f8058b48ad6a68f756243235",
+          "sample_count": 3860,
+          "schema_verified": true,
+          "label": "Pinus Coulteri Bark (ECO)",
+          "wavelength_nm": 905,
+          "reflectance_fraction": 0.16614,
+          "method": "exact source sample",
+          "bracket_nm": [
+            905.0,
+            905.0
+          ],
+          "bracket_reflectance": [
+            0.16614,
+            0.16614
+          ],
+          "curve_units": "source wavelength micrometers; dimensionless reflectance",
+          "source_page": "https://landsat.usgs.gov/spectral-characteristics-viewer"
+        },
+        "mapping_justification": "Coulter pine bark reference is an uncalibrated genus-level proxy; the specific modeled pine species, age, coating, moisture and BRDF are unmeasured.",
+        "dry_model": "Source spectral reflectance is a diffuse-return proxy, not a measured asset or monostatic BRDF.",
+        "wet_model": "No wet spectra available. Retain neutral multiplier1 as an explicitly unsupported wet-surface sensitivity; not a measured absence of wet response.",
+        "supported_sensor_wavelength_nm": 905,
+        "other_wavelengths": "Unsupported narrow constant905 lookup at904..906; runtime must enforce905.",
+        "unsupported_properties": "Specular, retroreflection and transmission remain zero; these are unsupported controls, not measured coefficients.",
+        "geometry": "Existing Acer source alpha, dimensions, addressing and clip retained exactly; bark has no newly invented alpha mask.",
+        "pending_acceptance": "Native parser, controlled material-only receiver comparisons, wholeTownCPU/GPU mapping, synchronized cameras, actual localwetness, permanence and real calibration remain open."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Ground89/M_T02_Ground89_GrassSoil.M_T02_Ground89_GrassSoil",
+      "wavelengths_nm": [
+        900,
+        910
+      ],
+      "dry_low": [
+        0.3,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.3,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.5,
+        1,
+        1,
+        1
+      ],
+      "uv_scale": [
+        1,
+        1
+      ],
+      "uv_offset": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House502/A/MI_T02_AtlasPlaster_Ivory502A.MI_T02_AtlasPlaster_Ivory502A",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.0,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.0,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "reference": "No measured coefficient for this candidate surface; not inferred from RGB.",
+        "supported_wavelength_nm": 905,
+        "limits": "Uniform whole material; atlas plaster/brick regions not separated. Global weather wetness, not rain-on-vertical-wall coverage. No calibrated NIR BRDF or wet reflectance."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House502/A/MI_T02_AtlasPlaster_Grey502A.MI_T02_AtlasPlaster_Grey502A",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.0,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.0,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "reference": "No measured coefficient for this candidate surface; not inferred from RGB.",
+        "supported_wavelength_nm": 905,
+        "limits": "Uniform whole material; atlas plaster/brick regions not separated. Global weather wetness, not rain-on-vertical-wall coverage. No calibrated NIR BRDF or wet reflectance."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House502/A/MI_T02_AtlasPlaster_Sage502A.MI_T02_AtlasPlaster_Sage502A",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.0,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.0,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "reference": "No measured coefficient for this candidate surface; not inferred from RGB.",
+        "supported_wavelength_nm": 905,
+        "limits": "Uniform whole material; atlas plaster/brick regions not separated. Global weather wetness, not rain-on-vertical-wall coverage. No calibrated NIR BRDF or wet reflectance."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House502/B/MI_T02_AtlasPlaster_Ivory502B.MI_T02_AtlasPlaster_Ivory502B",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.0,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.0,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "reference": "No measured coefficient for this candidate surface; not inferred from RGB.",
+        "supported_wavelength_nm": 905,
+        "limits": "Uniform whole material; atlas plaster/brick regions not separated. Global weather wetness, not rain-on-vertical-wall coverage. No calibrated NIR BRDF or wet reflectance."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House502/B/MI_T02_AtlasPlaster_Grey502B.MI_T02_AtlasPlaster_Grey502B",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.0,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.0,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "reference": "No measured coefficient for this candidate surface; not inferred from RGB.",
+        "supported_wavelength_nm": 905,
+        "limits": "Uniform whole material; atlas plaster/brick regions not separated. Global weather wetness, not rain-on-vertical-wall coverage. No calibrated NIR BRDF or wet reflectance."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House502/B/MI_T02_AtlasPlaster_Sage502B.MI_T02_AtlasPlaster_Sage502B",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.0,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.0,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "reference": "No measured coefficient for this candidate surface; not inferred from RGB.",
+        "supported_wavelength_nm": 905,
+        "limits": "Uniform whole material; atlas plaster/brick regions not separated. Global weather wetness, not rain-on-vertical-wall coverage. No calibrated NIR BRDF or wet reflectance."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House489/M_T02_PaintedExteriorWood489.M_T02_PaintedExteriorWood489",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.9,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "reference": "No measured coefficient for this candidate surface; not inferred from RGB.",
+        "supported_wavelength_nm": 905,
+        "limits": "Uniform whole material; atlas plaster/brick regions not separated. Global weather wetness, not rain-on-vertical-wall coverage. No calibrated NIR BRDF or wet reflectance."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House489/M_T02_SillFlashing489.M_T02_SillFlashing489",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.08,
+        0,
+        0.7,
+        0
+      ],
+      "dry_high": [
+        0.08,
+        0,
+        0.7,
+        0
+      ],
+      "wet_multipliers": [
+        1.0,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "reference": "No measured coefficient for this candidate surface; not inferred from RGB.",
+        "supported_wavelength_nm": 905,
+        "limits": "Uniform whole material; atlas plaster/brick regions not separated. Global weather wetness, not rain-on-vertical-wall coverage. No calibrated NIR BRDF or wet reflectance."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House506/M_T02_BayGlass506.M_T02_BayGlass506",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.02,
+        0,
+        0.04,
+        0.88
+      ],
+      "dry_high": [
+        0.02,
+        0,
+        0.04,
+        0.88
+      ],
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "limits": "905nm only; not measured BRDF or calibrated facade response"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House506/M_T02_PaintedDoorWood506.M_T02_PaintedDoorWood506",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.9,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "limits": "905nm only; not measured BRDF or calibrated facade response"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House506/M_T02_EntranceBronze506.M_T02_EntranceBronze506",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.12,
+        0,
+        0.6,
+        0
+      ],
+      "dry_high": [
+        0.12,
+        0,
+        0.6,
+        0
+      ],
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "limits": "905nm only; not measured BRDF or calibrated facade response"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House512r3/MI_T02_FinePlaster_Ivory512.MI_T02_FinePlaster_Ivory512",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.01,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.01,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "limits": "905nm only; material class sensitivity study, no measured reflectance or BRDF"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House512r3/MI_T02_FinePlaster_Grey512.MI_T02_FinePlaster_Grey512",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.01,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.01,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "limits": "905nm only; material class sensitivity study, no measured reflectance or BRDF"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House512r3/MI_T02_FinePlaster_Sage512.MI_T02_FinePlaster_Sage512",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.01,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.01,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "limits": "905nm only; material class sensitivity study, no measured reflectance or BRDF"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House512r3/M_T02_Brick512.M_T02_Brick512",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.35,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.35,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "limits": "905nm only; material class sensitivity study, no measured reflectance or BRDF"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House512r3/M_T02_Mortar512.M_T02_Mortar512",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.45,
+        0,
+        0.01,
+        0
+      ],
+      "dry_high": [
+        0.45,
+        0,
+        0.01,
+        0
+      ],
+      "wet_multipliers": [
+        0.85,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "limits": "905nm only; material class sensitivity study, no measured reflectance or BRDF"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House522/M_T02_ScannedBrick522.M_T02_ScannedBrick522",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.35,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.35,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "limits": "905nm only; no measured BRDF, physical texture color does not define NIR reflectance"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House522/M_T02_LimeMortar522.M_T02_LimeMortar522",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.45,
+        0,
+        0.01,
+        0
+      ],
+      "dry_high": [
+        0.45,
+        0,
+        0.01,
+        0
+      ],
+      "wet_multipliers": [
+        0.85,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "limits": "905nm only; no measured BRDF, physical texture color does not define NIR reflectance"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Materials/M_T02_House_Curtain27.M_T02_House_Curtain27",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.45,
+        0,
+        0.01,
+        0.12
+      ],
+      "dry_high": [
+        0.45,
+        0,
+        0.01,
+        0.12
+      ],
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Folded interior fabric behind revised glazing; no measured905nm fabric BRDF or transmission. Wet multipliers1 assume sheltered interior fabric for this study. Strongest echo may be transmitted beyond glass."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House536/MI_T02_ShelteredInteriorPlaster536.MI_T02_ShelteredInteriorPlaster536",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.6,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.6,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "New center-window enclosed room plaster; sheltered interior wet multipliers1, no measured905nm BRDF or field calibration."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House542/MI_T02_Clean_Ivory542.MI_T02_Clean_Ivory542",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Clean plaster surface partitions; entire region mean905nm estimate, not spatially calibrated staining or rain runoff; geometry plane unchanged."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House542/MI_T02_Aged_Ivory542.MI_T02_Aged_Ivory542",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.48,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.48,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.72,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Aged plaster surface partitions; entire region mean905nm estimate, not spatially calibrated staining or rain runoff; geometry plane unchanged."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House542/MI_T02_Repair_Ivory542.MI_T02_Repair_Ivory542",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.58,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.58,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.85,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Repair plaster surface partitions; entire region mean905nm estimate, not spatially calibrated staining or rain runoff; geometry plane unchanged."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House542/MI_T02_Clean_Grey542.MI_T02_Clean_Grey542",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Clean plaster surface partitions; entire region mean905nm estimate, not spatially calibrated staining or rain runoff; geometry plane unchanged."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House542/MI_T02_Aged_Grey542.MI_T02_Aged_Grey542",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.48,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.48,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.72,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Aged plaster surface partitions; entire region mean905nm estimate, not spatially calibrated staining or rain runoff; geometry plane unchanged."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House542/MI_T02_Repair_Grey542.MI_T02_Repair_Grey542",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.58,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.58,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.85,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Repair plaster surface partitions; entire region mean905nm estimate, not spatially calibrated staining or rain runoff; geometry plane unchanged."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House542/MI_T02_Clean_Sage542.MI_T02_Clean_Sage542",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Clean plaster surface partitions; entire region mean905nm estimate, not spatially calibrated staining or rain runoff; geometry plane unchanged."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House542/MI_T02_Aged_Sage542.MI_T02_Aged_Sage542",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.48,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.48,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.72,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Aged plaster surface partitions; entire region mean905nm estimate, not spatially calibrated staining or rain runoff; geometry plane unchanged."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House542/MI_T02_Repair_Sage542.MI_T02_Repair_Sage542",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.58,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.58,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.85,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Repair plaster surface partitions; entire region mean905nm estimate, not spatially calibrated staining or rain runoff; geometry plane unchanged."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House552/MI_T02_Clean_Ivory552.MI_T02_Clean_Ivory552",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Same independently authored whole-region mean905nm estimate as542; visible feather within surface region is not a per-pixel NIR measurement or RGB-derived reflectance."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House552/MI_T02_Aged_Ivory552.MI_T02_Aged_Ivory552",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.48,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.48,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.72,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Same independently authored whole-region mean905nm estimate as542; visible feather within surface region is not a per-pixel NIR measurement or RGB-derived reflectance."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House552/MI_T02_Repair_Ivory552.MI_T02_Repair_Ivory552",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.58,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.58,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.85,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Same independently authored whole-region mean905nm estimate as542; visible feather within surface region is not a per-pixel NIR measurement or RGB-derived reflectance."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House552/MI_T02_Clean_Grey552.MI_T02_Clean_Grey552",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Same independently authored whole-region mean905nm estimate as542; visible feather within surface region is not a per-pixel NIR measurement or RGB-derived reflectance."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House552/MI_T02_Aged_Grey552.MI_T02_Aged_Grey552",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.48,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.48,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.72,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Same independently authored whole-region mean905nm estimate as542; visible feather within surface region is not a per-pixel NIR measurement or RGB-derived reflectance."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House552/MI_T02_Repair_Grey552.MI_T02_Repair_Grey552",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.58,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.58,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.85,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Same independently authored whole-region mean905nm estimate as542; visible feather within surface region is not a per-pixel NIR measurement or RGB-derived reflectance."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House552/MI_T02_Clean_Sage552.MI_T02_Clean_Sage552",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Same independently authored whole-region mean905nm estimate as542; visible feather within surface region is not a per-pixel NIR measurement or RGB-derived reflectance."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House552/MI_T02_Aged_Sage552.MI_T02_Aged_Sage552",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.48,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.48,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.72,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Same independently authored whole-region mean905nm estimate as542; visible feather within surface region is not a per-pixel NIR measurement or RGB-derived reflectance."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House552/MI_T02_Repair_Sage552.MI_T02_Repair_Sage552",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.58,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.58,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.85,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Same independently authored whole-region mean905nm estimate as542; visible feather within surface region is not a per-pixel NIR measurement or RGB-derived reflectance."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House560/MI_T02_Clapboard_Sage560.MI_T02_Clapboard_Sage560",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.42,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.42,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.86,
+        1,
+        1.05,
+        1
+      ],
+      "provenance": {
+        "source": "Independent authored905nm material sensitivity estimate, not calibrated or derived from RGB",
+        "scope": "Painted timber or plaster mean response; physical board relief from actual triangles",
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House560/MI_T02_Clapboard_Grey560.MI_T02_Clapboard_Grey560",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.42,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.42,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.86,
+        1,
+        1.05,
+        1
+      ],
+      "provenance": {
+        "source": "Independent authored905nm material sensitivity estimate, not calibrated or derived from RGB",
+        "scope": "Painted timber or plaster mean response; physical board relief from actual triangles",
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House560/MI_T02_Clapboard_Blue560.MI_T02_Clapboard_Blue560",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.42,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.42,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.86,
+        1,
+        1.05,
+        1
+      ],
+      "provenance": {
+        "source": "Independent authored905nm material sensitivity estimate, not calibrated or derived from RGB",
+        "scope": "Painted timber or plaster mean response; physical board relief from actual triangles",
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House560/MI_T02_Plaster_Sage560.MI_T02_Plaster_Sage560",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1.1,
+        1
+      ],
+      "provenance": {
+        "source": "Independent authored905nm material sensitivity estimate, not calibrated or derived from RGB",
+        "scope": "Painted timber or plaster mean response; physical board relief from actual triangles",
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House560/MI_T02_Plaster_Grey560.MI_T02_Plaster_Grey560",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1.1,
+        1
+      ],
+      "provenance": {
+        "source": "Independent authored905nm material sensitivity estimate, not calibrated or derived from RGB",
+        "scope": "Painted timber or plaster mean response; physical board relief from actual triangles",
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House560/MI_T02_Plaster_Blue560.MI_T02_Plaster_Blue560",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1.1,
+        1
+      ],
+      "provenance": {
+        "source": "Independent authored905nm material sensitivity estimate, not calibrated or derived from RGB",
+        "scope": "Painted timber or plaster mean response; physical board relief from actual triangles",
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House568/MI_T02_GuardTimber568.MI_T02_GuardTimber568",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.38,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.38,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.84,
+        1,
+        1.05,
+        1
+      ],
+      "provenance": {
+        "source": "Independent authored905nm material sensitivity estimate, not calibrated or derived from RGB",
+        "scope": "Independent stained/painted timber mean sensitivity estimate used for balcony guard and entry leaf/frame. Not measured or inferred from RGB.",
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House583/M_T02_ClearWindowGlass583.M_T02_ClearWindowGlass583",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.02,
+        0,
+        0.04,
+        0.88
+      ],
+      "dry_high": [
+        0.02,
+        0,
+        0.04,
+        0.88
+      ],
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "limits": "905nm only; not measured BRDF or calibrated facade response",
+        "role": "House-only thin-glass583 surfaces on corrected579 mesh",
+        "comparison": "Same independent905nm mean estimates as original506 glass to isolate camera shader, not RGB-derived",
+        "visible_rgb_transmittance_is_not_905nm_transmission": true
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House590/MI_T02_Brick_Warm590.MI_T02_Brick_Warm590",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.35,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.35,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "limits": "905nm only; no measured BRDF, physical texture color does not define NIR reflectance",
+        "role": "House15 reconstructed fired-clay brick faces; Warm visible palette",
+        "comparison": "Independent existing522 fired-clay905nm estimates reused; RGB tint does not determine NIR; no measured calibration"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House590/MI_T02_Brick_Muted590.MI_T02_Brick_Muted590",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.35,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.35,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "limits": "905nm only; no measured BRDF, physical texture color does not define NIR reflectance",
+        "role": "House15 reconstructed fired-clay brick faces; Muted visible palette",
+        "comparison": "Independent existing522 fired-clay905nm estimates reused; RGB tint does not determine NIR; no measured calibration"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House590/MI_T02_Brick_Weathered590.MI_T02_Brick_Weathered590",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.35,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.35,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "limits": "905nm only; no measured BRDF, physical texture color does not define NIR reflectance",
+        "role": "House15 reconstructed fired-clay brick faces; Weathered visible palette",
+        "comparison": "Independent existing522 fired-clay905nm estimates reused; RGB tint does not determine NIR; no measured calibration"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House601/MI_T02_CharcoalTimber601.MI_T02_CharcoalTimber601",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.38,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.38,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.84,
+        1,
+        1.05,
+        1
+      ],
+      "provenance": {
+        "source": "Independent authored905nm material sensitivity estimate, not calibrated or derived from RGB",
+        "scope": "Independent stained/painted timber mean sensitivity estimate used for balcony guard and entry leaf/frame. Not measured or inferred from RGB.",
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House601/M_T02_PlanterSoil601.M_T02_PlanterSoil601",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.2,
+        0,
+        0.005,
+        0
+      ],
+      "dry_high": [
+        0.2,
+        0,
+        0.005,
+        0
+      ],
+      "wet_multipliers": [
+        0.6,
+        1,
+        1,
+        1
+      ],
+      "provenance": "Authored905nm roughsoil sensitivity estimate, independently chosen, unmeasured/notRGBderived"
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Materials/M_T02_AshShadedLeaf25.M_T02_AshShadedLeaf25",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.4,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.4,
+        0,
+        0,
+        0
+      ],
+      "opacity": {
+        "width": 1254,
+        "height": 1254,
+        "clip_value": 0.4000000059604645,
+        "address_x": "clamp",
+        "address_y": "clamp",
+        "uv_scale": [
+          1,
+          1
+        ],
+        "uv_offset": [
+          0,
+          0
+        ],
+        "data_file": "T_T02_LeafAtlas21.alpha8",
+        "sha1": "c9d358b60c62d97c0cfaf76f490b2ae534ae0dc8"
+      },
+      "provenance": "Actual native camera source alpha; independent synthetic0.4NIR fixture coefficient, uncalibrated",
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Materials/M_T02_AshLightLeaf25.M_T02_AshLightLeaf25",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.4,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.4,
+        0,
+        0,
+        0
+      ],
+      "opacity": {
+        "width": 1254,
+        "height": 1254,
+        "clip_value": 0.4000000059604645,
+        "address_x": "clamp",
+        "address_y": "clamp",
+        "uv_scale": [
+          1,
+          1
+        ],
+        "uv_offset": [
+          0,
+          0
+        ],
+        "data_file": "T_T02_LeafAtlas21.alpha8",
+        "sha1": "c9d358b60c62d97c0cfaf76f490b2ae534ae0dc8"
+      },
+      "provenance": "Actual native camera source alpha; independent synthetic0.4NIR fixture coefficient, uncalibrated",
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House621/MI_T02_Frame_Stone621.MI_T02_Frame_Stone621",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.38,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.38,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.84,
+        1,
+        1.05,
+        1
+      ],
+      "provenance": "Independent905nm painted timber authoredestimate(.38diffuse/.02specular); sameestimateacrossRGBpalettes, uncalibrated andnotderivedfromRGB"
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House621/MI_T02_Frame_Sage621.MI_T02_Frame_Sage621",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.38,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.38,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.84,
+        1,
+        1.05,
+        1
+      ],
+      "provenance": "Independent905nm painted timber authoredestimate(.38diffuse/.02specular); sameestimateacrossRGBpalettes, uncalibrated andnotderivedfromRGB"
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House621/MI_T02_Frame_Taupe621.MI_T02_Frame_Taupe621",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.38,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.38,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.84,
+        1,
+        1.05,
+        1
+      ],
+      "provenance": "Independent905nm painted timber authoredestimate(.38diffuse/.02specular); sameestimateacrossRGBpalettes, uncalibrated andnotderivedfromRGB"
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House625/MI_T02_Entry_Moss625.MI_T02_Entry_Moss625",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.38,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.38,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.84,
+        1,
+        1.05,
+        1
+      ],
+      "provenance": {
+        "source": "Independent authored painted-timber905nm sensitivity estimate",
+        "scope": "Same NIR values for three RGB entry palettes; not measured or RGB-derived",
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House625/MI_T02_Entry_Oxblood625.MI_T02_Entry_Oxblood625",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.38,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.38,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.84,
+        1,
+        1.05,
+        1
+      ],
+      "provenance": {
+        "source": "Independent authored painted-timber905nm sensitivity estimate",
+        "scope": "Same NIR values for three RGB entry palettes; not measured or RGB-derived",
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House625/MI_T02_Entry_Navy625.MI_T02_Entry_Navy625",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.38,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.38,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.84,
+        1,
+        1.05,
+        1
+      ],
+      "provenance": {
+        "source": "Independent authored painted-timber905nm sensitivity estimate",
+        "scope": "Same NIR values for three RGB entry palettes; not measured or RGB-derived",
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House625/M_T02_PowderCoatedSteel625.M_T02_PowderCoatedSteel625",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.12,
+        0,
+        0.06,
+        0
+      ],
+      "dry_high": [
+        0.12,
+        0,
+        0.06,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1.35,
+        1
+      ],
+      "provenance": {
+        "source": "Independent authored dark powder-coat905nm sensitivity estimate",
+        "scope": "Not bare metal or measured coating; not RGB-derived",
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House635/MI_T02_Clean_WarmRender635.MI_T02_Clean_WarmRender635",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Same independently estimated905nm plaster-region coefficients as source552. Visible pigment/albedo revision does not establish NIR change; pigment-specific measurements unavailable. Explicit new material mapping, not RGB-derived/calibrated."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House635/MI_T02_Aged_WarmRender635.MI_T02_Aged_WarmRender635",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.48,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.48,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.72,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Same independently estimated905nm plaster-region coefficients as source552. Visible pigment/albedo revision does not establish NIR change; pigment-specific measurements unavailable. Explicit new material mapping, not RGB-derived/calibrated."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House635/MI_T02_Repair_WarmRender635.MI_T02_Repair_WarmRender635",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.58,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.58,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.85,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Same independently estimated905nm plaster-region coefficients as source552. Visible pigment/albedo revision does not establish NIR change; pigment-specific measurements unavailable. Explicit new material mapping, not RGB-derived/calibrated."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Materials/M_T02_House_Plaster27.M_T02_House_Plaster27",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Existing native painted plaster27 behind three bay-window rays and elsewhere on the same material path. Reuse painted-plaster class sensitivity estimate, not measured pigment/BRDF. Whole-material global-wetness estimate; shelter/vertical rain coverage not calibrated. Added because actual native641ray hits resolved fallback on this material."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House646/MI_T02_PaintedIvory646.MI_T02_PaintedIvory646",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2.0,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "Painted fibre cement lap boards / coated opening and corner trim",
+        "nir_basis": "Independent assumed905nm coating response, not inferred from RGB or manufacturer dimensions; all three board colors use same estimate without pigment measurements",
+        "wet_model": "Global wetness sensitivity only; no measured vertical rain or shelter coverage",
+        "unsupported": "No wavelength extrapolation, measured BRDF, calibrated pigment or substrate reflectance"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House646/MI_T02_PaintedGrey646.MI_T02_PaintedGrey646",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2.0,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "Painted fibre cement lap boards / coated opening and corner trim",
+        "nir_basis": "Independent assumed905nm coating response, not inferred from RGB or manufacturer dimensions; all three board colors use same estimate without pigment measurements",
+        "wet_model": "Global wetness sensitivity only; no measured vertical rain or shelter coverage",
+        "unsupported": "No wavelength extrapolation, measured BRDF, calibrated pigment or substrate reflectance"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House646/MI_T02_PaintedStone646.MI_T02_PaintedStone646",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2.0,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "Painted fibre cement lap boards / coated opening and corner trim",
+        "nir_basis": "Independent assumed905nm coating response, not inferred from RGB or manufacturer dimensions; all three board colors use same estimate without pigment measurements",
+        "wet_model": "Global wetness sensitivity only; no measured vertical rain or shelter coverage",
+        "unsupported": "No wavelength extrapolation, measured BRDF, calibrated pigment or substrate reflectance"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House646/MI_T02_PaintedTrim646.MI_T02_PaintedTrim646",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.6,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.6,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.86,
+        1,
+        1.8,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "Painted fibre cement lap boards / coated opening and corner trim",
+        "nir_basis": "Independent assumed905nm coating response, not inferred from RGB or manufacturer dimensions; all three board colors use same estimate without pigment measurements",
+        "wet_model": "Global wetness sensitivity only; no measured vertical rain or shelter coverage",
+        "unsupported": "No wavelength extrapolation, measured BRDF, calibrated pigment or substrate reflectance"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House658/MI_T02_EntryOakNatural658.MI_T02_EntryOakNatural658",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.48,
+        0,
+        0.03,
+        0
+      ],
+      "dry_high": [
+        0.48,
+        0,
+        0.03,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        2,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Whole exterior-coated timber material estimate; Natural and Dark deliberately share the sameNIR coefficients independent of visible tint. Painted is a separate generic coating estimate. Scan grain is visible-band PBR only; no measured905nm timber/finish spatial BRDF, shelter coverage or field calibration. Global wetness interpolation only."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House658/MI_T02_EntryOakDark658.MI_T02_EntryOakDark658",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.48,
+        0,
+        0.03,
+        0
+      ],
+      "dry_high": [
+        0.48,
+        0,
+        0.03,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        2,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Whole exterior-coated timber material estimate; Natural and Dark deliberately share the sameNIR coefficients independent of visible tint. Painted is a separate generic coating estimate. Scan grain is visible-band PBR only; no measured905nm timber/finish spatial BRDF, shelter coverage or field calibration. Global wetness interpolation only."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House658/MI_T02_EntryOakPainted658.MI_T02_EntryOakPainted658",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.58,
+        0,
+        0.018,
+        0
+      ],
+      "dry_high": [
+        0.58,
+        0,
+        0.018,
+        0
+      ],
+      "wet_multipliers": [
+        0.86,
+        1,
+        1.8,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "scope": "Whole exterior-coated timber material estimate; Natural and Dark deliberately share the sameNIR coefficients independent of visible tint. Painted is a separate generic coating estimate. Scan grain is visible-band PBR only; no measured905nm timber/finish spatial BRDF, shelter coverage or field calibration. Global wetness interpolation only."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House666/MI_T02_MasonryA666.MI_T02_MasonryA666",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.35,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.35,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "limits": "905nm only; no measured BRDF, physical texture color does not define NIR reflectance",
+        "role": "666Awholefinish905nm sensitivity estimate",
+        "comparison": "A/B retain prior522clayestimate independently of visible tint/partialwash. C uses separatelyauthored .55/.85wholecoatedfinish estimate. No measured product/coverage/spatialmask optics, no RGBinference."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House666/MI_T02_MasonryB666.MI_T02_MasonryB666",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.35,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.35,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "limits": "905nm only; no measured BRDF, physical texture color does not define NIR reflectance",
+        "role": "666Bwholefinish905nm sensitivity estimate",
+        "comparison": "A/B retain prior522clayestimate independently of visible tint/partialwash. C uses separatelyauthored .55/.85wholecoatedfinish estimate. No measured product/coverage/spatialmask optics, no RGBinference."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House666/MI_T02_MasonryC666.MI_T02_MasonryC666",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.85,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "limits": "905nm only; no measured BRDF, physical texture color does not define NIR reflectance",
+        "role": "666Cwholefinish905nm sensitivity estimate",
+        "comparison": "A/B retain prior522clayestimate independently of visible tint/partialwash. C uses separatelyauthored .55/.85wholecoatedfinish estimate. No measured product/coverage/spatialmask optics, no RGBinference."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House666/M_T02_WashedMortar666.M_T02_WashedMortar666",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.01,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.01,
+        0
+      ],
+      "wet_multipliers": [
+        0.85,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "not_inferred_from_rgb": true,
+        "limits": "905nm only; no measured BRDF, physical texture color does not define NIR reflectance",
+        "role": "Authored wholewashedmortar905nm sensitivity estimate, not measured coating or per-pixel mask optics"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House678/MI_T02_PaintedIvory678.MI_T02_PaintedIvory678",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2.0,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "Painted weatherboard and coated opening/corner trim, scanned paintedtimber microdetail adaptation",
+        "nir_basis": "Retain prior independent assumed905nm opaquecoating sensitivity while revising only visible paintmicrodetail/tint. Allboardcolors use same estimate withoutpigmentmeasurements. Not derived from RGBtexture, normalmap, shaderroughness or diffuse tint.",
+        "wet_model": "Global wetness sensitivity only; no measured vertical rain or shelter coverage",
+        "unsupported": "No calibrated pigment/substrate905nmBRDF, texture-level IRvariation, or measured rain/shelter coverage"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House678/MI_T02_PaintedGrey678.MI_T02_PaintedGrey678",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2.0,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "Painted weatherboard and coated opening/corner trim, scanned paintedtimber microdetail adaptation",
+        "nir_basis": "Retain prior independent assumed905nm opaquecoating sensitivity while revising only visible paintmicrodetail/tint. Allboardcolors use same estimate withoutpigmentmeasurements. Not derived from RGBtexture, normalmap, shaderroughness or diffuse tint.",
+        "wet_model": "Global wetness sensitivity only; no measured vertical rain or shelter coverage",
+        "unsupported": "No calibrated pigment/substrate905nmBRDF, texture-level IRvariation, or measured rain/shelter coverage"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House678/MI_T02_PaintedStone678.MI_T02_PaintedStone678",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2.0,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "Painted weatherboard and coated opening/corner trim, scanned paintedtimber microdetail adaptation",
+        "nir_basis": "Retain prior independent assumed905nm opaquecoating sensitivity while revising only visible paintmicrodetail/tint. Allboardcolors use same estimate withoutpigmentmeasurements. Not derived from RGBtexture, normalmap, shaderroughness or diffuse tint.",
+        "wet_model": "Global wetness sensitivity only; no measured vertical rain or shelter coverage",
+        "unsupported": "No calibrated pigment/substrate905nmBRDF, texture-level IRvariation, or measured rain/shelter coverage"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House678/MI_T02_PaintedTrim678.MI_T02_PaintedTrim678",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.6,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.6,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.86,
+        1,
+        1.8,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "Painted weatherboard and coated opening/corner trim, scanned paintedtimber microdetail adaptation",
+        "nir_basis": "Retain prior independent assumed905nm opaquecoating sensitivity while revising only visible paintmicrodetail/tint. Allboardcolors use same estimate withoutpigmentmeasurements. Not derived from RGBtexture, normalmap, shaderroughness or diffuse tint.",
+        "wet_model": "Global wetness sensitivity only; no measured vertical rain or shelter coverage",
+        "unsupported": "No calibrated pigment/substrate905nmBRDF, texture-level IRvariation, or measured rain/shelter coverage"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House690/MI_T02_PaintedWall690.MI_T02_PaintedWall690",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2.0,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "Painted weatherboard and coated opening/corner trim, scanned paintedtimber microdetail adaptation",
+        "nir_basis": "Same independent uncalibrated opaque coating905nm sensitivity retained across visible pigment/BRDF changes. Dark RGB shutter paint is not evidence of low905nm return. No RGB-derived reflectance or calibrated pigment spectra.",
+        "wet_model": "Global wetness sensitivity only; no measured vertical rain or shelter coverage",
+        "unsupported": "No calibrated pigment/substrate905nmBRDF, texture-level IRvariation, or measured rain/shelter coverage"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House690/MI_T02_PaintedShutters690.MI_T02_PaintedShutters690",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2.0,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "Painted weatherboard and coated opening/corner trim, scanned paintedtimber microdetail adaptation",
+        "nir_basis": "Same independent uncalibrated opaque coating905nm sensitivity retained across visible pigment/BRDF changes. Dark RGB shutter paint is not evidence of low905nm return. No RGB-derived reflectance or calibrated pigment spectra.",
+        "wet_model": "Global wetness sensitivity only; no measured vertical rain or shelter coverage",
+        "unsupported": "No calibrated pigment/substrate905nmBRDF, texture-level IRvariation, or measured rain/shelter coverage"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House694/MI_T02_ShelteredOak694.MI_T02_ShelteredOak694",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.48,
+        0,
+        0.03,
+        0
+      ],
+      "dry_high": [
+        0.48,
+        0,
+        0.03,
+        0
+      ],
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "Sheltered timberfloor and desk/chair, matching existing naturaloak visible shader",
+        "nir_basis": "Retain prior independent assumed dry905nm naturaloak response. Neither visibleRGB nor roughness defines infrared reflectance.",
+        "wet_model": "Allwetmultipliers1: indoorfloor/furniture shelteredfrom global outdoorwetness in this estimatedmodel. No measured coatingBRDF/indoorwetting/rainpenetration calibration."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House698/MI_T02_WeatheredWall698.MI_T02_WeatheredWall698",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2.0,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED WHOLE COATING ESTIMATE",
+        "construction": "Same opaque wall paint with cosmetic localized visible weathering; no barewood or separate deposited material modeled",
+        "nir_basis": "Retain independently assumed690 coating905nm response, not computed from RGB/weathering mask. Texture-level NIR variation and real coating aging spectra are unsupported.",
+        "wet_model": "Retain existing global verticalwall wetness sensitivity; no calibrated runoff/shelter coverage or spectral damage model."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House702/MI_T02_ReferenceWall702.MI_T02_ReferenceWall702",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2.0,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "New grey-house facade Wall",
+        "nir_basis": "Retain independent uncalibrated opaque coating905nm sensitivity across visible pigment and BRDF changes. Same estimated NIR coating assumption; no pigment spectra available. Dark RGB sash/red door do not establish their905nm reflectance. Not derived from RGB texture/tint/normal/roughness.",
+        "wet_model": "Global wetness sensitivity only; no measured vertical rain or shelter coverage",
+        "unsupported": "No calibrated pigment/substrate905nmBRDF, texture-level IRvariation, or measured rain/shelter coverage"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House702/MI_T02_ReferenceSash702.MI_T02_ReferenceSash702",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2.0,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "New grey-house facade Sash",
+        "nir_basis": "Retain independent uncalibrated opaque coating905nm sensitivity across visible pigment and BRDF changes. Same estimated NIR coating assumption; no pigment spectra available. Dark RGB sash/red door do not establish their905nm reflectance. Not derived from RGB texture/tint/normal/roughness.",
+        "wet_model": "Global wetness sensitivity only; no measured vertical rain or shelter coverage",
+        "unsupported": "No calibrated pigment/substrate905nmBRDF, texture-level IRvariation, or measured rain/shelter coverage"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House702/MI_T02_ReferenceDoor702.MI_T02_ReferenceDoor702",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2.0,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "New grey-house facade Door",
+        "nir_basis": "Retain independent uncalibrated opaque coating905nm sensitivity across visible pigment and BRDF changes. Same estimated NIR coating assumption; no pigment spectra available. Dark RGB sash/red door do not establish their905nm reflectance. Not derived from RGB texture/tint/normal/roughness.",
+        "wet_model": "Global wetness sensitivity only; no measured vertical rain or shelter coverage",
+        "unsupported": "No calibrated pigment/substrate905nmBRDF, texture-level IRvariation, or measured rain/shelter coverage"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House719/MI_T02_ReferenceLowerPlaster719.MI_T02_ReferenceLowerPlaster719",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1.1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "Opaque exterior plaster coating; assumed mean905nm plaster response retained across visible paint change",
+        "nir_basis": "Independent905nm coating assumption from existing uncalibrated profile; not inferred from visible tint, texture, roughness or metallic input",
+        "basis_profile": "/Game/TownRealism/Town02/House560/MI_T02_Plaster_Blue560.MI_T02_Plaster_Blue560",
+        "wet_model": "Global wetness multipliers only; no measured vertical rain or sheltered coverage",
+        "calibrated": false,
+        "unsupported": "No measured pigment/substrate spectrum or calibrated905nm BRDF, shelter/wetness coverage"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House719/M_T02_CoatedGarage719.M_T02_CoatedGarage719",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2.0,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "Opaque paint over garage metal; adopts existing generic painted-coating905nm sensitivity as an uncalibrated assumption; substrate/pigment spectra are unknown",
+        "nir_basis": "Independent905nm coating assumption from existing uncalibrated profile; not inferred from visible tint, texture, roughness or metallic input",
+        "basis_profile": "/Game/TownRealism/Town02/House702/MI_T02_ReferenceSash702.MI_T02_ReferenceSash702",
+        "wet_model": "Global wetness multipliers only; no measured vertical rain or sheltered coverage",
+        "calibrated": false,
+        "unsupported": "No measured pigment/substrate spectrum or calibrated905nm BRDF, shelter/wetness coverage"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House723/M_T02_RecessedBlindFabric723.M_T02_RecessedBlindFabric723",
+      "dry_low": [
+        0.45,
+        0,
+        0.008,
+        0
+      ],
+      "dry_high": [
+        0.45,
+        0,
+        0.008,
+        0
+      ],
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "provenance": "AUTHORED UNCALIBRATED interior opaque textile905nm estimate, notRGBderived or measured"
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House733/M_T02_WhiteCladding733.M_T02_WhiteCladding733",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "opaque exterior paint",
+        "nir_basis": "Independent generic wholefinish assumptions; no measured pigment/substrate spectrum, not derived from RGB/texture/roughness/normal.",
+        "calibrated": false,
+        "wet_model": "Global wetness multiplier only; no calibrated verticalrain/shelter, textile multipliers1",
+        "unsupported": "No measured spectralBRDF or texturelevelNIRmapping"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House733/M_T02_Render733.M_T02_Render733",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.55,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1.1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "exterior rendered plaster",
+        "nir_basis": "Independent generic wholefinish assumptions; no measured pigment/substrate spectrum, not derived from RGB/texture/roughness/normal.",
+        "calibrated": false,
+        "wet_model": "Global wetness multiplier only; no calibrated verticalrain/shelter, textile multipliers1",
+        "unsupported": "No measured spectralBRDF or texturelevelNIRmapping"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House733/M_T02_GarageSatin733.M_T02_GarageSatin733",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "opaque garage coating",
+        "nir_basis": "Independent generic wholefinish assumptions; no measured pigment/substrate spectrum, not derived from RGB/texture/roughness/normal.",
+        "calibrated": false,
+        "wet_model": "Global wetness multiplier only; no calibrated verticalrain/shelter, textile multipliers1",
+        "unsupported": "No measured spectralBRDF or texturelevelNIRmapping"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House733/M_T02_GuardWoodlook733.M_T02_GuardWoodlook733",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "woodlook opaque aluminium coating, not timber",
+        "nir_basis": "Independent generic wholefinish assumptions; no measured pigment/substrate spectrum, not derived from RGB/texture/roughness/normal.",
+        "calibrated": false,
+        "wet_model": "Global wetness multiplier only; no calibrated verticalrain/shelter, textile multipliers1",
+        "unsupported": "No measured spectralBRDF or texturelevelNIRmapping"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House733/M_T02_RollerCharcoal733.M_T02_RollerCharcoal733",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.45,
+        0,
+        0.008,
+        0
+      ],
+      "dry_high": [
+        0.45,
+        0,
+        0.008,
+        0
+      ],
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "sheltered opaque textile",
+        "nir_basis": "Independent generic wholefinish assumptions; no measured pigment/substrate spectrum, not derived from RGB/texture/roughness/normal.",
+        "calibrated": false,
+        "wet_model": "Global wetness multiplier only; no calibrated verticalrain/shelter, textile multipliers1",
+        "unsupported": "No measured spectralBRDF or texturelevelNIRmapping"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House737/MI_T02_EbertsOchreCladding737.MI_T02_EbertsOchreCladding737",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2.0,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "Eberts-inspired neighboring House01C opaque painted timber OchreCladding",
+        "nir_basis": "Independent uncalibrated generic opaque coating905nm sensitivity estimate. Visible ochre, olive and wine pigments do not determine infrared reflectance. No measured pigment spectra, no RGB-derived NIR and no texture-level aging model.",
+        "wet_model": "Global wetness sensitivity only; no measured vertical rain or shelter coverage",
+        "unsupported": "No calibrated pigment/substrate905nmBRDF, texture-level IRvariation, or measured rain/shelter coverage"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House737/MI_T02_EbertsOliveCasing737.MI_T02_EbertsOliveCasing737",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2.0,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "Eberts-inspired neighboring House01C opaque painted timber OliveCasing",
+        "nir_basis": "Independent uncalibrated generic opaque coating905nm sensitivity estimate. Visible ochre, olive and wine pigments do not determine infrared reflectance. No measured pigment spectra, no RGB-derived NIR and no texture-level aging model.",
+        "wet_model": "Global wetness sensitivity only; no measured vertical rain or shelter coverage",
+        "unsupported": "No calibrated pigment/substrate905nmBRDF, texture-level IRvariation, or measured rain/shelter coverage"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House737/MI_T02_EbertsWineSashDoor737.MI_T02_EbertsWineSashDoor737",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2.0,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "Eberts-inspired neighboring House01C opaque painted timber WineSashDoor",
+        "nir_basis": "Independent uncalibrated generic opaque coating905nm sensitivity estimate. Visible ochre, olive and wine pigments do not determine infrared reflectance. No measured pigment spectra, no RGB-derived NIR and no texture-level aging model.",
+        "wet_model": "Global wetness sensitivity only; no measured vertical rain or shelter coverage",
+        "unsupported": "No calibrated pigment/substrate905nmBRDF, texture-level IRvariation, or measured rain/shelter coverage"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House741/MI_T02_EbertsFoundation741.MI_T02_EbertsFoundation741",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.36,
+        0,
+        0.006,
+        0
+      ],
+      "dry_high": [
+        0.36,
+        0,
+        0.006,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1.5,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "Thin mineral coating over existing brick substrate",
+        "nir_basis": "Independent generic wholefinish coefficient assumptions; no RGB, limewash shader coverage, texture or roughness to NIR conversion. Actual coating/substrate spectrum and monostaticBRDF unmeasured.",
+        "wet_model": "Global surface wetness sensitivity; no measured vertical rain or sheltered facade coverage",
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House746/M_T02_LinedCurtain746.M_T02_LinedCurtain746",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.48,
+        0,
+        0.003,
+        0
+      ],
+      "dry_high": [
+        0.48,
+        0,
+        0.003,
+        0
+      ],
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "Opaque indoor textile lining",
+        "nir_basis": "Independent generic linedtextile coefficient assumptions; noRGB/scan/roughness/fuzztoNIR. Unmeasuredspectrum/BRDF.",
+        "wet_model": "Shelteredinterior multiplier1 estimate; no measuredshelter/transmissionmodel",
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House750/MI_T02_PlumWallShingle750.MI_T02_PlumWallShingle750",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "Opaque coated vertical wall shingles",
+        "nir_basis": "Independent generic opaque timbercoating sensitivity estimate, same as prior737coatedtimber. Visible plum pigment and scan do not determine NIR. No measured pigment or cedar spectrum/BRDF.",
+        "wet_model": "Globalwetness sensitivity only; not measured vertical rain or shelter coverage",
+        "calibrated": false,
+        "nir_from_rgb": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House754/MI_T02_PlumWallShingle754.MI_T02_PlumWallShingle754",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "Same estimated opaque coated timber finish as750 with revised visible overlap envelope and independently authored visual per-unit attributes",
+        "nir_basis": "Independent generic905nm opaque timbercoating sensitivity estimate retained for the same whole finish; vertex color, RGB coat variation and normal-map grain do not determine NIR. No measured pigment/cedar spectrum or BRDF.",
+        "wet_model": "Globalwetness sensitivity only; not measured vertical rain or shelter coverage",
+        "calibrated": false,
+        "nir_from_rgb": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House758/MI_T02_OchreClapboards758.MI_T02_OchreClapboards758",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2.0,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED SENSITIVITY ESTIMATE",
+        "construction": "Eberts-inspired neighboring House01C opaque painted timber OchreCladding",
+        "nir_basis": "Independent uncalibrated generic opaque coating905nm sensitivity estimate. Visible ochre, olive and wine pigments do not determine infrared reflectance. No measured pigment spectra, no RGB-derived NIR and no texture-level aging model.",
+        "wet_model": "Global wetness sensitivity only; no measured vertical rain or shelter coverage",
+        "unsupported": "No calibrated pigment/substrate905nmBRDF, texture-level IRvariation, or measured rain/shelter coverage"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House762/MI_T02_GreyClapboards762.MI_T02_GreyClapboards762",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "Opaque coated vertical timber clapboards",
+        "nir_basis": "Independent generic opaque timber-coating estimate retained from737/758. Visible grey, red and light pigments, vertex attributes and texture grain do not determine NIR. No measured pigment/substrate spectrum or BRDF.",
+        "wet_model": "Globalwetness sensitivity only; no measured vertical rain/shelter coverage",
+        "calibrated": false,
+        "nir_from_rgb": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House762/MI_T02_RedJoinery762.MI_T02_RedJoinery762",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "Opaque coated timber window surrounds and paneled entrance",
+        "nir_basis": "Independent generic opaque timber-coating estimate retained from737/758. Visible grey, red and light pigments, vertex attributes and texture grain do not determine NIR. No measured pigment/substrate spectrum or BRDF.",
+        "wet_model": "Globalwetness sensitivity only; no measured vertical rain/shelter coverage",
+        "calibrated": false,
+        "nir_from_rgb": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House762/MI_T02_LightJoinery762.MI_T02_LightJoinery762",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "Opaque coated timber sash, trim and covered porch construction",
+        "nir_basis": "Independent generic opaque timber-coating estimate retained from737/758. Visible grey, red and light pigments, vertex attributes and texture grain do not determine NIR. No measured pigment/substrate spectrum or BRDF.",
+        "wet_model": "Globalwetness sensitivity only; no measured vertical rain/shelter coverage",
+        "calibrated": false,
+        "nir_from_rgb": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House769/MI_T02_ContinuousGrey769.MI_T02_ContinuousGrey769",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "Opaque exterior coated timber, shared front/side finish",
+        "nir_basis": "Independent generic whole-material coefficients retained from prior estimated material family; visible pigment, scan, vertex attributes, roughness and fuzz do not determine NIR. No measured spectrum or BRDF.",
+        "coefficient_assumption_source": "/Game/TownRealism/Town02/House762/MI_T02_GreyClapboards762.MI_T02_GreyClapboards762",
+        "wet_model": "Globalwetness exterior sensitivity; interior sheltered multipliers1. No measured vertical rain/shelter coverage.",
+        "calibrated": false,
+        "nir_from_rgb": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House769/MI_T02_NaturalLinedCloth769.MI_T02_NaturalLinedCloth769",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.48,
+        0,
+        0.003,
+        0
+      ],
+      "dry_high": [
+        0.48,
+        0,
+        0.003,
+        0
+      ],
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "Opaque sheltered natural lined textile",
+        "nir_basis": "Independent generic whole-material coefficients retained from prior estimated material family; visible pigment, scan, vertex attributes, roughness and fuzz do not determine NIR. No measured spectrum or BRDF.",
+        "coefficient_assumption_source": "/Game/TownRealism/Town02/House746/M_T02_LinedCurtain746.M_T02_LinedCurtain746",
+        "wet_model": "Globalwetness exterior sensitivity; interior sheltered multipliers1. No measured vertical rain/shelter coverage.",
+        "calibrated": false,
+        "nir_from_rgb": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House769/MI_T02_MutedBlueLinedCloth769.MI_T02_MutedBlueLinedCloth769",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.48,
+        0,
+        0.003,
+        0
+      ],
+      "dry_high": [
+        0.48,
+        0,
+        0.003,
+        0
+      ],
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "Opaque sheltered blue lined textile",
+        "nir_basis": "Independent generic whole-material coefficients retained from prior estimated material family; visible pigment, scan, vertex attributes, roughness and fuzz do not determine NIR. No measured spectrum or BRDF.",
+        "coefficient_assumption_source": "/Game/TownRealism/Town02/House746/M_T02_LinedCurtain746.M_T02_LinedCurtain746",
+        "wet_model": "Globalwetness exterior sensitivity; interior sheltered multipliers1. No measured vertical rain/shelter coverage.",
+        "calibrated": false,
+        "nir_from_rgb": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House769/MI_T02_WarmInteriorPlaster769.MI_T02_WarmInteriorPlaster769",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.6,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.6,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "Sheltered warm interior plaster",
+        "nir_basis": "Independent generic whole-material coefficients retained from prior estimated material family; visible pigment, scan, vertex attributes, roughness and fuzz do not determine NIR. No measured spectrum or BRDF.",
+        "coefficient_assumption_source": "/Game/TownRealism/Town02/House536/MI_T02_ShelteredInteriorPlaster536.MI_T02_ShelteredInteriorPlaster536",
+        "wet_model": "Globalwetness exterior sensitivity; interior sheltered multipliers1. No measured vertical rain/shelter coverage.",
+        "calibrated": false,
+        "nir_from_rgb": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House769/MI_T02_CoolInteriorPlaster769.MI_T02_CoolInteriorPlaster769",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.6,
+        0,
+        0.015,
+        0
+      ],
+      "dry_high": [
+        0.6,
+        0,
+        0.015,
+        0
+      ],
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "Sheltered cool interior plaster",
+        "nir_basis": "Independent generic whole-material coefficients retained from prior estimated material family; visible pigment, scan, vertex attributes, roughness and fuzz do not determine NIR. No measured spectrum or BRDF.",
+        "coefficient_assumption_source": "/Game/TownRealism/Town02/House536/MI_T02_ShelteredInteriorPlaster536.MI_T02_ShelteredInteriorPlaster536",
+        "wet_model": "Globalwetness exterior sensitivity; interior sheltered multipliers1. No measured vertical rain/shelter coverage.",
+        "calibrated": false,
+        "nir_from_rgb": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House786/MI_T02_FoundationHedgeLeaf786.MI_T02_FoundationHedgeLeaf786",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.4,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.4,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.8,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "Native foundation hedge Leaf",
+        "nir_basis": "Independent generic sensitivity assumption, not measured species, leaf side, water content or monostatic BRDF; no RGB-derived coefficient.",
+        "supported_sensor_wavelength_nm": 905,
+        "other_wavelengths": "Unsupported; narrow lookup clamps outside range, runtime must enforce905.",
+        "wet_model": "Independent estimated global surface-wetness multiplier; not calibrated leaf-film, rain or shelter response.",
+        "calibrated": false,
+        "nir_from_rgb": false
+      },
+      "opacity": {
+        "width": 256,
+        "height": 256,
+        "clip_value": 0.33329999446868896,
+        "address_x": "wrap",
+        "address_y": "wrap",
+        "uv_scale": [
+          1,
+          1
+        ],
+        "uv_offset": [
+          0,
+          0
+        ],
+        "data_file": "T_HedgeBush01_Leaf_d.alpha8",
+        "sha1": "2b5c7ea6bf335bf552ec5931dc61dc0913193af1"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House786/MI_T02_FoundationHedgeBody786.MI_T02_FoundationHedgeBody786",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.22,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.22,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.7,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED905nm SENSITIVITY ESTIMATE",
+        "construction": "Native foundation hedge Body",
+        "nir_basis": "Independent generic sensitivity assumption, not measured species, leaf side, water content or monostatic BRDF; no RGB-derived coefficient.",
+        "supported_sensor_wavelength_nm": 905,
+        "other_wavelengths": "Unsupported; narrow lookup clamps outside range, runtime must enforce905.",
+        "wet_model": "Independent estimated global surface-wetness multiplier; not calibrated leaf-film, rain or shelter response.",
+        "calibrated": false,
+        "nir_from_rgb": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House786/MI_T02_CommonGreyControl786.MI_T02_CommonGreyControl786",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "dry_high": [
+        0.52,
+        0,
+        0.025,
+        0
+      ],
+      "wet_multipliers": [
+        0.78,
+        1,
+        2,
+        1
+      ],
+      "provenance": {
+        "status": "Retained independently estimated whole-coating response exact769; shader control changes visible vertex brightness only, no RGB-to-NIR mapping.",
+        "source": "/Game/TownRealism/Town02/House769/MI_T02_ContinuousGrey769.MI_T02_ContinuousGrey769",
+        "calibrated": false,
+        "nir_from_rgb": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House805/MI_T02_AgedFront805.MI_T02_AgedFront805",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.46,
+        0.0,
+        0.022,
+        0.0
+      ],
+      "dry_high": [
+        0.46,
+        0.0,
+        0.022,
+        0.0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1.0,
+        2.0,
+        1.0
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED 905nm whole weathered-paint sensitivity estimate",
+        "source_class": "/Game/TownRealism/Town02/House769/MI_T02_ContinuousGrey769.MI_T02_ContinuousGrey769",
+        "nir_from_rgb": false,
+        "calibrated": false,
+        "limitation": "Spatial visible dirt masks are not spatial NIR measurements. One estimated weathered-coating profile per whole material; no measured dirt spectrum, per-stain optics or BRDF claim."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House805/MI_T02_AgedSide805.MI_T02_AgedSide805",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.46,
+        0.0,
+        0.022,
+        0.0
+      ],
+      "dry_high": [
+        0.46,
+        0.0,
+        0.022,
+        0.0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1.0,
+        2.0,
+        1.0
+      ],
+      "provenance": {
+        "status": "AUTHORED UNCALIBRATED 905nm whole weathered-paint sensitivity estimate",
+        "source_class": "/Game/TownRealism/Town02/House769/MI_T02_ContinuousGrey769.MI_T02_ContinuousGrey769",
+        "nir_from_rgb": false,
+        "calibrated": false,
+        "limitation": "Spatial visible dirt masks are not spatial NIR measurements. One estimated weathered-coating profile per whole material; no measured dirt spectrum, per-stain optics or BRDF claim."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House808/MI_T02_WeatheredLightJoinery808.MI_T02_WeatheredLightJoinery808",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.45,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.45,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.76,
+        1,
+        2,
+        1
+      ],
+      "provenance": {
+        "status": "Authored uncalibrated whole-material 905nm weathering estimate",
+        "nir_from_rgb": false,
+        "calibrated": false,
+        "spatial_stain_optics": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House808/MI_T02_WeatheredRedJoinery808.MI_T02_WeatheredRedJoinery808",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.44,
+        0,
+        0.02,
+        0
+      ],
+      "dry_high": [
+        0.44,
+        0,
+        0.02,
+        0
+      ],
+      "wet_multipliers": [
+        0.76,
+        1,
+        2,
+        1
+      ],
+      "provenance": {
+        "status": "Authored uncalibrated whole-material 905nm weathering estimate",
+        "nir_from_rgb": false,
+        "calibrated": false,
+        "spatial_stain_optics": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House808/MI_T02_WeatheredBrick808.MI_T02_WeatheredBrick808",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.31,
+        0,
+        0.018,
+        0
+      ],
+      "dry_high": [
+        0.31,
+        0,
+        0.018,
+        0
+      ],
+      "wet_multipliers": [
+        0.65,
+        1,
+        2,
+        1
+      ],
+      "provenance": {
+        "status": "Authored uncalibrated whole-material 905nm weathering estimate",
+        "nir_from_rgb": false,
+        "calibrated": false,
+        "spatial_stain_optics": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House808/M_T02_WeatheredBronze808.M_T02_WeatheredBronze808",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.22,
+        0,
+        0.3,
+        0
+      ],
+      "dry_high": [
+        0.22,
+        0,
+        0.3,
+        0
+      ],
+      "wet_multipliers": [
+        0.83,
+        1,
+        1.3,
+        1
+      ],
+      "provenance": {
+        "status": "Authored uncalibrated whole-material 905nm weathering estimate",
+        "nir_from_rgb": false,
+        "calibrated": false,
+        "spatial_stain_optics": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/House808/M_T02_WeatheredFlashing808.M_T02_WeatheredFlashing808",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.24,
+        0,
+        0.34,
+        0
+      ],
+      "dry_high": [
+        0.24,
+        0,
+        0.34,
+        0
+      ],
+      "wet_multipliers": [
+        0.83,
+        1,
+        1.3,
+        1
+      ],
+      "provenance": {
+        "status": "Authored uncalibrated whole-material 905nm weathering estimate",
+        "nir_from_rgb": false,
+        "calibrated": false,
+        "spatial_stain_optics": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Streets825/MI_T02_Curb825.MI_T02_Curb825",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.4,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.4,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Authored whole-material 905nm optical estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false,
+        "revision_note": "Same independently authored whole-material estimate as815. Visible pigment placement does not imply spatial NIR optics."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Streets825/MI_T02_Paving825.MI_T02_Paving825",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.4,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.4,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Authored whole-material 905nm optical estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false,
+        "revision_note": "Same independently authored whole-material estimate as815. Visible pigment placement does not imply spatial NIR optics."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Streets825/MI_T02_PlanterBase825.MI_T02_PlanterBase825",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.38,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.38,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Authored whole-material 905nm optical estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false,
+        "revision_note": "Same independently authored whole-material estimate as815. Visible pigment placement does not imply spatial NIR optics."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Streets825/MI_T02_PlanterCorner825.MI_T02_PlanterCorner825",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.38,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.38,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Authored whole-material 905nm optical estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false,
+        "revision_note": "Same independently authored whole-material estimate as815. Visible pigment placement does not imply spatial NIR optics."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Streets830/MI_T02_PlanterCast830.MI_T02_PlanterCast830",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.38,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.38,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Authored whole-material 905nm optical estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false,
+        "revision_note": "Same independently authored whole-material905nm estimate as825; new visible dielectric shading is not converted to NIR or spatial stain optics."
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props839/MI_T02_FenceTextured839.MI_T02_FenceTextured839",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.28,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.28,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props839/MI_T02_FenceAluminium839.MI_T02_FenceAluminium839",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.44,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.44,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props839/MI_T02_Guardrail839.MI_T02_Guardrail839",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.38,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.38,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props839/MI_T02_CoverWetGraph839.MI_T02_CoverWetGraph839",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.23,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.23,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props839/MI_T02_CoverDirect839.MI_T02_CoverDirect839",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.23,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.23,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Covers848b/MI_T02_CoverWetGraph848b.MI_T02_CoverWetGraph848b",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.23,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.23,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm cover estimate retained at0.23; uncalibrated, not tied to RGB finish",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Covers848b/MI_T02_CoverDirect848b.MI_T02_CoverDirect848b",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.23,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.23,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm cover estimate retained at0.23; uncalibrated, not tied to RGB finish",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props854b/MI_T02_BusStop854b.MI_T02_BusStop854b",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.25,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.25,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props854b/MI_T02_Trampoline854b.MI_T02_Trampoline854b",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.18,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.18,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props854b/MI_T02_StreetLamp854b.MI_T02_StreetLamp854b",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.28,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.28,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props870/MI_T02_PlasticChair870.MI_T02_PlasticChair870",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.38,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.38,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independentlyauthoredwholematerial905nm estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props870/MI_T02_PlasticTable870.MI_T02_PlasticTable870",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.32,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.32,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independentlyauthoredwholematerial905nm estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props870/MI_T02_AirConditioner870.MI_T02_AirConditioner870",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.3,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.3,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independentlyauthoredwholematerial905nm estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props870/MI_T02_MailBox870.MI_T02_MailBox870",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.27,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.27,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independentlyauthoredwholematerial905nm estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props870/MI_T02_ShoppingCart870.MI_T02_ShoppingCart870",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.4,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.4,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independentlyauthoredwholematerial905nm estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      },
+      "opacity": {
+        "width": 512,
+        "height": 512,
+        "clip_value": 0.33329999446868896,
+        "address_x": "wrap",
+        "address_y": "wrap",
+        "uv_scale": [
+          1,
+          1
+        ],
+        "uv_offset": [
+          0,
+          0
+        ],
+        "data_file": "cart-source870.alpha8",
+        "sha1": "b262ece88e35ace5b427a6e0c5d5dda81a5b39de"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props884/MI_T02_BarGraphic884.MI_T02_BarGraphic884",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.35,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.35,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm sensitivity estimate; not measured",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props884/MI_T02_BarPaint884.MI_T02_BarPaint884",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.3,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.3,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm sensitivity estimate; not measured",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props884/MI_T02_BarFrame884.MI_T02_BarFrame884",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.32,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.32,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm sensitivity estimate; not measured",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props884/MI_T02_BarWood884.MI_T02_BarWood884",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.27,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.27,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm sensitivity estimate; not measured",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props884/MI_T02_BillboardFrame884.MI_T02_BillboardFrame884",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.42,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.42,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm sensitivity estimate; not measured",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props884/MI_T02_BillboardGraphic884.MI_T02_BillboardGraphic884",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.35,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.35,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm sensitivity estimate; not measured",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props884/MI_T02_BikeRack884.MI_T02_BikeRack884",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.3,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.3,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm sensitivity estimate; not measured",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props884/MI_T02_Vending884.MI_T02_Vending884",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.28,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.28,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm sensitivity estimate; not measured",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props884/MI_T02_LightBox884.MI_T02_LightBox884",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.3,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.3,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm sensitivity estimate; not measured",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props884/MI_T02_MapTable884.MI_T02_MapTable884",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.3,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.3,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm sensitivity estimate; not measured",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props884/MI_T02_Fountain884.MI_T02_Fountain884",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.34,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.34,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm sensitivity estimate; not measured",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Signs893/MI_T02_SignBack893.MI_T02_SignBack893",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.3,
+        0,
+        0.12,
+        0
+      ],
+      "dry_high": [
+        0.3,
+        0,
+        0.12,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1.2,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm sensitivity estimate; not calibrated sign sheeting data",
+        "nir_from_rgb": false,
+        "calibrated": false,
+        "spatial_stain_optics": false,
+        "retroreflection_angular_range_validation_pending": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Signs893/MI_T02_Sign30893.MI_T02_Sign30893",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.35,
+        0.3,
+        0.08,
+        0
+      ],
+      "dry_high": [
+        0.35,
+        0.3,
+        0.08,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        0.65,
+        1.2,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm sensitivity estimate; not calibrated sign sheeting data",
+        "nir_from_rgb": false,
+        "calibrated": false,
+        "spatial_stain_optics": false,
+        "retroreflection_angular_range_validation_pending": true
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Signs893/MI_T02_Sign60893.MI_T02_Sign60893",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.35,
+        0.3,
+        0.08,
+        0
+      ],
+      "dry_high": [
+        0.35,
+        0.3,
+        0.08,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        0.65,
+        1.2,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm sensitivity estimate; not calibrated sign sheeting data",
+        "nir_from_rgb": false,
+        "calibrated": false,
+        "spatial_stain_optics": false,
+        "retroreflection_angular_range_validation_pending": true
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Signs893/MI_T02_Sign90893.MI_T02_Sign90893",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.35,
+        0.3,
+        0.08,
+        0
+      ],
+      "dry_high": [
+        0.35,
+        0.3,
+        0.08,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        0.65,
+        1.2,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm sensitivity estimate; not calibrated sign sheeting data",
+        "nir_from_rgb": false,
+        "calibrated": false,
+        "spatial_stain_optics": false,
+        "retroreflection_angular_range_validation_pending": true
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Net860c/MI_T02_TrampolineNet860c.MI_T02_TrampolineNet860c",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.18,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.18,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Prior independentlyauthored wholematerial905nm.18estimate/wet.75retained; new explicit authored geometric coverage shared with camera. Uncalibrated.",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false,
+        "alpha_is_geometric_coverage": true
+      },
+      "opacity": {
+        "width": 2048,
+        "height": 2048,
+        "clip_value": 0.5,
+        "address_x": "wrap",
+        "address_y": "wrap",
+        "uv_scale": [
+          1,
+          1
+        ],
+        "uv_offset": [
+          0,
+          0
+        ],
+        "data_file": "net-coverage860.alpha8",
+        "sha1": "001cabcb2e129cb45b80494f5d7829f633d87166"
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props833/MI_T02_BenchWood833.MI_T02_BenchWood833",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.25,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.25,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props833/MI_T02_WasteBin833.MI_T02_WasteBin833",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.22,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.22,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props833/MI_T02_Bollard833.MI_T02_Bollard833",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.3,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.3,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props833/MI_T02_BenchPaint833.MI_T02_BenchPaint833",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.25,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.25,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/TownRealism/Town02/Props833/MI_T02_Hydrant833.MI_T02_Hydrant833",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.35,
+        0,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.35,
+        0,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        0.75,
+        1,
+        1,
+        1
+      ],
+      "provenance": {
+        "status": "Independently authored whole-material905nm estimate; uncalibrated",
+        "nir_from_rgb": false,
+        "spatial_stain_optics": false,
+        "calibrated": false
+      }
+    },
+    {
+      "name": "/Game/Carla/Static/GenericMaterials/00_LegacyMaterials/Roads/LaneMarking/MI_Lanemarking_Opt.MI_Lanemarking_Opt",
+      "wavelengths_nm": [
+        904,
+        906
+      ],
+      "dry_low": [
+        0.45,
+        0.45,
+        0,
+        0
+      ],
+      "dry_high": [
+        0.45,
+        0.45,
+        0,
+        0
+      ],
+      "wet_multipliers": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "opacity": {
+        "width": 1024,
+        "height": 1024,
+        "clip_value": 0.16665,
+        "address_x": "wrap",
+        "address_y": "wrap",
+        "uv_scale": [
+          1,
+          1
+        ],
+        "uv_offset": [
+          0,
+          0
+        ],
+        "data_file": "lane-marking.alpha8",
+        "sha1": "218329fdcde5294e56d22b66427ea80fb9059930"
+      },
+      "provenance": {
+        "status": "Retains existing native marking fallback .45 diffuse/.45 retro; adds exact native source atlas alpha coverage",
+        "calibrated": false,
+        "nir_from_rgb": false,
+        "coverage": "Camera opacity is alphaA+alphaB; both use identical texture/UV, so alpha threshold is half camera clip. No shading/material/mesh change."
       }
     }
   ]

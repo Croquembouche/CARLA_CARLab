@@ -8,3 +8,7 @@ def tick(delta):
   world=u.find_object(None,'/Game/Carla/Maps/Town10HD_Opt.Town10HD_Opt')
   if world:u.SystemLibrary.execute_console_command(world,'quit')
 handle=u.register_slate_post_tick_callback(tick)
+
+exec(compile(Path("/mnt/simulations/vehicle-interiors/scripts/audit_runtime_materials.py").read_text(), "audit_runtime_materials.py", "exec"))
+
+exec(compile(Path("/mnt/simulations/vehicle-interiors/scripts/audit_door_motion.py").read_text(), "audit_door_motion.py", "exec"))

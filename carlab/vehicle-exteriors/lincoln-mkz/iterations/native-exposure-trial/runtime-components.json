@@ -1,0 +1,211 @@
+[
+  {
+    "actor": "BP_LincolnMKZ_Refined_C_0",
+    "components": [
+      {
+        "name": "VehicleMesh",
+        "socket": "None",
+        "location_cm": [
+          197.76032940900276,
+          3.7990210242333626,
+          -0.43911346916563077
+        ],
+        "rotation_deg": [
+          -0.21307132176326604,
+          0.9280457068675197,
+          -0.003631368624382959
+        ],
+        "parent_socket_location_cm": [
+          197.76032940900276,
+          3.7990210242333626,
+          -0.43911346916563077
+        ],
+        "materials": [
+          "/Game/VehicleExteriors/LincolnMKZ/MI_MKZ_ClearcoatPaint.MI_MKZ_ClearcoatPaint",
+          "/Game/VehicleExteriors/LincolnMKZ/MI_MKZ_ExteriorTrim.MI_MKZ_ExteriorTrim",
+          "/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Interior01.MI_LincolnMKZ_Interior01"
+        ]
+      },
+      {
+        "name": "SM_MKZ_Hardware_Wheel_Front_Left",
+        "socket": "Wheel_Front_Left",
+        "location_cm": [
+          346.18253507114525,
+          -73.4553823640536,
+          34.4657479679947
+        ],
+        "rotation_deg": [
+          65.82084446982252,
+          2.188726786756599,
+          -0.020478481022405688
+        ],
+        "parent_socket_location_cm": [
+          346.18253507114525,
+          -73.4553823640536,
+          34.4657479679947
+        ],
+        "materials": [
+          "/Game/VehicleExteriors/LincolnMKZ/M_MKZ_Fastener.M_MKZ_Fastener",
+          "/Game/VehicleExteriors/LincolnMKZ/M_MKZ_ValveRubber.M_MKZ_ValveRubber"
+        ]
+      },
+      {
+        "name": "SM_MKZ_Hardware_Wheel_Front_Right",
+        "socket": "Wheel_Front_Right",
+        "location_cm": [
+          343.60252928478513,
+          85.81568435940743,
+          34.467208494360555
+        ],
+        "rotation_deg": [
+          69.6405774527781,
+          2.188927339584419,
+          -0.024153726005299705
+        ],
+        "parent_socket_location_cm": [
+          343.60252928478513,
+          85.81568435940743,
+          34.467208494360555
+        ],
+        "materials": [
+          "/Game/VehicleExteriors/LincolnMKZ/M_MKZ_Fastener.M_MKZ_Fastener",
+          "/Game/VehicleExteriors/LincolnMKZ/M_MKZ_ValveRubber.M_MKZ_ValveRubber"
+        ]
+      },
+      {
+        "name": "SM_MKZ_Hardware_Wheel_Rear_Left",
+        "socket": "Wheel_Rear_Left",
+        "location_cm": [
+          59.4905489333066,
+          -78.08815363064934,
+          34.465754185351734
+        ],
+        "rotation_deg": [
+          65.89761568158417,
+          0.9199151164865234,
+          -0.008892321300996663
+        ],
+        "parent_socket_location_cm": [
+          59.4905489333066,
+          -78.08815363064934,
+          34.465754185351734
+        ],
+        "materials": [
+          "/Game/VehicleExteriors/LincolnMKZ/M_MKZ_Fastener.M_MKZ_Fastener",
+          "/Game/VehicleExteriors/LincolnMKZ/M_MKZ_ValveRubber.M_MKZ_ValveRubber"
+        ]
+      },
+      {
+        "name": "SM_MKZ_Hardware_Wheel_Rear_Right",
+        "socket": "Wheel_Rear_Right",
+        "location_cm": [
+          56.91072525832254,
+          81.17166884044582,
+          34.46720589280014
+        ],
+        "rotation_deg": [
+          69.71829433835254,
+          0.9182057418916123,
+          -0.010475950770026159
+        ],
+        "parent_socket_location_cm": [
+          56.91072525832254,
+          81.17166884044582,
+          34.46720589280014
+        ],
+        "materials": [
+          "/Game/VehicleExteriors/LincolnMKZ/M_MKZ_Fastener.M_MKZ_Fastener",
+          "/Game/VehicleExteriors/LincolnMKZ/M_MKZ_ValveRubber.M_MKZ_ValveRubber"
+        ]
+      },
+      {
+        "name": "SM_MKZ_Rotor_Wheel_Front_Left",
+        "socket": "Wheel_Front_Left",
+        "location_cm": [
+          346.18253507114525,
+          -73.4553823640536,
+          34.4657479679947
+        ],
+        "rotation_deg": [
+          65.82084446982252,
+          2.188726786756599,
+          -0.020478481022405688
+        ],
+        "parent_socket_location_cm": [
+          346.18253507114525,
+          -73.4553823640536,
+          34.4657479679947
+        ],
+        "materials": [
+          "/Game/VehicleExteriors/LincolnMKZ/M_MKZ_BrakeSteel.M_MKZ_BrakeSteel"
+        ]
+      },
+      {
+        "name": "SM_MKZ_Rotor_Wheel_Front_Right",
+        "socket": "Wheel_Front_Right",
+        "location_cm": [
+          343.60252928478513,
+          85.81568435940743,
+          34.467208494360555
+        ],
+        "rotation_deg": [
+          69.6405774527781,
+          2.188927339584419,
+          -0.024153726005299705
+        ],
+        "parent_socket_location_cm": [
+          343.60252928478513,
+          85.81568435940743,
+          34.467208494360555
+        ],
+        "materials": [
+          "/Game/VehicleExteriors/LincolnMKZ/M_MKZ_BrakeSteel.M_MKZ_BrakeSteel"
+        ]
+      },
+      {
+        "name": "SM_MKZ_Rotor_Wheel_Rear_Left",
+        "socket": "Wheel_Rear_Left",
+        "location_cm": [
+          59.4905489333066,
+          -78.08815363064934,
+          34.465754185351734
+        ],
+        "rotation_deg": [
+          65.89761568158417,
+          0.9199151164865234,
+          -0.008892321300996663
+        ],
+        "parent_socket_location_cm": [
+          59.4905489333066,
+          -78.08815363064934,
+          34.465754185351734
+        ],
+        "materials": [
+          "/Game/VehicleExteriors/LincolnMKZ/M_MKZ_BrakeSteel.M_MKZ_BrakeSteel"
+        ]
+      },
+      {
+        "name": "SM_MKZ_Rotor_Wheel_Rear_Right",
+        "socket": "Wheel_Rear_Right",
+        "location_cm": [
+          56.91072525832254,
+          81.17166884044582,
+          34.46720589280014
+        ],
+        "rotation_deg": [
+          69.71829433835254,
+          0.9182057418916123,
+          -0.010475950770026159
+        ],
+        "parent_socket_location_cm": [
+          56.91072525832254,
+          81.17166884044582,
+          34.46720589280014
+        ],
+        "materials": [
+          "/Game/VehicleExteriors/LincolnMKZ/M_MKZ_BrakeSteel.M_MKZ_BrakeSteel"
+        ]
+      }
+    ]
+  }
+]

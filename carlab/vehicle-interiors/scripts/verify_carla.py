@@ -11,7 +11,8 @@ for p in range(PORT,PORT+3):
 shutdown_request=ROOT/'.test-session-2230-stop'
 shutdown_request.unlink(missing_ok=True)
 log=(ROOT/'runtime.log').open('w')
-proc=subprocess.Popen(['/mnt/simulations/bin/carla-editor','/Game/Carla/Maps/Town10HD_Opt','-game','-RenderOffScreen',f'-graphicsadapter={os.environ.get("LINCOLN_TEST_GPU", "1")}',f'-carla-rpc-port={PORT}','-ResX=640','-ResY=360','-quality-level=Epic','-ddc=LincolnInteriorDDC','-ini:Engine:[DevOptions.Shaders]:bAllowCompilingThroughWorkers=False','-ini:Engine:[DevOptions.Shaders]:bAllowAsynchronousShaderCompiling=False','-ExecCmds=r.Streaming.PoolSize 2048,r.Shadow.Virtual.MaxPhysicalPages 2048,py /mnt/simulations/vehicle-interiors/scripts/test_session_shutdown.py','-nosound','-unattended'],stdout=log,stderr=subprocess.STDOUT)
+proc=subprocess.Popen(['/mnt/simulations/bin/carla-editor','/Game/Carla/Maps/Town10HD_Opt','-game','-RenderOffScreen',f'-graphicsadapter={os.environ.get("LINCOLN_TEST_GPU", "1")}',f'-carla-rpc-port={PORT}','-ResX=640','-ResY=360','-quality-level=Epic','-ddc=NoZenLocalFallback','-LocalDataCachePath=/home/william/.cache/carla-ddc','-ExecCmds=r.Streaming.PoolSize 2048,r.Shadow.Virtual.MaxPhysicalPages 2048,py /mnt/simulations/vehicle-interiors/scripts/test_session_shutdown.py','-nosound','-unattended'],stdout=log,stderr=subprocess.STDOUT)
+(ROOT/'runtime-report.json').write_text(json.dumps({'result':'RUNNING','visual_review':'PENDING'}))
 actors=[];world=None;original=None
 try:
     deadline=time.monotonic()+600
@@ -32,15 +33,28 @@ try:
     print('Lincoln variant spawned',flush=True)
     vehicle.apply_control(carla.VehicleControl(hand_brake=True))
     world.set_weather(carla.WeatherParameters(cloudiness=20,sun_altitude_angle=55,sun_azimuth_angle=170))
-    bp=library.find('sensor.camera.rgb');bp.set_attribute('image_size_x','1280');bp.set_attribute('image_size_y','800');bp.set_attribute('fov','90')
+    bp=library.find('sensor.camera.rgb');bp.set_attribute('image_size_x','1280');bp.set_attribute('image_size_y','800');bp.set_attribute('fov','90');bp.set_attribute('post_process_profile','LincolnInterior')
     views={
         'carla_dashboard':carla.Transform(carla.Location(x=-.20,y=0,z=1.25),carla.Rotation(pitch=-16,yaw=0)),
         'carla_passenger':carla.Transform(carla.Location(x=.65,y=-.35,z=1.28),carla.Rotation(pitch=-17,yaw=134)),
         'carla_rear_seats':carla.Transform(carla.Location(x=-.43,y=.05,z=1.22),carla.Rotation(pitch=-15,yaw=180)),
     }
+    views.update({
+        'carla_moonroof':carla.Transform(carla.Location(x=-.4,y=0,z=.79),carla.Rotation(pitch=75,yaw=0)),
+        'carla_driver_belt':carla.Transform(carla.Location(x=.70,y=.30,z=1.24),carla.Rotation(pitch=-18,yaw=-135)),
+        'carla_rear_console':carla.Transform(carla.Location(x=-.82,y=0,z=1.04),carla.Rotation(pitch=-30,yaw=0)),
+        'carla_front_door':carla.Transform(carla.Location(x=.20,y=.15,z=1.10),carla.Rotation(pitch=-20,yaw=72)),
+    })
+    if os.environ.get("LINCOLN_ROOF_ONLY"):
+        views={
+            "carla_moonroof":views["carla_moonroof"],
+            "carla_roof_exterior":carla.Transform(carla.Location(x=-.35,y=0,z=4.2),carla.Rotation(pitch=-90,yaw=0)),
+        }
     latest={}
     # Capture sequentially to stay within this GPU's memory budget.
     for name,transform in views.items():
+        if name=='carla_front_door':
+            vehicle.open_door(carla.VehicleDoor.FR);bp.set_attribute('fov','85')
         camera=world.spawn_actor(bp,transform,attach_to=vehicle);actors.append(camera)
         q=queue.Queue(maxsize=8)
         def receive(im,q=q):
@@ -59,7 +73,9 @@ try:
         im.save_to_disk(str(ROOT/'renders'/(name+'.png')))
         assert len(im.raw_data)==1280*800*4
         assert max(im.raw_data[0::4])>20,'Camera is black'
-        camera.stop();camera.destroy();actors.remove(camera)
+        camera.stop()
+        for _ in range(3):world.tick(180)
+        camera.destroy();actors.remove(camera)
     physics=vehicle.get_physics_control()
     assert len(physics.wheels)==4,'Expected four-wheel vehicle physics'
     extent=vehicle.bounding_box.extent
@@ -68,7 +84,7 @@ try:
     runtime_text=(ROOT/'runtime.log').read_text(errors='replace')
     assert 'missing bUsedWithSkeletalMesh' not in runtime_text,'Skeletal material usage flags missing'
     assert not any('/Game/VehicleInteriors/' in line and ('Failed to compile' in line or 'missing bUsed' in line) for line in runtime_text.splitlines()),'Interior material compilation or usage failed'
-    report={'result':'PASS_CAPTURE_CHECK','visual_review':'PENDING','vehicle':variant.id,'map':world.get_map().name,'cameras':list(latest),'server':client.get_server_version(),'texture_pool_mb':2048,'asynchronous_shader_compilation':False,'simultaneous_cameras':1,'wheels':len(physics.wheels),'extent_m':[extent.x,extent.y,extent.z],'note':'RGB cabin visibility. Epic scalability with bounded texture and virtual-shadow pools; no VR test.'}
+    report={'result':'PASS_CAPTURE_CHECK','visual_review':'PENDING','vehicle':variant.id,'map':world.get_map().name,'cameras':list(latest),'server':client.get_server_version(),'texture_pool_mb':2048,'shader_compilation':'project defaults; 65 warm-up ticks per camera','cache_profile':'NoZenLocalFallback with /home/william/.cache/carla-ddc','post_process_profile':'LincolnInterior','simultaneous_cameras':1,'wheels':len(physics.wheels),'extent_m':[extent.x,extent.y,extent.z],'note':'RGB cabin visibility. Epic scalability with bounded texture and virtual-shadow pools; no VR test.'}
     (ROOT/'runtime-report.json').write_text(json.dumps(report,indent=2))
     print(json.dumps(report),flush=True)
 finally:

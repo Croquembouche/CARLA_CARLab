@@ -12,8 +12,9 @@ uint RayCount;
 uint TableMask;
 uint IgnoredActor;
 uint HitStride;
-#include "CarlaLidarMotion.ush"
 #include "CarlaLidarInfrared.ush"
+uint4 Lookup(uint Component);
+#include "CarlaLidarMotion.ush"
 
 uint4 Lookup(uint Component)
 {
@@ -41,7 +42,12 @@ struct FCarlaCollisionCallback
         uint4 Entry=Lookup(Component);
         uint Actor=Entry.y;
         if (Motion && MovingPrimitive(Component)!=0) return false;
-        return Actor != 0 && Actor != IgnoredActor && (Optical || (Entry.w & 0x80000000u)==0);
+        bool Allowed=Actor != 0 && Actor != IgnoredActor && (Optical || (Entry.w & 0x80000000u)==0) && (!Optical || (Entry.w & 0x40000000u)==0);
+        if(Allowed&&Optical) {
+            uint Mat=Entry.z+min(Candidate.GeometryIndex,(Entry.w&0x3fffffffu)-1);
+            Allowed=InfraredAllowsHit(Mat,Candidate.PrimitiveIndex,Candidate.Barycentrics,0,false);
+        }
+        return Allowed;
     }
 };
 
@@ -94,7 +100,7 @@ void MainCS(uint3 DispatchId : SV_DispatchThreadID)
             Component=GetPrimitiveData(Instance.PrimitiveId).PrimitiveComponentId;
         }
         if (Filter.Motion) {
-            FCarlaMotionHit Moving=TraceMotion(Path.Origin,Path.Direction,Hit.IsHit()?Hit.HitT:Ray.TMax,saturate(Physical.y),Rays[Index*4+3].z);
+            FCarlaMotionHit Moving=TraceMotion(Path.Origin,Path.Direction,Hit.IsHit()?Hit.HitT:Ray.TMax,saturate(Physical.y),Rays[Index*4+3].z,Optical);
             if (Moving.Component!=0) {
                 Hit.HitT=Moving.Distance;Hit.GeometryIndex=Moving.Section;Hit.WorldGeometryNormal=Moving.Normal;
                 Component=Moving.Component;HitUV=Moving.UV;IsMotionHit=true;
@@ -103,7 +109,7 @@ void MainCS(uint3 DispatchId : SV_DispatchThreadID)
         if (Component==0) continue;
         float Length=Path.Length+Hit.HitT*Path.IOR;
         uint4 Meta=Lookup(Component);
-        uint Mat=Meta.z+min(Hit.GeometryIndex,(Meta.w & 0x7fffffffu)-1);
+        uint Mat=Meta.z+min(Hit.GeometryIndex,(Meta.w & 0x3fffffffu)-1);
         float4 M=OpticalMaterials[Mat*2], P=OpticalMaterials[Mat*2+1];
         if(Physical.x>0)M=InfraredMaterial(Mat,M,Hit.PrimitiveIndex,Hit.Barycentrics,HitUV,IsMotionHit,Rays[Index*4+3].xy);
         float3 N=normalize(Hit.WorldGeometryNormal);

@@ -1,0 +1,9 @@
+{
+  "result": "BAKED",
+  "cause": "Ebony color classification accidentally altered control-panel photo pixels",
+  "fix": "UV and color constrained protection of original control-panel colors and roughness",
+  "textures": [
+    "T_MKZ_Brochure_BaseColor",
+    "T_MKZ_Brochure_ORM"
+  ]
+}

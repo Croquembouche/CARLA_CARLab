@@ -1,0 +1,510 @@
+{
+  "status": "PASS",
+  "combination_count": 24,
+  "checks": [
+    {
+      "caption": "Refined MKZ · same native frame 405 · 1280 × 800 · standard profile · 0.563 s enhancement on RTX 2080 Ti (model loading excluded). Community approximation, not verified NVIDIA-equivalent. Independent still, no temporal history.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-refined-front-three-quarter.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "dlss/standard/0004-refined-front-three-quarter-405-enhanced.png",
+          "width": 1280
+        }
+      ],
+      "mode": "dlss-refined",
+      "profile": "standard",
+      "profileHidden": false,
+      "view": "front-three-quarter"
+    },
+    {
+      "caption": "Refined MKZ · same native frame 485 · 1280 × 800 · standard profile · 0.556 s enhancement on RTX 2080 Ti (model loading excluded). Community approximation, not verified NVIDIA-equivalent. Independent still, no temporal history.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-refined-rear-three-quarter.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "dlss/standard/0005-refined-rear-three-quarter-485-enhanced.png",
+          "width": 1280
+        }
+      ],
+      "mode": "dlss-refined",
+      "profile": "standard",
+      "profileHidden": false,
+      "view": "rear-three-quarter"
+    },
+    {
+      "caption": "Refined MKZ · same native frame 565 · 1280 × 800 · standard profile · 0.562 s enhancement on RTX 2080 Ti (model loading excluded). Community approximation, not verified NVIDIA-equivalent. Independent still, no temporal history.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-refined-front-detail.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "dlss/standard/0006-refined-front-detail-565-enhanced.png",
+          "width": 1280
+        }
+      ],
+      "mode": "dlss-refined",
+      "profile": "standard",
+      "profileHidden": false,
+      "view": "front-detail"
+    },
+    {
+      "caption": "Refined MKZ · same native frame 645 · 1280 × 800 · standard profile · 0.564 s enhancement on RTX 2080 Ti (model loading excluded). Community approximation, not verified NVIDIA-equivalent. Independent still, no temporal history.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-refined-wheel-detail.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "dlss/standard/0007-refined-wheel-detail-645-enhanced.png",
+          "width": 1280
+        }
+      ],
+      "mode": "dlss-refined",
+      "profile": "standard",
+      "profileHidden": false,
+      "view": "wheel-detail"
+    },
+    {
+      "caption": "Refined MKZ · same native frame 405 · 1280 × 800 · natural profile · 0.573 s enhancement on RTX 2080 Ti (model loading excluded). Community approximation, not verified NVIDIA-equivalent. Independent still, no temporal history.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-refined-front-three-quarter.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "dlss/natural/0004-refined-front-three-quarter-405-enhanced.png",
+          "width": 1280
+        }
+      ],
+      "mode": "dlss-refined",
+      "profile": "natural",
+      "profileHidden": false,
+      "view": "front-three-quarter"
+    },
+    {
+      "caption": "Refined MKZ · same native frame 485 · 1280 × 800 · natural profile · 0.571 s enhancement on RTX 2080 Ti (model loading excluded). Community approximation, not verified NVIDIA-equivalent. Independent still, no temporal history.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-refined-rear-three-quarter.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "dlss/natural/0005-refined-rear-three-quarter-485-enhanced.png",
+          "width": 1280
+        }
+      ],
+      "mode": "dlss-refined",
+      "profile": "natural",
+      "profileHidden": false,
+      "view": "rear-three-quarter"
+    },
+    {
+      "caption": "Refined MKZ · same native frame 565 · 1280 × 800 · natural profile · 0.562 s enhancement on RTX 2080 Ti (model loading excluded). Community approximation, not verified NVIDIA-equivalent. Independent still, no temporal history.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-refined-front-detail.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "dlss/natural/0006-refined-front-detail-565-enhanced.png",
+          "width": 1280
+        }
+      ],
+      "mode": "dlss-refined",
+      "profile": "natural",
+      "profileHidden": false,
+      "view": "front-detail"
+    },
+    {
+      "caption": "Refined MKZ · same native frame 645 · 1280 × 800 · natural profile · 0.568 s enhancement on RTX 2080 Ti (model loading excluded). Community approximation, not verified NVIDIA-equivalent. Independent still, no temporal history.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-refined-wheel-detail.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "dlss/natural/0007-refined-wheel-detail-645-enhanced.png",
+          "width": 1280
+        }
+      ],
+      "mode": "dlss-refined",
+      "profile": "natural",
+      "profileHidden": false,
+      "view": "wheel-detail"
+    },
+    {
+      "caption": "Stock MKZ · same native frame 85 · 1280 × 800 · standard profile · 0.720 s enhancement on RTX 2080 Ti (model loading excluded). Community approximation, not verified NVIDIA-equivalent. Independent still, no temporal history.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-stock-front-three-quarter.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "dlss/standard/0000-stock-front-three-quarter-85-enhanced.png",
+          "width": 1280
+        }
+      ],
+      "mode": "dlss-stock",
+      "profile": "standard",
+      "profileHidden": false,
+      "view": "front-three-quarter"
+    },
+    {
+      "caption": "Stock MKZ · same native frame 165 · 1280 × 800 · standard profile · 0.560 s enhancement on RTX 2080 Ti (model loading excluded). Community approximation, not verified NVIDIA-equivalent. Independent still, no temporal history.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-stock-rear-three-quarter.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "dlss/standard/0001-stock-rear-three-quarter-165-enhanced.png",
+          "width": 1280
+        }
+      ],
+      "mode": "dlss-stock",
+      "profile": "standard",
+      "profileHidden": false,
+      "view": "rear-three-quarter"
+    },
+    {
+      "caption": "Stock MKZ · same native frame 245 · 1280 × 800 · standard profile · 0.562 s enhancement on RTX 2080 Ti (model loading excluded). Community approximation, not verified NVIDIA-equivalent. Independent still, no temporal history.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-stock-front-detail.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "dlss/standard/0002-stock-front-detail-245-enhanced.png",
+          "width": 1280
+        }
+      ],
+      "mode": "dlss-stock",
+      "profile": "standard",
+      "profileHidden": false,
+      "view": "front-detail"
+    },
+    {
+      "caption": "Stock MKZ · same native frame 325 · 1280 × 800 · standard profile · 0.565 s enhancement on RTX 2080 Ti (model loading excluded). Community approximation, not verified NVIDIA-equivalent. Independent still, no temporal history.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-stock-wheel-detail.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "dlss/standard/0003-stock-wheel-detail-325-enhanced.png",
+          "width": 1280
+        }
+      ],
+      "mode": "dlss-stock",
+      "profile": "standard",
+      "profileHidden": false,
+      "view": "wheel-detail"
+    },
+    {
+      "caption": "Stock MKZ · same native frame 85 · 1280 × 800 · natural profile · 0.706 s enhancement on RTX 2080 Ti (model loading excluded). Community approximation, not verified NVIDIA-equivalent. Independent still, no temporal history.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-stock-front-three-quarter.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "dlss/natural/0000-stock-front-three-quarter-85-enhanced.png",
+          "width": 1280
+        }
+      ],
+      "mode": "dlss-stock",
+      "profile": "natural",
+      "profileHidden": false,
+      "view": "front-three-quarter"
+    },
+    {
+      "caption": "Stock MKZ · same native frame 165 · 1280 × 800 · natural profile · 0.566 s enhancement on RTX 2080 Ti (model loading excluded). Community approximation, not verified NVIDIA-equivalent. Independent still, no temporal history.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-stock-rear-three-quarter.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "dlss/natural/0001-stock-rear-three-quarter-165-enhanced.png",
+          "width": 1280
+        }
+      ],
+      "mode": "dlss-stock",
+      "profile": "natural",
+      "profileHidden": false,
+      "view": "rear-three-quarter"
+    },
+    {
+      "caption": "Stock MKZ · same native frame 245 · 1280 × 800 · natural profile · 0.565 s enhancement on RTX 2080 Ti (model loading excluded). Community approximation, not verified NVIDIA-equivalent. Independent still, no temporal history.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-stock-front-detail.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "dlss/natural/0002-stock-front-detail-245-enhanced.png",
+          "width": 1280
+        }
+      ],
+      "mode": "dlss-stock",
+      "profile": "natural",
+      "profileHidden": false,
+      "view": "front-detail"
+    },
+    {
+      "caption": "Stock MKZ · same native frame 325 · 1280 × 800 · natural profile · 0.569 s enhancement on RTX 2080 Ti (model loading excluded). Community approximation, not verified NVIDIA-equivalent. Independent still, no temporal history.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-stock-wheel-detail.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "dlss/natural/0003-stock-wheel-detail-325-enhanced.png",
+          "width": 1280
+        }
+      ],
+      "mode": "dlss-stock",
+      "profile": "natural",
+      "profileHidden": false,
+      "view": "wheel-detail"
+    },
+    {
+      "caption": "Actual CARLA RGB sensors in an isolated studio with Lumen and hardware ray tracing. Identical camera transforms, shader paint color, fixed exposure, lighting and warm-up sequence. No neural enhancement.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-stock-front-three-quarter.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-refined-front-three-quarter.png",
+          "width": 1280
+        }
+      ],
+      "mode": "native",
+      "profile": "natural",
+      "profileHidden": true,
+      "view": "front-three-quarter"
+    },
+    {
+      "caption": "Actual CARLA RGB sensors in an isolated studio with Lumen and hardware ray tracing. Identical camera transforms, shader paint color, fixed exposure, lighting and warm-up sequence. No neural enhancement.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-stock-rear-three-quarter.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-refined-rear-three-quarter.png",
+          "width": 1280
+        }
+      ],
+      "mode": "native",
+      "profile": "natural",
+      "profileHidden": true,
+      "view": "rear-three-quarter"
+    },
+    {
+      "caption": "Actual CARLA RGB sensors in an isolated studio with Lumen and hardware ray tracing. Identical camera transforms, shader paint color, fixed exposure, lighting and warm-up sequence. No neural enhancement.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-stock-front-detail.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-refined-front-detail.png",
+          "width": 1280
+        }
+      ],
+      "mode": "native",
+      "profile": "natural",
+      "profileHidden": true,
+      "view": "front-detail"
+    },
+    {
+      "caption": "Actual CARLA RGB sensors in an isolated studio with Lumen and hardware ray tracing. Identical camera transforms, shader paint color, fixed exposure, lighting and warm-up sequence. No neural enhancement.",
+      "images": [
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-stock-wheel-detail.png",
+          "width": 1280
+        },
+        {
+          "complete": true,
+          "height": 800,
+          "src": "renders/native-refined-wheel-detail.png",
+          "width": 1280
+        }
+      ],
+      "mode": "native",
+      "profile": "natural",
+      "profileHidden": true,
+      "view": "wheel-detail"
+    },
+    {
+      "caption": "Matched Blender Cycles renders of the exported stock assembly and refined source. Materials reconstructed for Blender; these are separate from native CARLA captures. No neural enhancement.",
+      "images": [
+        {
+          "complete": true,
+          "height": 1000,
+          "src": "renders/baseline-front-three-quarter.png",
+          "width": 1600
+        },
+        {
+          "complete": true,
+          "height": 1000,
+          "src": "renders/refined-front-three-quarter.png",
+          "width": 1600
+        }
+      ],
+      "mode": "studio",
+      "profile": "natural",
+      "profileHidden": true,
+      "view": "front-three-quarter"
+    },
+    {
+      "caption": "Matched Blender Cycles renders of the exported stock assembly and refined source. Materials reconstructed for Blender; these are separate from native CARLA captures. No neural enhancement.",
+      "images": [
+        {
+          "complete": true,
+          "height": 1000,
+          "src": "renders/baseline-rear-three-quarter.png",
+          "width": 1600
+        },
+        {
+          "complete": true,
+          "height": 1000,
+          "src": "renders/refined-rear-three-quarter.png",
+          "width": 1600
+        }
+      ],
+      "mode": "studio",
+      "profile": "natural",
+      "profileHidden": true,
+      "view": "rear-three-quarter"
+    },
+    {
+      "caption": "Matched Blender Cycles renders of the exported stock assembly and refined source. Materials reconstructed for Blender; these are separate from native CARLA captures. No neural enhancement.",
+      "images": [
+        {
+          "complete": true,
+          "height": 1000,
+          "src": "renders/baseline-front-detail.png",
+          "width": 1600
+        },
+        {
+          "complete": true,
+          "height": 1000,
+          "src": "renders/refined-front-detail.png",
+          "width": 1600
+        }
+      ],
+      "mode": "studio",
+      "profile": "natural",
+      "profileHidden": true,
+      "view": "front-detail"
+    },
+    {
+      "caption": "Matched Blender Cycles renders of the exported stock assembly and refined source. Materials reconstructed for Blender; these are separate from native CARLA captures. No neural enhancement.",
+      "images": [
+        {
+          "complete": true,
+          "height": 1000,
+          "src": "renders/baseline-wheel-detail.png",
+          "width": 1600
+        },
+        {
+          "complete": true,
+          "height": 1000,
+          "src": "renders/refined-wheel-detail.png",
+          "width": 1600
+        }
+      ],
+      "mode": "studio",
+      "profile": "natural",
+      "profileHidden": true,
+      "view": "wheel-detail"
+    }
+  ]
+}

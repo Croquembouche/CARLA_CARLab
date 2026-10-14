@@ -1,13 +1,35 @@
 # GPU sensor work
 
-These are historical measurements from the publication workstation. For first installation, follow [the current stack setup](https://github.com/Croquembouche/CARLA_CARLab/blob/main/carlab/SETUP.md). Benchmark commands below start workloads and require available GPUs/ports.
-
 Status: **compiled and live validated on all four RTX 2080 Ti GPUs** on
 2026-09-07. The hardware ray shader passes controlled geometry checks in both
 Entry and Town10HD. All six camera stream types pass live checks. Four workers
 pass RGB, LiDAR and radar frame/timestamp checks together, followed by an
 eight-frame semantic LiDAR check. The verifier confirmed one worker on each of
 four distinct physical GPUs and a 2000 MiB texture pool on every worker.
+
+## Vehicle return correction — 2026-09-12
+
+The GPU collision filter now associates visible meshes with an actor's single
+registered `CustomSensorCollision` proxy when that proxy accepts SensorTrace.
+CARLA vehicle bodies deliberately ignore SensorTrace and use this separate,
+usually hidden collision mesh. Filtering the visible body alone discarded the
+vehicle's GPU hits. The mapping honors disabled collision and preserves the
+proxy component for semantic labels and actor identity. Ordinary component
+filtering and the existing landscape mapping remain in place.
+
+In the saved Town10HD scene, all four CPU-visible spawned cars had zero GPU
+returns before the correction. Across 12 frames per backend, the fixed GPU
+returned 304, 88, 304, and 32 points per frame for those cars; the CPU reference
+returned 312, 112, 312, and 40. The four target poses were identical across the
+runs. The 65,536-ray controlled test also passes hit/miss, identity, normal, and
+distance checks with a hidden sensor proxy and a collision-disabled actor.
+
+See [the repair report](linux/verification/gpu-return-fix/REPORT.md) and
+[the machine-readable comparison](linux/verification/gpu-return-fix/comparison.json).
+The earlier benchmark below was not rerun; it did not establish coverage of
+this vehicle proxy configuration. GPU render surfaces still differ from CPU
+collision geometry, so matching point counts or exact surface parity is not
+claimed.
 
 ## Measured results
 
@@ -37,9 +59,9 @@ threads of the supplied server processes and excludes the Python client and
 shader compiler child processes; those compiler children were idle when timing
 started. GPU utilization and VRAM are sampled, not continuous measurements.
 
-Results: [combined report](../verification/gpu-stack-verification.json),
-[four-GPU samples](../verification/sensors-four-gpu.json),
-[example camera image](../verification/sensors-four-gpu.png).
+Results: [combined report](linux/verification/gpu-stack-verification.json),
+[four-GPU samples](linux/verification/sensors-four-gpu.json),
+[example camera image](linux/verification/sensors-four-gpu.png).
 The test processes were stopped after validation.
 
 The backend remains **experimental and opt-in** because render and collision
@@ -133,7 +155,7 @@ included in performance comparisons.
 ## Launch commands
 
 ```bash
-source /mnt/simulations/carla/carlab/host-setup/env.sh
+source /media/william/mist1/Simulations/env.sh
 
 # Inspect the exact primary and GPU worker commands without launching anything.
 carla-multigpu --dry-run
@@ -147,7 +169,7 @@ carla-multigpu --gpus 0,1,2,3 --port 2000 --backend cpu
 # Wait for READY before connecting. In another terminal, run four cameras,
 # four LiDARs and four radars.
 # Supply the primary/worker PIDs from the launch log for CPU accounting.
-carla-python /mnt/simulations/carla/carlab/host-setup/scripts/benchmark-sensors.py \
+carla-python /media/william/mist1/Simulations/scripts/benchmark-sensors.py \
   --port 2000 --pids PRIMARY_PID,WORKER_PID_0,WORKER_PID_1,WORKER_PID_2,WORKER_PID_3 \
   --output /mnt/simulations/verification/sensors-four-gpu.json
 ```
@@ -159,10 +181,11 @@ carla-sim -RenderOffScreen -graphicsadapter=3 -quality-level=High -ResX=640 -Res
   -ExecCmds="r.Streaming.PoolSize 2000,r.RayTracing.UseReferenceBasedResidency 1,r.RayTracing.NumAlwaysResidentLODs 0,r.RayTracing.ResidentGeometryMemoryPoolSizeInMB 2048,carla.Sensors.GpuRayTracing 1,r.RayTracing.ExternalQueries 1,r.RayTracing.ExternalQueryBounds 1,r.RayTracing.ForceAllRayTracingEffects 0,r.RayTracing.Culling 0,r.RayTracing.Geometry.InstancedStaticMeshes.Culling 0"
 ```
 
-`carla.Sensors.GpuSelfTest` is an Unreal console command. It spawns two controlled
-cube meshes away from the map, with a nonblocking mesh in front of a blocking one,
-then compares 65,536 GPU rays against Chaos. It checks hit/miss, distance, normal,
-actor mapping and collision filtering, removes its actors, and writes
+`carla.Sensors.GpuSelfTest` is an Unreal console command. It spawns controlled
+cubes away from the map: a visible body backed by a hidden sensor proxy, an
+ordinary blocking cube, a collision-disabled actor, and nonblocking layers.
+It compares 65,536 GPU rays against Chaos, checking hit/miss, distance, normal,
+actor/component identity and collision filtering, removes its actors, and writes
 `/mnt/simulations/verification/gpu-ray-self-test.json` only on success. Its CPU
 serial time and GPU end-to-end latency describe this controlled test, not general
 simulation speedup.

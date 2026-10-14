@@ -1,0 +1,11 @@
+{
+  "status": "PASS_FRESH_SOURCE_GEOMETRY_EQUIVALENCE",
+  "baseline_source": "Existing stock FBX exported September 9 from the unchanged native mesh; fresh export verified on October 4.",
+  "baseline_vertices": 347023,
+  "fresh_vertices": 347023,
+  "faces": 587042,
+  "unique_positions": 319423,
+  "position_precision_m": 1e-05,
+  "same_unique_positions": true,
+  "fresh_fbx_sha256": "d6619ae0e3143a635245dc263f6351c3752d24546030992065548cac52788e4a"
+}

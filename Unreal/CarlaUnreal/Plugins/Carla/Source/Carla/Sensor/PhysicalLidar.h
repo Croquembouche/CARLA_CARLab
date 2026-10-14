@@ -7,6 +7,7 @@
 #include <carla/sensor/data/PhysicalLidarData.h>
 #include <util/enable-ue4-macros.h>
 class ASensor;
+struct FCarlaGpuRay;
 struct FPhysicalLidarFrame {
   carla::sensor::data::PhysicalLidarData Data;
   double DeliveryDelayMs=0;
@@ -22,5 +23,6 @@ private:
   FTransform PreviousPose;
   double PreviousTime=-1,Epoch=-1;
   TArray<double> NextFiring;
+  TSharedPtr<TArray<FCarlaGpuRay>,ESPMode::ThreadSafe> RayStorage;
   uint64 PulseId=0,Sequence=0;
 };

@@ -1,0 +1,17 @@
+{
+  "enable_postprocess_effects": "ActorAttribute(id=enable_postprocess_effects,type=bool,value=True)",
+  "use_ray_tracing": "ActorAttribute(id=use_ray_tracing,type=bool,value=True)",
+  "lens_x_size": "ActorAttribute(id=lens_x_size,type=float,value=0.08)",
+  "lens_k": "ActorAttribute(id=lens_k,type=float,value=-1)",
+  "lens_kcube": "ActorAttribute(id=lens_kcube,type=float,value=0)",
+  "lens_circle_multiplier": "ActorAttribute(id=lens_circle_multiplier,type=float,value=0)",
+  "post_process_profile": "ActorAttribute(id=post_process_profile,type=str,value=Default)",
+  "fov": "ActorAttribute(id=fov,type=float,value=90)",
+  "image_size_x": "ActorAttribute(id=image_size_x,type=int,value=800)",
+  "lens_y_size": "ActorAttribute(id=lens_y_size,type=float,value=0.08)",
+  "image_size_y": "ActorAttribute(id=image_size_y,type=int,value=600)",
+  "sensor_tick": "ActorAttribute(id=sensor_tick,type=float,value=0)",
+  "ros_name": "ActorAttribute(id=ros_name,type=str,value=sensor.camera.rgb)",
+  "lens_circle_falloff": "ActorAttribute(id=lens_circle_falloff,type=float,value=5)",
+  "role_name": "ActorAttribute(id=role_name,type=str,value=front)"
+}

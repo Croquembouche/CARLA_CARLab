@@ -1,0 +1,22 @@
+{
+  "result": "IMPORTED_AND_BLUEPRINT_COMPILED",
+  "components": [
+    {
+      "component": "BrochureDoorDetails_FL",
+      "parent": "SM_LincolnDoor_Front_L",
+      "mesh": "/Game/VehicleInteriors/Lincoln/SM_MKZ_Door_Details_FL.SM_MKZ_Door_Details_FL",
+      "bounds": "<Struct 'BoxSphereBounds' (0x651ced8c900) {origin: {x: 39.700038, y: -70.189142, z: 78.100002}, box_extent: {x: 44.699994, y: 7.255552, z: 17.100002}, sphere_radius: 47.203249}>",
+      "relative_location": "<Struct 'Vector' (0x6528651d368) {x: -95.953059, y: 87.410206, z: -87.399000}>"
+    },
+    {
+      "component": "BrochureDoorDetails_FR",
+      "parent": "SM_LincolnDoor_Front_R",
+      "mesh": "/Game/VehicleInteriors/Lincoln/SM_MKZ_Door_Details_FR.SM_MKZ_Door_Details_FR",
+      "bounds": "<Struct 'BoxSphereBounds' (0x652896ce380) {origin: {x: 39.700045, y: 70.189100, z: 78.100018}, box_extent: {x: 44.700002, y: 7.255541, z: 17.100002}, sphere_radius: 47.203257}>",
+      "relative_location": "<Struct 'Vector' (0x6528651da68) {x: -95.953059, y: -88.020962, z: -87.398899}>"
+    }
+  ],
+  "open_door_visual_check": "PASS_FRESH_RUNTIME",
+  "hinge_coordinate_source": "reference/blender-audit.json: Door_Front_Left and Door_Front_Right bone heads",
+  "verification_image": "renders/carla_front_door.png"
+}

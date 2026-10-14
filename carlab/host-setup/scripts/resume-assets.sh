@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
-source /mnt/simulations/carla/carlab/host-setup/env.sh
+source /media/william/mist1/Simulations/env.sh
 export GIT_TERMINAL_PROMPT=0 GIT_LFS_FORCE_PROGRESS=1
 unset GIT_LFS_PROGRESS  # Per-chunk fsync of this log throttles large asset transfers.
 echo $$ > "$SIMULATIONS_LINUX/.asset-download.pid"

@@ -1,0 +1,728 @@
+{
+  "SK_LincolnMKZ.001": {
+    "vertices_above_1_30": 6552,
+    "faces_above_1_30": 10940,
+    "roof_bounds": {
+      "min": [
+        -1.601345181465149,
+        -0.6796879172325134,
+        1.301241159439087
+      ],
+      "max": [
+        0.6389107704162598,
+        0.6796879172325134,
+        1.5253046751022339
+      ]
+    },
+    "roof_material_faces": {
+      "MI_LincolnMKZ_Bodywork": 3388,
+      "MI_LincolnMKZ_Interior2": 1900,
+      "MI_LincolnMKZ_Interior01": 5652
+    }
+  },
+  "SM_LincolnMKZ_Door_FL": {
+    "vertices_above_1_30": 322,
+    "faces_above_1_30": 672,
+    "roof_bounds": {
+      "min": [
+        -0.267114520072937,
+        0.6094361543655396,
+        1.3023595809936523
+      ],
+      "max": [
+        0.49173665046691895,
+        0.6935469508171082,
+        1.4622409343719482
+      ]
+    },
+    "roof_material_faces": {
+      "MI_LincolnMKZ_Interior2": 672
+    }
+  },
+  "SM_LincolnMKZ_Door_FR": {
+    "vertices_above_1_30": 322,
+    "faces_above_1_30": 672,
+    "roof_bounds": {
+      "min": [
+        -0.267114520072937,
+        -0.6935470104217529,
+        1.3023595809936523
+      ],
+      "max": [
+        0.49173659086227417,
+        -0.6094361543655396,
+        1.4622409343719482
+      ]
+    },
+    "roof_material_faces": {
+      "MI_LincolnMKZ_Interior2": 672
+    }
+  },
+  "SM_LincolnMKZ_Door_RL": {
+    "vertices_above_1_30": 388,
+    "faces_above_1_30": 800,
+    "roof_bounds": {
+      "min": [
+        -1.0180013179779053,
+        0.607250988483429,
+        1.3118135929107666
+      ],
+      "max": [
+        -0.2403223216533661,
+        0.6935980319976807,
+        1.4651110172271729
+      ]
+    },
+    "roof_material_faces": {
+      "MI_LincolnMKZ_Interior2": 800
+    }
+  },
+  "SM_LincolnMKZ_Door_RR": {
+    "vertices_above_1_30": 388,
+    "faces_above_1_30": 800,
+    "roof_bounds": {
+      "min": [
+        -1.0180013179779053,
+        -0.6935980916023254,
+        1.3118135929107666
+      ],
+      "max": [
+        -0.24032241106033325,
+        -0.6072510480880737,
+        1.4651110172271729
+      ]
+    },
+    "roof_material_faces": {
+      "MI_LincolnMKZ_Interior2": 800
+    }
+  },
+  "SK_SeatedMannequin": {
+    "vertices_above_1_30": 4270,
+    "faces_above_1_30": 4512,
+    "roof_bounds": {
+      "min": [
+        0.0686400756239891,
+        0.3277900516986847,
+        1.3089351654052734
+      ],
+      "max": [
+        0.24959999322891235,
+        0.4722099304199219,
+        1.416450023651123
+      ]
+    },
+    "roof_material_faces": {
+      "M_Mannequin_Shell": 1952,
+      "M_Mannequin_Eye": 1280,
+      "M_Mannequin_Iris": 1280
+    }
+  },
+  "SM_MKZ_Moonroof_Glass": {
+    "vertices_above_1_30": 525,
+    "faces_above_1_30": 480,
+    "roof_bounds": {
+      "min": [
+        -0.8799999952316284,
+        -0.48500001430511475,
+        1.4573298692703247
+      ],
+      "max": [
+        0.30000001192092896,
+        0.48500001430511475,
+        1.5289891958236694
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Moonroof_Glass": 480
+    }
+  },
+  "ReferenceGlazing_SM_LincolnMKZ_Door_FR_Glass_Ext1.001": {
+    "vertices_above_1_30": 95,
+    "faces_above_1_30": 192,
+    "roof_bounds": {
+      "min": [
+        -0.18889831006526947,
+        -0.6963381171226501,
+        1.3010897636413574
+      ],
+      "max": [
+        0.48993682861328125,
+        -0.6272270679473877,
+        1.4425561428070068
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Moonroof_Glass": 192
+    }
+  },
+  "ReferenceGlazing_SM_LincolnMKZ_Door_FL_Glass_Ext1": {
+    "vertices_above_1_30": 95,
+    "faces_above_1_30": 192,
+    "roof_bounds": {
+      "min": [
+        -0.18889831006526947,
+        0.6272277235984802,
+        1.3010894060134888
+      ],
+      "max": [
+        0.48993682861328125,
+        0.6963387131690979,
+        1.4425556659698486
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Moonroof_Glass": 192
+    }
+  },
+  "ReferenceGlazing_SM_LincolnMKZ_Glass_Ext1.001": {
+    "vertices_above_1_30": 611,
+    "faces_above_1_30": 1120,
+    "roof_bounds": {
+      "min": [
+        -1.7284632921218872,
+        -0.6823480129241943,
+        1.302025318145752
+      ],
+      "max": [
+        0.7764419317245483,
+        0.6823486685752869,
+        1.5109831094741821
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Moonroof_Glass": 1120
+    }
+  },
+  "ReferenceGlazing_SM_LincolnMKZ_Door_RR_Glass_Ext1": {
+    "vertices_above_1_30": 119,
+    "faces_above_1_30": 235,
+    "roof_bounds": {
+      "min": [
+        -0.9406543374061584,
+        -0.6932706236839294,
+        1.3047268390655518
+      ],
+      "max": [
+        -0.3244410753250122,
+        -0.6221115589141846,
+        1.4492591619491577
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Moonroof_Glass": 235
+    }
+  },
+  "ReferenceGlazing_SM_LincolnMKZ_Door_RL_Glass_Ext1.001": {
+    "vertices_above_1_30": 119,
+    "faces_above_1_30": 235,
+    "roof_bounds": {
+      "min": [
+        -0.9406543374061584,
+        0.6221122145652771,
+        1.304726481437683
+      ],
+      "max": [
+        -0.3244410753250122,
+        0.6932711005210876,
+        1.449258804321289
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Moonroof_Glass": 235
+    }
+  },
+  "Front_Right_Headrest": {
+    "vertices_above_1_30": 1600,
+    "faces_above_1_30": 1600,
+    "roof_bounds": {
+      "min": [
+        -0.26835519075393677,
+        -0.5034809112548828,
+        1.3227463960647583
+      ],
+      "max": [
+        -0.12824484705924988,
+        -0.24251911044120789,
+        1.4075000286102295
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Ebony_Leather": 1600
+    }
+  },
+  "Front_Left_Headrest": {
+    "vertices_above_1_30": 1600,
+    "faces_above_1_30": 1600,
+    "roof_bounds": {
+      "min": [
+        -0.26835519075393677,
+        0.24251911044120789,
+        1.3227463960647583
+      ],
+      "max": [
+        -0.12824484705924988,
+        0.5034809112548828,
+        1.4075000286102295
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Ebony_Leather": 1600
+    }
+  },
+  "Rear_Right_Headrest": {
+    "vertices_above_1_30": 1120,
+    "faces_above_1_30": 1120,
+    "roof_bounds": {
+      "min": [
+        -1.2947940826416016,
+        -0.48970580101013184,
+        1.303722620010376
+      ],
+      "max": [
+        -1.1665464639663696,
+        -0.25629422068595886,
+        1.337499976158142
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Ebony_Leather": 1120
+    }
+  },
+  "Rear_Left_Headrest": {
+    "vertices_above_1_30": 1120,
+    "faces_above_1_30": 1120,
+    "roof_bounds": {
+      "min": [
+        -1.2947940826416016,
+        0.25629422068595886,
+        1.303722620010376
+      ],
+      "max": [
+        -1.1665464639663696,
+        0.48970580101013184,
+        1.337499976158142
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Ebony_Leather": 1120
+    }
+  },
+  "Front_Right_Height_Adjuster": {
+    "vertices_above_1_30": 4,
+    "faces_above_1_30": 5,
+    "roof_bounds": {
+      "min": [
+        -0.2919999957084656,
+        -0.6625000238418579,
+        1.3249999284744263
+      ],
+      "max": [
+        -0.2680000066757202,
+        -0.5874999761581421,
+        1.3249999284744263
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Seat_Base_Plastic": 5
+    }
+  },
+  "Front_Left_Height_Adjuster": {
+    "vertices_above_1_30": 4,
+    "faces_above_1_30": 5,
+    "roof_bounds": {
+      "min": [
+        -0.2919999957084656,
+        0.5874999761581421,
+        1.3249999284744263
+      ],
+      "max": [
+        -0.2680000066757202,
+        0.6625000238418579,
+        1.3249999284744263
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Seat_Base_Plastic": 5
+    }
+  },
+  "Moonroof sunshade guide": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        -0.8650000095367432,
+        -0.49300000071525574,
+        1.4424999952316284
+      ],
+      "max": [
+        0.2849999964237213,
+        -0.4749999940395355,
+        1.465499997138977
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Seat_Base_Plastic": 6
+    }
+  },
+  "Moonroof sunshade guide.001": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        -0.8650000095367432,
+        0.4749999940395355,
+        1.4424999952316284
+      ],
+      "max": [
+        0.2849999964237213,
+        0.49300000071525574,
+        1.465499997138977
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Seat_Base_Plastic": 6
+    }
+  },
+  "Retracted sunshade leading handle": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        -0.8624999523162842,
+        -0.14499999582767487,
+        1.4605000019073486
+      ],
+      "max": [
+        -0.8174999952316284,
+        0.14499999582767487,
+        1.4835000038146973
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Completion_Headliner": 6
+    }
+  },
+  "Overhead console housing": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        0.23500001430511475,
+        -0.125,
+        1.4159998893737793
+      ],
+      "max": [
+        0.4449999928474426,
+        0.125,
+        1.4539999961853027
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Completion_Headliner": 6
+    }
+  },
+  "Map light lens": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        0.3100000023841858,
+        -0.1054999977350235,
+        1.4084999561309814
+      ],
+      "max": [
+        0.38999998569488525,
+        -0.05050000175833702,
+        1.4175000190734863
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Completion_Lens": 6
+    }
+  },
+  "Roof switch": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        0.27549999952316284,
+        -0.04450000077486038,
+        1.4045000076293945
+      ],
+      "max": [
+        0.3044999837875366,
+        -0.02149999886751175,
+        1.4154999256134033
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Seat_Base_Plastic": 6
+    }
+  },
+  "Sun visor": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        0.4081769287586212,
+        -0.5199999809265137,
+        1.369234561920166
+      ],
+      "max": [
+        0.5518230199813843,
+        -0.20000001788139343,
+        1.4267654418945312
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Completion_Headliner": 6
+    }
+  },
+  "Visor vanity cover": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        0.421999990940094,
+        -0.45500001311302185,
+        1.375
+      ],
+      "max": [
+        0.5120000243186951,
+        -0.26500001549720764,
+        1.38100004196167
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Seat_Base_Plastic": 6
+    }
+  },
+  "Grab handle hinge": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        -0.07999999821186066,
+        -0.6184999942779541,
+        1.372999906539917
+      ],
+      "max": [
+        -0.03999999910593033,
+        -0.5735000371932983,
+        1.4010000228881836
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Completion_Headliner": 6
+    }
+  },
+  "Grab handle hinge.001": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        0.10999999940395355,
+        -0.6184999942779541,
+        1.372999906539917
+      ],
+      "max": [
+        0.14999999105930328,
+        -0.5735000371932983,
+        1.4010000228881836
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Completion_Headliner": 6
+    }
+  },
+  "Grab handle hinge.002": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        -0.9049999713897705,
+        -0.6184999942779541,
+        1.372999906539917
+      ],
+      "max": [
+        -0.8650000095367432,
+        -0.5735000371932983,
+        1.4010000228881836
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Completion_Headliner": 6
+    }
+  },
+  "Grab handle hinge.003": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        -0.7149999737739563,
+        -0.6184999942779541,
+        1.372999906539917
+      ],
+      "max": [
+        -0.675000011920929,
+        -0.5735000371932983,
+        1.4010000228881836
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Completion_Headliner": 6
+    }
+  },
+  "Map light lens.001": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        0.3100000023841858,
+        0.05050000175833702,
+        1.4084999561309814
+      ],
+      "max": [
+        0.38999998569488525,
+        0.1054999977350235,
+        1.4175000190734863
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Completion_Lens": 6
+    }
+  },
+  "Roof switch.001": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        0.27549999952316284,
+        0.02149999886751175,
+        1.4045000076293945
+      ],
+      "max": [
+        0.3044999837875366,
+        0.04450000077486038,
+        1.4154999256134033
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Seat_Base_Plastic": 6
+    }
+  },
+  "Sun visor.001": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        0.4081769287586212,
+        0.20000001788139343,
+        1.369234561920166
+      ],
+      "max": [
+        0.5518230199813843,
+        0.5199999809265137,
+        1.4267654418945312
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Completion_Headliner": 6
+    }
+  },
+  "Visor vanity cover.001": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        0.421999990940094,
+        0.26500001549720764,
+        1.375
+      ],
+      "max": [
+        0.5120000243186951,
+        0.45500001311302185,
+        1.38100004196167
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Seat_Base_Plastic": 6
+    }
+  },
+  "Grab handle hinge.004": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        -0.07999999821186066,
+        0.5735000371932983,
+        1.372999906539917
+      ],
+      "max": [
+        -0.03999999910593033,
+        0.6184999942779541,
+        1.4010000228881836
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Completion_Headliner": 6
+    }
+  },
+  "Grab handle hinge.005": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        0.10999999940395355,
+        0.5735000371932983,
+        1.372999906539917
+      ],
+      "max": [
+        0.14999999105930328,
+        0.6184999942779541,
+        1.4010000228881836
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Completion_Headliner": 6
+    }
+  },
+  "Grab handle hinge.006": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        -0.9049999713897705,
+        0.5735000371932983,
+        1.372999906539917
+      ],
+      "max": [
+        -0.8650000095367432,
+        0.6184999942779541,
+        1.4010000228881836
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Completion_Headliner": 6
+    }
+  },
+  "Grab handle hinge.007": {
+    "vertices_above_1_30": 8,
+    "faces_above_1_30": 6,
+    "roof_bounds": {
+      "min": [
+        -0.7149999737739563,
+        0.5735000371932983,
+        1.372999906539917
+      ],
+      "max": [
+        -0.675000011920929,
+        0.6184999942779541,
+        1.4010000228881836
+      ]
+    },
+    "roof_material_faces": {
+      "MKZ_Completion_Headliner": 6
+    }
+  }
+}

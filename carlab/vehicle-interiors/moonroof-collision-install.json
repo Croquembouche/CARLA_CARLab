@@ -1,0 +1,10 @@
+{
+  "result": "PASS_SAVED_BLUEPRINT",
+  "blueprint": "/Game/VehicleInteriors/Lincoln/BP_LincolnMKZ_Interior.BP_LincolnMKZ_Interior",
+  "component": "MoonroofGlass",
+  "mesh": "/Game/VehicleInteriors/Lincoln/SM_MKZ_Moonroof_Glass.SM_MKZ_Moonroof_Glass",
+  "collision_enabled": "<CollisionEnabled.QUERY_AND_PHYSICS: 3>",
+  "collision_profile": "BlockAll",
+  "collision_trace_flag": "<CollisionTraceFlag.CTF_USE_COMPLEX_AS_SIMPLE: 3>",
+  "bounds": "<Struct 'BoxSphereBounds' (0x8b30c9ab0e0) {origin: {x: -28.999997, y: 0.000002, z: 149.118858}, box_extent: {x: 59.000003, y: 48.500006, z: 3.780067}, sphere_radius: 76.450731}>"
+}

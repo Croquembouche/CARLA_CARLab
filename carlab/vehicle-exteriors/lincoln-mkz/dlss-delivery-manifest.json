@@ -1,0 +1,300 @@
+{
+  "description": "MKZ DLSS comparison addition; native validation and asset files retained from the original study.",
+  "files": [
+    {
+      "path": "index.html",
+      "size": 8503,
+      "sha256": "35a9168166bbcd6fdd31fcc3b338d87a84b781a1ced8e72ca10d51195d5c917b"
+    },
+    {
+      "path": "REPRODUCTION.txt",
+      "size": 4698,
+      "sha256": "5ec9231acf87cef1f86b436c6fd282257872c0449289547978b3c3692648e7cb"
+    },
+    {
+      "path": "scripts/prepare_dlss_comparison.py",
+      "size": 1410,
+      "sha256": "fbef461c878cb5d82be0cc3347ef092d0a44cf68866a09e55704af03fdb8dd8d"
+    },
+    {
+      "path": "scripts/verify_dlss_comparison.py",
+      "size": 3680,
+      "sha256": "baa449062601471a2f291cdde1dab89b272b7c8a3f0954822a9d8ae16e365e07"
+    },
+    {
+      "path": "dlss/browser-verification.json",
+      "size": 17493,
+      "sha256": "21b50381dc191d04ca99fa63a5b5d3e83d322aa6d792f6fa12a4316850fc5b59"
+    },
+    {
+      "path": "dlss/catalog.json",
+      "size": 4956,
+      "sha256": "1b94fb5f446641510d9eefc7dc6258b4c34a80f1d876a5bc2ebd251a3b4e6ca3"
+    },
+    {
+      "path": "dlss/gallery-proof.png",
+      "size": 83733,
+      "sha256": "d771974ba060501dd1df75ca945d419a428d19b45aeac7363ab14d13876d47f3"
+    },
+    {
+      "path": "dlss/inputs.json",
+      "size": 5805,
+      "sha256": "ebbcbde61117dfcfaa62e4ff8e1b682516fcc81ba60467ce5d0e34353f3ef04c"
+    },
+    {
+      "path": "dlss/natural/0000-stock-front-three-quarter-85-comparison.jpg",
+      "size": 569229,
+      "sha256": "8d587d31a5f8994c51fcf0cba4e721e45a033e026bfdebbdb6d1219adcf72054"
+    },
+    {
+      "path": "dlss/natural/0000-stock-front-three-quarter-85-enhanced.png",
+      "size": 1305402,
+      "sha256": "a66c6212ccbac98883a554bd1b2285da4160867d00d553b6c17ffdaefd7ca391"
+    },
+    {
+      "path": "dlss/natural/0000-stock-front-three-quarter-85-original.png",
+      "size": 1127853,
+      "sha256": "8dc07e4478cff5cdf56f3a973b106930ab9f0beede6fdea2de51947c594d32a0"
+    },
+    {
+      "path": "dlss/natural/0001-stock-rear-three-quarter-165-comparison.jpg",
+      "size": 539342,
+      "sha256": "c3a7ff9a4cee98bc901d9ad8c32815cea99826612ab7efcd586cd88fcea21ab7"
+    },
+    {
+      "path": "dlss/natural/0001-stock-rear-three-quarter-165-enhanced.png",
+      "size": 1249006,
+      "sha256": "6cc820749cb2e3b4d6affd77241e0ca854874ecee7b87c06715a0dae0d47efa3"
+    },
+    {
+      "path": "dlss/natural/0001-stock-rear-three-quarter-165-original.png",
+      "size": 1073571,
+      "sha256": "67fc6c5290e452ac75d9f09397791f22cb31c8bd666e73a818d70cd346e12ec7"
+    },
+    {
+      "path": "dlss/natural/0002-stock-front-detail-245-comparison.jpg",
+      "size": 605039,
+      "sha256": "dd3fdb895ee5d882cd81ef4e1889e3f3a434e1ae0f1e45750ca1f4d6dd448244"
+    },
+    {
+      "path": "dlss/natural/0002-stock-front-detail-245-enhanced.png",
+      "size": 1351043,
+      "sha256": "58534c7726881a7eedffd6f8fc7e6fbc45036cdb71365b077f042b511e7abf1b"
+    },
+    {
+      "path": "dlss/natural/0002-stock-front-detail-245-original.png",
+      "size": 1177192,
+      "sha256": "e543714c334c8f49c2314a2ff3b237eb778d98fcf826b27631f6e0fbfd4a66f1"
+    },
+    {
+      "path": "dlss/natural/0003-stock-wheel-detail-325-comparison.jpg",
+      "size": 411545,
+      "sha256": "e916378b6d21db48a5d1e9628a39f2a7d0696171a303e01084762b060384d4c1"
+    },
+    {
+      "path": "dlss/natural/0003-stock-wheel-detail-325-enhanced.png",
+      "size": 1148453,
+      "sha256": "ab8099bc75ccf496ad6ea430bf5c0e908e74f6a5f75b40ad56b03e9ff8b4185f"
+    },
+    {
+      "path": "dlss/natural/0003-stock-wheel-detail-325-original.png",
+      "size": 955613,
+      "sha256": "5de9020f0c9b361c484681cff30657c42d1642ce1308d04697a42f6c61bacf03"
+    },
+    {
+      "path": "dlss/natural/0004-refined-front-three-quarter-405-comparison.jpg",
+      "size": 571605,
+      "sha256": "d7323bf16cd10fad329dc5ff7f90f524899194dc1e6e385359966d64f4aa2c9f"
+    },
+    {
+      "path": "dlss/natural/0004-refined-front-three-quarter-405-enhanced.png",
+      "size": 1317157,
+      "sha256": "8ecd3cb54935efbecf7573c53f97dafc9839a054cc1e7c186fdb617dbbe94d46"
+    },
+    {
+      "path": "dlss/natural/0004-refined-front-three-quarter-405-original.png",
+      "size": 1147772,
+      "sha256": "82a199786ed3a020bb6c88e85add062a3c81007793b80d82b9ba444409833784"
+    },
+    {
+      "path": "dlss/natural/0005-refined-rear-three-quarter-485-comparison.jpg",
+      "size": 539789,
+      "sha256": "105b7f73de27d87dfc17f4fc2be0d39a2cba40c5d7cda0528854c7d84696941d"
+    },
+    {
+      "path": "dlss/natural/0005-refined-rear-three-quarter-485-enhanced.png",
+      "size": 1283409,
+      "sha256": "ef62fe514b7715836c31a6551a90843f8f0a9ed67476bcc1e8886b531e7bb0a2"
+    },
+    {
+      "path": "dlss/natural/0005-refined-rear-three-quarter-485-original.png",
+      "size": 1087823,
+      "sha256": "e6f9ab5511c4fbb136b4ff3f7367591d0ea6507980de6fb90a55fc09c04080d9"
+    },
+    {
+      "path": "dlss/natural/0006-refined-front-detail-565-comparison.jpg",
+      "size": 582499,
+      "sha256": "562f1b5bdbf41667a7bfac9cb238041fa01e2fea7f98aab38da735087f50ed95"
+    },
+    {
+      "path": "dlss/natural/0006-refined-front-detail-565-enhanced.png",
+      "size": 1355204,
+      "sha256": "e1a7a1db6668a5c8e8798995bd77d11617ab2cfd808042db1a0542adc67ea00d"
+    },
+    {
+      "path": "dlss/natural/0006-refined-front-detail-565-original.png",
+      "size": 1218279,
+      "sha256": "6db4cd081a54e1076152175c2acde1f672cebdd8a13e02118d00d92e5544e036"
+    },
+    {
+      "path": "dlss/natural/0007-refined-wheel-detail-645-comparison.jpg",
+      "size": 368693,
+      "sha256": "f251fc1ca49ef52aff5147af5604b410212b6451d9f2ec0ee13a5a02a00d62ab"
+    },
+    {
+      "path": "dlss/natural/0007-refined-wheel-detail-645-enhanced.png",
+      "size": 1119544,
+      "sha256": "790e4f6c5626010fb2ff3119cb4dae5ee5ec7195eda2e47aabccd5b0cd3b9c74"
+    },
+    {
+      "path": "dlss/natural/0007-refined-wheel-detail-645-original.png",
+      "size": 969959,
+      "sha256": "b614cbf8dd5c5b68ef6339f97e5d55195e35841e6996578c102fc58b3f9d6ba5"
+    },
+    {
+      "path": "dlss/natural/report.json",
+      "size": 13966,
+      "sha256": "21005d0d422a78b473d92d1ebfd7e1259f3a0e635967ec5c3b0ca85827bf1866"
+    },
+    {
+      "path": "dlss/standard/0000-stock-front-three-quarter-85-comparison.jpg",
+      "size": 548965,
+      "sha256": "46eba826ce579a8b42abadc26a886dab049ee6a7258c6c07acd75e7622764216"
+    },
+    {
+      "path": "dlss/standard/0000-stock-front-three-quarter-85-enhanced.png",
+      "size": 1209462,
+      "sha256": "c14f8cd7c988ad5b10d37957b9169951807e48a86889edc1fb1248a00b89314b"
+    },
+    {
+      "path": "dlss/standard/0000-stock-front-three-quarter-85-original.png",
+      "size": 1127853,
+      "sha256": "8dc07e4478cff5cdf56f3a973b106930ab9f0beede6fdea2de51947c594d32a0"
+    },
+    {
+      "path": "dlss/standard/0001-stock-rear-three-quarter-165-comparison.jpg",
+      "size": 522768,
+      "sha256": "1f7125f047aea55a697baa1d1b7e325623e6370e5d0a6a941dd7654f490f34ee"
+    },
+    {
+      "path": "dlss/standard/0001-stock-rear-three-quarter-165-enhanced.png",
+      "size": 1247974,
+      "sha256": "3cbc07e738519fdae5054169e6a825dda2029850641683907fed88ed10d69be3"
+    },
+    {
+      "path": "dlss/standard/0001-stock-rear-three-quarter-165-original.png",
+      "size": 1073571,
+      "sha256": "67fc6c5290e452ac75d9f09397791f22cb31c8bd666e73a818d70cd346e12ec7"
+    },
+    {
+      "path": "dlss/standard/0002-stock-front-detail-245-comparison.jpg",
+      "size": 583713,
+      "sha256": "c31cae018d94f109c3942656de86fa6e9c2cf5759c44866770d30abb21035b6f"
+    },
+    {
+      "path": "dlss/standard/0002-stock-front-detail-245-enhanced.png",
+      "size": 1267855,
+      "sha256": "b5a09b66883befba1ebb562f9c83628097d8b75fba6e521e8071651f9400b904"
+    },
+    {
+      "path": "dlss/standard/0002-stock-front-detail-245-original.png",
+      "size": 1177192,
+      "sha256": "e543714c334c8f49c2314a2ff3b237eb778d98fcf826b27631f6e0fbfd4a66f1"
+    },
+    {
+      "path": "dlss/standard/0003-stock-wheel-detail-325-comparison.jpg",
+      "size": 392426,
+      "sha256": "6b2a94a08400ade5bba04df6456b476072639e0237a9117d7f9c46deb774cfcb"
+    },
+    {
+      "path": "dlss/standard/0003-stock-wheel-detail-325-enhanced.png",
+      "size": 1051345,
+      "sha256": "6e568fe03277a2adabb52652f222b5c0626b9919a34aabf492ac98ad1c8215ea"
+    },
+    {
+      "path": "dlss/standard/0003-stock-wheel-detail-325-original.png",
+      "size": 955613,
+      "sha256": "5de9020f0c9b361c484681cff30657c42d1642ce1308d04697a42f6c61bacf03"
+    },
+    {
+      "path": "dlss/standard/0004-refined-front-three-quarter-405-comparison.jpg",
+      "size": 549394,
+      "sha256": "4ac86f407a3d3fa5ab01558640488cd4a6a543a7885f3355c3970ea6e29b3202"
+    },
+    {
+      "path": "dlss/standard/0004-refined-front-three-quarter-405-enhanced.png",
+      "size": 1229097,
+      "sha256": "f2794cc5fb3d93d7396fdefab109a7dabe9ef7a6cdf473d09a707b14d6bba32b"
+    },
+    {
+      "path": "dlss/standard/0004-refined-front-three-quarter-405-original.png",
+      "size": 1147772,
+      "sha256": "82a199786ed3a020bb6c88e85add062a3c81007793b80d82b9ba444409833784"
+    },
+    {
+      "path": "dlss/standard/0005-refined-rear-three-quarter-485-comparison.jpg",
+      "size": 519285,
+      "sha256": "dd6e5255d3e1d04c6f7f6c98aca52ef47204327fbb0621c03941d67a6209a979"
+    },
+    {
+      "path": "dlss/standard/0005-refined-rear-three-quarter-485-enhanced.png",
+      "size": 1213514,
+      "sha256": "4f324a3569729549eef503b7dbe3bb3d2cf82d9b79be549505e630c1e4cc3e9c"
+    },
+    {
+      "path": "dlss/standard/0005-refined-rear-three-quarter-485-original.png",
+      "size": 1087823,
+      "sha256": "e6f9ab5511c4fbb136b4ff3f7367591d0ea6507980de6fb90a55fc09c04080d9"
+    },
+    {
+      "path": "dlss/standard/0006-refined-front-detail-565-comparison.jpg",
+      "size": 559995,
+      "sha256": "297b07a05dd4521174247631479796f1e584f116bc892aaaa684e9f179b64397"
+    },
+    {
+      "path": "dlss/standard/0006-refined-front-detail-565-enhanced.png",
+      "size": 1279576,
+      "sha256": "725b772e5a604aed7fdb1b5f3eea5d2068bdef9527d72535ebaff53a3a8a3b85"
+    },
+    {
+      "path": "dlss/standard/0006-refined-front-detail-565-original.png",
+      "size": 1218279,
+      "sha256": "6db4cd081a54e1076152175c2acde1f672cebdd8a13e02118d00d92e5544e036"
+    },
+    {
+      "path": "dlss/standard/0007-refined-wheel-detail-645-comparison.jpg",
+      "size": 353075,
+      "sha256": "3f741f602ea5bd3ff3abb5b495e517349add5d4c831fb5c8cbd5a21839d1fbe0"
+    },
+    {
+      "path": "dlss/standard/0007-refined-wheel-detail-645-enhanced.png",
+      "size": 1067763,
+      "sha256": "c1c1b9cb64683d4f646e974dceebefcde863cf6fc269b1dd8400af0c935a4855"
+    },
+    {
+      "path": "dlss/standard/0007-refined-wheel-detail-645-original.png",
+      "size": 969959,
+      "sha256": "b614cbf8dd5c5b68ef6339f97e5d55195e35841e6996578c102fc58b3f9d6ba5"
+    },
+    {
+      "path": "dlss/standard/report.json",
+      "size": 13970,
+      "sha256": "9f128f4941ed7371d0b27ededfe1f3294ff96b4e3c479aff1598ac90e9872fbd"
+    },
+    {
+      "path": "dlss/verification.json",
+      "size": 5466,
+      "sha256": "40b99e6df8791ef7c4df60b292863e6184cd7a5b5399ac73264ece1d77a8a26b"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "SM_MKZ_Cabin_Final": {
+    "bounds": "<Struct 'BoxSphereBounds' (0xbf3e0fd7b40) {origin: {x: -2.167137, y: 0.000008, z: 88.695197}, box_extent: {x: 237.496208, y: 89.839760, z: 62.848031}, sphere_radius: 244.716364}>",
+    "materials": [
+      "<Object '/Game/VehicleInteriors/Lincoln/MI_MKZ_Final_Interior.MI_MKZ_Final_Interior' (0xbf3de4e8000) Class 'MaterialInstanceConstant'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/M_Interior_Mat.M_Interior_Mat' (0xbf3de585400) Class 'Material'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/M_Interior_Edge.M_Interior_Edge' (0xbf3de584600) Class 'Material'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Ebony_Leather.MKZ_Ebony_Leather' (0xbf3de588c00) Class 'Material'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Perforated_Leather.MKZ_Perforated_Leather' (0xbf3de589a00) Class 'Material'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Stitch_Charcoal.MKZ_Stitch_Charcoal' (0xbf3de587e00) Class 'Material'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.MKZ_Seat_Base_Plastic' (0xbf3de586200) Class 'Material'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Seat_Hardware.MKZ_Seat_Hardware' (0xbf3de587000) Class 'Material'>"
+    ]
+  },
+  "SM_MKZ_Completion_Details": {
+    "bounds": "<Struct 'BoxSphereBounds' (0xbf3e02a1f40) {origin: {x: -37.152069, y: 0.000000, z: 96.616226}, box_extent: {x: 92.047928, y: 66.250000, z: 54.366226}, sphere_radius: 120.254125}>",
+    "materials": [
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Seat_Base_Plastic.MKZ_Seat_Base_Plastic' (0xbf3de586200) Class 'Material'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Belt_Release.MKZ_Belt_Release' (0xbf3de58ee00) Class 'Material'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Completion_Rubber.MKZ_Completion_Rubber' (0xbf3de580000) Class 'Material'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Seat_Hardware.MKZ_Seat_Hardware' (0xbf3de587000) Class 'Material'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Seatbelt_Webbing.MKZ_Seatbelt_Webbing' (0xbf3de582a00) Class 'Material'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Completion_Headliner.MKZ_Completion_Headliner' (0xbf3de580e00) Class 'Material'>",
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Completion_Lens.MKZ_Completion_Lens' (0xbf3de581c00) Class 'Material'>"
+    ]
+  },
+  "SM_MKZ_Moonroof_Glass": {
+    "bounds": "<Struct 'BoxSphereBounds' (0xbf3e0fd3000) {origin: {x: -28.999997, y: 0.000002, z: 149.118858}, box_extent: {x: 59.000003, y: 48.500006, z: 3.780067}, sphere_radius: 76.450731}>",
+    "materials": [
+      "<Object '/Game/VehicleInteriors/Lincoln/MI_MKZ_Moonroof_Tint.MI_MKZ_Moonroof_Tint' (0xbf3f35a3000) Class 'MaterialInstanceConstant'>"
+    ]
+  },
+  "SM_MKZ_Driver_Worn_Belt": {
+    "bounds": "<Struct 'BoxSphereBounds' (0xbf3e0fd5b40) {origin: {x: 12.070787, y: -38.103608, z: 91.518797}, box_extent: {x: 36.059244, y: 26.305297, z: 35.012384}, sphere_radius: 55.085376}>",
+    "materials": [
+      "<Object '/Game/VehicleInteriors/Lincoln/MKZ_Seatbelt_Webbing.MKZ_Seatbelt_Webbing' (0xbf3de582a00) Class 'Material'>"
+    ]
+  }
+}

@@ -545,16 +545,16 @@ float MotionPlanStage::GetTurnTargetVelocity(const Buffer &waypoint_buffer,
     return max_target_velocity;
   }
   else {
-    const SimpleWaypointPtr first_waypoint = waypoint_buffer.front();
-    const SimpleWaypointPtr last_waypoint = waypoint_buffer.back();
-    const SimpleWaypointPtr middle_waypoint = waypoint_buffer.at(waypoint_buffer.size() / 2);
-
-    float radius = GetThreePointCircleRadius(first_waypoint->GetLocation(),
-                                             middle_waypoint->GetLocation(),
-                                             last_waypoint->GetLocation());
-
-    // Return the max velocity at the turn
-    return std::sqrt(radius * FRICTION * GRAVITY);
+    std::vector<cg::Location> locations;
+    locations.reserve(waypoint_buffer.size());
+    for (const auto &waypoint : waypoint_buffer) {
+      locations.emplace_back(waypoint->GetLocation());
+    }
+    const float radius = GetMinimumCurveRadius(locations);
+    // Keep the existing friction and speed limit, including the tighter
+    // local bend that a single circle across the buffer can average away.
+    const double turn_velocity = std::sqrt(double(radius) * FRICTION * GRAVITY);
+    return std::min(max_target_velocity, static_cast<float>(turn_velocity));
   }
 }
 

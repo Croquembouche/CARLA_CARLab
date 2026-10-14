@@ -1,0 +1,12 @@
+{
+  "result": "PASS_SAVED_BLUEPRINT",
+  "replaced_components": [
+    "SM_Glass_Lincoln_Ext1"
+  ],
+  "glass_bounds": "<Struct 'BoxSphereBounds' (0x69961bf66c0) {origin: {x: -3.470924, y: -0.000015, z: 100.162941}, box_extent: {x: 238.702736, y: 89.894073, z: 50.935371}, sphere_radius: 245.420469}>",
+  "material_slots": [
+    "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Glass_Ext.MI_LincolnMKZ_Glass_Ext' (0x699eb5b4000) Class 'MaterialInstanceConstant'>",
+    "<Object '/Game/Carla/Static/Car/4Wheeled/LincolnMKZ/Materials/MI_LincolnMKZ_Emissive_Glass_Ext.MI_LincolnMKZ_Emissive_Glass_Ext' (0x699eb5b6800) Class 'MaterialInstanceConstant'>"
+  ],
+  "moonroof_material": "<Object '/Game/VehicleInteriors/Lincoln/MI_MKZ_Moonroof_Tint.MI_MKZ_Moonroof_Tint' (0x699eccad800) Class 'MaterialInstanceConstant'>"
+}

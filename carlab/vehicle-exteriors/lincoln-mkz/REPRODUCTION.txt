@@ -1,0 +1,34 @@
+Lincoln MKZ exterior study
+
+Variant: vehicle.lincoln.mkz_refined
+Blueprint: /Game/VehicleExteriors/LincolnMKZ/BP_LincolnMKZ_Refined
+Editable source: Lincoln_MKZ_Exterior_Refined.blend (packed textures)
+Review: http://127.0.0.1:8098/
+
+The stock body, skeletal mesh, tires and vehicle physics are retained. Added geometry is exported as eight static meshes: four sets of wheel fasteners/valves and four sets of concentric rotor surface rings. The editor helper persists their corresponding wheel-bone attachments. Repaired wheel/caliper texture maps, new material instances and the variant Blueprint are installed in a separate VehicleExteriors folder.
+
+The final result was iterated from matched Blender studio views. Trial optical additions were rejected after close-up inspection because they overlapped the stock lenses; the final asset retains the original optics. Pass 1 and pass 2 evidence is retained in iterations/.
+
+The baseline Blender materials reconstruct the native shaders and therefore do not exactly reproduce Unreal. Use CARLA RGB camera comparisons for native behavior. Final studio validation uses one sequential 1280x800 RGB camera with Epic quality, Lumen hardware ray tracing, virtual shadows, and fixed manual exposure. The user stopped the existing town during this work, releasing memory for the final quality settings. Native comparisons assign the same linear shader paint color (.024, .045, .065) to both owned actors because the inherited stock Blueprint bodywork slot does not apply the requested color correctly. This is a controlled color comparison; original material assets are not saved or modified. The native CARLA and Blender asset comparisons have no neural enhancement; the added DLSS experiment modes are labeled separately.
+
+Installation (editor commandlet; changes the separate variant and registers its catalogue entry):
+/mnt/simulations/bin/carla-editor /mnt/simulations/carla/Unreal/CarlaUnreal/CarlaUnreal.uproject -run=pythonscript -script=/mnt/simulations/vehicle-exteriors/lincoln-mkz/scripts/install_variant.py -nullrhi -unattended -nosound -notraceserver -ddc=NoZenLocalFallback -LocalDataCachePath=/home/william/.cache/carla-ddc
+
+Runtime validation (owns only fresh RPC port 2250, destroys its actors and exits its engine):
+/mnt/simulations/bin/carla-python /mnt/simulations/vehicle-exteriors/lincoln-mkz/scripts/verify_native.py
+
+Evidence: native-install.json, runtime-report.json, runtime-components.json, scene-preservation-check.json, reference/fresh-mesh-verification.json, renders/, and build-helper.log.
+
+The user stopped the existing session. It remains stopped. The validation harness exits its own isolated process after completion. A newly launched CARLA process reads the added vehicle catalogue entry.
+
+DLSS 5 comparison added to the same viewer:
+Eight existing native captures, two profiles (standard and natural), 16 enhanced 1280x800 stills. Each slider compares exactly the same saved native frame before and after actual CUDA inference. The installed community implementation is approximate, not verified equivalent to NVIDIA DLSS 5. No temporal history, no CARLA connection, no simulator ticks. Enhancement changes image appearance; it does not repair mesh geometry or modify native materials/physics/ground truth.
+
+Reproduce inference with the dedicated existing environment and shared inference lock (use a NEW output directory for each run; existing reports are immutable):
+CUDA_VISIBLE_DEVICES=0 /mnt/simulations/dlss5-evaluation/.venv/bin/python /mnt/simulations/dlss5-evaluation/evaluate.py --manifest /mnt/simulations/vehicle-exteriors/lincoln-mkz/dlss/inputs.json --output /mnt/simulations/vehicle-exteriors/lincoln-mkz/dlss/standard-repeat --profile standard
+CUDA_VISIBLE_DEVICES=0 /mnt/simulations/dlss5-evaluation/.venv/bin/python /mnt/simulations/dlss5-evaluation/evaluate.py --manifest /mnt/simulations/vehicle-exteriors/lincoln-mkz/dlss/inputs.json --output /mnt/simulations/vehicle-exteriors/lincoln-mkz/dlss/natural-repeat --profile natural
+
+Verify the delivered comparisons and rebuild their gallery catalog:
+/mnt/simulations/dlss5-evaluation/.venv/bin/python /mnt/simulations/vehicle-exteriors/lincoln-mkz/scripts/verify_dlss_comparison.py
+
+Evidence: dlss/inputs.json, dlss/standard/report.json, dlss/natural/report.json, dlss/verification.json, dlss/catalog.json. Reports retain native camera frames/timestamps/transforms/FOV, input/output hashes, model hash, community source revisions, actual GPU identity and individual inference timings. Model loading is reported separately. Warm median enhancement latency was 0.562s standard / 0.568s natural on RTX 2080 Ti; this is not complete simulator throughput.
